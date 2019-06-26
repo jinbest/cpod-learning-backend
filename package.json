@@ -1,8 +1,8 @@
 {
-  "name": "full-size",
+  "name": "ChinesePOd",
   "private": true,
-  "version": "0.0.0",
-  "description": "a Sails application",
+  "version": "0.1.0",
+  "description": "ChinesePod Javascript Stack",
   "keywords": [],
   "dependencies": {
     "@sailshq/connect-redis": "^3.2.1",
@@ -39,7 +39,7 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/rozkalns/full-size.git"
+    "url": "git://github.com/ChinesePod/CPOD-JS.git"
   },
   "author": "rozkalns",
   "license": "",
