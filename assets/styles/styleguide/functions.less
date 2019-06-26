@@ -1,0 +1,7 @@
+.rem(@pixels) {
+  if(isnumber(@{pixels})) {
+    @pixels: @pixels * 1px;
+  }
+  @pixels();
+}
+@rem: 16rem;

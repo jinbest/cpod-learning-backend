@@ -1,0 +1,470 @@
+<div id="signup" v-cloak>
+  <section class="section hero">
+    <div class="mobile__hero__text d-block d-md-none">
+      14 years leading Mandarin Chinese online learning
+    </div>
+    <div class="container">
+      <div class="hero__content">
+        <div class="hero__text">
+          14 years leading Mandarin Chinese online learning
+        </div>
+        <div class="hero__form">
+          <div class="form-block">
+            <div class="form-block__header">
+              <h3 class="form-block__title">Sign Up Today!</h3>
+            </div>
+            <div class="form-block__content">
+              <div id="form-top-msg"></div>
+              <ajax-form name="form-top" id="form-top" action="signup" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
+                <div class="form-block__row">
+                  <div class="form-block__col">
+                    <label class="form-block__label">Email Address</label>
+                    <input type="email" name="email" placeholder="email@chinesepod.com" :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress" class="form-control form-block__input" autocomplete="email">
+                    <div class="invalid-feedback" v-if="formErrors.emailAddress">Please enter a valid email address.</div>
+                  </div>
+                </div>
+                <div class="form-block__row">
+                  <div class="form-block__col">
+                    <label class="form-block__checkbox">
+                      <input type="checkbox" name="overlay_email" v-model="formData.optIn" checked>
+                      <div class="form-block__checkbox-block"></div>
+                      <span class="form-block__checkbox-label">I want to hear the latest news from ChinesePod.</span>
+                    </label>
+                    <p class="text-danger" v-if="cloudError==='emailAlreadyInUse'"><small>It looks like there's already an account with your email address. If you forgot your password, you can recover it <a href="/accounts/resetpassword">here</a>.</small></p>
+                    <p class="text-danger" v-else-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or <a href="/support">contact support</a> if the error persists.</small></p>
+                  </div>
+                </div>
+                <div class="form-block__row">
+                  <div class="form-block__col">
+                    <ajax-button type="submit" id="btn-form-top-submit" :syncing="syncing" class="form-block__button">Get Started</ajax-button>
+                  </div>
+                </div>
+              </ajax-form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section home">
+    <div class="container">
+      <div class="home__content">
+        <div class="home__mack">
+          <img src="/images/academic-learning/macbook.svg" alt="" class="home__img">
+          <div class="home__content-video">
+            <div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;">
+              <div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;">
+                <div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;">
+                  <div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;">
+                    <div class="wistia_embed wistia_async_fwg1oypcj5 videoFoam=true" style="height:100%;position:relative;width:100%">
+                      <div class="wistia_swatch" style="height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;transition:opacity 200ms;width:100%;">
+                        <img src="https://fast.wistia.com/embed/medias/fwg1oypcj5/swatch" style="filter:blur(5px);height:100%;object-fit:contain;width:100%;" alt="" onload="this.parentNode.style.opacity=1;" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% block('localScripts', '<script src="https://fast.wistia.com/embed/medias/fwg1oypcj5.jsonp" async></script>\n' +
+          '                        <script src="https://fast.wistia.com/assets/external/E-v1.js" async></script>') %>
+        <div class="home__desc">
+          <ul class="home__list">
+            <li class="home__item">Engaging fun lessons</li>
+            <li class="home__item">On-Demand Content</li>
+            <li class="home__item">Over 4000 Lessons</li>
+            <li class="home__item">Wide range of levels</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section content">
+    <div class="about-item about-item_1">
+      <div class="about-item__bg">
+      </div>
+      <div class="about-item__text">
+        <h3 class="title about-item__title">Real language</h3>
+        <div class="about-item__desc">
+          We believe that students learn better from immersive experiences instead of traditional textbooks.
+        </div>
+        <div class="about-item__cit">
+          ChinesePod creates Mandarin Chinese lessons with real language that native speakers use, not stiff,
+          unnatural textbook phrases.
+        </div>
+      </div>
+    </div>
+    <div class="about-item about-item_right about-item_2 ">
+      <div class="about-item__text">
+        <h3 class="title about-item__title">Self-contained Lessons</h3>
+        <div class="about-item__desc">
+          The beauty of ChinesePod is that you don't need to study our lessons in a specific order, they are
+          self-contained.
+        </div>
+        <div class="about-item__cit">
+          Just pick your Chinese skill level, then a topic you want to study and you are good to go, browse our
+          library full of content. Human conversations don't follow the chapters of a textbook so why should your
+          learning?
+        </div>
+      </div>
+      <div class="about-item__bg">
+      </div>
+    </div>
+
+    <section class="section props section_props_animation">
+      <div class="container">
+        <ul class="props__list">
+          <li class="props__item props__item-1">
+            <div class="props__img">
+              <img src="/images/academic-learning/ChinesePod_Tools-04.svg" class="props__svg" alt="">
+            </div>
+            <h3 class="props__title">Exercises</h3>
+            <ul class="props__tools-list">
+              <li class="props__tools-item">Lesson exercises</li>
+              <li class="props__tools-item">Placement test</li>
+              <li class="props__tools-item">Personal scoring</li>
+              <li class="props__tools-item">Progress tracker</li>
+            </ul>
+          </li>
+          <li class="props__item props__item-2">
+            <div class="props__img">
+              <img src="/images/academic-learning/ChinesePod_Tools-02.svg" class="props__svg" alt="">
+            </div>
+            <h3 class="props__title">Vocabulary</h3>
+            <ul class="props__tools-list">
+              <li class="props__tools-item">Context sentences</li>
+              <li class="props__tools-item">Vocabulary decks</li>
+              <li class="props__tools-item">In-depth grammar</li>
+              <li class="props__tools-item">Extra dialogues</li>
+            </ul>
+          </li>
+          <li class="props__item props__item-3">
+            <div class="props__img">
+              <img src="/images/academic-learning/ChinesePod_Tools-03.svg" class="props__svg" alt="">
+            </div>
+            <h3 class="props__title">Pronunciation</h3>
+            <ul class="props__tools-list">
+              <li class="props__tools-item">Best learning approach</li>
+              <li class="props__tools-item">Wide range of difficulty levels</li>
+              <li class="props__tools-item">Perfecting your pronunciation</li>
+              <li class="props__tools-item">In-depth Pinyin section</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="about-item about-item_3">
+      <div class="about-item__bg">
+      </div>
+      <div class="about-item__text">
+        <h3 class="title about-item__title">Easy to use</h3>
+        <div class="about-item__desc">
+          We provide over 4000 entertaining and practical audio & video lessons that make learning the Mandarin
+          language fun.
+        </div>
+        <div class="about-item__cit">
+          Simply, download a lesson and study it anywhere, at anytime, on any device. Each lesson also comes with
+          downloadable dialogues, vocabulary, grammar and practical exercises.
+        </div>
+      </div>
+    </div>
+
+    <section class="form-section form-section__middle">
+      <div class="container">
+        <div class="form-section__contant">
+          <div class="form-block col-12 col-md-6">
+            <div class="form-block__header">
+              <h3 class="form-block__title">Sign Up Today!</h3>
+            </div>
+            <div class="form-block__content">
+              <div id="form-medium-msg"></div>
+              <ajax-form name="form-medium" id="form-medium" action="signup" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
+                <div class="form-block__row">
+                  <div class="form-block__col">
+                    <label class="form-block__label">Email Address</label>
+                    <input type="email" name="email" placeholder="email@chinesepod.com" :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress" class="form-control form-block__input" autocomplete="email">
+                    <div class="invalid-feedback" v-if="formErrors.emailAddress">Please enter a valid email address.</div>
+                  </div>
+                </div>
+                <div class="form-block__row">
+                  <div class="form-block__col">
+                    <label class="form-block__checkbox">
+                      <input type="checkbox" name="overlay_email" v-model="formData.optIn" checked>
+                      <div class="form-block__checkbox-block"></div>
+                      <span class="form-block__checkbox-label">I want to hear the latest news from ChinesePod.</span>
+                    </label>
+                    <p class="text-danger" v-if="cloudError==='emailAlreadyInUse'"><small>It looks like there's already an account with your email address. If you forgot your password, you can recover it <a href="/accounts/resetpassword">here</a>.</small></p>
+                    <p class="text-danger" v-else-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or <a href="/support">contact support</a> if the error persists.</small></p>
+
+                  </div>
+                </div>
+                <div class="form-block__row">
+                  <div class="form-block__col">
+                    <ajax-button type="submit" id="btn-form-top-submit" :syncing="syncing" class="form-block__button">Get Started</ajax-button>
+                  </div>
+                </div>
+              </ajax-form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="about-item about-item_right about-item_4 ">
+      <div class="about-item__text">
+        <h3 class="title about-item__title">Restricting courses are all over!</h3>
+        <div class="about-item__desc">
+          We all don't listen to the same music, or like the same food so
+          why should we be forced to follow a structured, monotonous
+          curriculum when it comes to learning a language?
+        </div>
+        <div class="about-item__cit">
+          With ChinesePod you have the freedom to take the Mandarin Chinese lessons that you find interesting, having
+          the ability to study at your own pace.
+        </div>
+      </div>
+      <div class="about-item__bg">
+      </div>
+    </div>
+    <div class="container">
+      <div class="content__resorces">
+        <div id="resourcesCarousel" data-ride="carousel" class="resorces carousel slide">
+          <div class="resorces__list carousel-inner">
+            <div class="carousel-item resorces__item row active">
+              <div class="resorces__photo col-12 col-sm-6">
+                <img src="https://img.youtube.com/vi/u8UBzEs6PuY/maxresdefault.jpg" class="w-100"/>
+              </div>
+              <div class="resorces__desc col-12 col-sm-6">
+                <p>Once you are finished with the video lesson, there is so much extra content waiting on our lesson's
+                  page, including vocabulary, sentence reviews, and expansions, where we give further examples of the
+                  lesson's grammatical structure and vocabulary in different context.</p>
+              </div>
+            </div>
+            <div class="carousel-item resorces__item row">
+              <div class="resorces__photo col-12 col-sm-6">
+                <img src="https://img.youtube.com/vi/YRHg6AEJ7yM/maxresdefault.jpg" class="w-100" />
+              </div>
+              <div class="resorces__desc col-12 col-sm-6">
+                <p>Once you are finished with the video lesson, there is so much extra content waiting on our lesson's
+                  page, including vocabulary, sentence reviews, and expansions, where we give further examples of the
+                  lesson's grammatical structure and vocabulary in different context.</p>
+              </div>
+            </div>
+            <div class="carousel-item resorces__item row">
+              <div class="resorces__photo col-12 col-sm-6">
+                <img src="https://img.youtube.com/vi/FodIiHrkUjU/maxresdefault.jpg" class="w-100"/>
+              </div>
+              <div class="resorces__desc col-12 col-sm-6">
+                <p>Once you are finished with the video lesson, there is so much extra content waiting on our lesson's
+                  page, including vocabulary, sentence reviews, and expansions, where we give further examples of the
+                  lesson's grammatical structure and vocabulary in different context.</p>
+              </div>
+            </div>
+          </div>
+          <ul class="resorces__controls carousel-indicators controls">
+            <li data-target="#resourcesCarousel" data-slide-to="0" class="controls__item controls_resource__item active"></li>
+            <li data-target="#resourcesCarousel" data-slide-to="1" class="controls__item controls_resource__item"></li>
+            <li data-target="#resourcesCarousel" data-slide-to="2" class="controls__item controls_resource__item"></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="about-item about-item_5">
+      <div class="about-item__bg">
+      </div>
+      <div class="about-item__text">
+        <h3 class="title about-item__title">Learn the topics you want!</h3>
+        <div class="about-item__desc">
+          With the largest library of Mandarin Chinese lessons, on and offline, you have 4000+ lessons at your
+          fingertips.
+        </div>
+        <div class="about-item__cit">
+          We challenge you to find a situation or topic we haven't already covered, and our library is always growing,
+          updating on weekly basis.
+        </div>
+      </div>
+    </div>
+
+    <section class="section reviews section_reviews" data-ride="carousel">
+      <div id="reviewsCarousel" class="container carousel slide">
+        <div class="reviews__list carousel-inner">
+          <div class="carousel-item reviews__item active">
+            <div class="reviews__img-container">
+              <img src="/images/academic-learning/home_pic_3.png" alt="" class="reviews__img">
+            </div>
+            <div class="reviews__text">
+              "ChinesePod has such a vast scope of topics and diversity in levels, which makes it extremely convenient
+              to progress, never-mind the entertaining hosts, great top-down approach and super useful additional
+              content!"
+              <br><small><strong>Niel de la Rouviere</strong> | Language blogger and web developer at Buffer</small>
+            </div>
+          </div>
+          <div class="carousel-item reviews__item">
+            <div class="reviews__img-container">
+              <img src="/images/academic-learning/home_pic_31.png" alt="" class="reviews__img">
+            </div>
+            <div class="reviews__text">
+              "When I was learning Mandarin, ChinesePod was my favourite resource by far. It was essential in getting
+              me up to basic conversational level in just a few months. I recommend it to everyone learning Chinese!"
+              <br><small><strong>Benny Lewis</strong> | "The Irish Polyglot"</small>
+            </div>
+          </div>
+          <div class="carousel-item reviews__item">
+            <div class="reviews__img-container">
+              <img src="/images/academic-learning/home_pic_33.png" alt="" class="reviews__img">
+            </div>
+            <div class="reviews__text">
+              "ChinesePod is an incredible resource for mastering spoken Chinese - a vast library of entertaining
+              lessons from a great collection of teachers, all short and friendly enough
+              to squeeze into a busy schedule."
+              <br><small><strong>Mike Love</strong> | Creator of Pleco</small>
+            </div>
+          </div>
+        </div>
+        <ul class="reviews__controls carousel-indicators controls controls_red">
+          <li data-target="#reviewsCarousel" data-slide-to="0" class="controls__item controls_reviews__item active"></li>
+          <li data-target="#reviewsCarousel" data-slide-to="1" class="controls__item controls_reviews__item"></li>
+          <li data-target="#reviewsCarousel" data-slide-to="2" class="controls__item controls_reviews__item"></li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="about-item about-item_right about-item_6">
+      <div class="about-item__text">
+        <h3 class="title about-item__title">Train your ears not your eyes</h3>
+        <div class="about-item__desc">
+          Flashback to your were a childhood and learning your mother language for the first time: you started with
+          listening, not reading.
+        </div>
+        <div class="about-item__cit">
+          We believe that our audio and video lessons mimic the natural process of language acquisition that everyone
+          goes through and are the best way to learn Chinese.
+        </div>
+      </div>
+      <div class="about-item__bg">
+      </div>
+    </div>
+    <div class="about-item about-item_7 ">
+      <div class="about-item__bg">
+      </div>
+      <div class="about-item__text">
+        <h3 class="title about-item__title">Native pronunciation</h3>
+        <div class="about-item__desc">
+          Access our specially designed video course "Say It Right (S.I.R)" entirely devoted towards teaching the
+          correct pronunciation of the Chinese Mandarin Language.
+        </div>
+        <div class="about-item__cit">
+          The "Say It Right (S.I.R)" video course contains 22 lessons, in which you will
+          learn all about pinyin, tones, tricky combinations, tone change rules and
+          difficult sounds. These lessons work to give you a comprehensive and
+          unprecedented education on the most daunting aspect of learning Chinese.
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section section__mac">
+    <div id="sectionResourcesCarousel" data-ride="carousel" class="carousel section__resources">
+      <div class="container section__resources__container">
+        <div class="section__resources__text">
+          <div class="resources_slider_text_list">
+            <div class="carousel-item resources_slider_text_item active">
+              <h2 class="section__resources__title">Dialogue</h2>
+              <p>The Dialogue section provides an interactive transcript of the lesson. The Chinese characters are
+                provided along with the English translation and pinyin to ease with pronunciation. It’s better to
+                learn the target language in context but we provide a function to study each word separately too.
+                Scrutinize each Chinese character by mousing over it to see the literal translation. You also have the
+                option of toggling between Simplified and Traditional characters.</p>
+            </div>
+            <div class="carousel-item resources_slider_text_item">
+              <h2 class="section__resources__title">Vocabulary</h2>
+              <p>Rote memorization is boring and not the most effective method, but we suggest using the supplementary
+                vocabulary lists in conjunction with the audio or video to accelerate your rate of achieving language
+                competency.</p>
+            </div>
+            <div class="carousel-item resources_slider_text_item">
+              <h2 class="section__resources__title">Expansion</h2>
+              <p>Our expansion gives you the opportunity to learn target vocabulary taught in the lesson in other
+                meaningful situations.</p>
+            </div>
+            <div class="carousel-item resources_slider_text_item" id="greatest_carousel_item">
+              <h2 class="section__resources__title">Exercises</h2>
+              <p>Learn aurally then reinforce further with online worksheets and exercises. These include:</p>
+              <ul>
+                <li>Matching: Choose a word on the left side, then match it to the closest meaning on the right side</li>
+                <li>Sentence Reordering: sentences are in the wrong order; move them into the correct order by
+                  clicking and dragging</li>
+                <li>Dictation: Listen to the audio and type out what you hear</li>
+                <li>Multiple Choice</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div id="imageResourcesCarousel" data-ride="carousel" class="carousel section__resources__slider">
+          <div class="mac-slider carousel-inner">
+            <div class="mac-slider__container">
+              <img src="/images/academic-learning/Carousell_Vocabulary_950x860.png" alt="" class="mac-slider__img">
+              <ul class="mac-slider__list">
+                <li class="carousel-item mac-slider__item active"
+                    style="background-image: url('https://s3contents.chinesepod.com/img/corporate/carousel/dictionary.png')"></li>
+                <li class="carousel-item mac-slider__item"
+                    style="background-image: url('https://s3contents.chinesepod.com/img/corporate/carousel/vocabulary.png')"></li>
+                <li class="carousel-item mac-slider__item"
+                    style="background-image: url('https://s3contents.chinesepod.com/img/corporate/carousel/expansion.png')"></li>
+                <li class="carousel-item mac-slider__item"
+                    style="background-image: url('https://s3contents.chinesepod.com/img/corporate/carousel/exercises.png')" id="greatest_carousel_mac_item"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-indicators section__resources__controls controls controls_white">
+          <li data-target="#sectionResourcesCarousel" data-target="#imageResourcesCarousel" data-slide-to="0" class="controls__item controls_mac__item active"></li>
+          <li data-target="#sectionResourcesCarousel" data-target="#imageResourcesCarousel" data-slide-to="1" class="controls__item controls_mac__item "></li>
+          <li data-target="#sectionResourcesCarousel" data-target="#imageResourcesCarousel" data-slide-to="2" class="controls__item controls_mac__item "></li>
+          <li data-target="#sectionResourcesCarousel" data-target="#imageResourcesCarousel" data-slide-to="3" class="controls__item controls_mac__item " id="greatest_carousel_controls_item"></li>
+      </div>
+    </div>
+  </section>
+  <section class="form-section form-section_footer">
+    <div class="container">
+      <div class="form-section__contant">
+        <div class="form-block col-12 col-md-6">
+          <div class="form-block__header">
+            <h3 class="form-block__title">Sign Up Today!</h3>
+          </div>
+          <div class="form-block__content">
+            <div id="form-bottom-msg"></div>
+            <ajax-form name="form-bottom" id="form-bottom" action="signup" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
+              <div class="form-block__row">
+                <div class="form-block__col">
+                  <label class="form-block__label">Email Address</label>
+                  <input type="email" name="email" placeholder="email@chinesepod.com" :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress" class="form-control form-block__input" autocomplete="email">
+                  <div class="invalid-feedback" v-if="formErrors.emailAddress">Please enter a valid email address.</div>
+                </div>
+              </div>
+              <div class="form-block__row">
+                <div class="form-block__col">
+                  <label class="form-block__checkbox">
+                    <input type="checkbox" name="overlay_email" v-model="formData.optIn" checked>
+                    <div class="form-block__checkbox-block"></div>
+                    <span class="form-block__checkbox-label">I want to hear the latest news from ChinesePod.</span>
+                  </label>
+                  <p class="text-danger" v-if="cloudError==='emailAlreadyInUse'"><small>It looks like there's already an account with your email address. If you forgot your password, you can recover it <a href="/accounts/resetpassword">here</a>.</small></p>
+                  <p class="text-danger" v-else-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or <a href="/support">contact support</a> if the error persists.</small></p>
+
+                </div>
+              </div>
+              <div class="form-block__row">
+                <div class="form-block__col">
+                  <ajax-button type="submit" id="btn-form-top-submit" :syncing="syncing" class="form-block__button">Get Started</ajax-button>
+                </div>
+              </div>
+            </ajax-form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<%- /* Expose locals as 'window.SAILS_LOCALS' :: */ exposeLocalsToBrowser() %>

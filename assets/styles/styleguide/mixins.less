@@ -1,0 +1,159 @@
+
+
+// screen < 1000px
+//min-width: 768
+.big-phone-max-view(@content) {
+  @media (max-width: @screen-phones-big) {
+  @content();
+  }
+}
+
+//min-width: 768
+.tablet-view(@content) {
+  @media (min-width: @screen-tablet) {
+  @content();
+  }
+}
+.max-tablet-view(@content) {
+  @media (max-width: @screen-tablet) {
+  @content();
+  }
+}
+//min-width: 992
+.large-tablet-view(@content) {
+  @media (min-width: @screen-large-tablet) {
+  @content();
+  }
+}
+.max-large-tablet-view(@content) {
+  @media (max-width: @screen-large-tablet) {
+  @content();
+  }
+}
+
+// screen > 1000px
+//min-width: 1601
+.desktop-view(@content) {
+  @media (min-width: @screen-desktop) {
+  @content();
+  }
+}
+// min: 1400 max 1600
+.desktop-views(@content) {
+  @media (min-width: @screen-small-desktop) and (max-width: @screen-desktop) {
+  @content();
+  }
+}
+.small-desktop-view(@content) {
+  @media (min-width: @screen-small-desktop) {
+  @content();
+  }
+}
+// min: 1200
+.laptop-view(@content) {
+  @media (min-width: @screen-laptop) {
+  @content();
+  }
+}
+// min: 992 max 1199
+.tablet-to-laptop(@content) {
+  @media (min-width: @screen-large-tablet) and (max-width: @screen-laptop) {
+  @content();
+  }
+}
+
+/* from files.scss */
+// 1920
+.comp_big(@content){
+  @media screen and(max-width: @screen-comp){
+  @content();
+  }
+}
+// 1400
+.comp(@content) {
+  @media screen and(max-width: @screen-small-desktop) {
+  @content();
+  }
+}
+// 1200
+.desktop(@content) {
+  @media screen and(max-width: @screen-laptop) {
+  @content();
+  }
+}
+// 1170
+.desktop_mini(@content){
+  @media screen and(max-width: @screen-mini-desktop){
+  @content();
+  }
+}
+// 960
+.laptop(@content) {
+  @media screen and(max-width: @screen-laptop-small) {
+  @content();
+  }
+}
+// 768
+.tablets(@content) {
+  @media screen and(max-width: @screen-tablets) {
+  @content();
+  }
+}
+// 650
+.phones_big(@content) {
+  @media screen and(max-width: @screen-phones-big) {
+  @content();
+  }
+}
+// 550
+.phones_medium(@content){
+  @media screen and(max-width: @screen-medium-phones){
+  @content();
+  }
+}
+// 480
+.phones(@content){
+  @media screen and(max-width: @screen-phones){
+  @content();
+  }
+}
+// 430
+.small(@content) {
+  @media screen and(max-width: @screen-small) {
+  @content();
+  }
+}
+// 960 and 1024 - 1
+.responsive(@content) {
+  @media (min-width: @screen-laptop-small) and (max-width: @screen-ipod-pro - 1) {
+  @content();
+  }
+}
+// 1024 and 1400 - 1
+.ipod-pro_comp(@content) {
+  @media (min-width: @screen-ipod-pro) and (max-width: @screen-small-desktop - 1) {
+  @content();
+  }
+}
+// 1400
+.min_comp(@content) {
+  @media (min-width: @screen-small-desktop) {
+  @content();
+  }
+}
+
+.placeholder(@content) {
+  &::-webkit-input-placeholder {
+  @content();
+  }
+  &:-moz-placeholder {
+  @content();
+  }
+  &::-moz-placeholder {
+  @content();
+  }
+  &:-ms-input-placeholder {
+  @content();
+  }
+}
+/* end from files.scss */
