@@ -60,9 +60,11 @@ the account verification message.)`,
     var req = this.req;
 
     let password = await sails.helpers.passwordGenerate();
+    console.log(req);
     console.log(req.ip);
     console.log(req.ips);
-    console.log(req);
+    console.log(req.connection.remoteAddress);
+    console.log(req.hostname);
 
     let ipData = {};
 

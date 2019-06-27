@@ -55,6 +55,7 @@ module.exports.http = {
     //   return middlewareFn;
     // })(),
 
+    trustProxy: true
   },
 
 };
