@@ -60,7 +60,7 @@ the account verification message.)`,
 
     let password = await sails.helpers.passwordGenerate();
 
-    const ip = this.req.ip;
+    const ip = req.ip;
     let ipData = {};
 
     await ipdata.lookup(ip, '67ce141658c735941e1307cf08fcf9a40cd5101a64f19ea674688fff')
