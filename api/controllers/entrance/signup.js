@@ -122,42 +122,41 @@ the account verification message.)`,
     }:{}))
       .fetch();
 
-    //
-    // // Store the user's new id in their session.
-    // this.req.session.userId = newUserRecord.id;
-    //
-    // if (sails.config.custom.verifyEmailAddresses) {
-    //   // Send "confirm account" email
-    //   await sails.helpers.sendTemplateEmail.with({
-    //     to: email,
-    //     subject: 'Please confirm your account',
-    //     template: 'email-verify-account',
-    //     templateData: {
-    //       fullName: name,
-    //       email: email,
-    //       password: password,
-    //       token: newUserRecord.code ? newUserRecord.code : '',
-    //       mobile: false,
-    //       confirmation: false
-    //     }
-    //   });
-    // } else {
-    //   sails.log.info('Skipping new account email verification... (since `verifyEmailAddresses` is disabled)');
-    // }
-    // if (inputs.optIn) {
-    //   const data = {
-    //     email_address: email,
-    //     status: 'subscribed'
-    //   };
-    //   axios.post('https://us9.api.mailchimp.com/3.0/lists/0a8579be6a/members', data, {
-    //     mode: 'no-cors', // no-cors, cors, *same-origin
-    //     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'Authorization': 'apikey d1056769726aa0f9129a5ce02a23dd93-us9'
-    //     }
-    //   });
-    // }
-    return newUserRecord;
+    // Store the user's new id in their session.
+    this.req.session.userId = newUserRecord.id;
+
+    if (sails.config.custom.verifyEmailAddresses) {
+      // Send "confirm account" email
+      await sails.helpers.sendTemplateEmail.with({
+        to: email,
+        subject: 'Please confirm your account',
+        template: 'email-verify-account',
+        templateData: {
+          fullName: name,
+          email: email,
+          password: password,
+          token: newUserRecord.code ? newUserRecord.code : '',
+          mobile: false,
+          confirmation: false
+        }
+      });
+    } else {
+      sails.log.info('Skipping new account email verification... (since `verifyEmailAddresses` is disabled)');
+    }
+    if (inputs.optIn) {
+      const data = {
+        email_address: email,
+        status: 'subscribed'
+      };
+      axios.post('https://us9.api.mailchimp.com/3.0/lists/0a8579be6a/members', data, {
+        mode: 'no-cors', // no-cors, cors, *same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'apikey d1056769726aa0f9129a5ce02a23dd93-us9'
+        }
+      });
+    }
+    return newUserRecord.id;
   }
 };

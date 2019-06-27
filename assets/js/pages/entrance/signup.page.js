@@ -6,7 +6,8 @@ parasails.registerPage('signup', {
       // Form data
       formData: {
         optIn: true,
-        emailAddress: ''
+        emailAddress: '',
+        showFooter: true
       },
 
       // For tracking client-side validation errors in our form.
@@ -35,7 +36,7 @@ parasails.registerPage('signup', {
       var self = this;
     },
     mounted: async function() {
-
+      document.getElementById('page-footer').style = 'display: flex';
     },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
