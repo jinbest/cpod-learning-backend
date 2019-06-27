@@ -121,13 +121,13 @@ module.exports = {
       type: 'number',
       columnType: 'int',
       isInteger: true,
-      defaultsTo: 0
+      defaultsTo: 888
     },
     updated_by: {
       type: 'number',
       columnType: 'int',
       isInteger: true,
-      defaultsTo: 0
+      defaultsTo: 888
     },
     birthday: {
       type: 'string',

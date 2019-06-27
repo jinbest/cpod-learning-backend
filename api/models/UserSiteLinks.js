@@ -10,7 +10,7 @@ module.exports = {
       type: 'number',
       columnType: 'int',
       isInteger: true,
-      required: true
+      autoIncrement: true
     },
     user_id: {
       type: 'number',
@@ -22,7 +22,7 @@ module.exports = {
       type: 'number',
       columnType: 'int',
       isInteger: true,
-      required: true
+      defaultsTo: 2
     },
     org_id: {
       type: 'number',
@@ -33,11 +33,13 @@ module.exports = {
     usertype_id: {
       type: 'number',
       columnType: 'int',
-      isInteger: true
+      isInteger: true,
+      defaultsTo: 7
     },
     expiry: {
       type: 'string',
-      columnType: 'datetime'
+      columnType: 'datetime',
+      defaultsTo: new Date().toISOString(),
     },
     active: {
       type: 'number',
@@ -55,19 +57,19 @@ module.exports = {
       type: 'number',
       columnType: 'tinyint',
       isInteger: true,
-      defaultsTo: 1
+      defaultsTo: 0
     },
     activity_email: {
       type: 'number',
       columnType: 'tinyint',
       isInteger: true,
-      defaultsTo: 1
+      defaultsTo: 0
     },
     other_email: {
       type: 'number',
       columnType: 'tinyint',
       isInteger: true,
-      defaultsTo: 1
+      defaultsTo: 0
     },
     show_email: {
       type: 'number',
@@ -79,13 +81,13 @@ module.exports = {
       type: 'number',
       columnType: 'tinyint',
       isInteger: true,
-      defaultsTo: 1
+      defaultsTo: 0
     },
     meetup_email: {
       type: 'number',
       columnType: 'tinyint',
       isInteger: true,
-      defaultsTo: 1
+      defaultsTo: 0
     },
     motivation_id: {
       type: 'number',
@@ -123,12 +125,13 @@ module.exports = {
       type: 'number',
       columnType: 'int',
       isInteger: true,
-      defaultsTo: 0
+      defaultsTo: 888
     },
     updatedAt: {
       type: 'string',
       columnType: 'datetime',
-      columnName: 'updated_at'
+      columnName: 'updated_at',
+      autoUpdatedAt: true
     },
     forward_message: {
       type: 'number',
@@ -139,7 +142,8 @@ module.exports = {
     level_id: {
       type: 'number',
       columnType: 'int',
-      isInteger: true
+      isInteger: true,
+      defaultsTo: 0
     },
     account_note: {
       type: 'string',
@@ -148,7 +152,8 @@ module.exports = {
     teacher_id: {
       type: 'number',
       columnType: 'int',
-      isInteger: true
+      isInteger: true,
+      defaultsTo: 0
     },
     analysis_time: {
       type: 'string',
@@ -162,7 +167,8 @@ module.exports = {
     createdAt: {
       type: 'string',
       columnType: 'datetime',
-      columnName: 'created_at'
+      columnName: 'created_at',
+      autoCreatedAt: true
     },
     is_arb: {
       type: 'number',
