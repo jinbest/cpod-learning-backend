@@ -49,7 +49,7 @@ module.exports = {
     default: {
       // Staging Test DB
       adapter: require('sails-mysql'),
-      url: 'mysql://cpoddba:tr5mai81@@kazuya.chinesepod.com:3306/chinesepod_production',
+      url: 'mysql://cpoddba:tr5mai81@kazuya.chinesepod.com:3306/chinesepod_production',
       //--------------------------------------------------------------------------
       //  /\   To avoid checking it in to version control, you might opt to set
       //  ||   sensitive credentials like `url` using an environment variable.
@@ -119,7 +119,7 @@ module.exports = {
   *                                                                         *
   ***************************************************************************/
   blueprints: {
-    shortcuts: false,
+    // shortcuts: false,
   },
 
 
@@ -149,9 +149,9 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     cors: {
-      // allowOrigins: [
-      //   'https://example.com',
-      // ]
+      allowOrigins: [
+        '*',
+      ]
     },
 
   },
@@ -254,6 +254,8 @@ module.exports = {
     onlyAllowOrigins: [
       'https://chinesepod.com',
       'https://staging.chinesepod.com',
+      'http://chinesepod.com',
+      'http://staging.chinesepod.com',
     ],
 
 
