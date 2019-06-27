@@ -61,15 +61,19 @@ the account verification message.)`,
 
     let password = await sails.helpers.passwordGenerate();
 
+    const ip = req.ip ? req.ip : false
     let ipData = {};
 
-    await ipdata.lookup(req.ip, '67ce141658c735941e1307cf08fcf9a40cd5101a64f19ea674688fff')
-      .then(function (info) {
-        ipData = info;
-      })
-      .catch(function (err) {
-        //TODO Handle error
-      });
+    if(ip) {
+      await ipdata.lookup(req.ip, '67ce141658c735941e1307cf08fcf9a40cd5101a64f19ea674688fff')
+        .then(function (info) {
+          ipData = info;
+        })
+        .catch(function (err) {
+          //TODO Handle error
+        });
+    }
+
     //TODO Timezone / Lattitude / Longtitude / Postal
 
     let name = '', userName = '';
