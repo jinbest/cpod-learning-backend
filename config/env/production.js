@@ -48,8 +48,8 @@ module.exports = {
     ***************************************************************************/
     default: {
       // Staging Test DB
-      adapter: require('sails-mysql'),
-      url: 'mysql://cpoddba:fr0t3ll@@kazuya.chinesepod.com:3306/chinesepod_production',
+      // adapter: require('sails-mysql'),
+      // url: 'mysql://cpoddba:fr0t3ll@@kazuya.chinesepod.com:3306/chinesepod_production',
       //--------------------------------------------------------------------------
       //  /\   To avoid checking it in to version control, you might opt to set
       //  ||   sensitive credentials like `url` using an environment variable.
@@ -222,7 +222,7 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     cookie: {
-      secure: true,
+      // secure: true,
       maxAge: 24 * 60 * 60 * 1000,  // 24 hours
     },
 
