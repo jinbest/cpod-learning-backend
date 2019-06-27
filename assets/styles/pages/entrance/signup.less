@@ -146,13 +146,13 @@
   }
 
   .about-item__desc {
-    font-size: 18px;
+    font-size: 20px;
     line-height: 20px;
     margin-bottom: 21px;
   }
 
   .about-item__cit {
-    font-size: 14px;
+    font-size: 18px;
     line-height: 20px;
   }
 
@@ -436,7 +436,7 @@
       }
     }
     @media (max-width: @screen-mini-desktop) {
-      margin-bottom: 340px;
+      margin-bottom: 130px;
     }
     @media (max-width: @screen-tablets) {
       margin-bottom: 60px;
@@ -517,7 +517,7 @@
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
     border-radius: 10px;
     background-color: @color-white;
-    @media (max-width: @screen-tablets) {
+    @media (max-width: @screen-phones) {
       box-shadow: none;
       border-radius: 0;
       border: none;
@@ -674,9 +674,8 @@
     @media (max-width: @screen-mini-desktop) {
       height: 708px;
       background: url('/images/academic-learning/Middle_Banner_1920x995.jpg') right center no-repeat;
-      margin-bottom: 200px;
     }
-    @media (max-width: @screen-tablets) {
+    @media (max-width: @screen-medium-phones) {
       background: none;
       height: initial;
       margin-bottom: 85px;
@@ -702,7 +701,6 @@
       @media (max-width: @screen-tablets) {
         margin-bottom: 0;
         height: auto;
-        background-image: none;
       }
     }
   }
@@ -711,7 +709,10 @@
     position: relative;
     width: 100%;
     height: 100%;
-    @media (max-width: @screen-tablets) {
+    @media (min-width: @screen-tablet) {
+      padding-top: 100px;
+    }
+    @media (max-width: @screen-phones) {
       width: 100vw;
       left: 50%;
       right: 50%;
@@ -744,17 +745,17 @@
     background-size: 100% auto, cover;
     padding-top: 7.5%;
     margin-bottom: 82px;
-    @media (max-width: @screen-mini-desktop) {
-      min-height: 768px;
-      padding-top: 12.5%;
-      margin-bottom: 140px;
-    }
-    @media (max-width: @screen-tablets) {
-      padding-top: 0;
-      display: block;
-      min-height: inherit;
-      margin-bottom: 95px;
-    }
+    //@media (max-width: @screen-mini-desktop) {
+    //  min-height: 768px;
+    //  padding-top: 12.5%;
+    //  margin-bottom: 140px;
+    //}
+    //@media (max-width: @screen-tablets) {
+    //  padding-top: 0;
+    //  display: block;
+    //  min-height: inherit;
+    //  margin-bottom: 95px;
+    //}
     @media (max-width: @screen-phones) {
       padding-top: 0;
       margin-bottom: 20px;
@@ -773,6 +774,10 @@
     font-size: 30px;
     font-weight: 400;
     padding: 140px 10px 50px;
+    @media(min-width: @screen-tablet) {
+      font-size: 50px;
+      padding: 40px;
+    }
   }
 
   .hero__text {
@@ -782,14 +787,17 @@
     font-size: 60px;
     font-weight: 400;
     padding-top: 55px;
-    @media (max-width: @screen-tablets) {
-      display: none;
-    }
+    //@media (max-width: @screen-tablets) {
+    //  display: none;
+    //}
   }
 
   .hero__form {
     width: 48.8%;
     @media (max-width: @screen-tablets) {
+      width: 100%;
+    }
+    @media (max-width: @screen-phones) {
       width: 100vw;
       left: 50%;
       right: 50%;
@@ -886,11 +894,11 @@
     height: 100%;
     @media (max-width: @screen-tablets) {
       position: relative;
-      width: 100vw;
+      width: 101vw;
       height: initial;
       left: 50%;
       right: 50%;
-      margin-left: -49vw;
+      margin-left: -50vw;
       margin-right: -50vw;
       margin-bottom: 49px;
     }
@@ -1119,7 +1127,7 @@
     border-radius: 10px;
     background-color: @color-black;
     color: @color-white;
-    padding: 58px 36px;
+    padding: 25px 36px;
     font-size: 18px;
     line-height: 24px;
     p {
@@ -1128,10 +1136,8 @@
         margin-bottom: 0;
       }
     }
-    @media (min-width: @screen-tablet) {
-      padding: 73px 55px 43px 38px;
-    }
     @media (min-width: @screen-laptop) {
+      padding: 73px 55px 43px 38px;
       border-radius: 0;
       height: 100%;
     }
@@ -1183,10 +1189,6 @@
     @media (max-width: @screen-laptop) {
       min-height: 286px;
       padding-bottom: 140px;
-    }
-    @media (max-width: @screen-tablet) {
-      padding-bottom: 247px;
-      margin-bottom: 213px;
     }
     @media (max-width: @screen-phones) {
       padding-bottom: 75px;
@@ -1250,7 +1252,7 @@
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    @media (max-width: @screen-tablet) {
+    @media (max-width: @screen-laptop) {
       bottom: -10%;
     }
   }
@@ -1299,10 +1301,10 @@
     }
     @media (max-width: @screen-tablet) {
       width: 100%;
-      min-height: 314px;
+      min-height: 340px;
     }
     @media (max-width: @screen-phones) {
-      min-height: 392px;
+      min-height: 450px;
     }
   }
 

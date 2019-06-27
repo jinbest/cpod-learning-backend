@@ -10,7 +10,7 @@ html, body {
 
 #page-wrap {
   height: 100%;
-  /* lesshint-disable */height: auto !important;/* lesshint-enable */
+  ///* lesshint-disable */height: auto !important;/* lesshint-enable */
   // ^^The above is to disable "importantRule" and "duplicateProperty" rules.
   min-height: 100%;
   position: relative;
@@ -36,15 +36,14 @@ html, body {
 }
 
 #page-footer {
-  //border-top: 1px solid rgba(0, 0, 0, 0.1);
-  //height: @footer-height;
-  //width: 100%;
-  //position: absolute;
-  //left: 0px;
-  //bottom: 0px;
-  //.xs-only {
-  //  display: none;
-  //}
+  height: @footer-height;
+  width: 100%;
+  position: absolute;
+  left: 0px;
+  padding-bottom: 80px;
+  .xs-only {
+    display: none;
+  }
 }
 
 body.detected-mobile {
