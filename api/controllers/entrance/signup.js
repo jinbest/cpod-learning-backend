@@ -62,6 +62,7 @@ the account verification message.)`,
     let password = await sails.helpers.passwordGenerate();
     console.log(req.ip);
     console.log(req.ips);
+    console.log(req);
 
     let ipData = {};
 
