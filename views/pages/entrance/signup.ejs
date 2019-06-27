@@ -14,8 +14,11 @@
               <h3 class="form-block__title">Sign Up Today!</h3>
             </div>
             <div class="form-block__content">
-              <div id="form-top-msg"></div>
-              <ajax-form name="form-top" id="form-top" action="signup" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
+              <div  v-if="cloudSuccess" id="form-top-msg"><div class="alert alert-success" role="alert">
+                  Great! We've just sent you an account confirmation email. Please check your inbox.
+                </div>
+              </div>
+              <ajax-form v-if="!cloudSuccess" name="form-top" id="form-top" action="signup" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
                 <div class="form-block__row">
                   <div class="form-block__col">
                     <label class="form-block__label">Email Address</label>
@@ -179,8 +182,11 @@
               <h3 class="form-block__title">Sign Up Today!</h3>
             </div>
             <div class="form-block__content">
-              <div id="form-medium-msg"></div>
-              <ajax-form name="form-medium" id="form-medium" action="signup" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
+              <div  v-if="cloudSuccess" id="form-top-msg"><div class="alert alert-success" role="alert">
+                  Great! We've just sent you an account confirmation email. Please check your inbox.
+                </div>
+              </div>
+              <ajax-form v-if="!cloudSuccess" name="form-medium" id="form-medium" action="signup" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
                 <div class="form-block__row">
                   <div class="form-block__col">
                     <label class="form-block__label">Email Address</label>
@@ -434,8 +440,11 @@
             <h3 class="form-block__title">Sign Up Today!</h3>
           </div>
           <div class="form-block__content">
-            <div id="form-bottom-msg"></div>
-            <ajax-form name="form-bottom" id="form-bottom" action="signup" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
+            <div  v-if="cloudSuccess" id="form-top-msg"><div class="alert alert-success" role="alert">
+                Great! We've just sent you an account confirmation email. Please check your inbox.
+              </div>
+            </div>
+            <ajax-form v-if="!cloudSuccess"  name="form-bottom" id="form-bottom" action="signup" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
               <div class="form-block__row">
                 <div class="form-block__col">
                   <label class="form-block__label">Email Address</label>
