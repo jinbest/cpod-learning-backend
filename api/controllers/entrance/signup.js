@@ -57,15 +57,10 @@ the account verification message.)`,
     const email = inputs.emailAddress.toLowerCase();
     const ipdata =  require('ipdata');
     const axios = require('axios');
-    // return await sails.helpers.passwordHash.with({
-    //   password: inputs.emailAddress,
-    //   method: 'E'
-    // });
+
     let password = await sails.helpers.passwordGenerate();
 
-    // const ip = this.req.ip;
-
-    const ip = '42.200.130.138';
+    const ip = this.req.ip;
     let ipData = {};
 
     await ipdata.lookup(ip, '67ce141658c735941e1307cf08fcf9a40cd5101a64f19ea674688fff')
