@@ -60,90 +60,85 @@ the account verification message.)`,
     var req = this.req;
 
     let password = await sails.helpers.passwordGenerate();
-    console.log(req);
-    console.log(req.ip);
-    console.log(req.ips);
-    console.log(req.connection.remoteAddress);
-    console.log(req.hostname);
 
     let ipData = {};
 
-    // await ipdata.lookup(ipAddress, '67ce141658c735941e1307cf08fcf9a40cd5101a64f19ea674688fff')
-    //   .then(function (info) {
-    //     ipData = info;
-    //   })
-    //   .catch(function (err) {
-    //     //TODO Handle error
-    //   });
-    // //TODO Timezone / Lattitude / Longtitude / Postal
-    //
-    // let name = '', userName = '';
-    // name = email.split('@')[0].replace(/[^0-9a-z]/gi, ' ');
-    // userName = name.replace(' ', '');
-    // if (userName.length < 6 || userName.length > 20) {
-    //   userName = await sails.helpers.passwordGenerate.with({
-    //     numWords: 1
-    //   });
-    //   userName += Math.floor(Math.random() * Math.floor(50))
-    // }
-    // // Create new User record
-    // let newUserRecord = await User.create(_.extend({
-    //   email: email,
-    //   password: await sails.helpers.passwordHash.with({
-    //     password: password,
-    //     method: 'E'
-    //   }),
-    //   username: userName,
-    //   name: name,
-    //   ip_address: ip,
-    //   ip_country: ipData['country_name'],
-    //   ip_region: ipData['region'],
-    //   ip_city: ipData['city'],
-    //   country: ipData['country_name'],
-    //   city: ipData['city'],
-    //   http_referer: this.req.headers.referer ? this.req.headers.referer : '',
-    //   code: await sails.helpers.strings.random('url-friendly'),
-    //   confirm_status: 0
-    // }))
-    //   .intercept('E_UNIQUE', 'emailAlreadyInUse')
-    //   .intercept({name: 'UsageError'}, 'invalid')
-    //   .fetch();
-    //
-    // // Store the user's new id in their session.
-    // this.req.session.userId = newUserRecord.id;
-    //
-    // if (sails.config.custom.verifyEmailAddresses) {
-    //   // Send "confirm account" email
-    //   await sails.helpers.sendTemplateEmail.with({
-    //     to: email,
-    //     subject: 'Please confirm your account',
-    //     template: 'email-verify-account',
-    //     templateData: {
-    //       fullName: name,
-    //       email: email,
-    //       password: password,
-    //       token: newUserRecord.code ? newUserRecord.code : '',
-    //       mobile: false,
-    //       confirmation: false
-    //     }
-    //   });
-    // } else {
-    //   sails.log.info('Skipping new account email verification... (since `verifyEmailAddresses` is disabled)');
-    // }
-    // if (inputs.optIn) {
-    //   const data = {
-    //     email_address: email,
-    //     status: 'subscribed'
-    //   };
-    //   axios.post('https://us9.api.mailchimp.com/3.0/lists/0a8579be6a/members', data, {
-    //     mode: 'no-cors', // no-cors, cors, *same-origin
-    //     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'Authorization': 'apikey d1056769726aa0f9129a5ce02a23dd93-us9'
-    //     }
-    //   });
-    // }
-    // return newUserRecord.id;
+    await ipdata.lookup(req.ip, '67ce141658c735941e1307cf08fcf9a40cd5101a64f19ea674688fff')
+      .then(function (info) {
+        ipData = info;
+      })
+      .catch(function (err) {
+        //TODO Handle error
+      });
+    //TODO Timezone / Lattitude / Longtitude / Postal
+
+    let name = '', userName = '';
+    name = email.split('@')[0].replace(/[^0-9a-z]/gi, ' ');
+    userName = name.replace(' ', '');
+    if (userName.length < 6 || userName.length > 20) {
+      userName = await sails.helpers.passwordGenerate.with({
+        numWords: 1
+      });
+      userName += Math.floor(Math.random() * Math.floor(50))
+    }
+    // Create new User record
+    let newUserRecord = await User.create(_.extend({
+      email: email,
+      password: await sails.helpers.passwordHash.with({
+        password: password,
+        method: 'E'
+      }),
+      username: userName,
+      name: name,
+      ip_address: ip,
+      ip_country: ipData['country_name'],
+      ip_region: ipData['region'],
+      ip_city: ipData['city'],
+      country: ipData['country_name'],
+      city: ipData['city'],
+      http_referer: this.req.headers.referer ? this.req.headers.referer : '',
+      code: await sails.helpers.strings.random('url-friendly'),
+      confirm_status: 0
+    }))
+      .intercept('E_UNIQUE', 'emailAlreadyInUse')
+      .intercept({name: 'UsageError'}, 'invalid')
+      .fetch();
+
+    // Store the user's new id in their session.
+    this.req.session.userId = newUserRecord.id;
+
+    if (sails.config.custom.verifyEmailAddresses) {
+      // Send "confirm account" email
+      await sails.helpers.sendTemplateEmail.with({
+        to: email,
+        subject: 'Please confirm your account',
+        template: 'email-verify-account',
+        templateData: {
+          fullName: name,
+          email: email,
+          password: password,
+          token: newUserRecord.code ? newUserRecord.code : '',
+          mobile: false,
+          confirmation: false
+        }
+      });
+    } else {
+      sails.log.info('Skipping new account email verification... (since `verifyEmailAddresses` is disabled)');
+    }
+    if (inputs.optIn) {
+      const data = {
+        email_address: email,
+        status: 'subscribed'
+      };
+      axios.post('https://us9.api.mailchimp.com/3.0/lists/0a8579be6a/members', data, {
+        mode: 'no-cors', // no-cors, cors, *same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'apikey d1056769726aa0f9129a5ce02a23dd93-us9'
+        }
+      });
+    }
+    return newUserRecord.id;
   }
 };
