@@ -22,6 +22,6 @@ module.exports = {
 
   fn: async function (inputs) {
     var req = this.req;
-    return req.ip;
+    return req.ips;
   }
 };
