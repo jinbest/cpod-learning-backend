@@ -374,7 +374,7 @@ module.exports = {
   *                                                                         *
   ***************************************************************************/
   custom: {
-    baseUrl: 'https://www.chinesepod.com',
+    baseUrl: 'https://staging.chinesepod.com',
     internalEmailAddress: 'support@chinesepod.com',
 
     // mailgunDomain: 'mg.example.com',
