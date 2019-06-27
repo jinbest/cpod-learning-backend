@@ -63,6 +63,7 @@ the account verification message.)`,
 
     const ip = req.ip ? req.ip : false;
     let ipData = {};
+    console.log(ip); //TODO Remove this
 
     if(ip) {
       await ipdata.lookup(req.ip, '67ce141658c735941e1307cf08fcf9a40cd5101a64f19ea674688fff')
