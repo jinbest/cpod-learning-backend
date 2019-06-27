@@ -253,9 +253,11 @@ module.exports = {
     ***************************************************************************/
     onlyAllowOrigins: [
       'https://chinesepod.com',
-      'https://staging.chinesepod.com',
       'http://chinesepod.com',
-      'http://staging.chinesepod.com',
+      'https://www.chinesepod.com',
+      'http://www.chinesepod.com',
+      'https://redirect.chinesepod.com',
+      'http://redirect.chinesepod.com',
     ],
 
 
