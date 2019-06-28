@@ -35,10 +35,10 @@ module.exports = {
     const ipdata =  require('ipdata');
     var req = this.req;
 
+    const ip = req.ip;
+
     if (inputs.ipAddress != '') {
       const ip = inputs.ipAddress;
-    } else {
-      const ip = req.ip;
     }
 
     let ipData = {};
