@@ -10,7 +10,7 @@ module.exports = {
   inputs: {
 
     ipAddress: {
-      type: 'sting',
+      type: 'string',
       description: 'IP Address for IPDATA Lookup',
     }
   },
