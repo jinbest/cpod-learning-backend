@@ -745,20 +745,12 @@
     background-size: 100% auto, cover;
     padding-top: 7.5%;
     margin-bottom: 82px;
-    //@media (max-width: @screen-mini-desktop) {
-    //  min-height: 768px;
-    //  padding-top: 12.5%;
-    //  margin-bottom: 140px;
-    //}
-    //@media (max-width: @screen-tablets) {
-    //  padding-top: 0;
-    //  display: block;
-    //  min-height: inherit;
-    //  margin-bottom: 95px;
-    //}
     @media (max-width: @screen-phones) {
       padding-top: 0;
       margin-bottom: 20px;
+    }
+    @media (min-width: @screen-laptop) {
+      margin-bottom: 0;
     }
   }
 
@@ -770,7 +762,7 @@
 
   .mobile__hero__text {
     color: @color-white;
-    font-family: "Roboto Slab";
+    font-family: "Roboto Slab", serif;
     font-size: 30px;
     font-weight: 400;
     padding: 140px 10px 50px;
@@ -783,7 +775,7 @@
   .hero__text {
     width: 50%;
     color: @color-white;
-    font-family: "Roboto Slab";
+    font-family: "Roboto Slab", serif;
     font-size: 60px;
     font-weight: 400;
     padding-top: 55px;
@@ -814,6 +806,7 @@
     @media (max-width: @screen-tablets) {
       margin-bottom: 73px;
     }
+
   }
 
   .home__title {
@@ -845,6 +838,9 @@
     @media (max-width: @screen-tablets) {
       margin-left: 0;
       position: static;
+    }
+    @media (min-width: @screen-laptop) {
+      margin-top: -100px;
     }
   }
 
