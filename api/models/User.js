@@ -10,6 +10,7 @@ module.exports = {
       type: 'number',
       columnType: 'int',
       isInteger: true,
+      unique: true,
       autoIncrement: true
     },
     username: {

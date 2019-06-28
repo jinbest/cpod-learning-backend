@@ -10,7 +10,8 @@ module.exports = {
       type: 'number',
       columnType: 'int',
       isInteger: true,
-      required: true
+      unique: true,
+      autoIncrement: true
     },
     user_id: {
       type: 'number',
@@ -33,7 +34,7 @@ module.exports = {
       type: 'string',
       columnType: 'timestamp',
       columnName: 'last_update',
-      defaultsTo: 'CURRENT_TIMESTAMP'
+      autoUpdatedAt: true
     }
   }
 };
