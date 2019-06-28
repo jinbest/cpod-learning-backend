@@ -19,14 +19,12 @@ module.exports = {
   exits: {
 
     success: {
-      description: 'New user account was created successfully.'
+      description: 'IP info sent successfully.'
     },
 
     invalid: {
       responseType: 'badRequest',
-      description: 'The provided fullName, password and/or email address are invalid.',
-      extendedDescription: 'If this request was sent from a graphical user interface, the request '+
-        'parameters should have been validated/coerced _before_ they were sent.'
+      description: 'The provided ip address is invalid.'
     },
 
   },
@@ -35,16 +33,12 @@ module.exports = {
     const ipdata =  require('ipdata');
     var req = this.req;
 
-    let ip = req.ip;
-
-    if (inputs.ipAddress != '') {
-      ip = inputs.ipAddress;
-    }
+    const ip = inputs.ipAddress ? inputs.ipAddress : req.ip;
 
     let ipData = {};
 
     if(ip) {
-      await ipdata.lookup(req.ip, '67ce141658c735941e1307cf08fcf9a40cd5101a64f19ea674688fff')
+      await ipdata.lookup(ip, '67ce141658c735941e1307cf08fcf9a40cd5101a64f19ea674688fff')
         .then(function (info) {
           ipData = info;
         })
@@ -52,8 +46,6 @@ module.exports = {
           throw 'invalid';
         });
     }
-
-
     return ipData;
   }
 };
