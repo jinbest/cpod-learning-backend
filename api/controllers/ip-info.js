@@ -35,7 +35,7 @@ module.exports = {
     const ipdata =  require('ipdata');
     var req = this.req;
 
-    if (inputs.ipAddress) {
+    if (inputs.ipAddress != '') {
       const ip = inputs.ipAddress;
     } else {
       const ip = req.ip;
