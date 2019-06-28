@@ -78,13 +78,20 @@
                                   <table class="mcnTextContentContainer" style="min-width:100% !important;" width="100%" cellspacing="0" border="0">
                                     <tbody><tr>
                                       <td class="mcnTextContent" style="padding: 18px;color: #000000;font-family: Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;font-size: 16px;font-weight: normal;line-height: 100%;text-align: left;" valign="top">
-                                        <h2 class="null"><span style="font-size:18px"><span style="color:#000000"><span style="font-family:roboto,helvetica neue,helvetica,arial,sans-serif"><strong>Nǐ hǎo!</strong></span></span><br>
+                                        <h2 class="null">
+                                          <span style="font-size:18px"><span style="color:#000000"><span style="font-family:roboto,helvetica neue,helvetica,arial,sans-serif"><strong>Nǐ hǎo!</strong></span></span><br>
 There's one more step before you can improve your Chinese!<br>
 All you have to do is click the button above and confirm your account.
                                           <br>
                                           <br>
-                                          If you have any trouble, try pasting this link in your browser: <a style="color: #00ACC4; word-wrap: break-word;" href="<%= url.resolve(sails.config.custom.baseUrl,'/accounts/signup/confirm?code=') + encodeURIComponent(token) + '&type=verify&utm_nooverride=1' %>"><%= url.resolve(sails.config.custom.baseUrl,'/accounts/signup/confirm?code=') + encodeURIComponent(token) %></a></p>
-                                        </span></h2>
+                                          If you have any trouble, try pasting this link in your browser:
+                                            <a style="color: #00ACC4; word-wrap: break-word;" href="<%= url.resolve(sails.config.custom.baseUrl,'/accounts/signup/confirm?code=') + encodeURIComponent(token) + '&type=verify&utm_nooverride=1' %>"><%= url.resolve(sails.config.custom.baseUrl,'/accounts/signup/confirm?code=') + encodeURIComponent(token) %></a>
+                                            <br>
+                                            <br>
+                                            We have also generated you a temporary password: <br>
+                                            <strong><%= password %></strong>
+                                        </span>
+                                        </h2>
                                       </td>
                                     </tr>
                                     </tbody></table>
