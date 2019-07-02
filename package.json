@@ -21,8 +21,6 @@
     "sails-hook-orm": "^2.1.1",
     "sails-hook-sockets": "^1.5.5",
     "sails-mysql": "^1.0.1",
-    "xkcd-password": "^2.0.0",
-    "xkcd-z-password-nobadwords": "^1.1.0",
     "xkpasswd": "^1.0.5"
   },
   "devDependencies": {
