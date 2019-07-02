@@ -45,11 +45,21 @@ parasails.registerPage('signup', {
   methods: {
 
   submittedForm: async function() {
-    console.log('Submitted Form');
     if(this.isEmailVerificationRequired) {
       // If email confirmation is enabled, show the success message.
+      await function gtag_report_conversion(url) {
+        var callback = function () {
+          if (typeof(url) != 'undefined') {
+            window.location = url;
+          }
+        };
+        gtag('event', 'conversion', {
+          'send_to': 'AW-758600947/wcBzCMCf4aQBEPOp3ekC',
+          'event_callback': callback
+        });
+        return false;
+      };
       this.cloudSuccess = true;
-      console.log('User Created');
     }
     else {
       // Otherwise, redirect to the logged-in dashboard.
@@ -70,7 +80,6 @@ parasails.registerPage('signup', {
 
     // Validate email:
     if(!argins.emailAddress || !parasails.util.isValidEmailAddress(argins.emailAddress)) {
-      console.log('Invalid Email');
       this.formErrors.emailAddress = true;
       console.log(this.formErrors)
     }
@@ -82,7 +91,6 @@ parasails.registerPage('signup', {
       return;
     }
 
-    console.log('Form Valid');
 
     return argins;
   }
