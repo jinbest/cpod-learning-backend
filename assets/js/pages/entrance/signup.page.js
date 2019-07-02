@@ -73,8 +73,6 @@ parasails.registerPage('signup', {
   handleParsingForm: function() {
     // Clear out any pre-existing error messages.
     this.formErrors = {};
-    console.log('Form Submit');
-
 
     var argins = this.formData;
 
@@ -90,7 +88,6 @@ parasails.registerPage('signup', {
     if (Object.keys(this.formErrors).length > 0) {
       return;
     }
-
 
     return argins;
   }

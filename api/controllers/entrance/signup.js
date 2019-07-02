@@ -81,7 +81,7 @@ the account verification message.)`,
     userName = name.replace(' ', '');
     if (userName.length < 6 || userName.length > 20) {
       userName = await sails.helpers.passwordGenerate.with({
-        numWords: 1
+        pattern: 'w'
       });
       userName += Math.floor(Math.random() * Math.floor(50))
     }

@@ -1,15 +1,15 @@
 module.exports = {
 
 
-  friendlyName: 'Generate Password',
+  friendlyName: 'Generate Random Words',
 
 
-  description: 'Generate passwords according to the nice logic discussed in XKCD',
+  description: 'Take length and word count and generate from a pool of random words',
+
 
   inputs: {
 
     complexity: {
-      default: 1,
       type: 'number',
       description: 'Needed Complexity',
       extendedDescription: `
@@ -25,7 +25,6 @@ module.exports = {
       `
     },
     pattern: {
-      default: 'wsw',
       type: 'string',
       description: 'Needed Pattern',
       extendedDescription: `
@@ -38,12 +37,17 @@ module.exports = {
     },
   },
 
+
   exits: {
 
     success: {
-      outputFriendlyName: 'Password Generated',
-      outputDescription: 'Return a generated password',
-    }
+      description: 'Word list generated.'
+    },
+
+    invalid: {
+      responseType: 'badRequest',
+      description: 'Something went wrong.'
+    },
 
   },
 
@@ -55,11 +59,9 @@ module.exports = {
       separators: '-',
       wordList: __dirname + '/../../assets/json/passList.json'
     };
-
     if (inputs.pattern) {
       options.pattern = inputs.pattern
     }
-
-    return xkpasswd(options);
+    return xkpasswd(options)
   }
 };
