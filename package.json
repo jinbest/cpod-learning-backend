@@ -44,7 +44,7 @@
     "type": "git",
     "url": "git://github.com/ChinesePod/CPOD-JS.git"
   },
-  "author": "rozkalns",
+  "author": "Ugis Rozkalns",
   "license": "",
   "engines": {
     "node": "^11.10"
