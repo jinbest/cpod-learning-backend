@@ -36,6 +36,7 @@ module.exports = {
 
   fn: async function(inputs) {
     let Md5 = require("crypto-js/md5");
+    let base64 = require("crypto-js/base64");
 
     let key = 'sgsd!aadsf6699#dsf;,asdga!6fffkogasdfppyhhav6';
     key = Md5(key);
