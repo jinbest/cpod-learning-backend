@@ -13,7 +13,7 @@
 Cloud.setup({
 
   /* eslint-disable */
-  methods: {"confirmEmail":{"verb":"GET","url":"/email/confirm","args":["token"]},"logout":{"verb":"GET","url":"/api/v1/account/logout","args":[]},"updatePassword":{"verb":"PUT","url":"/api/v1/account/update-password","args":["password"]},"updateProfile":{"verb":"PUT","url":"/api/v1/account/update-profile","args":["fullName","emailAddress"]},"updateBillingCard":{"verb":"PUT","url":"/api/v1/account/update-billing-card","args":["stripeToken","billingCardLast4","billingCardBrand","billingCardExpMonth","billingCardExpYear"]},"login":{"verb":"PUT","url":"/api/v1/entrance/login","args":["emailAddress","password","rememberMe"]},"signup":{"verb":"POST","url":"/api/v1/entrance/signup","args":["emailAddress"]},"emailSignup":{"verb":"POST","url":"/api/v1/entrance/email-signup","args":["emailAddress"]},"sendPasswordRecoveryEmail":{"verb":"POST","url":"/api/v1/entrance/send-password-recovery-email","args":["emailAddress"]},"updatePasswordAndLogin":{"verb":"POST","url":"/api/v1/entrance/update-password-and-login","args":["password","token"]},"deliverContactFormMessage":{"verb":"POST","url":"/api/v1/deliver-contact-form-message","args":["emailAddress","topic","fullName","message"]}}
+  methods: {"updateOptions":{"verb":"PUT","url":"/api/v1/account/update-options","args":["userId","type","value"]},"signup":{"verb":"POST","url":"/api/v1/entrance/signup","args":["emailAddress","optIn"]},"request":{"verb":"GET","url":"/api/v1/request","args":[]},"ipInfo":{"verb":"POST","url":"/api/v1/ip-info","args":["ipAddress"]},"generateWords":{"verb":"GET","url":"/api/v1/generate-words","args":["complexity","pattern"]}}
   /* eslint-enable */
 
 });
