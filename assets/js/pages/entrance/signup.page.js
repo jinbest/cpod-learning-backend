@@ -62,6 +62,7 @@ parasails.registerPage('signup', {
           'event_label': 'cpod-js',
           'value': 1
         });
+        gtag('event', 'sign_up');
         return false;
       };
       this.cloudSuccess = true;
