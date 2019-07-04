@@ -23,5 +23,5 @@
 module.exports = function notFound() {
   var req = this.req;
   var res = this.res;
-  return res.redirect(301, `https://chinesepod.com${req.url}`)
+  return res.redirect(301, `https://chinesepod.com${req.url}`);
 };

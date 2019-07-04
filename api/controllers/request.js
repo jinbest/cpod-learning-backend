@@ -20,7 +20,7 @@ module.exports = {
 
   },
 
-  fn: async function (inputs) {
+  fn: async function () {
     var req = this.req;
     return req.ips;
   }

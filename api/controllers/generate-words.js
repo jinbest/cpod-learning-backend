@@ -60,8 +60,8 @@ module.exports = {
       wordList: __dirname + '/../../assets/json/passList.json'
     };
     if (inputs.pattern) {
-      options.pattern = inputs.pattern
+      options.pattern = inputs.pattern;
     }
-    return xkpasswd(options)
+    return xkpasswd(options);
   }
 };
