@@ -66,11 +66,11 @@ the account verification message.)`,
 
     if(ip) {
       await ipdata.lookup(req.ip, '67ce141658c735941e1307cf08fcf9a40cd5101a64f19ea674688fff')
-        .then(function (info) {
+        .then((info) => {
           ipData = info;
         })
-        .catch(function (err) {
-          //TODO Handle error
+        .catch((err) => {
+          sails.log.info(err);
         });
     }
 
