@@ -63,6 +63,7 @@ parasails.registerPage('signup', {
           'value': 1
         });
         gtag('event', 'sign_up');
+        console.log('Successful Signup');
         return false;
       };
       this.cloudSuccess = true;
