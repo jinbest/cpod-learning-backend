@@ -57,6 +57,11 @@ parasails.registerPage('signup', {
           'send_to': 'AW-758600947/wcBzCMCf4aQBEPOp3ekC',
           'event_callback': callback
         });
+        gtag('event', 'signup', {
+          'event_category': 'signup',
+          'event_label': 'cpod-js',
+          'value': 1
+        });
         return false;
       };
       this.cloudSuccess = true;
