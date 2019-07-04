@@ -56,6 +56,8 @@ module.exports = {
       option_value: value
     };
 
+    let response = {};
+
     await UserOptions.findOrCreate({
       user_id: userId,
       option_key: type
@@ -63,14 +65,14 @@ module.exports = {
       .exec(async(err, userOptions, wasCreated) => {
         if (err) { throw 'invalid' }
         if (wasCreated) {
-          return userOptions.id
+          response = userOptions;
         } else {
-          let id = userOptions.id;
           valuesToSet.id = userOptions.id;
           await UserOptions.updateOne({id: userOptions.id})
             .set(valuesToSet);
-          return userOptions.id
+          response = userOptions;
         }
       });
+    return response;
   }
 };
