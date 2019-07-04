@@ -88,7 +88,6 @@ config/local.js
 ################################################
 
 node_modules
-package-lock.json
 
 ################################################
 #
@@ -122,6 +121,7 @@ nbproject
 .idea
 .node_history
 dump.rdb
+package-lock.json
 
 npm-debug.log
 lib-cov
