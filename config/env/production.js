@@ -377,6 +377,7 @@ module.exports = {
   * > See config/custom.js for more info on how to configure these options. *
   *                                                                         *
   ***************************************************************************/
+
   custom: {
     baseUrl: 'http://sails.chinesepod.com',
     internalEmailAddress: 'support@chinesepod.com',
