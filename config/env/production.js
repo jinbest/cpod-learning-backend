@@ -258,6 +258,8 @@ module.exports = {
       'http://www.chinesepod.com',
       'https://redirect.chinesepod.com',
       'http://redirect.chinesepod.com',
+      'http://sails.chinesepod.com',
+      'https://sails.chinesepod.com',
     ],
 
 
@@ -274,7 +276,7 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     // adapter: '@sailshq/socket.io-redis',
-    // url: 'redis://user:password@bigsquid.redistogo.com:9562/databasenumber',
+    // url: 'redis://user:password@cpod-redis.idthgn.ng.0001.use1.cache.amazonaws.com:6379',
     //--------------------------------------------------------------------------
     // /\   OR, to avoid checking it in to version control, you might opt to
     // ||   set sensitive credentials like this using an environment variable.
@@ -376,7 +378,7 @@ module.exports = {
   *                                                                         *
   ***************************************************************************/
   custom: {
-    baseUrl: 'https://redirect.chinesepod.com',
+    baseUrl: 'https://sails.chinesepod.com',
     internalEmailAddress: 'support@chinesepod.com',
 
     // mailgunDomain: 'mg.example.com',
