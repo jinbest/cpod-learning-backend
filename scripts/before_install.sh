@@ -16,6 +16,9 @@ sudo apt-get install nodejs -y
 # Install pm2 module
 sudo npm install pm2 -g
 
+# Install nginx
+sudo apt-get install -y nginx
+
 # Install sails globally
 sudo npm install sails -g
 
