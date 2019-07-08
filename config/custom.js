@@ -53,6 +53,9 @@ module.exports.custom = {
   **************************************************************************/
   mailgunDomain: 'mailg.chinesepod.com',
   mailgunSecret: 'afe8013d8cfd50887526da8bdbcc6c21-29b7488f-4470acc8',
+
+
+  emailOctopusSecret: '1ce2c0f8-a142-11e9-9307-06b4694bee2a',
   //--------------------------------------------------------------------------
   // /\  Configure these to enable support for automated emails.
   // ||  (Important for password recovery, verification, contact form, etc.)
