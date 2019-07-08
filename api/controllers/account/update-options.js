@@ -21,7 +21,7 @@ module.exports = {
     },
     value: {
       required: true,
-      type: 'ref',
+      type: 'string',
       description: 'Takes corresponding setting value',
     }
   },
