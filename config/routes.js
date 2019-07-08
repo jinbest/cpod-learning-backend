@@ -65,7 +65,7 @@ module.exports.routes = {
   // 'PUT   /api/v1/entrance/login':                        { action: 'entrance/login' },
   'POST  /api/v1/entrance/signup':                       { action: 'entrance/signup' },
 
-  // Information Routes
+  // Information Routes - Health Check
   '/api/v1/request':                                     { action: 'request' },
   'POST  /api/v1/ip-info':                               { action: 'ip-info' },
   '/api/v1/generate-words':                               { action: 'generate-words' },
