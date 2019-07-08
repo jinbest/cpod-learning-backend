@@ -59,6 +59,7 @@ module.exports.routes = {
   // from the Parasails library, or by using those method names as the `action` in <ajax-form>.
   // '/api/v1/account/logout':                           { action: 'account/logout' },
   'PUT   /api/v1/account/update-options':                { action: 'account/update-options' },
+  'POST   /api/v1/placement/email-results':              { action: 'placement/email-results' },
   // 'PUT   /api/v1/account/update-profile':             { action: 'account/update-profile' },
   // 'PUT   /api/v1/account/update-billing-card':        { action: 'account/update-billing-card' },
   // 'PUT   /api/v1/entrance/login':                        { action: 'entrance/login' },
