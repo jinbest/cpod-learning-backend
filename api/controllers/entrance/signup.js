@@ -41,7 +41,7 @@ the account verification message.)`,
 
     invalid: {
       responseType: 'badRequest',
-      description: 'The provided fullName, password and/or email address are invalid.',
+      description: 'The provided email address is invalid.',
       extendedDescription: 'If this request was sent from a graphical user interface, the request '+
         'parameters should have been validated/coerced _before_ they were sent.'
     },
