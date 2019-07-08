@@ -2,7 +2,7 @@ server {
         listen 80;
         listen [::]:80;
 
-        server_name chinesepod.com www.chinesepod.com redirect.chinesepod.com;
+        server_name chinesepod.com www.chinesepod.com sails.chinesepod.com;
 
         location / {
             proxy_pass http://localhost:1337;
