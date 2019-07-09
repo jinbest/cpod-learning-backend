@@ -1,0 +1,355 @@
+body.pricing-index{
+  .container-global > .container-fluid{
+    padding: 0;
+  }
+}
+#pricing {
+  min-height: 100vh;
+  background: url(/images/onboarding-bg.svg);
+  background-size: cover;
+  position: relative;
+  //height: 100%;
+  overflow: hidden;
+  padding-bottom: 30px;
+
+  b {
+    font-weight: 600;
+  }
+
+  .container.small {
+    max-width: 1000px;
+    position: relative;
+  }
+
+  .hide {
+    display: none;
+  }
+
+  #switch {
+    position: absolute;
+    top: 10px;
+    left: 0px;
+
+    span {
+      display: block;
+      border: 1px solid @color-white;
+      color: @color-white;
+      padding: 7px 10px;
+      text-align: center;
+      margin: 0px;
+      background: transparent;
+      font-size: 18px;
+    }
+
+    span:hover,
+    span.active{
+      background: #fff;
+      color: @onboard-red;
+      cursor: pointer;
+    }
+  }
+
+  .left-img {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+  }
+
+  .left-img img {
+    height: 100%;
+  }
+
+  .flex {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .flex.mt {
+    margin-top: 7%;
+  }
+  .group-plan {
+    width: 61.5%;
+
+    @media (max-width:1020px) {
+      width: 67%;
+    }
+  }
+  .plan.main-plan {
+    border-radius: 0px;
+    border: 2px solid @onboard-red;
+    border-radius: 7px;
+    padding: 0px;
+    .plan-body {
+      padding: 25px;
+    }
+  }
+  .plan {
+    position: relative;
+    background: @color-white;
+    margin: 0px auto;
+    margin-bottom: 0px;
+    width: 33%;
+    padding: 25px;
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
+
+    h4 {
+      text-align: left;
+      color: @onboard-grey-3;
+      margin-bottom: 0px;
+      font-weight: 600;
+    }
+
+    h4.line {
+      position: relative;
+    }
+
+    #line {
+      position: absolute;
+      width: 100%;
+      border-top: 1px solid @color-grey-3;
+      left: 0px;
+    }
+
+    p {
+      color: @onboard-grey-3;
+    }
+
+    p:first-of-type {
+      font-size:14px;
+    }
+
+    .price {
+      color: @onboard-grey-3;
+      font-size: 26px;
+      padding-bottom: 7px;
+      border-bottom: 1px solid @color-grey-3;
+      width: 100px;
+      text-align: center;
+      font-weight: lighter;
+      margin-top: 50px;
+      margin-bottom: 30px;
+
+      small {
+        font-size: 18px;
+      }
+    }
+
+    img.team {
+      display: block;
+      margin: auto;
+    }
+
+    .btn {
+      .button(@onboard-grey-1, @onboard-grey-2, 1px, @onboard-grey-2, 5px);
+      display: block;
+      width: 100%;
+      margin: 30px auto;
+      padding: 11px 10px;
+      text-align: center;
+      font-size: 14px;
+      letter-spacing: 0.075em;
+    }
+
+    .btn.action,
+    .btn.team {
+      position: absolute;
+      bottom: 10px;
+      width: 80%;
+    }
+
+    .btn.blue {
+      background: @onboard-blue;
+      border-color: @onboard-blue;
+      color: @color-white;
+      font-size: 15px;
+      text-shadow: none;
+      font-weight: 600;
+    }
+    .btn.blue:hover,
+    .btn.blue:active {
+      .button-hover;
+    }
+
+    .btn.gray {
+      font-size: 15px;
+      font-weight: 600;
+      color: @onboard-grey-3;
+    }
+    .btn.gray:hover,
+    .btn.gray:active {
+      .button-hover(@color-grey-3, @color-grey-3);
+    }
+  }
+  .plan:last-of-type {
+    padding-bottom: 110px;
+    margin: unset;
+    max-width: 311px;
+    width: 33%;
+  }
+  .group-plan .plan {
+    width: 48%;
+  }
+  .group-plan .plan:first-of-type {
+    margin-right: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 7px;
+    margin-top: 71px;
+    margin-bottom: 50px;
+  }
+  .group-plan .plan:last-of-type {
+    margin-left: 0px;
+    margin-right: 15px;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0px;
+
+    li {
+      color: @onboard-grey-3;
+      padding-left: 30px;
+      position: relative;
+      margin-bottom: 15px;
+
+      img {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+      }
+    }
+
+  }
+
+  #main {
+    background: @onboard-smoke;
+    width: 100%;
+    padding: 2px;
+    border-bottom: 0px;
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
+  }
+  #main p {
+    color: @onboard-red;
+    font-weight: 600;
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 0px;
+    padding: 20px 0;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+  }
+  .plan.team {
+    margin-top: 71px;
+    margin-bottom: 50px;
+    border-radius: 10px;
+  }
+  @media (max-width: 1280px) {
+    .group-plan .plan:last-of-type {
+      margin-right: 10px;
+    }
+    .group-plan .plan {
+      max-width: 42%;
+    }
+
+    .plan {
+      max-width: 30%;
+    }
+  }
+
+  @media (max-width: 1140px) {
+    .group-plan .plan {
+      max-width: 38%;
+    }
+
+    .plan {
+      max-width: 28%;
+      margin-right: 0px;
+    }
+  }
+
+  @media (max-width: 1020px) {
+    .container.small {
+      float: none;
+    }
+    .group-plan .plan {
+      max-width: 49%;
+    }
+    .plan {
+      max-width: 32%;
+      width: 100%;
+    }
+    .left-img {
+      z-index: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .group-plan .plan:last-of-type {
+      display: none;
+    }
+
+    .plan.hide {
+      display: block !important;
+      margin-top: 30px;
+      border-bottom: 2px solid @color-red;
+    }
+
+    .plan,
+    .group-plan {
+      min-width: 400px;
+      margin: 10px auto;
+    }
+
+    .left-img {
+      position: fixed;
+      top: 61px;
+    }
+
+    .plan ul {
+      margin-bottom: 80px;
+    }
+
+    .group-plan .plan:first-of-type {
+      margin: 0 auto;
+      -webkit-border-radius: 7px;
+      -moz-border-radius: 7px;
+      border-radius: 7px;
+    }
+
+    .plan:last-of-type {
+      margin: 0 auto;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .container.small {
+      width: 100%;
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .plan {
+      min-width: 263px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .plan {
+      width: 100%;
+      min-width: unset;
+      max-width: unset;
+    }
+    .group-plan {
+      width: 100%;
+      margin-left: 0px;
+      margin-right: 0px;
+      min-width: unset;
+    }
+    .group-plan .plan:first-of-type,
+    .plan:last-of-type {
+      width: 100%;
+      max-width: unset;
+    }
+  }
+}

@@ -1,0 +1,90 @@
+<div id="level" v-cloak>
+
+  <div class="container-fluid">
+    <div class="levels">
+      <div class="flex">
+        <div class="level">
+          <h3>Newbie</h3>
+          <div class="body">
+            <p>You're just learning some survival Chinese, or looking to start a lifelong relationship with Mandarin Chinese.</p>
+            <a href="#" class="btn continue" data-level="1">Continue</a>
+          </div>
+        </div>
+
+        <div class="level">
+          <h3>INTERMEDIATE</h3>
+          <div class="body">
+            <p>You're are able to have simple conversations in Chinese, and want to explore more variety of topics and use richer language.</p>
+            <a href="#" class="btn continue" data-level="3">Continue</a>
+          </div>
+        </div>
+
+        <div class="level">
+          <h3>Advanced</h3>
+          <div class="body">
+            <p>You can easily use concrete language. You want to expand into describing abstract concepts and discuss cultural issues that go deeper than the surface.</p>
+            <a href="#" class="btn continue" data-level="5">Continue</a>
+          </div>
+        </div>
+
+        <div class="level">
+          <div class="body test">
+            <h5>Need some help choosing your level?</h5><br>
+            <p>Complete our placement test and we will assess which level fits you best.</p>
+
+            <a href="/tools/placement-test" class="btn">Placement test</a>
+          </div>
+        </div>
+
+        <form id="update-level" action="/dashboard/updatelevel-no-redirect" method="post">
+          <input type="hidden" id="level" name="level" value="" />
+        </form>
+      </div>
+    </div>
+
+    <div class="choose hide">
+      <div class="flex">
+        <div class="level language">
+          <h3>Simplified Chinese</h3>
+          <div class="body">
+            <p>
+              These are standardized Chinese characters prescribed in Table of General Standard Chinese Characters for
+              use in <b>mainland China</b>.<br><br>(简化字; jiǎnhuàzì)
+            </p>
+            <a href="#" class="btn choose-type" data-type="1">Choose</a>
+          </div>
+        </div>
+        <div class="level language">
+          <h3>Traditional Chinese</h3>
+          <div class="body">
+            <p>
+              These are Chinese characters that do not contain newly created characters
+              or character substitutions performed after 1946.
+              <br><br>
+              They are commonly use in <b>Taiwan</b>, of <b>Hong Kong</b> and <b>Macau</b>, and in <b>Kangxi Dictionary</b>.
+              <br><br>
+            </p>
+            <a href="#" class="btn choose-type" data-type="2">Choose</a>
+          </div>
+        </div>
+        <form id="update-type" action="/accounts/settings/update-character-set" method="post">
+          <input type="hidden" id="ctype" name="ctype" value="" />
+        </form>
+        <div class="level language skip">
+          <div class="body">
+            <h5>Predefined settings</h5>
+            <p>
+              By skipping this, we will select most popular settings for your account. This can be modified.
+            </p>
+            <a href="/dashboard" class="btn">Skip</a>
+          </div>
+        </div>
+      </div>
+      <div class="action-nav">
+        <span class="btn action prev">Back</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

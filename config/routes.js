@@ -36,6 +36,16 @@ module.exports.routes = {
   'GET /email-signup':          { action: 'entrance/view-signup' },
   'GET /get-started':           { action: 'entrance/view-signup' },
   'GET /signup':                { action: 'entrance/view-signup' },
+  'GET /email/confirm':         { action: 'entrance/confirm-email' },
+  'GET /email/confirmed':       { action: 'entrance/view-confirmed-email' },
+
+
+  'GET /pricing':               { action: 'view-pricing' },
+  'GET /level':               { action: 'view-level' },
+
+
+  //TODO Recap View
+  // 'GET /recap-lessons':         { action: 'view-recap-lessons' },
 
 
 
@@ -67,8 +77,9 @@ module.exports.routes = {
 
   // Information Routes - Health Check
   '/api/v1/request':                                     { action: 'request' },
+  '/api/v1/chinesepod-recap':                            { action: 'recap/list-all' },
   'POST  /api/v1/ip-info':                               { action: 'ip-info' },
-  '/api/v1/generate-words':                               { action: 'generate-words' },
+  '/api/v1/generate-words':                              { action: 'generate-words' },
   // 'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
   // 'POST  /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },
   // 'POST  /api/v1/deliver-contact-form-message':          { action: 'deliver-contact-form-message' },

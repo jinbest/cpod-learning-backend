@@ -9,6 +9,7 @@
     "@sailshq/connect-redis": "^3.2.1",
     "@sailshq/lodash": "^3.10.3",
     "@sailshq/socket.io-redis": "^5.2.0",
+    "aws-sdk": "^2.489.0",
     "axios": "^0.19.0",
     "crypto-js": "^3.1.9-1",
     "grunt": "1.0.1",
@@ -23,6 +24,7 @@
     "sails-hook-orm": "^2.1.1",
     "sails-hook-sockets": "^1.5.5",
     "sails-mysql": "^1.0.1",
+    "skipper-better-s3": "^2.3.0",
     "universal-analytics": "^0.4.20",
     "xkpasswd": "^1.0.5"
   },

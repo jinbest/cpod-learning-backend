@@ -1,0 +1,107 @@
+<div id="pricing" v-cloak>
+  <div class="container small">
+    <div class="flex mt">
+      <div class="plan main-plan hide">
+        <div id="main">
+          <p>Most popular</p>
+        </div>
+        <div class="plan-body">
+          <h4>Premium learner</h4>
+          <br>
+          <p>Taking your Mandarin Chinese learning seriously?</p>
+          <br>
+          <p>In depth explanations, practice exercises and access to custom courses</p>
+
+          <p class="price">$29/mo</p>
+          <ul>
+            <li><img src="/images/checkbox.svg"> <b>Everything from basic</b></li>
+            <li><img src="/images/checkbox.svg"> Vocabulary and audio review</li>
+            <li><img src="/images/checkbox.svg"> In depth lesson dialogues</li>
+            <li><img src="/images/checkbox.svg"> Interactive practice tests</li>
+            <li><img src="/images/checkbox.svg"> Access to mobile apps</li>
+            <li><img src="/images/checkbox.svg"> All content downloads</li>
+            <li><img src="/images/checkbox.svg"> Exclusive "Say It Right" pronunciation course</li>
+            <li><img src="/images/checkbox.svg"> Vocabulary exercises</li>
+            <li><img src="/images/checkbox.svg"> Popup definitions</li>
+            <li><img src="/images/checkbox.svg"> Grammar blocks</li>
+          </ul>
+          <a v-if="trial" href="#" class="get-started btn blue action" data-product-id="2" data-url="/store/purchase/checkout?plan=premium&trial=yes<?= $this->hash? '&hash='. $this->hash: '' ?>">Start 14 day trial</a>
+          <a v-else href="#" class="get-started btn blue action" data-product-id="2" data-url="/store/purchase/checkout?plan=premium<?= $this->hash? '&hash='. $this->hash: '' ?>">Get Started</a>
+        </div>
+      </div>
+      <div class="group-plan flex">
+        <div class="plan">
+          <h4>Basic Learner</h4><br>
+          <p>Give Chinese a try</p>
+          <br>
+          <br>
+          <p>Dive into 4000+ entertaining <br>audio & video lessons.</p><br><br>
+
+          <p class="price">$14<small>/mo</small></p>
+          <ul>
+            <li><img src="/images/checkbox.svg">On-demand video lessons.</li>
+            <li><img src="/images/checkbox.svg">On-demand audio lessons.</li>
+            <li><img src="/images/checkbox.svg">PDF lesson notes.</li>
+            <li><img src="/images/checkbox.svg">Simplified and Traditional Chinese support.</li>
+            <li><img src="/images/checkbox.svg">Courses and premade playlists.</li>
+            <li><img src="/images/checkbox.svg">An active community of learners and teachers</li>
+            <li><img src="/images/checkbox.svg">Dictionary and example sentence search.</li>
+          </ul>
+          <a href="#" class="get-started btn gray action" data-product-id="13" data-url="/store/purchase/checkout?plan=basic<?= $this->hash? '&hash='. $this->hash: '' ?>">Get Started</a>
+        </div>
+        <div class="plan main-plan">
+          <div id="main">
+            <p>Most popular</p>
+          </div>
+          <div class="plan-body">
+            <h4>Premium learner</h4><br>
+            <p>Taking your Mandarin<br> Chinese learning seriously?</p>
+            <br>
+            <p>In-depth explanations, practice exercises and access to custom courses</p>
+
+            <p class="price">$29<small>/mo</small></p>
+            <ul>
+              <li><img src="/images/checkbox.svg"> <b>Everything from basic</b></li>
+              <li><img src="/images/checkbox.svg"> Vocabulary and audio review</li>
+              <li><img src="/images/checkbox.svg"> In-depth lesson dialogues</li>
+              <li><img src="/images/checkbox.svg"> Interactive practice tests</li>
+              <li><img src="/images/checkbox.svg"> Access to mobile apps</li>
+              <li><img src="/images/checkbox.svg"> All content downloads</li>
+              <li><img src="/images/checkbox.svg"> Exclusive "Say It Right" pronunciation course</li>
+              <li><img src="/images/checkbox.svg"> Vocabulary exercises</li>
+              <li><img src="/images/checkbox.svg"> Popup definitions</li>
+              <li><img src="/images/checkbox.svg"> Grammar blocks</li>
+            </ul>
+            <a v-if="trial" href="#" class="get-started btn blue action" data-product-id="2" data-url="/store/purchase/checkout?plan=premium&trial=yes<?= $this->hash? '&hash='. $this->hash: '' ?>">Start 14 day trial</a>
+            <a v-else href="#" class="get-started btn blue action" data-product-id="2" data-url="/store/purchase/checkout?plan=premium<?= $this->hash? '&hash='. $this->hash: '' ?>">Get Started</a>
+          </div>
+        </div>
+      </div>
+      <div class="plan team">
+        <h4>For Teams</h4><br>
+        <p>Custom created plans <br>for any size company.</p><br>
+        <p>Need to train 2 or more team<br> members ? We have custom<br> solutions for companies of any size.</p>
+        <!--<br>-->
+        <!--<img src="/images/chinesepod_corporate_icon.svg" width="110px" class="team">-->
+        <!--<br>-->
+        <a href="/corporate" class="btn gray">Read More</a>
+        <span id="line"></span>
+        <br>
+        <h4>For Education</h4><br>
+        <p>Unlimited access to all of our academic content.</p>
+        <br>
+        <p>
+          Need access for your students ?
+          We offer custom packages for all institution sizes.
+        </p>
+        <a href="/academic-offers" class="btn gray">Read More</a>
+        <span id="line"></span>
+        <br>
+        <h4 class="team-border">Try a Demo</h4><br>
+        <p>Not convinced? Try a free Demo account with some sample lessons.</p>
+        <a href="#" class="btn gray team">Read More</a>
+      </div>
+    </div>
+  </div>
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
