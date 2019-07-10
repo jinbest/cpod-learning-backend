@@ -38,9 +38,9 @@ module.exports.swaggerConfig = {
       "http",
       "https"
     ],
-    // externalDocs: {
-    //   url: "http://www.logisticinfotech.com"
-    // },
+    externalDocs: {
+      url: "https://www.chinesepod.com"
+    },
     parameters: {
       WhereQueryParam: {
         in: "query",
