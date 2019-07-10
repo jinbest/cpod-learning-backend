@@ -32,7 +32,7 @@ module.exports.swaggerConfig = {
       },
       version: "1.0.0"
     },
-    host: sails.config.custom.baseUrl,
+    host: "staging.chinesepod.com",
     basePath: "/",
     schemes: [
       "http",
