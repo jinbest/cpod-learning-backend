@@ -90,6 +90,9 @@ module.exports = Object.assign({}, PRODUCTION_CONFIG, {
     // ||  (or use system environment variables prefixed with "sails_custom__")
     //--------------------------------------------------------------------------
 
+  }),
+  swaggerConfig: Object.assign({}, PRODUCTION_CONFIG.swaggerConfig, {
+    disable: false,
   })
 
 });
