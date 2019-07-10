@@ -40,8 +40,8 @@ module.exports.routes = {
   'GET /email/confirmed':       { action: 'entrance/view-confirmed-email' },
 
 
-  'GET /pricing':               { action: 'view-pricing' },
-  'GET /level':               { action: 'view-level' },
+  'GET /pricing':               { action: 'onboarding/view-pricing' },
+  'GET /level':                 { action: 'onboarding/view-level' },
 
 
   //TODO Recap View
@@ -74,6 +74,8 @@ module.exports.routes = {
   // 'PUT   /api/v1/account/update-billing-card':        { action: 'account/update-billing-card' },
   // 'PUT   /api/v1/entrance/login':                        { action: 'entrance/login' },
   'POST  /api/v1/entrance/signup':                       { action: 'entrance/signup' },
+  'PUT  /api/v1/onboarding/pricing':                     { action: 'onboarding/pricing' },
+  'PUT  /api/v1/onboarding/level':                       { action: 'onboarding/level' },
 
   // Information Routes - Health Check
   '/api/v1/request':                                     { action: 'request' },

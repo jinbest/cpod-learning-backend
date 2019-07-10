@@ -1,5 +1,9 @@
 <div id="pricing" v-cloak>
   <div class="container small">
+    <div class="heading text-center">
+      <h1 class="headline d-block">Start learning Chinese today</h1>
+      <h3 class="subheading d-none d-md-block">Join XXXXX students</h3>
+    </div>
     <div class="flex mt">
       <div class="plan main-plan hide">
         <div id="main">
@@ -11,7 +15,6 @@
           <p>Taking your Mandarin Chinese learning seriously?</p>
           <br>
           <p>In depth explanations, practice exercises and access to custom courses</p>
-
           <p class="price">$29/mo</p>
           <ul>
             <li><img src="/images/checkbox.svg"> <b>Everything from basic</b></li>
@@ -25,8 +28,8 @@
             <li><img src="/images/checkbox.svg"> Popup definitions</li>
             <li><img src="/images/checkbox.svg"> Grammar blocks</li>
           </ul>
-          <a v-if="trial" href="#" class="get-started btn blue action" data-product-id="2" data-url="/store/purchase/checkout?plan=premium&trial=yes<?= $this->hash? '&hash='. $this->hash: '' ?>">Start 14 day trial</a>
-          <a v-else href="#" class="get-started btn blue action" data-product-id="2" data-url="/store/purchase/checkout?plan=premium<?= $this->hash? '&hash='. $this->hash: '' ?>">Get Started</a>
+          <button v-if="trial" v-on:click="submittedForm('premiumTrial')" class="get-started btn blue action">Start 14 day trial</button>
+          <button v-else v-on:click="submittedForm('premium')" class="get-started btn blue action">Get Started</button>
         </div>
       </div>
       <div class="group-plan flex">
@@ -47,7 +50,7 @@
             <li><img src="/images/checkbox.svg">An active community of learners and teachers</li>
             <li><img src="/images/checkbox.svg">Dictionary and example sentence search.</li>
           </ul>
-          <a href="#" class="get-started btn gray action" data-product-id="13" data-url="/store/purchase/checkout?plan=basic<?= $this->hash? '&hash='. $this->hash: '' ?>">Get Started</a>
+          <button v-on:click="submittedForm('basic')" class="get-started btn gray action">Get Started</button>
         </div>
         <div class="plan main-plan">
           <div id="main">
@@ -99,7 +102,7 @@
         <br>
         <h4 class="team-border">Try a Demo</h4><br>
         <p>Not convinced? Try a free Demo account with some sample lessons.</p>
-        <a href="#" class="btn gray team">Read More</a>
+        <button v-on:click="submittedForm('free')" class="btn gray team">Read More</button>
       </div>
     </div>
   </div>

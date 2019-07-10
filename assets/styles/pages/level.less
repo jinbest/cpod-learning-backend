@@ -5,8 +5,27 @@
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  margin: -18px -15px 0px -15px;
+  //margin: -18px -15px 0px -15px;
   min-height: 100vh;
+  width: 100%;
+
+  .heading {
+    padding-top: 80px;
+    color: white;
+    .headline {
+      font-weight: 500;
+      font-size: 1.75rem;
+      @media (min-width: 1200px) {
+        font-size: 2.25rem;
+      }
+    }
+    .subheading {
+      padding-top: 20px;
+      @media (min-width: 1200px) {
+        padding-top: 40px;
+      }
+    }
+  }
 
   .flex {
     display: flex;
@@ -228,8 +247,15 @@
       padding-top: 50px;
     }
 
+    @media (min-width: 1000px) {
+      padding-top: 10%;
+    }
+
     .flex{
       margin-top: -50px;
+      @media (min-width: 1000px) {
+        margin-top: -75px;
+      }
     }
   }
 
@@ -238,13 +264,22 @@
     min-height: 100vh;
     padding-bottom: 10px;
     justify-content: center;
+    padding-top: 15%;
 
+    @media (max-width: 440px) {
+      padding-top: 50px;
+    }
+    @media (min-width: 1000px) {
+      padding-top: 10%;
+    }
     @media (max-width: 576px) {
       display: block;
     }
-
-    .flex {
-      margin-top: 0px;
+    .flex{
+      margin-top: -50px;
+      @media (min-width: 1000px) {
+        margin-top: -75px;
+      }
     }
 
     .action-nav {
@@ -283,7 +318,6 @@
         }
       }
     }
-
   }
 
   .level.language {

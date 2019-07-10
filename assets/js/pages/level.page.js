@@ -3,7 +3,17 @@ parasails.registerPage('level', {
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
-    //…
+    level: '',
+    charSet: '',
+    nextPage: false,
+    // Syncing / loading state
+    syncing: false,
+
+    // Server error state
+    cloudError: '',
+
+    // Success state when form has been submitted
+    cloudSuccess: false,
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -21,6 +31,36 @@ parasails.registerPage('level', {
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
-    //…
+    setLevel: function (level) {
+      this.level = level;
+      this.flipPage();
+      this.postData();
+    },
+    setCharSet: function (charSet) {
+      this.charSet = charSet;
+      this.postData();
+      window.location = '/dashboard';
+    },
+    skip: function () {
+      this.postData();
+      window.location = '/dashboard';
+    },
+    flipPage() {
+      this.nextPage = !this.nextPage;
+      window.scrollTo(0,0);
+    },
+    postData: async function () {
+      if (!this.level) {
+        this.level = 'Newbie'
+      }
+      if (!this.charSet) {
+        this.charSet = 'simplified'
+      }
+      await Cloud[this.pageName].with({
+        level: this.level,
+        charSet: this.charSet
+      })
+    },
   }
+
 });

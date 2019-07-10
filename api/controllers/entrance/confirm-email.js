@@ -68,16 +68,19 @@ then redirect to either a special landing page (for newly-signed up users), or t
       // If this is a new user confirming their email for the first time,
       // then just update the state of their user record in the database,
       // store their user id in the session (just in case they aren't logged
-      // in already), and then redirect them to the "email confirmed" page.
+      // in already), and then redirect them to the "plan selection" page.
       await User.updateOne({ id: user.id }).set({
-        confirmation: 1
+        confirm_status: 1
       });
       this.req.session.userId = user.id;
 
       if (this.req.wantsJSON) {
         return;
       } else {
-        throw { redirect: '/email/confirmed' };
+        // throw { redirect: '/email/confirmed' };
+        //Enable Trial options for all newly confirmed accounts
+        this.req.session.trial = true;
+        throw { redirect: '/pricing' };
       }
 
     // } else if (user.emailStatus === 'change-requested') {
