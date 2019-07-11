@@ -14,6 +14,9 @@ parasails.registerPage('level', {
 
     // Success state when form has been submitted
     cloudSuccess: false,
+
+    modal: '',
+    pageLoadedAt: Date.now()
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -25,6 +28,23 @@ parasails.registerPage('level', {
   },
   mounted: async function() {
     //…
+  },
+
+  //  ╦  ╦╦╦═╗╔╦╗╦ ╦╔═╗╦    ╔═╗╔═╗╔═╗╔═╗╔═╗
+  //  ╚╗╔╝║╠╦╝ ║ ║ ║╠═╣║    ╠═╝╠═╣║ ╦║╣ ╚═╗
+  //   ╚╝ ╩╩╚═ ╩ ╚═╝╩ ╩╩═╝  ╩  ╩ ╩╚═╝╚═╝╚═╝
+  // Configure deep-linking (aka client-side routing)
+  virtualPagesRegExp: /^\/level\/?([^\/]+)?\/?/,
+  afterNavigate: async function(virtualPageSlug){
+    // `virtualPageSlug` is determined by the regular expression above, which
+    // corresponds with `:unused?` in the server-side route for this page.
+    switch (virtualPageSlug) {
+      case 'placement':
+        this.modal = 'example';
+        break;
+      default:
+        this.modal = '';
+    }
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
@@ -61,6 +81,22 @@ parasails.registerPage('level', {
         charSet: this.charSet
       })
     },
+    clickOpenExampleModalButton: async function() {
+      this.goto('/level/placement');
+      // Or, without deep links, instead do:
+      // ```
+      // this.modal = 'example';
+      // ```
+    },
+
+    closeExampleModal: async function() {
+      this.goto('/level');
+      // Or, without deep links, instead do:
+      // ```
+      // this.modal = '';
+      // ```
+    },
+
   }
 
 });

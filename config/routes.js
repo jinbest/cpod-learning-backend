@@ -41,7 +41,7 @@ module.exports.routes = {
 
 
   'GET /pricing':               { action: 'onboarding/view-pricing' },
-  'GET /level':                 { action: 'onboarding/view-level' },
+  'GET /level/:unused?':        { action: 'onboarding/view-level' },
 
 
   //TODO Recap View
