@@ -27,10 +27,7 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    // TODO
-    let userData = '';
-    let userId = 1016995;
-    let group = 'admin';
+    let userId = inputs.userId;
     let currentTime = new Date();
     let expiryTime = new Date(currentTime.getTime() + 365.25 * 24 * 60 * 60 * 1000); //Creation + 1 year
     let sessionStart = currentTime.toISOString().split('T').join(' ').split('.')[0];
