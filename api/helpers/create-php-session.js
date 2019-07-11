@@ -69,7 +69,6 @@ module.exports = {
       session_data: sessionData
     })
       .fetch();
-    console.log(session);
     return session.id;
   }
   // user|a:8:{

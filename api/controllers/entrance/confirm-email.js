@@ -83,7 +83,7 @@ then redirect to either a special landing page (for newly-signed up users), or t
         this.req.session.trial = true;
 
         //Create PHP Website Session & Cookie
-        await sails.helpers.phpSession.with({
+        await sails.helpers.createPhpSession.with({
           userId: user.id,
         })
           .then((phpSessionId) => {
@@ -92,8 +92,7 @@ then redirect to either a special landing page (for newly-signed up users), or t
               domain: '.chinesepod.com',
               expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
             });
-            throw { redirect: '/dashboard' };
-            // throw { redirect: '/pricing' };
+            throw { redirect: '/pricing' };
           });
       }
 

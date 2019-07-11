@@ -40,11 +40,19 @@ parasails.registerPage('pricing', {
       this.plan = plan;
       this.postData();
       this.syncing = true;
-      if (plan === 'free') {
-        window.location = '/level';
-      } else {
-      //   //TODO Replace this with Checkout route logic
-      //   window.location = '/level';
+      switch (plan) {
+        case 'free':
+          window.location = '/level';
+          break;
+        case 'premium':
+          window.location = '/store/purchase/create-order?product_id=2&redirect=true';
+          break;
+        case 'basic':
+          window.location = '/store/purchase/create-order?product_id=13&redirect=true';
+          break;
+        case 'premiumTrial':
+          window.location = '/store/purchase/free-trial?redirect=true';
+          break;
       }
     }
   }
