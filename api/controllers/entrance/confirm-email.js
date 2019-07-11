@@ -83,9 +83,12 @@ then redirect to either a special landing page (for newly-signed up users), or t
         this.req.session.trial = true;
 
         //Create PHP Website Session & Cookie
-        let phpSessionId = sails.helpers.phpSession.with({
+        let phpSessionId = await sails.helpers.phpSession.with({
           userId: user.id,
         });
+
+        console.log(phpSessionId);
+
         this.res.cookie('CPODSESSID', phpSessionId, {
           domain: '.chinesepod.com',
           expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
