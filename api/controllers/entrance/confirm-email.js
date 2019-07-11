@@ -78,9 +78,20 @@ then redirect to either a special landing page (for newly-signed up users), or t
         return;
       } else {
         // throw { redirect: '/email/confirmed' };
+
         //Enable Trial options for all newly confirmed accounts
         this.req.session.trial = true;
-        throw { redirect: '/pricing' };
+
+        //Create PHP Website Session & Cookie
+        let phpSessionId = sails.helpers.phpSession.with({
+          userId: user.id,
+        });
+        this.res.cookie('CPODSESSID', phpSessionId, {
+          domain: '.chinesepod.com',
+          expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
+        });
+        throw { redirect: '/dashboard' };
+        // throw { redirect: '/pricing' };
       }
 
     // } else if (user.emailStatus === 'change-requested') {
@@ -139,7 +150,8 @@ then redirect to either a special landing page (for newly-signed up users), or t
     //   }
 
     } else {
-      throw new Error(`Consistency violation: User ${user.id} has an email proof token, but somehow also has an emailStatus of "${user.confirm_status}"!  (This should never happen.)`);
+      throw { redirect: '/dashboard' };
+      // throw new Error(`Consistency violation: User ${user.id} has an email proof token, but somehow also has an emailStatus of "${user.confirm_status}"!  (This should never happen.)`);
     }
 
   }

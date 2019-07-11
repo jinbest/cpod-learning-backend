@@ -222,7 +222,8 @@ module.exports = {
     priority_info: {
       type: 'string',
       columnType: 'varchar',
-      maxLength: 255
+      maxLength: 255,
+      allowNull: true
     },
     staff_type: {
       type: 'number',

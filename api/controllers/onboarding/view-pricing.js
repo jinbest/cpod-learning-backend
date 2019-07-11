@@ -10,7 +10,7 @@ module.exports = {
   exits: {
 
     success: {
-      viewTemplatePath: 'pages/pricing'
+      viewTemplatePath: 'pages/onboarding/pricing'
     }
 
   },
@@ -18,10 +18,13 @@ module.exports = {
 
   fn: async function () {
 
-    sails.sess
     // Respond with view.
+    let trial = false;
+    if(this.req.param('trial', false) || this.req.session.trial ) {
+      trial = true
+    }
     return {
-      trial: this.req.param('trial', false)
+      trial: trial
     };
 
   }
