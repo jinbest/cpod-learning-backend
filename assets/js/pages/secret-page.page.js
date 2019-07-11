@@ -6,7 +6,8 @@ parasails.registerPage('secret-page', {
     lessonTitle: '',
     v3id: '',
     error: 'Sorry, something went terribly wrong',
-    isError: true
+    isError: true,
+    lessonData: ''
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
