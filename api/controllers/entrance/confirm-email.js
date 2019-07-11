@@ -61,7 +61,7 @@ then redirect to either a special landing page (for newly-signed up users), or t
       throw 'invalidOrExpiredToken';
     }
 
-    if (user.confirm_status === 0) {
+    // if (user.confirm_status === 0) {
       //  ┌─┐┌─┐┌┐┌┌─┐┬┬─┐┌┬┐┬┌┐┌┌─┐  ╔═╗╦╦═╗╔═╗╔╦╗ ╔╦╗╦╔╦╗╔═╗  ╦ ╦╔═╗╔═╗╦═╗  ┌─┐┌┬┐┌─┐┬┬
       //  │  │ ││││├┤ │├┬┘││││││││ ┬  ╠╣ ║╠╦╝╚═╗ ║───║ ║║║║║╣   ║ ║╚═╗║╣ ╠╦╝  ├┤ │││├─┤││
       //  └─┘└─┘┘└┘└  ┴┴└─┴ ┴┴┘└┘└─┘  ╚  ╩╩╚═╚═╝ ╩   ╩ ╩╩ ╩╚═╝  ╚═╝╚═╝╚═╝╩╚═  └─┘┴ ┴┴ ┴┴┴─┘
@@ -83,18 +83,18 @@ then redirect to either a special landing page (for newly-signed up users), or t
         this.req.session.trial = true;
 
         //Create PHP Website Session & Cookie
-        let phpSessionId = await sails.helpers.phpSession.with({
+        await sails.helpers.phpSession.with({
           userId: user.id,
-        });
-
-        console.log(phpSessionId);
-
-        this.res.cookie('CPODSESSID', phpSessionId, {
-          domain: '.chinesepod.com',
-          expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
-        });
-        throw { redirect: '/dashboard' };
-        // throw { redirect: '/pricing' };
+        })
+          .then((phpSessionId) => {
+            console.log(phpSessionId);
+            this.res.cookie('CPODSESSID', phpSessionId, {
+              domain: '.chinesepod.com',
+              expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
+            });
+            throw { redirect: '/dashboard' };
+            // throw { redirect: '/pricing' };
+          });
       }
 
     // } else if (user.emailStatus === 'change-requested') {
@@ -152,10 +152,10 @@ then redirect to either a special landing page (for newly-signed up users), or t
     //     throw { redirect: '/account' };
     //   }
 
-    } else {
-      throw { redirect: '/dashboard' };
-      // throw new Error(`Consistency violation: User ${user.id} has an email proof token, but somehow also has an emailStatus of "${user.confirm_status}"!  (This should never happen.)`);
-    }
+    // } else {
+    //   throw { redirect: '/dashboard' };
+    //   // throw new Error(`Consistency violation: User ${user.id} has an email proof token, but somehow also has an emailStatus of "${user.confirm_status}"!  (This should never happen.)`);
+    // }
 
   }
 

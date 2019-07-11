@@ -70,7 +70,7 @@ module.exports = {
     })
       .fetch();
     console.log(session);
-    return session;
+    return session.id;
   }
   // user|a:8:{
   // s:2:"id";s:7:"1016995"; //changes
