@@ -24,7 +24,8 @@ module.exports = {
       type: 'string',
       columnType: 'varchar',
       maxLength: 255,
-      required: true
+      required: true,
+      protect: true
     },
     email: {
       type: 'string',

@@ -126,9 +126,7 @@ the account verification message.)`,
     // Store the user's new id in their session.
     this.req.session.userId = newUserRecord.id;
     var visitor = ua('UA-1176295-7', {uid: newUserRecord.id});
-    visitor.pageview("/signup").send();
     visitor.event("sign_up", "sign_up").send();
-    console.log('GA Sent');
 
     if (sails.config.custom.verifyEmailAddresses) {
       // Send "confirm account" email

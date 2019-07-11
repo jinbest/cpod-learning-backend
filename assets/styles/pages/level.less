@@ -1,0 +1,472 @@
+#level {
+
+  background: url(/images/onboarding-bg.svg);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  //margin: -18px -15px 0px -15px;
+  min-height: 100vh;
+  width: 100%;
+
+  .heading {
+    padding-top: 80px;
+    color: white;
+    .headline {
+      font-weight: 500;
+      font-size: 1.75rem;
+      @media (min-width: 1200px) {
+        font-size: 2.25rem;
+      }
+    }
+    .subheading {
+      padding-top: 20px;
+      @media (min-width: 1200px) {
+        padding-top: 40px;
+      }
+    }
+  }
+
+  .flex {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 5%;
+
+    .level {
+      position: relative;
+      width: 24%;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 10px;
+      padding-bottom: 30px;
+      max-width: 275px;
+
+      @media (min-width: 1200px) {
+        margin: 5px;
+        &:first-of-type {
+          margin-left: auto;
+        }
+        &:last-of-type {
+          margin-right: auto;
+        }
+      }
+
+      @media (max-width: 860px) {
+        width: 49%;
+        max-width: unset;
+
+        &:nth-child(3) {
+          margin-top: 20px;
+        }
+      }
+      @media (max-width: 440px) {
+        width: 90%;
+        margin-top: 20px;
+      }
+
+      h3 {
+        background: @onboard-orange-pale;
+        color: @onboard-orange;
+        padding: 25px 0px;
+        text-transform: uppercase;
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+        margin: 0px;
+      }
+
+      .body {
+        background: @color-white;
+        padding: 20px 15px 0px 15px;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+
+        @media (max-width: 992px) {
+          padding: 0;
+
+          &:last-of-type .body {
+            padding-bottom: 15px;
+          }
+        }
+
+        p {
+          color: @color-grey-6;
+          padding: 15px;
+          margin-bottom: 50px;
+          @media (max-width: 576px) {
+            font-size: 12px;
+            padding-top: 20px;
+          }
+          @media (max-width: 440px) {
+            font-size: 14px;
+            padding: 50px 25px;
+            padding-bottom: 35px;
+          }
+        }
+
+        .btn {
+          .button(transparent, @onboard-orange, 1px, @onboard-orange, 5px);
+          display: block;
+          width: 86%;
+          left: 7%;
+          padding: 13px;
+          margin-bottom: 20px;
+          position: absolute;
+          bottom: 10px;
+          font-weight: bold;
+
+          @media (max-width: 440px) {
+            left: 0px;
+            position: relative;
+            margin: auto;
+          }
+        }
+        .btn:hover,
+        .btn:active {
+          .button-hover(@onboard-orange, @onboard-orange);
+          color: #fff;
+        }
+
+        &.test h5 {
+          font-size: 16px;
+        }
+      }
+
+    }
+
+    .level:first-of-type h3 {
+      background: @onboard-blue-pale;
+      color: @onboard-blue;
+    }
+
+    .level:nth-child(3) h3 {
+      background: @onboard-purple-pale;
+      color: @onboard-purple;
+    }
+
+    .level:last-of-type {
+      max-height: 301px;
+      align-self: flex-end;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      border-radius: 10px;
+      padding: 10px;
+
+      @media (max-width: 440px) {
+        max-height: unset;
+      }
+    }
+
+    .level:first-of-type .btn {
+      .button(transparent, @onboard-blue, 1px, @onboard-blue, 5px);
+    }
+
+    .level:last-of-type .btn {
+      .button(@color-black, @color-white, 1px, @color-black, 5px);
+    }
+
+    .level:last-of-type .body {
+      border-radius: 5px;
+      border: 1px solid @onboard-yellow;
+
+      p {
+        margin-top: 0;
+        padding-top: 0;
+        padding-bottom: 40px;
+        @media (max-width: 992px) {
+          padding-bottom: 50px;
+        }
+        @media (max-width: 480px) {
+          margin-top: 10px;
+        }
+      }
+
+      h5 {
+        margin: 0px auto 7px auto;
+        color: @color-grey;
+        padding: 15px;
+        padding-top: 5px;
+        padding-bottom: 0px;
+
+        @media (max-width: 992px) {
+          padding-top: 20px;
+        }
+        @media (max-width: 440px) {
+          padding: 15px 25px;
+          padding-top: 25px;
+        }
+      }
+
+      a {
+        position: absolute;
+        margin: 0px;
+        bottom: 30px;
+
+        @media (max-width: 440px) {
+          position: relative;
+          left: 0px;
+          margin: auto;
+          width: 90%;
+        }
+      }
+
+    }
+
+
+    .level:last-of-type .btn:hover,
+    .level:last-of-type .btn:active {
+      .button-hover(@color-grey-1, @color-black);
+      color: @color-black;
+    }
+
+    .level:first-of-type .btn:hover,
+    .level:first-of-type .btn:active {
+      .button-hover(@onboard-blue);
+      color: #fff;
+    }
+    .level:nth-child(3) .btn {
+      .button(transparent, @onboard-purple, 1px, @onboard-purple, 5px);
+    }
+
+    .level:nth-child(3) .btn:hover,
+    .level:nth-child(3) .btn:active {
+      .button-hover(@onboard-purple, @onboard-purple);
+      color: #fff;
+    }
+  }
+  .levels{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+    justify-content: center;
+    padding-top: 15%;
+
+    @media (max-width: 440px) {
+      padding-top: 50px;
+    }
+
+    @media (min-width: 1000px) {
+      padding-top: 10%;
+    }
+
+    .flex{
+      margin-top: -50px;
+      @media (min-width: 1000px) {
+        margin-top: -75px;
+      }
+    }
+  }
+
+  .choose {
+    flex-direction: column;
+    min-height: 100vh;
+    padding-bottom: 10px;
+    justify-content: center;
+    padding-top: 15%;
+
+    @media (max-width: 440px) {
+      padding-top: 50px;
+    }
+    @media (min-width: 1000px) {
+      padding-top: 10%;
+    }
+    @media (max-width: 576px) {
+      display: block;
+    }
+    .flex{
+      margin-top: -50px;
+      @media (min-width: 1000px) {
+        margin-top: -75px;
+      }
+    }
+
+    .action-nav {
+      display: block;
+      position: relative;
+      overflow: hidden;
+      max-width: 1000px;
+      width: 100%;
+      margin: 10px auto;
+
+      @media (max-width:867px) and (min-width:576px) {
+        width: 97%;
+        margin: 10px auto;
+      }
+      @media (max-width:575px) {
+        width: 92%;
+        margin: 10px auto;
+      }
+
+      .btn {
+        max-width: 150px;
+        display: block;
+        width: 100%;
+        background: @color-white;
+        color: #000;
+        font-size: 14px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-weight: bold;
+      }
+      .prev {
+        float: left;
+        margin-left: 1%;
+        &:hover,&:active, &:visited{
+          background: @color-grey-1;
+        }
+      }
+    }
+  }
+
+  .level.language {
+    width: 32%;
+    max-width: 320px;
+
+    @media (min-width: 872px) {
+      margin: 5px;
+      &:first-of-type {
+        margin-left: auto;
+      }
+      &:last-of-type {
+        margin-right: auto;
+      }
+    }
+
+    @media (max-width: 867px) {
+      width: 45%;
+      max-width: unset;
+
+      &:last-of-type {
+        width: 90%;
+        margin-top: 10px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      width: 90%;
+      max-width: unset;
+      margin: 10px auto;
+
+      &:last-of-type {
+        width: 90%;
+        margin-top: 10px;
+      }
+    }
+
+    h3 {
+      background: @onboard-red-pale !important;
+      color: @onboard-red !important;
+    }
+
+    .body p {
+      @media (max-width: 440px) {
+        font-size: 18px;
+        padding: 50px 35px 55px;
+      }
+    }
+
+    .btn {
+      color: @onboard-red !important;
+      border-color: @onboard-red !important;
+    }
+    .btn:hover {
+      background: @onboard-red !important;
+      color: @color-white !important;
+    }
+    &.skip {
+      //@media (max-width:867px) and (min-width:576px) {
+      //  width: 95%;
+      //  max-width: unset;
+      //}
+    }
+    &.skip .body {
+      //@media (max-width:867px) and (min-width:776px) {
+      //  overflow: hidden;
+      //  padding: 20px 170px 20px 80px;
+      //}
+      //@media (max-width:775px) and (min-width:700px) {
+      //  overflow: hidden;
+      //  padding: 20px 150px 20px 80px;
+      //}
+      //@media (max-width:700px) and (min-width:576px) {
+      //  overflow: hidden;
+      //  padding: 20px 40px 20px 80px;
+      //}
+    }
+    &.skip .body h5 {
+      //font-size: 16px;
+      //padding-top: 5px;
+      //padding-bottom: 0px;
+      //@media (max-width: 992px) {
+      //  padding-top: 15px;
+      //}
+      //@media (max-width:867px) and (min-width:576px) {
+      //  width: 62%;
+      //  float: right;
+      //  padding-top: 0px;
+      //}
+    }
+    &:last-of-type .body p {
+      padding-bottom: 60px;
+      padding-top: 20px;
+      @media (max-width:867px) and (min-width:576px) {
+        width: 62%;
+        float: right;
+        padding-bottom: 0px !important;
+        margin-bottom: 0px !important;
+        padding-top: 0px;
+      }
+    }
+    &.skip a.btn {
+      .button(@color-black, @color-white, 1px, @color-black, 5px);
+      color: @color-white !important;
+      border-color: @color-black !important;
+      position: absolute;
+      margin: 0px;
+      bottom: 30px;
+
+      @media (max-width:867px) and (min-width:775px) {
+        top: 49px;
+        bottom: unset;
+        width: 150px;
+        left: 90px;
+      }
+      @media (max-width:775px) and (min-width:700px) {
+        top: 49px;
+        bottom: unset;
+        width: 150px;
+        left: 70px;
+      }
+      @media (max-width:699px) and (min-width:576px) {
+        top: 49px;
+        bottom: unset;
+        width: 150px;
+        left: 40px;
+      }
+
+      @media (max-width: 440px) {
+        position: relative;
+        left: 0px;
+        margin: auto;
+        width: 90%;
+      }
+    }
+    &:last-of-type a.btn:hover,
+    &:last-of-type a.btn:active {
+      .button-hover(@color-grey-1, @color-black);
+      color: @color-black !important;
+      border-color: @color-black !important;
+    }
+  }
+  .flex{
+    .level.language{
+      .btn:hover{
+        background: @onboard-red !important;
+        border: 1px solid @onboard-red !important;
+        color: @color-white !important;
+      }
+    }
+  }
+}

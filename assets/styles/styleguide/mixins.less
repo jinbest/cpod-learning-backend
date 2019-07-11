@@ -1,4 +1,26 @@
+.button (@background: transparent, @color: #666, @border-size: 0px, @border-color: transparent, @border-radius: 0px) {
+  background: @background;
+  color: @color;
+  border: @border-size solid @border-color;
+  border-radius: @border-radius;
+}
 
+.checkout-input {
+  background: @color-grey-1;
+  border: 1px solid @color-grey-2;
+  padding: 14px;
+  outline: none;
+  border-radius: 5px;
+
+  &:focus {
+    border-color: @onboard-blue;
+  }
+}
+
+.button-hover(@background: @onboard-blue-2, @bc: @onboard-blue) {
+  border-color: @bc !important;
+  background: @background !important;
+}
 
 // screen < 1000px
 //min-width: 768

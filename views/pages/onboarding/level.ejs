@@ -1,0 +1,112 @@
+<div id="level">
+
+  <div class="container-fluid">
+    <div class="heading text-center">
+      <h1 class="headline d-block">Optimizing your user experience</h1>
+      <h3 v-if="!nextPage" class="subheading d-block">Please select your current Chinese proficiency level</h3>
+      <h3 v-else class="subheading d-block">Please select your Chinese Character preference</h3>
+    </div>
+    <div v-if="!nextPage" class="levels">
+      <div class="flex">
+        <div class="level">
+          <h3>Newbie</h3>
+          <div class="body">
+            <p>You're just learning some survival Chinese, or looking to start a lifelong relationship with Mandarin Chinese.</p>
+            <button v-on:click="setLevel('Newbie')" class="btn continue">Continue</button>
+          </div>
+        </div>
+
+        <div class="level">
+          <h3>Intermediate</h3>
+          <div class="body">
+            <p>You're are able to have simple conversations in Chinese, and want to explore more variety of topics and use richer language.</p>
+            <button v-on:click="setLevel('Intermediate')" class="btn continue">Continue</button>
+          </div>
+        </div>
+
+        <div class="level">
+          <h3>Advanced</h3>
+          <div class="body">
+            <p>You can easily use concrete language. You want to expand into describing abstract concepts and discuss cultural issues that go deeper than the surface.</p>
+            <button v-on:click="setLevel('Advanced')" class="btn continue" >Continue</button>
+          </div>
+        </div>
+
+        <div class="level">
+          <div class="body test">
+            <h5>Need some help choosing your level?</h5><br>
+            <p>Complete our placement test and we will assess which level fits you best.</p>
+            <button @click="clickOpenExampleModalButton()" class="btn">Placement test</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div v-else class="choose">
+      <div class="flex">
+        <div class="level language">
+          <h3>Simplified Chinese</h3>
+          <div class="body">
+            <p>
+              These are standardized Chinese characters prescribed in Table of General Standard Chinese Characters for
+              use in <b>Mainland China</b>.<br><br>(简化字; jiǎnhuàzì)
+            </p>
+            <button v-on:click="setCharSet('simplified')" class="btn choose-type">Choose</button>
+          </div>
+        </div>
+        <div class="level language">
+          <h3>Traditional Chinese</h3>
+          <div class="body">
+            <p>
+              These are Chinese characters that do not contain newly created characters
+              or character substitutions performed after 1946.
+              <br><br>
+              They are commonly used in <b>Taiwan</b>, of <b>Hong Kong</b> and <b>Macau</b>, and in <b>Kangxi Dictionary</b>.
+              <br><br>
+            </p>
+            <button v-on:click="setCharSet('traditional')" class="btn choose-type" data-type="2">Choose</button>
+          </div>
+        </div>
+        <div class="level language skip">
+          <div class="body">
+            <h5>Predefined settings</h5>
+            <p>
+              By skipping this, we will select the most popular settings for your account. This can be modified.
+            </p>
+            <button v-on:click="skip()" class="btn">Skip</button>
+          </div>
+        </div>
+      </div>
+      <div class="action-nav">
+        <span v-on:click="flipPage()" class="btn action prev">Back</span>
+      </div>
+    </div>
+  </div>
+
+  <router-view></router-view>
+
+
+  <modal class="example-modal" v-if="modal==='example'" @close="closeExampleModal()">
+    <div class="modal-header">
+      <h2 class="modal-title">Placement test</h2>
+      <hr/>
+      <button type="button" class="modal-close-button" data-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <link href=https://s3contents.chinesepod.com/placement/css/app.836391d8.css rel=preload as=style>
+      <link href=https://s3contents.chinesepod.com/placement/js/app.10772ad7.js rel=preload as=script>
+      <link href=https://s3contents.chinesepod.com/placement/js/chunk-vendors.db4a02db.js rel=preload as=script>
+      <link href=https://s3contents.chinesepod.com/placement/css/app.836391d8.css rel=stylesheet>
+      <noscript><strong>We're sorry but the placement test doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript>
+      <div id=app></div>
+      <% block('localScripts', '<script src="https://s3contents.chinesepod.com/placement/js/chunk-vendors.db4a02db.js"></script>\n' +
+        '<script src="https://s3contents.chinesepod.com/placement/js/app.10772ad7.js"></script>') %>
+    </div>
+    <div class="modal-footer flex-row-reverse justify-content-between">
+      <button type="button" data-dismiss="modal" class="btn btn-info">Close</button>
+      <button type="button" data-dismiss="modal" class="btn btn-outline-info">Cancel</button>
+    </div>
+  </modal>
+
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
