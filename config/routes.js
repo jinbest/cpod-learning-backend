@@ -37,15 +37,17 @@ module.exports.routes = {
   'GET /get-started':           { action: 'entrance/view-signup' },
   'GET /signup':                { action: 'entrance/view-signup' },
   'GET /email/confirm':         { action: 'entrance/confirm-email' },
-  'GET /email/confirmed':       { action: 'entrance/view-confirmed-email' },
+  // 'GET /email/confirmed':       { action: 'entrance/view-confirmed-email' },
 
 
   'GET /pricing':               { action: 'onboarding/view-pricing' },
-  'GET /level/:unused?':        { action: 'onboarding/view-level' },
+  'GET /checkout':              { action: 'view-checkout' },
 
+  'GET /level/:unused?':        { action: 'onboarding/view-level' },
 
   //TODO Recap View
   // 'GET /recap-lessons':         { action: 'view-recap-lessons' },
+  'GET /secret-page':             { action: 'view-secret-page' },
 
 
 

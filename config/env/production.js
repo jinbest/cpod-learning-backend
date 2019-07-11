@@ -49,7 +49,7 @@ module.exports = {
     default: {
       // Staging Test DB
       adapter: require('sails-mysql'),
-      url: 'mysql://cpoddba:tr5mai81@kazuya.chinesepod.com:3306/chinesepod_production',
+      url: 'mysql://cpoddba:fr0t3ll@@cpoddbbak.cx6o0r5nidjs.us-east-1.rds.amazonaws.com:3306/chinesepod_production',
       //--------------------------------------------------------------------------
       //  /\   To avoid checking it in to version control, you might opt to set
       //  ||   sensitive credentials like `url` using an environment variable.
@@ -184,9 +184,9 @@ module.exports = {
     * > other compatible packages (like "connect-mongo") are available on NPM. *
     * > (For a full list, see https://sailsjs.com/plugins/sessions)            *
     *                                                                          *
-    ***************************************************************************/
-    adapter: '@sailshq/connect-redis',
-    url: 'redis://cpod-production-001.idthgn.0001.use1.cache.amazonaws.com:6379/1',
+    // ***************************************************************************/
+    // adapter: '@sailshq/connect-redis',
+    // url: 'redis://cpod-production-001.idthgn.0001.use1.cache.amazonaws.com:6379/1',
     //--------------------------------------------------------------------------
     // /\   OR, to avoid checking it in to version control, you might opt to
     // ||   set sensitive credentials like this using an environment variable.
@@ -252,14 +252,13 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     onlyAllowOrigins: [
-      'https://chinesepod.com',
-      'http://chinesepod.com',
-      'https://www.chinesepod.com',
-      'http://www.chinesepod.com',
-      'https://redirect.chinesepod.com',
-      'http://redirect.chinesepod.com',
-      'http://sails.chinesepod.com',
-      'https://sails.chinesepod.com',
+      'http://localhost:1337',
+      // 'https://www.chinesepod.com',
+      // 'http://www.chinesepod.com',
+      // 'https://redirect.chinesepod.com',
+      // 'http://redirect.chinesepod.com',
+      // 'http://sails.chinesepod.com',
+      // 'https://sails.chinesepod.com',
     ],
 
 
@@ -275,8 +274,8 @@ module.exports = {
     * (https://sailsjs.com/docs/concepts/deployment/scaling)                   *
     *                                                                          *
     ***************************************************************************/
-    adapter: '@sailshq/socket.io-redis',
-    url: 'redis://cpod-production-001.idthgn.0001.use1.cache.amazonaws.com:6379/2',
+    // adapter: '@sailshq/socket.io-redis',
+    // url: 'redis://cpod-production-001.idthgn.0001.use1.cache.amazonaws.com:6379/2',
     //--------------------------------------------------------------------------
     // /\   OR, to avoid checking it in to version control, you might opt to
     // ||   set sensitive credentials like this using an environment variable.
@@ -378,7 +377,7 @@ module.exports = {
   *                                                                         *
   ***************************************************************************/
   custom: {
-    baseUrl: 'http://sails.chinesepod.com',
+    baseUrl: 'http://localhost:1337',
     internalEmailAddress: 'support@chinesepod.com',
 
     // mailgunDomain: 'mg.example.com',
