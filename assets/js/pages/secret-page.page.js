@@ -8,7 +8,8 @@ parasails.registerPage('secret-page', {
     topLessonUsers: [],
     otherTopLessons: [],
     lessonViews: [],
-    syncing: true
+    syncing: true,
+    error: ''
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -26,6 +27,11 @@ parasails.registerPage('secret-page', {
         this.otherTopLessons = data.otherTopLessons;
         this.lessonViews = data.lessonViews;
         this.syncing = false
+      })
+      .catch((e) => {
+        this.error = e;
+        console.log(e);
+        this.syncing = false;
       });
   },
 

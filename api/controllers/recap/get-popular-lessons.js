@@ -10,6 +10,10 @@ module.exports = {
 
   exits: {
 
+    'noLessons': {
+      description: 'Unfortunately there are no lessons'
+    }
+
   },
 
 
@@ -61,6 +65,10 @@ module.exports = {
 
     if (topLessons[topLessonItem] < 2) {
       topLessonItem = logData['rows'].sort((a, b) => (a.ltv < b.ltv) ? 1 : -1)[0]['accesslog_url'].split('v3_id=')[1].split('&')[0]
+    }
+
+    if (!topLessonItem) {
+      throw 'noLessons'
     }
 
     let topLesson = await Contents.findOne({
