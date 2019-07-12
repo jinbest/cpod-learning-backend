@@ -41,7 +41,7 @@ module.exports = {
 
     // Respond with view.
     return {
-      lessonData: popularLessons
+      lessonData: lessonData[0]
     };
 
   }
