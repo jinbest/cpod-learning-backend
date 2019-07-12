@@ -10,7 +10,7 @@
 
 module.exports.policies = {
 
-  'view-level': 'is-logged-in',
+  'onboarding/view-level': 'is-logged-in',
   'placement/*': 'is-logged-in',
 
   // // Bypass the `is-logged-in` policy for:
