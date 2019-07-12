@@ -81,7 +81,8 @@ module.exports.routes = {
 
   // Information Routes - Health Check
   '/api/v1/request':                                     { action: 'request' },
-  '/api/v1/chinesepod-recap':                            { action: 'recap/list-all' },
+
+  '/api/v1/get-popular-lessons':                         { action: 'recap/get-popular-lessons' },
   'POST  /api/v1/ip-info':                               { action: 'ip-info' },
   '/api/v1/generate-words':                              { action: 'generate-words' },
   // 'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
