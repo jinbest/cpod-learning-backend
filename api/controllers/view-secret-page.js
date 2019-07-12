@@ -32,9 +32,16 @@ module.exports = {
     let lessonData = await sails.sendNativeQuery(
       sql, [new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().split('T')[0]]
     );
+
+    let popularLessons = [];
+
+    for (log in lessonData[0]) {
+      popularLessons.push(log['accesslog_url'].split('v3_id=')[1].split('&')[0])
+    }
+
     // Respond with view.
     return {
-      lessonData: lessonData
+      lessonData: popularLessons
     };
 
   }
