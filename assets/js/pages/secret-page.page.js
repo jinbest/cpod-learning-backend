@@ -4,6 +4,10 @@ parasails.registerPage('secret-page', {
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
     topLesson: '',
+    topLessonTitle: '',
+    topLessonUsers: [],
+    otherTopLessons: [],
+    lessonViews: [],
     syncing: true
   },
 
@@ -15,8 +19,14 @@ parasails.registerPage('secret-page', {
     _.extend(this, SAILS_LOCALS);
   },
   mounted: async function() {
-    this.topLesson = await Cloud['getPopularLessons'].with({});
-    this.syncing = false
+    await Cloud['getPopularLessons'].with({})
+      .then((data) => {
+        this.topLesson = data.topLesson;
+        this.topLessonUsers = data.topLessonUsers;
+        this.otherTopLessons = data.otherTopLessons;
+        this.lessonViews = data.lessonViews;
+        this.syncing = false
+      });
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗

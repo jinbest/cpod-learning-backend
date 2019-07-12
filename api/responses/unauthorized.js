@@ -38,7 +38,7 @@ module.exports = function unauthorized() {
     }
 
     // return res.redirect('/login');
-    return res.redirect(`'/accounts/signin?continue=https://www.chinesepod.com/${req.path}'`);
+    return res.redirect(`/accounts/signin?continue=https://www.chinesepod.com${req.path}`);
   }
 
 };

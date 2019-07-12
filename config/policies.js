@@ -10,12 +10,17 @@
 
 module.exports.policies = {
 
-  '*': 'is-logged-in',
+  'view-level': 'is-logged-in',
+  'placement/*': 'is-logged-in',
 
-  // Bypass the `is-logged-in` policy for:
-  'entrance/*': true,
-  'account/logout': true,
-  'onboarding/view-pricing': true,
-  'view-checkout': true
+  // // Bypass the `is-logged-in` policy for:
+  // 'entrance/*': true,
+  // 'account/logout': true,
+  // 'onboarding/view-pricing': true,
+  // 'view-checkout': true,
+  //
+  //
+  // // Admin Pages
+  // 'view-secret-page': true,
 
 };
