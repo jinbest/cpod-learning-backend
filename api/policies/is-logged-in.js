@@ -19,15 +19,17 @@ module.exports = async function (req, res, proceed) {
     return proceed();
   } else if (req.cookies.CPODSESSID){
     let sid = req.cookies.CPODSESSID;
-    try {
-      req.session.userId = await PhpSessions.findOne({
-        where: {id: sid},
-        select: ['session_user_id']
-      })['session_user_id'];
+    await PhpSessions.findOne({
+      where: {id: sid},
+      select: ['session_user_id']
+    }).then((record) => {
+      console.log('Session Data');
+      console.log(record);
+      req.session.userId = record['session_user_id'];
       return proceed();
-    } catch (e) {
+    }).catch ((e) => {
       return res.unauthorized();
-    }
+    });
   }
 
   //--•
