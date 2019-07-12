@@ -3,11 +3,7 @@ parasails.registerPage('secret-page', {
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
-    lessonTitle: '',
-    v3id: '',
-    error: 'Sorry, something went terribly wrong',
-    isError: true,
-    lessonData: ''
+    topLesson: ''
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗

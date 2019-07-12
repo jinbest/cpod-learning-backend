@@ -29,19 +29,40 @@ module.exports = {
     GROUP BY log.accesslog_user;
     `; //Android specific Endpoint used in query
 
-    let lessonData = await sails.sendNativeQuery(
+    let logData = await sails.sendNativeQuery(
       sql, [new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().split('T')[0]]
     );
 
     let popularLessons = [];
 
-    for (log in lessonData[0]) {
-      popularLessons.push(log['accesslog_url'].split('v3_id=')[1].split('&')[0])
+    logData['rows'].forEach(function (log) {
+      try {
+        let item = log['accesslog_url'].split('v3_id=')[1].split('&')[0];
+        popularLessons.push(item);
+      } catch (e) {
+        console.log(e);
+      }
+    });
+
+    let topLessons = {};
+    popularLessons.forEach(function (lesson) {
+      topLessons[lesson] = (topLessons[lesson] || 0) +1;
+    });
+
+    let sortedLessons = Object.keys(topLessons).sort(function (a, b) {
+      return topLessons[b]-topLessons[a]
+    });
+
+    let topLessonItem = sortedLessons[0];
+
+    if (topLessons[topLessonItem] < 2) {
+      topLessonItem = logData['rows'].sort((a, b) => (a.ltv < b.ltv) ? 1 : -1)[0]['accesslog_url'].split('v3_id=')[1].split('&')[0]
     }
 
+    //TODO move to an Async element
     // Respond with view.
     return {
-      lessonData: lessonData[0]
+      topLesson: topLessonItem
     };
 
   }
