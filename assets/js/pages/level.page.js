@@ -27,38 +27,21 @@ parasails.registerPage('level', {
     //…
   },
 
-  //  ╦  ╦╦╦═╗╔╦╗╦ ╦╔═╗╦    ╔═╗╔═╗╔═╗╔═╗╔═╗
-  //  ╚╗╔╝║╠╦╝ ║ ║ ║╠═╣║    ╠═╝╠═╣║ ╦║╣ ╚═╗
-  //   ╚╝ ╩╩╚═ ╩ ╚═╝╩ ╩╩═╝  ╩  ╩ ╩╚═╝╚═╝╚═╝
-  // Configure deep-linking (aka client-side routing)
-  virtualPagesRegExp: /^\/level\/?([^\/]+)?\/?/,
-  afterNavigate: async function(virtualPageSlug){
-    // `virtualPageSlug` is determined by the regular expression above, which
-    // corresponds with `:unused?` in the server-side route for this page.
-    switch (virtualPageSlug) {
-      case 'placement':
-        this.modal = 'example';
-        break;
-      default:
-        this.modal = '';
-    }
-  },
-
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
-    setLevel: function (level) {
+    setLevel (level) {
       this.level = level;
       this.flipPage();
       this.postData();
     },
-    setCharSet: function (charSet) {
+    setCharSet (charSet) {
       this.charSet = charSet;
       this.postData();
       window.location = '/dashboard/free';
     },
-    skip: function () {
+    skip () {
       this.postData();
       window.location = '/dashboard/free';
     },
@@ -78,6 +61,9 @@ parasails.registerPage('level', {
         charSet: this.charSet
       })
     },
+    placementTest() {
+      window.location = '/placement';
+    }
   }
 
 });
