@@ -42,7 +42,7 @@ parasails.registerPage('pricing', {
       this.syncing = true;
       switch (plan) {
         case 'free':
-          window.location = '/dashboard/free';
+          window.location = '/level';
           break;
         case 'premium':
           window.location = '/store/purchase/create-order?product_id=2&redirect=true';

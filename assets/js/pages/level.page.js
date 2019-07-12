@@ -14,9 +14,6 @@ parasails.registerPage('level', {
 
     // Success state when form has been submitted
     cloudSuccess: false,
-
-    modal: '',
-    pageLoadedAt: Date.now()
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -59,11 +56,11 @@ parasails.registerPage('level', {
     setCharSet: function (charSet) {
       this.charSet = charSet;
       this.postData();
-      window.location = '/dashboard';
+      window.location = '/dashboard/free';
     },
     skip: function () {
       this.postData();
-      window.location = '/dashboard';
+      window.location = '/dashboard/free';
     },
     flipPage() {
       this.nextPage = !this.nextPage;
@@ -81,22 +78,6 @@ parasails.registerPage('level', {
         charSet: this.charSet
       })
     },
-    clickOpenExampleModalButton: async function() {
-      this.goto('/level/placement');
-      // Or, without deep links, instead do:
-      // ```
-      // this.modal = 'example';
-      // ```
-    },
-
-    closeExampleModal: async function() {
-      this.goto('/level');
-      // Or, without deep links, instead do:
-      // ```
-      // this.modal = '';
-      // ```
-    },
-
   }
 
 });
