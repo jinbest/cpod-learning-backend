@@ -28,13 +28,6 @@ module.exports = {
 
     // Respond with view.
 
-    //TODO Add redirect for the time being - eventually implement logged in/not logged in page views
-    if (!this.req.me) {
-      return this.res.redirect('/login')
-    }
-
-    // Respond with view.
-
     return {
       nextPage: this.req.param('nextPage', false)
     };
