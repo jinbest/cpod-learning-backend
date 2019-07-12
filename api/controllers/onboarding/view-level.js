@@ -30,10 +30,14 @@ module.exports = {
 
     //TODO Add redirect for the time being - eventually implement logged in/not logged in page views
     if (!this.req.me) {
-      throw {redirect: '/login'};
+      return this.res.redirect('/login')
     }
 
-    return {};
+    // Respond with view.
+
+    return {
+      nextPage: this.req.param('nextPage', false)
+    };
 
   }
 };

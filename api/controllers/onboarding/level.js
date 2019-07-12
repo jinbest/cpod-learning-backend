@@ -28,16 +28,29 @@ module.exports = {
 
     invalid: {
       responseType: 'badRequest',
-      description: 'The options are invalid.',
+      description: 'The user not logged in.',
+    },
+
+    invalidInputs: {
+      responseType: 'badRequest',
+      description: 'No inputs provided.',
     },
 
   },
 
   fn: async function (inputs) {
-    let level = inputs.level.toLowerCase();
-    let charSet = inputs.charSet.toLowerCase();
+    if (!this.req.session.userId) {
+      // this.req.session.userId = 1016995;
+      throw 'invalid';
+    }
+
+    if(!inputs.level && !inputs.charSet){
+      throw 'invalidInputs';
+    }
+
     let levelValue = 1;
-    if (level) {
+    if (inputs.level) {
+      let level = inputs.level.toLowerCase();
       switch (level) {
         case 'newbie':
           levelValue = 1;
@@ -45,7 +58,7 @@ module.exports = {
         case 'elementary':
           levelValue = 2;
           break;
-          // Due to an old mistake PreInt = 6
+          // Due to an old mistake PreInt === 6
         case 'preInt':
           levelValue = 6;
           break;
@@ -70,7 +83,8 @@ module.exports = {
         value: level.toUpperCase()
       });
     }
-    if (charSet) {
+    if (inputs.charSet) {
+      let charSet = inputs.charSet.toLowerCase();
       await sails.helpers.updateOptions.with({
         userId: this.req.session.userId,
         type: 'charSet',
