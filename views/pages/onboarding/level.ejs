@@ -36,7 +36,7 @@
           <div class="body test">
             <h5>Need some help choosing your level?</h5><br>
             <p>Complete our placement test and we will assess which level fits you best.</p>
-            <button @click="clickOpenExampleModalButton()" class="btn">Placement test</button>
+            <button href="/placement" class="btn">Placement test</button>
           </div>
         </div>
       </div>
@@ -82,31 +82,5 @@
       </div>
     </div>
   </div>
-
-  <router-view></router-view>
-
-
-  <modal class="example-modal" v-if="modal==='example'" @close="closeExampleModal()">
-    <div class="modal-header">
-      <h2 class="modal-title">Placement test</h2>
-      <hr/>
-      <button type="button" class="modal-close-button" data-dismiss="modal" aria-label="Close"></button>
-    </div>
-    <div class="modal-body">
-      <link href=https://s3contents.chinesepod.com/placement/css/app.836391d8.css rel=preload as=style>
-      <link href=https://s3contents.chinesepod.com/placement/js/app.10772ad7.js rel=preload as=script>
-      <link href=https://s3contents.chinesepod.com/placement/js/chunk-vendors.db4a02db.js rel=preload as=script>
-      <link href=https://s3contents.chinesepod.com/placement/css/app.836391d8.css rel=stylesheet>
-      <noscript><strong>We're sorry but the placement test doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript>
-      <div id=app></div>
-      <% block('localScripts', '<script src="https://s3contents.chinesepod.com/placement/js/chunk-vendors.db4a02db.js"></script>\n' +
-        '<script src="https://s3contents.chinesepod.com/placement/js/app.10772ad7.js"></script>') %>
-    </div>
-    <div class="modal-footer flex-row-reverse justify-content-between">
-      <button type="button" data-dismiss="modal" class="btn btn-info">Close</button>
-      <button type="button" data-dismiss="modal" class="btn btn-outline-info">Cancel</button>
-    </div>
-  </modal>
-
 </div>
 <%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
