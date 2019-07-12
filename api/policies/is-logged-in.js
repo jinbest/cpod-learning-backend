@@ -17,6 +17,17 @@ module.exports = async function (req, res, proceed) {
   // > custom hook (`api/hooks/custom/index.js`).
   if (req.me) {
     return proceed();
+  } else if (req.cookies.CPODSESSID){
+    let sid = req.cookies.CPODSESSID;
+    try {
+      req.session.userId = await PhpSessions.findOne({
+        where: {id: sid},
+        select: ['session_user_id']
+      });
+      return proceed();
+    } catch (e) {
+      return res.unauthorized();
+    }
   }
 
   //--•
