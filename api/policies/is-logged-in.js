@@ -23,7 +23,7 @@ module.exports = async function (req, res, proceed) {
       req.session.userId = await PhpSessions.findOne({
         where: {id: sid},
         select: ['session_user_id']
-      });
+      })['session_user_id'];
       return proceed();
     } catch (e) {
       return res.unauthorized();
