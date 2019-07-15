@@ -58,7 +58,7 @@ module.exports = {
     //Connect Sails Session to PHP API Session
     this.req.session.userId = user.id;
 
-    //TODO Select Relevant lesson
+    //TODO Select Relevant lesson REWRITE TO LOG LOOKUP
     let latestStudiedLesson = await UserContents.find({
         user_id: user.id,
         studied: 1
@@ -85,6 +85,7 @@ module.exports = {
       }
       //TODO Implement 'both' as a character output "chars";i:0;
       //  `a:8:{s:5:"ctype";i:1;s:3:"pdf";i:0;s:5:"chars";i:0;s:5:"trans";i:1;s:10:"tweet_post";s:1:"1";s:16:"reply_tweet_post";s:1:"1";s:18:"group_conversation";s:1:"1";s:13:"exercise_lang";s:1:"3";}`
+
     } catch (e) {
       console.log('No Char Setting');
       //TODO Update Char Settings

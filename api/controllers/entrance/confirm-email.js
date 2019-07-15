@@ -5,7 +5,7 @@ module.exports = {
 
 
   description:
-`Confirm a new user's email address, or an existing user's request for an email address change,
+    `Confirm a new user's email address, or an existing user's request for an email address change,
 then redirect to either a special landing page (for newly-signed up users), or the account page
 (for existing users who just changed their email address).`,
 
@@ -47,7 +47,6 @@ then redirect to either a special landing page (for newly-signed up users), or t
 
 
   fn: async function (inputs) {
-
     // If no token was provided, this is automatically invalid.
     if (!inputs.code) {
       throw 'invalidOrExpiredToken';
@@ -62,39 +61,46 @@ then redirect to either a special landing page (for newly-signed up users), or t
     }
 
     // if (user.confirm_status === 0) {
-      //  ┌─┐┌─┐┌┐┌┌─┐┬┬─┐┌┬┐┬┌┐┌┌─┐  ╔═╗╦╦═╗╔═╗╔╦╗ ╔╦╗╦╔╦╗╔═╗  ╦ ╦╔═╗╔═╗╦═╗  ┌─┐┌┬┐┌─┐┬┬
-      //  │  │ ││││├┤ │├┬┘││││││││ ┬  ╠╣ ║╠╦╝╚═╗ ║───║ ║║║║║╣   ║ ║╚═╗║╣ ╠╦╝  ├┤ │││├─┤││
-      //  └─┘└─┘┘└┘└  ┴┴└─┴ ┴┴┘└┘└─┘  ╚  ╩╩╚═╚═╝ ╩   ╩ ╩╩ ╩╚═╝  ╚═╝╚═╝╚═╝╩╚═  └─┘┴ ┴┴ ┴┴┴─┘
-      // If this is a new user confirming their email for the first time,
-      // then just update the state of their user record in the database,
-      // store their user id in the session (just in case they aren't logged
-      // in already), and then redirect them to the "plan selection" page.
-      await User.updateOne({ id: user.id }).set({
-        confirm_status: 1
-      });
-      this.req.session.userId = user.id;
+    //  ┌─┐┌─┐┌┐┌┌─┐┬┬─┐┌┬┐┬┌┐┌┌─┐  ╔═╗╦╦═╗╔═╗╔╦╗ ╔╦╗╦╔╦╗╔═╗  ╦ ╦╔═╗╔═╗╦═╗  ┌─┐┌┬┐┌─┐┬┬
+    //  │  │ ││││├┤ │├┬┘││││││││ ┬  ╠╣ ║╠╦╝╚═╗ ║───║ ║║║║║╣   ║ ║╚═╗║╣ ╠╦╝  ├┤ │││├─┤││
+    //  └─┘└─┘┘└┘└  ┴┴└─┴ ┴┴┘└┘└─┘  ╚  ╩╩╚═╚═╝ ╩   ╩ ╩╩ ╩╚═╝  ╚═╝╚═╝╚═╝╩╚═  └─┘┴ ┴┴ ┴┴┴─┘
+    // If this is a new user confirming their email for the first time,
+    // then just update the state of their user record in the database,
+    // store their user id in the session (just in case they aren't logged
+    // in already), and then redirect them to the "plan selection" page.
+    await User.updateOne({ id: user.id }).set({
+      confirm_status: 1
+    });
+    this.req.session.userId = user.id;
 
-      if (this.req.wantsJSON) {
-        return;
-      } else {
-        // throw { redirect: '/email/confirmed' };
+    //Google Analytics Update
+    const ua = require('universal-analytics');
+    var visitor = ua('UA-1176295-7', {uid: user.id});
+    visitor.event("confirm_account", "confirm_account").send();
 
-        //Enable Trial options for all newly confirmed accounts
-        this.req.session.trial = true;
+    if (this.req.wantsJSON) {
+      return;
+    } else {
+      // throw { redirect: '/email/confirmed' };
 
-        //Create PHP Website Session & Cookie
-        await sails.helpers.createPhpSession.with({
-          userId: user.id,
-        })
-          .then((phpSessionId) => {
-            console.log(phpSessionId);
-            this.res.cookie('CPODSESSID', phpSessionId, {
-              domain: '.chinesepod.com',
-              expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
-            });
-            throw { redirect: '/pricing' };
+      //Enable Trial options for all newly confirmed accounts
+      this.req.session.trial = true;
+
+      //Create PHP Website Session & Cookie
+      await sails.helpers.createPhpSession.with({
+        userId: user.id,
+      })
+        .then((phpSessionId) => {
+          console.log(phpSessionId);
+          this.res.cookie('CPODSESSID', phpSessionId, {
+            domain: '.chinesepod.com',
+            expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
           });
-      }
+          throw { redirect: '/pricing' };
+        });
+    }
+
+
 
     // } else if (user.emailStatus === 'change-requested') {
     //   //  ┌─┐┌─┐┌┐┌┌─┐┬┬─┐┌┬┐┬┌┐┌┌─┐  ╔═╗╦ ╦╔═╗╔╗╔╔═╗╔═╗╔╦╗  ┌─┐┌┬┐┌─┐┬┬
