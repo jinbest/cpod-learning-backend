@@ -73,12 +73,16 @@ module.exports = {
 
     let topLesson = await Contents.findOne({
       where: {v3_id:topLessonItem},
-      select: ['v3_id', 'title', 'hash_code', 'image']
+      select: ['v3_id', 'title', 'hash_code', 'image', 'type']
     });
 
     let topLessonUsers = cleanLog.filter(student => student['v3id'] === topLessonItem);
 
     topLessonUsers.sort((b,a) => (a.ltv > b.ltv) ? 1 : ((b.ltv > a.ltv) ? -1 : 0));
+
+    topLesson['imageUrl'] = topLesson.type === 'lesson'
+      ? `https://s3contents.chinesepod.com/${topLesson.v3_id}/${topLesson.hash_code}/${topLesson.image}`
+      : `https://s3contents.chinesepod.com/extra/${topLesson.v3_id}/${topLesson.hash_code}/${topLesson.image}`;
 
     return {
       topLesson: topLesson,
