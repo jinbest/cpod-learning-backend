@@ -82,7 +82,14 @@ module.exports.routes = {
   // Information Routes - Health Check
   '/api/v1/request':                                     { action: 'request' },
 
-  'GET /api/v1/get-popular-lessons':                         { action: 'recap/get-popular-lessons' },
+  //Lesson Recap Routes
+  'GET /api/v1/get-popular-lessons':                       { action: 'recap/get-popular-lessons' },
+  'POST /api/v1/recap/get-lessons':                         { action: 'recap/get-user-lesson' },
+
+
+
+
+  //General Info Routes
   'GET  /api/v1/ip-info':                                   { action: 'ip-info' },
   'GET /api/v1/generate-words':                              { action: 'generate-words' },
   // 'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },

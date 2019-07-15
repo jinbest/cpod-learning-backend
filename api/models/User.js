@@ -240,7 +240,8 @@ module.exports = {
     member_id: {
       type: 'string',
       columnType: 'varchar',
-      maxLength: 50
+      maxLength: 50,
+      allowNull: true
     },
     ltv: {
       type: 'number',
