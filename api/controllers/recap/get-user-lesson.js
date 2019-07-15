@@ -31,8 +31,8 @@ module.exports = {
     },
 
     noLesson: {
-      responseType: 'badRequest',
-      description: 'User Has No Recent Lessons',
+      statusCode: '404',
+      description: 'User Has No Available Relevant Recap Lessons',
     }
 
   },
@@ -58,15 +58,35 @@ module.exports = {
     //Connect Sails Session to PHP API Session
     this.req.session.userId = user.id;
 
-    //TODO Select Relevant lesson REWRITE TO LOG LOOKUP
-    let latestStudiedLesson = await UserContents.find({
-        user_id: user.id,
-        studied: 1
-      })
-      .sort('createdAt desc')
-      .limit(1);
+    let availableRecaps = await sails.helpers.listRecapLessons();
 
-    console.log(latestStudiedLesson);
+    //TODO Select Relevant lesson REWRITE TO LOG LOOKUP
+    // let latestStudiedLesson = await UserContents.find({
+    //     user_id: user.id,
+    //     studied: 1
+    //   })
+    //   .sort('createdAt desc')
+    //   .limit(1);
+
+    let sql = `
+    SELECT DISTINCT log.accesslog_url
+    FROM chinesepod_logging.cp_accesslog log
+    WHERE log.accesslog_time > $1
+    AND log.accesslog_user = $2
+    AND log.accesslog_url LIKE '%v3_id%'
+    ORDER BY log.accesslog_time DESC;
+    `;
+
+    let latestLoggedLessons = await sails.sendNativeQuery(
+      sql, [new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], session.email]
+    );
+    let latestStudiedLesson = [];
+    latestLoggedLessons['rows'].some( function(item) {
+      if (availableRecaps.includes(item['accesslog_url'].split('v3_id=')[1].split('&')[0])) {
+        return latestStudiedLesson = item['accesslog_url'].split('v3_id=')[1].split('&')[0];
+      }
+    });
+
     if (latestStudiedLesson === undefined || latestStudiedLesson.length === 0){
       throw 'noLesson'
     }
@@ -106,7 +126,7 @@ module.exports = {
     //TODO Return All Data
 
     return {
-      lessonId: latestStudiedLesson[0].v3_id,
+      lessonId: latestStudiedLesson,
       charSet: charSet,
       subscription: subscription
     }

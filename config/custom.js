@@ -94,6 +94,9 @@ module.exports.custom = {
   * Any other custom config this Sails app should use during development.    *
   *                                                                          *
   ***************************************************************************/
-  // …
+  // AWS S3 Buckets
+
+  awsKey: 'AKIA4DQYSAHG3CJYO4XH',
+  awsSecret: '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',
 
 };
