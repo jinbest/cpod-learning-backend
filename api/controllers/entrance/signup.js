@@ -125,8 +125,19 @@ the account verification message.)`,
 
     // Store the user's new id in their session.
     this.req.session.userId = newUserRecord.id;
+
+    //Google Analytics Call
     var visitor = ua('UA-1176295-7', {uid: newUserRecord.id});
     visitor.event("sign_up", "sign_up").send();
+
+    await sails.helpers.mautic.createContact.with({
+      email: email,
+      userId: newUserRecord.id,
+      optIn: inputs.optIn,
+      ipData: ipData
+    }).catch((e) => {
+
+    });
 
     if (sails.config.custom.verifyEmailAddresses) {
       // Send "confirm account" email
@@ -171,6 +182,8 @@ the account verification message.)`,
           'Content-Type': 'application/json',
           'Authorization': 'apikey d1056769726aa0f9129a5ce02a23dd93-us9'
         }
+      }).catch((err) => {
+        console.log(err)
       });
     }
     return newUserRecord.id;

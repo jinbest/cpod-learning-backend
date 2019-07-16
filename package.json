@@ -18,6 +18,7 @@
     "ipdata": "^1.1.2",
     "machinepack-mailgun": "^0.6.0",
     "machinepack-mandrill": "^1.2.0",
+    "node-mautic": "^1.0.2",
     "sails": "^1.2.2",
     "sails-hook-apianalytics": "^2.0.3",
     "sails-hook-organics": "^0.15.0",
