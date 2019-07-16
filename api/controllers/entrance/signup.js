@@ -136,7 +136,7 @@ the account verification message.)`,
       optIn: inputs.optIn,
       ipData: ipData
     }).catch((e) => {
-
+      console.log(e)
     });
 
     if (sails.config.custom.verifyEmailAddresses) {
