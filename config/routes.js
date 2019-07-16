@@ -85,7 +85,6 @@ module.exports.routes = {
   //Lesson Recap Routes
   'GET /api/v1/get-popular-lessons':                       { action: 'recap/get-popular-lessons' },
   'POST /api/v1/recap/get-lessons':                         { action: 'recap/get-user-lesson' },
-  'GET /api/v1/recap/list-lessons':                         { action: 'recap/list-lessons' },
 
 
 
@@ -96,5 +95,4 @@ module.exports.routes = {
   // 'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
   // 'POST  /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },
   // 'POST  /api/v1/deliver-contact-form-message':          { action: 'deliver-contact-form-message' },
-
 };

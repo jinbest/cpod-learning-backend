@@ -130,7 +130,7 @@ the account verification message.)`,
     var visitor = ua('UA-1176295-7', {uid: newUserRecord.id});
     visitor.event("sign_up", "sign_up").send();
 
-    await sails.helpers.mautic.createContact.with({
+    let mauticLead = await sails.helpers.mautic.createContact.with({
       email: email,
       userId: newUserRecord.id,
       optIn: inputs.optIn,
@@ -138,6 +138,8 @@ the account verification message.)`,
     }).catch((e) => {
       console.log(e)
     });
+
+    console.log(mauticLead);
 
     if (sails.config.custom.verifyEmailAddresses) {
       // Send "confirm account" email
