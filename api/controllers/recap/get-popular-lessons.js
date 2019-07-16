@@ -27,7 +27,7 @@ module.exports = {
   fn: async function (inputs) {
     let period = false;
     if (inputs.days) {
-      period = inputs.days <= 21 ? inputs.days : 21;
+      period = inputs.days <= 30 ? inputs.days : 30;
     }
 
     let sql = `
@@ -99,7 +99,8 @@ module.exports = {
       topLesson: topLesson,
       topLessonUsers: topLessonUsers,
       otherTopLessons: sortedLessons.slice(1),
-      lessonViews: topLessons
+      lessonViews: topLessons,
+      days: period
     }
   }
 

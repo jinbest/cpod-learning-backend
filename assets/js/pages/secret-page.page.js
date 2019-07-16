@@ -29,6 +29,7 @@ parasails.registerPage('secret-page', {
         this.topLessonUsers = data.topLessonUsers;
         this.otherTopLessons = data.otherTopLessons;
         this.lessonViews = data.lessonViews;
+        this.days = data.period;
         this.syncing = false
       })
       .catch((e) => {
