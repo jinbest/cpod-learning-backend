@@ -6,6 +6,13 @@ module.exports = {
 
   description: '',
 
+  inputs: {
+    days: {
+      type: 'number',
+      description: 'Length of period in days for which to lookup Popular Lessons'
+    }
+  },
+
 
 
   exits: {
@@ -17,7 +24,11 @@ module.exports = {
   },
 
 
-  fn: async function () {
+  fn: async function (inputs) {
+    let period = false;
+    if (inputs.days) {
+      period = inputs.days <= 21 ? inputs.days : 21;
+    }
 
     let sql = `
     SELECT DISTINCT log.accesslog_user, log.accesslog_url, u.ltv, u.name, u.email
@@ -30,7 +41,7 @@ module.exports = {
     `; //Android specific Endpoint used in query
 
     let logData = await sails.sendNativeQuery(
-      sql, [new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString().split('T')[0]] //Adding 12 hour lag
+      sql, [new Date(Date.now() - 60 * 60 * 1000 * (period ? period * 24 : 12) ).toISOString().split('T')[0]] //Adding 12 hour lag
     );
 
     let popularLessons = [];

@@ -9,7 +9,8 @@ parasails.registerPage('secret-page', {
     otherTopLessons: [],
     lessonViews: [],
     syncing: true,
-    error: ''
+    error: '',
+    days: '',
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -20,7 +21,9 @@ parasails.registerPage('secret-page', {
     _.extend(this, SAILS_LOCALS);
   },
   mounted: async function() {
-    await Cloud['getPopularLessons'].with({})
+    await Cloud['getPopularLessons'].with({
+      days: this.days
+    })
       .then((data) => {
         this.topLesson = data.topLesson;
         this.topLessonUsers = data.topLessonUsers;

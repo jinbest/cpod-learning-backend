@@ -19,7 +19,9 @@ module.exports = {
   fn: async function () {
 
     //Return view
-    return {};
+    return {
+      days: this.req.param('days', '')
+    };
   }
 
 
