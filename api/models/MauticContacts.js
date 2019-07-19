@@ -87,7 +87,7 @@ module.exports = {
       defaultsTo: 0
     },
     last_active: {
-      type: "string",
+      type: "ref",
       columnType: "timestamp",
       allowNull: true
     },
