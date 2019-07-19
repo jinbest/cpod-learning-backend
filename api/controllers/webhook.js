@@ -20,7 +20,7 @@ module.exports = {
   fn: async function (inputs) {
 
     // All done.
-    sails.log(this.req);
+    sails.log(inputs);
 
   }
 
