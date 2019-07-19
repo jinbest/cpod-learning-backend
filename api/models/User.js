@@ -37,7 +37,8 @@ module.exports = {
     code: {
       type: 'string',
       columnType: 'varchar',
-      maxLength: 255
+      maxLength: 255,
+      allowNull: true
     },
     name: {
       type: 'string',
@@ -48,39 +49,47 @@ module.exports = {
     ip_address: {
       type: 'string',
       columnType: 'varchar',
-      maxLength: 255
+      maxLength: 255,
+      allowNull: true
     },
     age_id: {
       type: 'number',
       columnType: 'int',
-      isInteger: true
+      isInteger: true,
+      allowNull: true
     },
     country: {
       type: 'string',
       columnType: 'varchar',
-      maxLength: 64
+      maxLength: 64,
+      allowNull: true
     },
     nationality: {
       type: 'string',
       columnType: 'varchar',
-      maxLength: 64
+      maxLength: 64,
+      allowNull: true
     },
     city: {
       type: 'string',
       columnType: 'varchar',
-      maxLength: 32
+      maxLength: 32,
+      allowNull: true
     },
     avatar_url: {
       type: 'string',
-      columnType: 'text'
+      columnType: 'text',
+      allowNull: true
     },
     interests: {
       type: 'string',
-      columnType: 'text'
+      columnType: 'text',
+      allowNull: true
     },
     http_referer: {
       type: 'string',
-      columnType: 'text'
+      columnType: 'text',
+      allowNull: true
     },
     source_type: {
       type: 'number',
@@ -91,21 +100,25 @@ module.exports = {
     msn: {
       type: 'string',
       columnType: 'varchar',
-      maxLength: 64
+      maxLength: 64,
+      allowNull: true
     },
     skyper: {
       type: 'string',
       columnType: 'varchar',
-      maxLength: 64
+      maxLength: 64,
+      allowNull: true
     },
     sex: {
       type: 'string',
       columnType: 'varchar',
-      maxLength: 10
+      maxLength: 10,
+      allowNull: true
     },
     admin_note: {
       type: 'string',
-      columnType: 'text'
+      columnType: 'text',
+      allowNull: true
     },
     createdAt: {
       type: 'string',
@@ -133,42 +146,50 @@ module.exports = {
     },
     birthday: {
       type: 'string',
-      columnType: 'datetime'
+      columnType: 'datetime',
+      allowNull: true
     },
     mailing_address1: {
       type: 'string',
       columnType: 'varchar',
-      maxLength: 255
+      maxLength: 255,
+      allowNull: true
     },
     mailing_address2: {
       type: 'string',
       columnType: 'varchar',
-      maxLength: 255
+      maxLength: 255,
+      allowNull: true
     },
     mailing_city: {
       type: 'string',
       columnType: 'varchar',
-      maxLength: 255
+      maxLength: 255,
+      allowNull: true
     },
     mailing_state: {
       type: 'string',
       columnType: 'varchar',
-      maxLength: 255
+      maxLength: 255,
+      allowNull: true
     },
     mailing_country: {
       type: 'string',
       columnType: 'varchar',
-      maxLength: 255
+      maxLength: 255,
+      allowNull: true
     },
     mailing_postal_code: {
       type: 'string',
       columnType: 'varchar',
-      maxLength: 255
+      maxLength: 255,
+      allowNull: true
     },
     mobile_phone: {
       type: 'string',
       columnType: 'varchar',
-      maxLength: 255
+      maxLength: 255,
+      allowNull: true
     },
     credit_amount: {
       type: 'number',
@@ -178,22 +199,26 @@ module.exports = {
     ip_country: {
       type: 'string',
       columnType: 'varchar',
-      maxLength: 255
+      maxLength: 255,
+      allowNull: true
     },
     ip_region: {
       type: 'string',
       columnType: 'varchar',
-      maxLength: 255
+      maxLength: 255,
+      allowNull: true
     },
     ip_city: {
       type: 'string',
       columnType: 'varchar',
-      maxLength: 255
+      maxLength: 255,
+      allowNull: true
     },
     profession: {
       type: 'string',
       columnType: 'varchar',
-      maxLength: 255
+      maxLength: 255,
+      allowNull: true
     },
     come: {
       type: 'string',

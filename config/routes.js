@@ -62,6 +62,7 @@ module.exports.routes = {
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝
   // …
+  'POST /api/v1/webhooks/mautic/update':                  { action: 'webhooks/mautic/update' },
 
 
   //  ╔═╗╔═╗╦  ╔═╗╔╗╔╔╦╗╔═╗╔═╗╦╔╗╔╔╦╗╔═╗
@@ -86,7 +87,7 @@ module.exports.routes = {
   'GET /api/v1/get-popular-lessons':                       { action: 'recap/get-popular-lessons' },
   'POST /api/v1/recap/get-lessons':                         { action: 'recap/get-user-lesson' },
 
-
+  'GET /test-job': { action: 'test-job' },
 
 
   //General Info Routes
