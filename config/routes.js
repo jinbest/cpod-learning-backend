@@ -62,6 +62,7 @@ module.exports.routes = {
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝
   // …
+  'POST /api/v1/webhooks/mautic/update':                  { action: 'webhooks/mautic/update' },
 
 
   //  ╔═╗╔═╗╦  ╔═╗╔╗╔╔╦╗╔═╗╔═╗╦╔╗╔╔╦╗╔═╗
@@ -90,7 +91,6 @@ module.exports.routes = {
 
 
   //General Info Routes
-  '/api/v1/webhook':                                        { action: 'webhook' },
   'GET  /api/v1/ip-info':                                   { action: 'ip-info' },
   'GET /api/v1/generate-words':                              { action: 'generate-words' },
   // 'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },

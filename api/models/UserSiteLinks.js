@@ -22,22 +22,25 @@ module.exports = {
       type: 'number',
       columnType: 'int',
       isInteger: true,
-      defaultsTo: 2
+      defaultsTo: 2,
+      allowNull: true
     },
     org_id: {
       type: 'number',
       columnType: 'int',
       isInteger: true,
-      defaultsTo: 1
+      defaultsTo: 1,
+      allowNull: true
     },
     usertype_id: {
       type: 'number',
       columnType: 'int',
       isInteger: true,
-      defaultsTo: 7
+      defaultsTo: 7,
+      allowNull: true
     },
     expiry: {
-      type: 'string',
+      type: 'ref',
       columnType: 'datetime',
       defaultsTo: new Date().toISOString(),
     },
@@ -45,87 +48,102 @@ module.exports = {
       type: 'number',
       columnType: 'tinyint',
       isInteger: true,
-      defaultsTo: 1
+      defaultsTo: 1,
+      allowNull: true
     },
     deactive: {
       type: 'number',
       columnType: 'tinyint',
       isInteger: true,
-      defaultsTo: 0
+      defaultsTo: 0,
+      allowNull: true
     },
     academic_email: {
       type: 'number',
       columnType: 'tinyint',
       isInteger: true,
-      defaultsTo: 0
+      defaultsTo: 0,
+      allowNull: true
     },
     activity_email: {
       type: 'number',
       columnType: 'tinyint',
       isInteger: true,
-      defaultsTo: 0
+      defaultsTo: 0,
+      allowNull: true
     },
     other_email: {
       type: 'number',
       columnType: 'tinyint',
       isInteger: true,
-      defaultsTo: 0
+      defaultsTo: 0,
+      allowNull: true
     },
     show_email: {
       type: 'number',
       columnType: 'tinyint',
       isInteger: true,
-      defaultsTo: 0
+      defaultsTo: 0,
+      allowNull: true
     },
     newsletter_email: {
       type: 'number',
       columnType: 'tinyint',
       isInteger: true,
-      defaultsTo: 0
+      defaultsTo: 0,
+      allowNull: true
     },
     meetup_email: {
       type: 'number',
       columnType: 'tinyint',
       isInteger: true,
-      defaultsTo: 0
+      defaultsTo: 0,
+      allowNull: true
     },
     motivation_id: {
       type: 'number',
       columnType: 'int',
-      isInteger: true
+      isInteger: true,
+      allowNull: true
     },
     source_id: {
       type: 'number',
       columnType: 'int',
-      isInteger: true
+      isInteger: true,
+      allowNull: true
     },
     bio: {
       type: 'string',
-      columnType: 'text'
+      columnType: 'text',
+      allowNull: true
     },
     is_public: {
       type: 'number',
       columnType: 'tinyint',
       isInteger: true,
-      defaultsTo: 1
+      defaultsTo: 1,
+      allowNull: true
     },
     is_display_online: {
       type: 'number',
       columnType: 'tinyint',
       isInteger: true,
-      defaultsTo: 1
+      defaultsTo: 1,
+      allowNull: true
     },
     allow_comment: {
       type: 'number',
       columnType: 'tinyint',
       isInteger: true,
-      defaultsTo: 1
+      defaultsTo: 1,
+      allowNull: true
     },
     updated_by: {
       type: 'number',
       columnType: 'int',
       isInteger: true,
-      defaultsTo: 888
+      defaultsTo: 888,
+      allowNull: true
     },
     updatedAt: {
       type: 'string',
@@ -137,32 +155,38 @@ module.exports = {
       type: 'number',
       columnType: 'tinyint',
       isInteger: true,
-      defaultsTo: 0
+      defaultsTo: 0,
+      allowNull: true
     },
     level_id: {
       type: 'number',
       columnType: 'int',
       isInteger: true,
-      defaultsTo: 0
+      defaultsTo: 0,
+      allowNull: true
     },
     account_note: {
       type: 'string',
-      columnType: 'text'
+      columnType: 'text',
+      allowNull: true
     },
     teacher_id: {
       type: 'number',
       columnType: 'int',
       isInteger: true,
-      defaultsTo: 0
+      defaultsTo: 0,
+      allowNull: true
     },
     analysis_time: {
       type: 'string',
-      columnType: 'datetime'
+      columnType: 'datetime',
+      allowNull: true
     },
     status: {
       type: 'string',
       columnType: 'varchar',
-      maxLength: 255
+      maxLength: 255,
+      allowNull: true
     },
     createdAt: {
       type: 'string',
@@ -174,80 +198,95 @@ module.exports = {
       type: 'number',
       columnType: 'tinyint',
       isInteger: true,
-      defaultsTo: 0
+      defaultsTo: 0,
+      allowNull: true
     },
     subscription_id: {
       type: 'number',
       columnType: 'int',
-      isInteger: true
+      isInteger: true,
+      allowNull: true
     },
     cc_expiry: {
       type: 'string',
-      columnType: 'datetime'
+      columnType: 'datetime',
+      allowNull: true
     },
     arb_start_date: {
       type: 'string',
-      columnType: 'datetime'
+      columnType: 'datetime',
+      allowNull: true
     },
     pp_profile_id: {
       type: 'string',
       columnType: 'varchar',
-      maxLength: 255
+      maxLength: 255,
+      allowNull: true
     },
     segment_id: {
       type: 'number',
       columnType: 'int',
-      isInteger: true
+      isInteger: true,
+      allowNull: true
     },
     is_manual: {
       type: 'number',
       columnType: 'tinyint',
       isInteger: true,
-      defaultsTo: 0
+      defaultsTo: 0,
+      allowNull: true
     },
     is_priority: {
       type: 'number',
       columnType: 'tinyint',
       isInteger: true,
-      defaultsTo: 0
+      defaultsTo: 0,
+      allowNull: true
     },
     segment_date: {
       type: 'string',
-      columnType: 'datetime'
+      columnType: 'datetime',
+      allowNull: true
     },
     segment_updated_at: {
       type: 'string',
-      columnType: 'datetime'
+      columnType: 'datetime',
+      allowNull: true
     },
     priority_info: {
       type: 'string',
       columnType: 'varchar',
       maxLength: 255,
+      allowNull: true,
       allowNull: true
     },
     staff_type: {
       type: 'number',
       columnType: 'tinyint',
       isInteger: true,
-      defaultsTo: 0
+      defaultsTo: 0,
+      allowNull: true
     },
     is_on_team: {
       type: 'number',
       columnType: 'tinyint',
       isInteger: true,
-      defaultsTo: 0
+      defaultsTo: 0,
+      allowNull: true
     },
     overlay_email: {
       type: 'number',
       columnType: 'tinyint',
       isInteger: true,
-      defaultsTo: 0
+      defaultsTo: 0,
+      allowNull: true
     },
     signup_device: {
       type: 'number',
       columnType: 'tinyint',
       isInteger: true,
-      defaultsTo: 0
+      defaultsTo: 0,
+      allowNull: true
     },
     signup_user_agent: {
       type: 'string',
@@ -259,7 +298,8 @@ module.exports = {
       type: 'number',
       columnType: 'int',
       isInteger: true,
-      defaultsTo: 0
+      defaultsTo: 0,
+      allowNull: true
     },
     custom_id: {
       type: 'string',

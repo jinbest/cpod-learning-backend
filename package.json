@@ -11,6 +11,7 @@
     "@sailshq/socket.io-redis": "^5.2.0",
     "aws-sdk": "^2.489.0",
     "axios": "^0.19.0",
+    "bull": "^3.10.0",
     "crypto-js": "^3.1.9-1",
     "grunt": "1.0.1",
     "grunt-contrib-sass": "^1.0.0",
@@ -18,6 +19,7 @@
     "ipdata": "^1.1.2",
     "machinepack-mailgun": "^0.6.0",
     "machinepack-mandrill": "^1.2.0",
+    "mysql": "^2.17.1",
     "node-mautic": "^1.0.2",
     "sails": "^1.2.2",
     "sails-hook-apianalytics": "^2.0.3",
@@ -25,7 +27,6 @@
     "sails-hook-orm": "^2.1.1",
     "sails-hook-sockets": "^1.5.5",
     "sails-mysql": "^1.0.1",
-    "skipper-better-s3": "^2.3.0",
     "universal-analytics": "^0.4.20",
     "xkpasswd": "^1.0.5"
   },
