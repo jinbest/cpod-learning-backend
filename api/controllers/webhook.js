@@ -17,24 +17,9 @@ module.exports = {
   },
 
 
-  fn: async function (inputs) {
-    try {
-      sails.log(this.req.mautic.lead_post_save_new);
-    } catch (e) {
+  fn: async function (req, res) {
 
-    }
-    try {
-      sails.log(this.req.contact);
-    } catch (e) {
-
-    }
-    try {
-      sails.log(this.req.data);
-    } catch (e) {
-
-    }
-    // All done.
-    sails.log(inputs);
+    sails.log(req)
 
   }
 
