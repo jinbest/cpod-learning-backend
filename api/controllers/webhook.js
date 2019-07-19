@@ -8,9 +8,6 @@ module.exports = {
 
 
   inputs: {
-    'mautic.lead_post_save_new': {
-      type: 'ref'
-    },
     trigger: {
       type: {}
     }
