@@ -121,13 +121,13 @@ module.exports = {
       allowNull: true
     },
     createdAt: {
-      type: 'string',
+      type: 'ref',
       columnType: 'datetime',
       columnName: 'created_at',
       autoCreatedAt: true
     },
     updatedAt: {
-      type: 'string',
+      type: 'ref',
       columnType: 'datetime',
       columnName: 'updated_at',
       autoUpdatedAt: true
@@ -145,9 +145,8 @@ module.exports = {
       defaultsTo: 888
     },
     birthday: {
-      type: 'string',
-      columnType: 'datetime',
-      allowNull: true
+      type: 'ref',
+      columnType: 'datetime'
     },
     mailing_address1: {
       type: 'string',

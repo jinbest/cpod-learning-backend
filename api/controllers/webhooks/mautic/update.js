@@ -30,13 +30,12 @@ module.exports = {
 
   fn: async function (inputs) {
     let email = '';
-    if (!inputs) {
-      try {
-        email = this.req.body['mautic.lead_post_save_new'][0].contact.fields.core.email.value;
-      } catch (e) {
-        sails.log('Invalid Webhook Event');
-      }
-    } else if (inputs.email) {
+    try {
+      email = this.req.body['mautic.lead_post_save_new'][0].contact.fields.core.email.value;
+    } catch (e) {
+      sails.log('Invalid Webhook Event');
+    }
+    if (email === '' && inputs.email) {
       email = inputs.email;
     } else {
       throw 'invalid'
