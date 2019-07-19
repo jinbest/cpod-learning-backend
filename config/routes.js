@@ -86,10 +86,11 @@ module.exports.routes = {
   'GET /api/v1/get-popular-lessons':                       { action: 'recap/get-popular-lessons' },
   'POST /api/v1/recap/get-lessons':                         { action: 'recap/get-user-lesson' },
 
-
+  'GET /test-job': { action: 'test-job' },
 
 
   //General Info Routes
+  '/api/v1/webhook':                                        { action: 'webhook' },
   'GET  /api/v1/ip-info':                                   { action: 'ip-info' },
   'GET /api/v1/generate-words':                              { action: 'generate-words' },
   // 'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
