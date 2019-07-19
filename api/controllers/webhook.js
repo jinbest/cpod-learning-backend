@@ -18,8 +18,11 @@ module.exports = {
 
 
   fn: async function (req, res) {
-
-    sails.log(Object.keys(this.req.body))
+    try {
+      sails.log(this.req.body['mautic.lead_post_save_new']);
+    } catch (e) {
+      sails.log(e);
+    }
 
   }
 
