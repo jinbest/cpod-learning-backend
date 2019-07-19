@@ -19,7 +19,7 @@ module.exports = {
 
   fn: async function (req, res) {
 
-    sails.log(req)
+    sails.log(this.req.body)
 
   }
 
