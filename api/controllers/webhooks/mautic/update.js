@@ -30,11 +30,21 @@ module.exports = {
 
   fn: async function (inputs) {
     let email = '';
+    let data = this.req.body;
     try {
-      this.req.body.forEach((item) => {
-        sails.log([0].contact.fields.core.email.value)
-      });
-      email = this.req.body[0][0].contact.fields.core.email.value;
+      if(data['mautic.lead_channel_subscription_changed']) {
+        email = data['mautic.lead_channel_subscription_changed'][0].contact.fields.core.email.value;
+      }
+      if(data['mautic.lead_post_save_new']) {
+        email = data['mautic.lead_post_save_new'][0].contact.fields.core.email.value;
+      }
+      if(data['mautic.lead_points_change']) {
+        email = data['mautic.lead_points_change'][0].contact.fields.core.email.value;
+      }
+      if(data['mautic.lead_post_save_update']) {
+        email = data['mautic.lead_post_save_update'][0].contact.fields.core.email.value;
+      }
+
     } catch (e) {
       sails.log('Invalid Webhook Event');
     }
@@ -62,12 +72,18 @@ module.exports = {
           .catch((err) => {
             done(new Error ('No Such User on ChinesePod'))
           });
+        if (!userData) {
+          done(new Error ('No Such User on ChinesePod'))
+        }
         let userOptions = await UserOptions.findOne({
           user_id: userData.id,
           option_key: 'level'
         }).catch((err) => {
           done(new Error ('No Such User on ChinesePod'))
         });
+        if (!userOptions) {
+          done(new Error ('No Such User on ChinesePod'))
+        }
         let userSiteLinks = await UserSiteLinks.findOne({user_id: userData.id});
         let subscription = 'Free';
         switch (userSiteLinks.usertype_id) {
