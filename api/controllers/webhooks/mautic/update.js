@@ -31,7 +31,9 @@ module.exports = {
   fn: async function (inputs) {
     let email = '';
     try {
-      sails.log(this.req.body[0]);
+      this.req.body.forEach((item) => {
+        sails.log([0].contact.fields.core.email.value)
+      });
       email = this.req.body[0][0].contact.fields.core.email.value;
     } catch (e) {
       sails.log('Invalid Webhook Event');
