@@ -31,18 +31,23 @@ module.exports = {
   fn: async function (inputs) {
     let email = '';
     let data = this.req.body;
+    let mauticData ={};
     try {
       if(data['mautic.lead_channel_subscription_changed']) {
-        email = data['mautic.lead_channel_subscription_changed'][0].contact.fields.core.email.value;
+        mauticData = data['mautic.lead_channel_subscription_changed'][0];
+        email = mauticData.contact.fields.core.email.value;
       }
       if(data['mautic.lead_post_save_new']) {
-        email = data['mautic.lead_post_save_new'][0].contact.fields.core.email.value;
+        mauticData = data['mautic.lead_post_save_new'][0];
+        email = mauticData.contact.fields.core.email.value;
       }
       if(data['mautic.lead_points_change']) {
-        email = data['mautic.lead_points_change'][0].contact.fields.core.email.value;
+        mauticData = data['mautic.lead_points_change'][0];
+        email = mauticData.contact.fields.core.email.value;
       }
       if(data['mautic.lead_post_save_update']) {
-        email = data['mautic.lead_post_save_update'][0].contact.fields.core.email.value;
+        mauticData = data['mautic.lead_post_save_update'][0];
+        email = mauticData.contact.fields.core.email.value;
       }
 
     } catch (e) {
@@ -53,6 +58,8 @@ module.exports = {
     } else if (email === '') {
       throw 'invalid'
     }
+
+
     var Queue = require('bull');
     var userInfoQueue = new Queue('UserInfoQueue', sails.config.jobs.url);
     userInfoQueue.on('ready', () => {
@@ -64,6 +71,8 @@ module.exports = {
     userInfoQueue.on('completed', (job, result) => {
       sails.log.info('userInfoQueue job finished:', job.data.email, result)
     });
+
+
     userInfoQueue.process('Update Data to Mautic', 100,async function (job, done) {
       // console.log(job.data);
       // done('banana');
@@ -75,116 +84,129 @@ module.exports = {
         if (!userData) {
           done(new Error ('No Such User on ChinesePod'))
         }
-        let userOptions = await UserOptions.findOne({
-          user_id: userData.id,
-          option_key: 'level'
-        }).catch((err) => {
-          done(new Error ('No Such User on ChinesePod'))
-        });
-        if (!userOptions) {
-          done(new Error ('No Such User on ChinesePod'))
+        if (!userData.member_id) {
+          userData = await User.updateOne({id:userData.id})
+            .set({member_id:job.data.mauticData.contact.id})
         }
-        let userSiteLinks = await UserSiteLinks.findOne({user_id: userData.id});
-        let subscription = 'Free';
-        switch (userSiteLinks.usertype_id) {
-          case 5:
-            subscription = 'Premium'; //Premium
-            break;
-          case 6:
-            subscription = 'Basic'; //Basic
-            break;
-          case 7:
-            subscription = 'Free'; //Free
-            break;
-          case 1:
-            subscription = 'Premium'; //Admin
-            break;
-        }
-        let levelText = 'Newbie';
-        if(userOptions) {
-          switch (userOptions.option_value) {
-            case 1:
-              levelText = 'Newbie';
-              break;
-            case 2:
-              levelText = 'Elementary';
-              break;
-            // Due to an old mistake PreInt === 6
-            case 6:
-              levelText = 'Pre Intermediate';
-              break;
-            case 3:
-              levelText = 'Intermediate';
-              break;
-            case 4:
-              levelText = 'Upper Intermediate';
-              break;
+        // Check if recently updated
+        if (userData.updatedAt < new Date(Date.now() - 60 * 60 * 1000)) {
+          let userOptions = await UserOptions.findOne({
+            user_id: userData.id,
+            option_key: 'level'
+          }).catch((err) => {
+            done(new Error ('No Such User on ChinesePod'))
+          });
+          if (!userOptions) {
+            done(new Error ('No Such User on ChinesePod'))
+          }
+          let userSiteLinks = await UserSiteLinks.findOne({user_id: userData.id});
+          let subscription = 'Free';
+          switch (userSiteLinks.usertype_id) {
             case 5:
-              levelText = 'Advanced';
+              subscription = 'Premium'; //Premium
+              break;
+            case 6:
+              subscription = 'Basic'; //Basic
+              break;
+            case 7:
+              subscription = 'Free'; //Free
+              break;
+            case 1:
+              subscription = 'Premium'; //Admin
               break;
           }
-        }
+          let levelText = 'Newbie';
+          if(userOptions) {
+            switch (userOptions.option_value) {
+              case 1:
+                levelText = 'Newbie';
+                break;
+              case 2:
+                levelText = 'Elementary';
+                break;
+              // Due to an old mistake PreInt === 6
+              case 6:
+                levelText = 'Pre Intermediate';
+                break;
+              case 3:
+                levelText = 'Intermediate';
+                break;
+              case 4:
+                levelText = 'Upper Intermediate';
+                break;
+              case 5:
+                levelText = 'Advanced';
+                break;
+            }
+          }
 
-        //TODO CURRENT MAUTIC API UPDATE PROCESS
-        // const MauticConnector = require('node-mautic');
-        // const mauticConnector = new MauticConnector({
-        //   apiUrl: 'https://email.chinesepod.com',
-        //   username: 'CpodJsWebsite',
-        //   password: 'zro5YdSykdqYkkgPMBH9yCcGPguGdAbk8IXyjnCW'
-        // });
-        // let contactId = await mauticConnector.contacts.listContacts({search:`email:${job.data.email}`});
-        // sails.log.info(contactId.contacts);
-        // if (Object.keys(contactId.contacts).length === 1) {
-        //   let updatedUser = await mauticConnector.contacts.editContact('PATCH',{
-        //     level: level,
-        //     subscription: subscription,
-        //     fullname: userData.name,
-        //     expirydate: userSiteLinks.expiry,
-        //     userid: userData.id
-        //   },Object.keys(contactId.contacts));
-        //   done();
-        // } else {
-        //   sails.log.error(`Job Failed as user email is not unique - ${job.data.email}`)
-        // }
-        //TODO SAILS ORM PROCESS
-
-        let updatedContact = await MauticContacts.updateOne({email:job.data.email})
-          .set({
-            level:levelText,
+          // TODO CURRENT MAUTIC API UPDATE PROCESS
+          const MauticConnector = require('node-mautic');
+          const mauticConnector = new MauticConnector({
+            apiUrl: 'https://email.chinesepod.com',
+            username: 'CpodJsWebsite',
+            password: 'zro5YdSykdqYkkgPMBH9yCcGPguGdAbk8IXyjnCW'
+          });
+          let updatedUser = await mauticConnector.contacts.editContact('PATCH',{
+            level: level,
             subscription: subscription,
             fullname: userData.name,
             expirydate: userSiteLinks.expiry,
             userid: userData.id
-          });
-        if(updatedContact) {
-          done(null,'updated');
+          },userData.member_id);
+          if (updatedUser) {
+            done(null, 'Updated on Mautic');
+          } else {
+            done(new Error('User Data could not be pushed to Mautic'))
+          }
+
+
+          //TODO CLEANUP SAILS ORM PROCESS
+
+          // let updatedContact = await MauticContacts.updateOne({email:job.data.email})
+          //   .set({
+          //     level:levelText,
+          //     subscription: subscription,
+          //     fullname: userData.name,
+          //     expirydate: userSiteLinks.expiry,
+          //     userid: userData.id
+          //   });
+          // if(updatedContact) {
+          //   done(null,'updated');
+          // } else {
+          //   MauticContacts.findOrCreate({email:job.data.email},{
+          //     email:job.data.email,
+          //     level:levelText,
+          //     subscription: subscription,
+          //     fullname: userData.name,
+          //     expirydate: userSiteLinks.expiry,
+          //     userid: userData.id
+          //   }).exec(async (err, user, wasCreated) => {
+          //     if (err) {
+          //       sails.log(err);
+          //       done(new Error('Could not update or create'));
+          //     }
+          //     if (wasCreated) {
+          //       done(null,'created')
+          //     }
+          //     if (user) {
+          //       done(new Error('User exists, but could not be updated'))
+          //     }
+          //   });
+          // }
+
         } else {
-          MauticContacts.findOrCreate({email:job.data.email},{
-            email:job.data.email,
-            level:levelText,
-            subscription: subscription,
-            fullname: userData.name,
-            expirydate: userSiteLinks.expiry,
-            userid: userData.id
-          }).exec(async (err, user, wasCreated) => {
-            if (err) {
-              sails.log(err);
-              done(new Error('Could not update or create'));
-            }
-            if (wasCreated) {
-              done(null,'created')
-            }
-            if (user) {
-              done(new Error('User exists, but could not be updated'))
-            }
-          });
-
+          done(null,'Recently Updated')
         }
       } else {
         done(new Error('No User Email provided'));
       }
     });
-    userInfoQueue.add('Update Data to Mautic', {email: email})
+
+    userInfoQueue.add('Update Data to Mautic', {
+      email: email,
+      mauticData: mauticData
+    })
 
   }
 
