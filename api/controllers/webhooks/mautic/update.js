@@ -115,7 +115,7 @@ module.exports = {
               subscription = 'Premium'; //Admin
               break;
           }
-          let levelText = 'Newbie';
+          let levelText = '';
           if(userOptions) {
             switch (userOptions.option_value) {
               case 1:
@@ -159,41 +159,6 @@ module.exports = {
           } else {
             done(new Error('User Data could not be pushed to Mautic'))
           }
-
-
-          //TODO CLEANUP SAILS ORM PROCESS
-
-          // let updatedContact = await MauticContacts.updateOne({email:job.data.email})
-          //   .set({
-          //     level:levelText,
-          //     subscription: subscription,
-          //     fullname: userData.name,
-          //     expirydate: userSiteLinks.expiry,
-          //     userid: userData.id
-          //   });
-          // if(updatedContact) {
-          //   done(null,'updated');
-          // } else {
-          //   MauticContacts.findOrCreate({email:job.data.email},{
-          //     email:job.data.email,
-          //     level:levelText,
-          //     subscription: subscription,
-          //     fullname: userData.name,
-          //     expirydate: userSiteLinks.expiry,
-          //     userid: userData.id
-          //   }).exec(async (err, user, wasCreated) => {
-          //     if (err) {
-          //       sails.log(err);
-          //       done(new Error('Could not update or create'));
-          //     }
-          //     if (wasCreated) {
-          //       done(null,'created')
-          //     }
-          //     if (user) {
-          //       done(new Error('User exists, but could not be updated'))
-          //     }
-          //   });
-          // }
 
         } else {
           done(null,'Recently Updated')
