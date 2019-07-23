@@ -44,9 +44,9 @@ module.exports = {
       id: inputs.sessionId.toLowerCase()
     });
 
-    // if(!session) {
-    //   throw 'invalid'
-    // }
+    if(!session) {
+      throw 'invalid'
+    }
 
     //TODO REMOVE THIS DUMMY API CALL PROCESS
     let currentHour = new Date().getHours();
