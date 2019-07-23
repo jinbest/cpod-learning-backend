@@ -44,92 +44,103 @@ module.exports = {
       id: inputs.sessionId.toLowerCase()
     });
 
-    if(!session) {
-      throw 'invalid'
+    // if(!session) {
+    //   throw 'invalid'
+    // }
+
+    //TODO REMOVE THIS DUMMY API CALL PROCESS
+    let currentHour = new Date().getHours();
+    let latestStudiedLesson = '4121';
+
+    if (currentHour >= 3 && currentHour < 9) {
+      latestStudiedLesson = '4123'
+    } else if (currentHour >= 9 && currentHour < 15) {
+      latestStudiedLesson = '4124'
+    } else if (currentHour >= 15 && currentHour < 21) {
+      latestStudiedLesson = '4125'
+    } else if (currentHour >= 21 && currentHour < 24) {
+      latestStudiedLesson = '4126'
     }
 
-    let user = await User.findOne({
-      email: session.email
-    });
-
-    if(!user) {
-      throw 'invalid'
-    }
-    //Connect Sails Session to PHP API Session
-    this.req.session.userId = user.id;
-
-    let availableRecaps = await sails.helpers.listRecapLessons();
-
-    //TODO Select Relevant lesson REWRITE TO LOG LOOKUP
-    // let latestStudiedLesson = await UserContents.find({
-    //     user_id: user.id,
-    //     studied: 1
-    //   })
-    //   .sort('createdAt desc')
-    //   .limit(1);
-
-    let sql = `
-    SELECT DISTINCT log.accesslog_url
-    FROM chinesepod_logging.cp_accesslog log
-    WHERE log.accesslog_time > $1
-    AND log.accesslog_user = $2
-    AND log.accesslog_url LIKE '%v3_id%'
-    ORDER BY log.accesslog_time DESC;
-    `;
-
-    let latestLoggedLessons = await sails.sendNativeQuery(
-      sql, [new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], session.email]
-    );
-    let latestStudiedLesson = [];
-    latestLoggedLessons['rows'].some( function(item) {
-      if (availableRecaps.includes(item['accesslog_url'].split('v3_id=')[1].split('&')[0])) {
-        return latestStudiedLesson = item['accesslog_url'].split('v3_id=')[1].split('&')[0];
-      }
-    });
-
-    if (latestStudiedLesson === undefined || latestStudiedLesson.length === 0){
-      throw 'noLesson'
+      return {
+      lessonId: latestStudiedLesson, //latestStudiedLesson
+      charSet: 'simplified', //charset
+      subscription: 'premium' //subscription
     }
 
-    //TODO Select User CharSet
-    let userSettings = await UserSettings.findOne({
-      user_id: user.id
-    });
-
-    let charSet = 'simplified';
-
-    try {
-      let rawChar = userSettings.setting.split('"ctype";i:')[1].slice(0,1);
-      if (rawChar == 2) {
-        charSet = 'traditional';
-      }
-      //TODO Implement 'both' as a character output "chars";i:0;
-      //  `a:8:{s:5:"ctype";i:1;s:3:"pdf";i:0;s:5:"chars";i:0;s:5:"trans";i:1;s:10:"tweet_post";s:1:"1";s:16:"reply_tweet_post";s:1:"1";s:18:"group_conversation";s:1:"1";s:13:"exercise_lang";s:1:"3";}`
-
-    } catch (e) {
-      console.log('No Char Setting');
-      //TODO Update Char Settings
-    }
-
-    //TODO Select User Subscription Status
-    let UserSiteLink = await UserSiteLinks.findOne({
-      user_id: user.id
-    });
-
-    let subscription = 'free';
-    switch (UserSiteLink.usertype_id) {
-      case 6: subscription = 'basic';
-      case 7: subscription = 'premium';
-      case 1: subscription = 'premium'
-    }
-
-    //TODO Return All Data
-
-    return {
-      lessonId: latestStudiedLesson,
-      charSet: charSet,
-      subscription: subscription
-    }
+    // let user = await User.findOne({
+    //   email: session.email
+    // });
+    //
+    // if(!user) {
+    //   throw 'invalid'
+    // }
+    // //Connect Sails Session to PHP API Session
+    // this.req.session.userId = user.id;
+    //
+    // let availableRecaps = await sails.helpers.listRecapLessons();
+    //
+    // let sql = `
+    // SELECT DISTINCT log.accesslog_url
+    // FROM chinesepod_logging.cp_accesslog log
+    // WHERE log.accesslog_time > $1
+    // AND log.accesslog_user = $2
+    // AND log.accesslog_url LIKE '%v3_id%'
+    // ORDER BY log.accesslog_time DESC;
+    // `;
+    //
+    // let latestLoggedLessons = await sails.sendNativeQuery(
+    //   sql, [new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], session.email]
+    // );
+    // let latestStudiedLesson = [];
+    // latestLoggedLessons['rows'].some( function(item) {
+    //   if (availableRecaps.includes(item['accesslog_url'].split('v3_id=')[1].split('&')[0])) {
+    //     return latestStudiedLesson = item['accesslog_url'].split('v3_id=')[1].split('&')[0];
+    //   }
+    // });
+    //
+    // if (latestStudiedLesson === undefined || latestStudiedLesson.length === 0){
+    //   throw 'noLesson'
+    // }
+    //
+    // //TODO Select User CharSet
+    // let userSettings = await UserSettings.findOne({
+    //   user_id: user.id
+    // });
+    //
+    // let charSet = 'simplified';
+    //
+    // try {
+    //   let rawChar = userSettings.setting.split('"ctype";i:')[1].slice(0,1);
+    //   if (rawChar == 2) {
+    //     charSet = 'traditional';
+    //   }
+    //   //TODO Implement 'both' as a character output "chars";i:0;
+    //   //  `a:8:{s:5:"ctype";i:1;s:3:"pdf";i:0;s:5:"chars";i:0;s:5:"trans";i:1;s:10:"tweet_post";s:1:"1";s:16:"reply_tweet_post";s:1:"1";s:18:"group_conversation";s:1:"1";s:13:"exercise_lang";s:1:"3";}`
+    //
+    // } catch (e) {
+    //   console.log('No Char Setting');
+    //   //TODO Update Char Settings
+    // }
+    //
+    // //TODO Select User Subscription Status
+    // let UserSiteLink = await UserSiteLinks.findOne({
+    //   user_id: user.id
+    // });
+    //
+    // let subscription = 'free';
+    // switch (UserSiteLink.usertype_id) {
+    //   case 6: subscription = 'basic';
+    //   case 7: subscription = 'premium';
+    //   case 1: subscription = 'premium'
+    // }
+    //
+    // //TODO FIX THIS TO ACTUAL VARIABLES
+    // return {
+    //   lessonId: latestStudiedLesson, //latestStudiedLesson
+    //   charSet: 'simplified', //charset
+    //   subscription: 'premium' //subscription
+    // }
 
   }
 
