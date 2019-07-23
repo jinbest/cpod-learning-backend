@@ -72,10 +72,7 @@ module.exports = {
       sails.log.info('userInfoQueue job finished:', job.data.email, result)
     });
 
-
     userInfoQueue.process('Update Data to Mautic', 100,async function (job, done) {
-      // console.log(job.data);
-      // done('banana');
       if (job.data.email) {
         let userData = await User.findOne({email: job.data.email})
           .catch((err) => {
@@ -171,7 +168,11 @@ module.exports = {
     userInfoQueue.add('Update Data to Mautic', {
       email: email,
       mauticData: mauticData
-    })
+    },
+      {
+        attempts: 2,
+        timeout: 30000
+      })
 
   }
 
