@@ -145,7 +145,7 @@ module.exports = {
             password: 'zro5YdSykdqYkkgPMBH9yCcGPguGdAbk8IXyjnCW'
           });
           let updatedUser = await mauticConnector.contacts.editContact('PATCH',{
-            level: level,
+            level: levelText,
             subscription: subscription,
             fullname: userData.name,
             expirydate: userSiteLinks.expiry,

@@ -82,15 +82,15 @@ module.exports.routes = {
 
   // Information Routes - Health Check
   '/api/v1/request':                                     { action: 'health/request' },
-  '/api/v1/health/time':                                     { action: 'health/time' },
+  '/api/v1/health/time':                                 { action: 'health/time' },
 
   //Lesson Recap Routes
-  'GET /api/v1/get-popular-lessons':                       { action: 'recap/get-popular-lessons' },
-  'POST /api/v1/recap/get-lessons':                         { action: 'recap/get-user-lesson' },
+  'GET /api/v1/get-popular-lessons':                     { action: 'recap/get-popular-lessons' },
+  'POST /api/v1/recap/get-lessons':                      { action: 'recap/get-user-lesson' },
 
   //General Info Routes
-  'GET  /api/v1/health/ip-info':                                   { action: 'health/ip-info' },
-  'GET /api/v1/health/generate-words':                              { action: 'generate-words' },
+  'GET  /api/v1/health/ip-info':                         { action: 'health/ip-info' },
+  'GET /api/v1/health/generate-words':                   { action: 'generate-words' },
   // 'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
   // 'POST  /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },
   // 'POST  /api/v1/deliver-contact-form-message':          { action: 'deliver-contact-form-message' },
