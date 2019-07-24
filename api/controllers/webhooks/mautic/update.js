@@ -171,7 +171,7 @@ module.exports = {
     },
       {
         attempts: 2,
-        timeout: 30000,
+        timeout: 180000,
         removeOnComplete: true
       })
 
