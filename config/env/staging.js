@@ -70,9 +70,7 @@ module.exports = Object.assign({}, PRODUCTION_CONFIG, {
 
   security: Object.assign({}, PRODUCTION_CONFIG.security, {
     cors: {
-      allowOrigins: [
-        '*',
-      ]
+      allowOrigins: '*'
     },
   }),
 
