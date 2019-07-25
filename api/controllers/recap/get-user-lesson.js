@@ -63,6 +63,7 @@ module.exports = {
     }
 
       return {
+      title: 'Lesson Title: ' + latestStudiedLesson,
       lessonId: latestStudiedLesson, //latestStudiedLesson
       charSet: 'simplified', //charset
       subscription: 'premium' //subscription
