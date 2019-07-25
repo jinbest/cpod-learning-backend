@@ -76,25 +76,29 @@ module.exports = {
       if (job.data.email) {
         let userData = await User.findOne({email: job.data.email})
           .catch((err) => {
-            done(new Error ('No Such User on ChinesePod'))
+            //TODO SOMETHING HERE
+            done( null, 'No Such User on ChinesePod')
           });
         if (!userData) {
-          done(new Error ('No Such User on ChinesePod'))
+          //TODO SOMETHING HERE
+          done( null, 'No Such User on ChinesePod')
         }
         if (!userData.member_id) {
           userData = await User.updateOne({id:userData.id})
             .set({member_id:job.data.mauticData.contact.id})
         }
         // Check if recently updated
-        if (userData.updatedAt < new Date(Date.now() - 60 * 60 * 1000)) {
+        if (true) {
           let userOptions = await UserOptions.findOne({
             user_id: userData.id,
             option_key: 'level'
           }).catch((err) => {
-            done(new Error ('No Such User on ChinesePod'))
+            //TODO SOMETHING HERE
+            done( null, 'No Such User on ChinesePod')
           });
           if (!userOptions) {
-            done(new Error ('No Such User on ChinesePod'))
+            //TODO SOMETHING HERE
+            done( null, 'No Such User on ChinesePod')
           }
           let userSiteLinks = await UserSiteLinks.findOne({user_id: userData.id});
           let subscription = 'Free';
@@ -161,7 +165,7 @@ module.exports = {
           done(null,'Recently Updated')
         }
       } else {
-        done(new Error('No User Email provided'));
+        done(null, 'Anonymous User');
       }
     });
 
