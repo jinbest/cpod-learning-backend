@@ -103,7 +103,7 @@ module.exports = {
           type: 'levels',
           value: value
         });
-        return userData;
+        sails.log.info(userData);
       } else if (0 < parseInt(value) && parseInt(value) <= 6) {
         let levelId = parseInt(value);
         let level = 'newbie';
@@ -137,17 +137,18 @@ module.exports = {
           type: 'levels',
           value: level
         });
-        return userData;
       } else {
         throw 'invalidValue';
       }
+    } else if (type === 'charSet') {
+      //TODO Char Set Logic
     } else {
       userData = await sails.helpers.users.setOption.with({
         userId: user.id,
         type: type,
         value: value
       });
-      return userData;
     }
+    return userData;
   }
 };

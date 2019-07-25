@@ -47,8 +47,7 @@ module.exports = {
       option_key: inputs.type,
       option_value: inputs.value
     };
-
-    let userData = await UserOptions.findOrCreate({
+    return await UserOptions.findOrCreate({
       user_id: inputs.userId,
       option_key: inputs.type
     },valuesToSet)
@@ -57,12 +56,11 @@ module.exports = {
         if (wasCreated) {
         } else {
           valuesToSet.id = userOptions.id;
-          await UserOptions.updateOne({id: userOptions.id})
+          userOptions = await UserOptions.updateOne({id: userOptions.id})
             .set(valuesToSet);
         }
         return userOptions
-      });
-    return userData;
+      })
   }
 
 
