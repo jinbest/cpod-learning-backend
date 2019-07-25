@@ -47,6 +47,10 @@ module.exports = {
       description: 'Requested settings type does not exist.',
     },
 
+    invalidValue: {
+      responseType: 'badRequest',
+      description: 'Requested settings value is invalid.',
+    },
   },
 
   fn: async function (inputs) {
@@ -56,35 +60,94 @@ module.exports = {
     const type = inputs.type.toLowerCase();
     const value = typeof inputs.value  === 'string' ? inputs.value.toLowerCase() : inputs.value;
 
-    const userId = inputs.userId ? inputs.userId :
+    const user = inputs.userId ? inputs.userId :
       await User.findOne({
         email: inputs.emailAddress
       });
 
-    if (!userId) {
+    if (!user) {
       throw 'invalid';
     }
-
-    let valuesToSet = {
-      user_id: userId,
-      option_key: type,
-      option_value: value
-    };
-
-    let userData = await UserOptions.findOrCreate({
-      user_id: userId,
-      option_key: type
-    },valuesToSet)
-      .exec(async(err, userOptions, wasCreated) => {
-        if (err) { throw 'invalid' }
-        if (wasCreated) {
-        } else {
-          valuesToSet.id = userOptions.id;
-          await UserOptions.updateOne({id: userOptions.id})
-            .set(valuesToSet);
+    let userData = {};
+    if (type === 'level') {
+      //TODO Helper Set user Level validation
+      if (['newbie', 'elementary', 'preInt', 'intermediate', 'upperInt', 'advanced'].includes(value)) {
+        let levelId = 1;
+        switch (value) {
+          case 'newbie':
+            levelId = 1;
+            break;
+          case 'elementary':
+            levelId = 2;
+            break;
+          case 'preInt':
+            levelId = 6;
+            break;
+          case 'intermediate':
+            levelId = 3;
+            break;
+          case 'upperInt':
+            levelId = 4;
+            break;
+          case 'advanced':
+            levelId = 5;
+            break;
         }
-        return userOptions
+        await sails.helpers.users.setOption.with({
+          userId: user.id,
+          type: 'level',
+          value: levelId
+        });
+        userData = await sails.helpers.users.setOption.with({
+          userId: user.id,
+          type: 'levels',
+          value: value
+        });
+        return userData;
+      } else if (0 < parseInt(value) && parseInt(value) <= 6) {
+        let levelId = parseInt(value);
+        let level = 'newbie';
+        switch (levelId) {
+          case 1:
+            level = 'newbie';
+            break;
+          case 2:
+            level = 'elementary';
+            break;
+          case 6:
+            level = 'preInt';
+            break;
+          case 3:
+            level = 'intermediate';
+            break;
+          case 4:
+            level = 'upperInt';
+            break;
+          case 5:
+            level = 'advanced';
+            break;
+        }
+        await sails.helpers.users.setOption.with({
+          userId: user.id,
+          type: 'level',
+          value: levelId
+        });
+        userData = await sails.helpers.users.setOption.with({
+          userId: user.id,
+          type: 'levels',
+          value: level
+        });
+        return userData;
+      } else {
+        throw 'invalidValue';
+      }
+    } else {
+      userData = await sails.helpers.users.setOption.with({
+        userId: user.id,
+        type: type,
+        value: value
       });
-    return userData;
+      return userData;
+    }
   }
 };

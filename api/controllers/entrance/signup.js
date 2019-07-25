@@ -24,11 +24,18 @@ the account verification message.)`,
       type: 'string',
       isEmail: true,
       description: 'The email address for the new account, e.g. m@example.com.',
-      extendedDescription: 'Must be a valid email address.',
     },
     optIn: {
       type: 'boolean',
       description: 'Checkbox to Receive ChinesePod Marketing emails',
+    },
+    level: {
+      type: 'string',
+      description: 'User level as one of these types [newbie, elementary, preInt, intermediate, upperInt, advanced]',
+    },
+    charSet: {
+      type: 'string',
+      description: 'User character set [simplified, traditional]',
     }
   },
 
@@ -188,6 +195,56 @@ the account verification message.)`,
         console.log(err)
       });
     }
-    return newUserRecord.id;
+    let level = '';
+    if (inputs.level) {
+      //TODO Helper Set user Level validation
+      level = inputs.level.toString().toLowerCase();
+      if (['newbie', 'elementary', 'preInt', 'intermediate', 'upperInt', 'advanced'].includes(level)) {
+        let levelId = 1;
+        switch (level) {
+          case 'newbie':
+            levelId = 1;
+            break;
+          case 'elementary':
+            levelId = 2;
+            break;
+          case 'preInt':
+            levelId = 6;
+            break;
+          case 'intermediate':
+            levelId = 3;
+            break;
+          case 'upperInt':
+            levelId = 4;
+            break;
+          case 'advanced':
+            levelId = 5;
+            break;
+        }
+        await sails.helpers.users.setOption.with({
+          userId: newUserRecord.id,
+          type: 'level',
+          value: levelId
+        });
+        await sails.helpers.users.setOption.with({
+          userId: newUserRecord.id,
+          type: 'levels',
+          value: level
+        })
+      } else {
+        level = 'INVALID | User level as one of these types [newbie, elementary, preInt, intermediate, upperInt, advanced]'
+      }
+    }
+    let charSet = '';
+    if (inputs.charSet) {
+      charSet = inputs.charSet
+      //TODO Helper Set user Char Set
+    }
+    return {
+      id: newUserRecord.id,
+      optIn: inputs.optIn,
+      level: level ? level : '',
+      charSet: charSet ? charSet : ''
+    };
   }
 };
