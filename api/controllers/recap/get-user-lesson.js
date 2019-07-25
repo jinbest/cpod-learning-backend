@@ -49,7 +49,7 @@ module.exports = {
     }
 
     //TODO REMOVE THIS DUMMY API CALL PROCESS
-    let currentHour = new Date().getHours();
+    let currentHour = new Date(new Date() - 4 * 60 * 60 * 1000).getHours(); //NY Time
     let latestStudiedLesson = '4121';
 
     if (currentHour >= 3 && currentHour < 9) {
