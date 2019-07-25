@@ -68,6 +68,14 @@ module.exports = Object.assign({}, PRODUCTION_CONFIG, {
     //--------------------------------------------------------------------------
   }),
 
+  security: Object.assign({}, PRODUCTION_CONFIG.security, {
+    cors: {
+      allowOrigins: [
+        '*',
+      ]
+    },
+  }),
+
   custom: Object.assign({}, PRODUCTION_CONFIG.custom, {
 
     baseUrl: 'https://staging.chinesepod.com',
@@ -94,5 +102,4 @@ module.exports = Object.assign({}, PRODUCTION_CONFIG, {
   swaggerConfig: Object.assign({}, PRODUCTION_CONFIG.swaggerConfig, {
     disable: false,
   })
-
 });
