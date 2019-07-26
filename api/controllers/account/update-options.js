@@ -68,7 +68,7 @@ module.exports = {
     if (!user) {
       throw 'invalid';
     }
-    let userData = {};
+    var userData = {};
     if (type === 'level') {
       //TODO Helper Set user Level validation
       if (['newbie', 'elementary', 'preInt', 'intermediate', 'upperInt', 'advanced'].includes(inputs.value)) {
@@ -140,8 +140,13 @@ module.exports = {
       } else {
         throw 'invalidValue';
       }
-    } else if (type === 'charSet') {
+    } else if (type === 'charset') {
       //TODO Char Set Logic
+      userData = await sails.helpers.users.setCharSet.with({
+        userId:user.id,
+        charSet:inputs.value
+      });
+      console.log(userData)
     } else {
       userData = await sails.helpers.users.setOption.with({
         userId: user.id,

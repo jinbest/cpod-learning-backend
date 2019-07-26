@@ -84,13 +84,10 @@ module.exports = {
       });
     }
     if (inputs.charSet) {
-      let charSet = inputs.charSet.toLowerCase();
-      await sails.helpers.updateOptions.with({
+      await sails.helpers.users.setCharSet.with({
         userId: this.req.session.userId,
-        type: 'charSet',
-        value: charSet.toUpperCase()
+        charSet: inputs.charSet.toLowerCase()
       });
     }
-    return;
   }
 };
