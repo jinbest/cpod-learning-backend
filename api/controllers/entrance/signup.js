@@ -198,7 +198,7 @@ the account verification message.)`,
     let level = '';
     if (inputs.level) {
       //TODO Helper Set user Level validation
-      level = inputs.level.toString().toLowerCase();
+      level = inputs.level.toString();
       if (['newbie', 'elementary', 'preInt', 'intermediate', 'upperInt', 'advanced'].includes(level)) {
         let levelId = 1;
         switch (level) {
