@@ -59,13 +59,13 @@ module.exports = {
           levelValue = 2;
           break;
           // Due to an old mistake PreInt === 6
-        case 'preInt':
+        case 'preint':
           levelValue = 6;
           break;
         case 'intermediate':
           levelValue = 3;
           break;
-        case 'upperInt':
+        case 'upperint':
           levelValue = 4;
           break;
         case 'advanced':
@@ -80,7 +80,7 @@ module.exports = {
       await sails.helpers.users.setOption.with({
         userId: this.req.session.userId,
         type: 'levels',
-        value: level.toUpperCase()
+        value: level.toLowerCase()
       });
     }
     if (inputs.charSet) {
