@@ -72,12 +72,12 @@ module.exports = {
           levelValue = 5;
           break;
       }
-      await sails.helpers.updateOptions.with({
+      await sails.helpers.users.setOption.with({
         userId: this.req.session.userId,
         type: 'level',
         value: levelValue
       });
-      await sails.helpers.updateOptions.with({
+      await sails.helpers.users.setOption.with({
         userId: this.req.session.userId,
         type: 'levels',
         value: level.toUpperCase()

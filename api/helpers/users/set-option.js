@@ -56,10 +56,9 @@ module.exports = {
         if (wasCreated) {
         } else {
           valuesToSet.id = userOptions.id;
-          userOptions = await UserOptions.updateOne({id: userOptions.id})
+          return await UserOptions.updateOne({id: userOptions.id})
             .set(valuesToSet);
         }
-        return userOptions
       })
   }
 

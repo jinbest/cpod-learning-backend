@@ -10,7 +10,6 @@ module.exports = {
       type: "number",
       columnType: "int",
       isInteger: true,
-      required: true,
       autoIncrement: true
     },
     user_id: {
@@ -24,7 +23,7 @@ module.exports = {
       type: "string",
       columnType: "datetime",
       columnName: 'updated_at',
-      required: true
+      autoUpdatedAt: true
     },
     setting: {
       type: "string",
@@ -40,7 +39,8 @@ module.exports = {
     im_address: {
       type: "string",
       columnType: "varchar",
-      maxLength: 255
+      maxLength: 255,
+      allowNull: true
     },
     im_status: {
       type: "number",
