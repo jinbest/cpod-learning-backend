@@ -72,13 +72,13 @@ module.exports = {
       sails.log.info('userInfoQueue failed:', job.id, e);
     });
     userInfoQueue.on('completed', (job, result) => {
-      sails.log.info('userInfoQueue job finished:', job.data.email, result)
+      sails.log.info('userInfoQueue job finished:', job.data.email, result);
       cleanupQueue.add(job, {
         jobId: job.id,
         // delete job after one week
         delay: 1000 * 60 * 60 * 24 * 7,
         removeOnComplete: true
-      })
+      });
     });
 
     cleanupQueue.process(async job => {
