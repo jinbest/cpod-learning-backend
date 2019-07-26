@@ -62,6 +62,8 @@ module.exports = {
 
     var Queue = require('bull');
     var userInfoQueue = new Queue('UserInfoQueue', sails.config.jobs.url);
+    var cleanupQueue = new Queue('CleanupQueue', sails.config.jobs.url);
+
     userInfoQueue.on('ready', () => {
       sails.log.info('userInfoQueue ready!')
     });
@@ -70,6 +72,20 @@ module.exports = {
     });
     userInfoQueue.on('completed', (job, result) => {
       sails.log.info('userInfoQueue job finished:', job.data.email, result)
+      cleanup.add(job, {
+        jobId: job.id,
+        // delete job after one week
+        delay: 1000 * 60 * 60 * 24 * 7,
+        removeOnComplete: true
+      })
+    });
+
+    cleanupQueue.process(async job => {
+      const userInfoJob = await userInfoQueue.getJob(job.id);
+      if (!userInfoJob) {
+        return;
+      }
+      userInfoJob.remove();
     });
 
     userInfoQueue.process('Update Data to Mautic', 100,async function (job, done) {
@@ -169,14 +185,15 @@ module.exports = {
       }
     });
 
+
+
     userInfoQueue.add('Update Data to Mautic', {
       email: email,
       mauticData: mauticData
     },
       {
         attempts: 2,
-        timeout: 180000,
-        removeOnComplete: true
+        timeout: 180000
       })
 
   }
