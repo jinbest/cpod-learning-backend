@@ -62,17 +62,18 @@ module.exports = {
 
     var Queue = require('bull');
     var userInfoQueue = new Queue('UserInfoQueue', sails.config.jobs.url);
+
     var cleanupQueue = new Queue('CleanupQueue', sails.config.jobs.url);
 
     userInfoQueue.on('ready', () => {
-      sails.log.info('userInfoQueue ready!')
+      sails.log.info('userInfoQueue ready!');
     });
     userInfoQueue.on('failed', (job, e) => {
-      sails.log.info('userInfoQueue failed:', job.id, e)
+      sails.log.info('userInfoQueue failed:', job.id, e);
     });
     userInfoQueue.on('completed', (job, result) => {
       sails.log.info('userInfoQueue job finished:', job.data.email, result)
-      cleanup.add(job, {
+      cleanupQueue.add(job, {
         jobId: job.id,
         // delete job after one week
         delay: 1000 * 60 * 60 * 24 * 7,
