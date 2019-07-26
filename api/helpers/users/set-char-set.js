@@ -48,9 +48,11 @@ module.exports = {
       throw 'invalid'
     }
 
+    //TODO Rewrite as .exec(async func())
+
     let userSettings = await UserSettings.findOrCreate({user_id:inputs.userId}, {
       user_id: inputs.userId,
-      setting: `a:1:{"ctype";i:${charInt}}`
+      setting: `a:4:{s:5:"ctype";i:${charInt}1;s:3:"pdf";i:0;s:5:"chars";i:0;s:5:"trans";i:1;}`
     });
 
     let newSetting = userSettings.setting;
