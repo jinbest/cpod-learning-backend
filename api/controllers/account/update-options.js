@@ -71,9 +71,9 @@ module.exports = {
     let userData = {};
     if (type === 'level') {
       //TODO Helper Set user Level validation
-      if (['newbie', 'elementary', 'preInt', 'intermediate', 'upperInt', 'advanced'].includes(value)) {
+      if (['newbie', 'elementary', 'preInt', 'intermediate', 'upperInt', 'advanced'].includes(inputs.value)) {
         let levelId = 1;
-        switch (value) {
+        switch (inputs.value) {
           case 'newbie':
             levelId = 1;
             break;
@@ -101,7 +101,7 @@ module.exports = {
         userData = await sails.helpers.users.setOption.with({
           userId: user.id,
           type: 'levels',
-          value: value
+          value: inputs.value
         });
         sails.log.info(userData);
       } else if (0 < parseInt(value) && parseInt(value) <= 6) {
