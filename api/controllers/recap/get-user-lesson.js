@@ -52,17 +52,27 @@ module.exports = {
     let currentHour = new Date(new Date() - 4 * 60 * 60 * 1000).getHours(); //NY Time
     let latestStudiedLesson = '4121';
 
-    if (currentHour >= 3 && currentHour < 9) {
+    // if (currentHour >= 3 && currentHour < 9) {
+    //   latestStudiedLesson = '4123'
+    // } else if (currentHour >= 9 && currentHour < 15) {
+    //   latestStudiedLesson = '4124'
+    // } else if (currentHour >= 15 && currentHour < 21) {
+    //   latestStudiedLesson = '4125'
+    // } else if (currentHour >= 21 && currentHour < 24) {
+    //   latestStudiedLesson = '4126'
+    // }
+
+    if([1,6,11,16,21].includes(currentHour)) {
       latestStudiedLesson = '4123'
-    } else if (currentHour >= 9 && currentHour < 15) {
+    } else if ([2,7,12,17,22].includes(currentHour)) {
       latestStudiedLesson = '4124'
-    } else if (currentHour >= 15 && currentHour < 21) {
+    } else if ([3,8,13,18,23].includes(currentHour)) {
       latestStudiedLesson = '4125'
-    } else if (currentHour >= 21 && currentHour < 24) {
+    } else if ([4,9,14,19].includes(currentHour)) {
       latestStudiedLesson = '4126'
     }
 
-      return {
+    return {
       title: 'Lesson Title: ' + latestStudiedLesson,
       lessonId: latestStudiedLesson, //latestStudiedLesson
       charSet: 'simplified', //charset
