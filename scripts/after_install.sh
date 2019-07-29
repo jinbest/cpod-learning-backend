@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /home/ubuntu/nodejs
+cd /home/ubuntu/chinesepod.com
 
 # Install dependencies
 sudo npm install
