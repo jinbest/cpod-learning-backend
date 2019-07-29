@@ -185,8 +185,8 @@ module.exports = {
     * > (For a full list, see https://sailsjs.com/plugins/sessions)            *
     *                                                                          *
     ***************************************************************************/
-    // adapter: '@sailshq/connect-redis',
-    // url: 'redis://user:password@localhost:6379/databasenumber',
+    adapter: '@sailshq/connect-redis',
+    url: 'redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/1',
     //--------------------------------------------------------------------------
     // /\   OR, to avoid checking it in to version control, you might opt to
     // ||   set sensitive credentials like this using an environment variable.
@@ -273,8 +273,8 @@ module.exports = {
     * (https://sailsjs.com/docs/concepts/deployment/scaling)                   *
     *                                                                          *
     ***************************************************************************/
-    // adapter: '@sailshq/socket.io-redis',
-    // url: 'redis://user:password@cpod-redis.idthgn.ng.0001.use1.cache.amazonaws.com:6379',
+    adapter: '@sailshq/socket.io-redis',
+    url: 'redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/2',
     //--------------------------------------------------------------------------
     // /\   OR, to avoid checking it in to version control, you might opt to
     // ||   set sensitive credentials like this using an environment variable.
