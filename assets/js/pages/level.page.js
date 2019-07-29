@@ -38,8 +38,9 @@ parasails.registerPage('level', {
     },
     setCharSet (charSet) {
       this.charSet = charSet;
+      console.log(charSet);
       this.postData();
-      window.location = '/dashboard/free';
+      // window.location = '/dashboard/free';
     },
     skip () {
       this.postData();
@@ -54,12 +55,14 @@ parasails.registerPage('level', {
         this.level = 'Newbie'
       }
       if (!this.charSet) {
-        this.charSet = 'simplified'
+        this.charSet = 'simplified';
+        console.log('rewrite to simplified')
       }
-      await Cloud[this.pageName].with({
+      let response = await Cloud[this.pageName].with({
         level: this.level,
         charSet: this.charSet
-      })
+      });
+      console.log(response);
     },
     placementTest() {
       window.location = '/placement';

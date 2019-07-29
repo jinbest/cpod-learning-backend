@@ -27,7 +27,6 @@ module.exports = {
     },
 
     invalid: {
-      responseType: 'badRequest',
       description: 'The provided charSet does not match a valid value.'
     },
 
