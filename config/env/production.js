@@ -256,8 +256,6 @@ module.exports = {
       'http://chinesepod.com',
       'https://www.chinesepod.com',
       'http://www.chinesepod.com',
-      'https://redirect.chinesepod.com',
-      'http://redirect.chinesepod.com',
       'http://sails.chinesepod.com',
       'https://sails.chinesepod.com',
     ],
@@ -299,7 +297,7 @@ module.exports = {
   *                                                                         *
   ***************************************************************************/
   log: {
-    level: 'debug'
+    level: 'error'
   },
 
 
@@ -378,7 +376,7 @@ module.exports = {
   *                                                                         *
   ***************************************************************************/
   custom: {
-    baseUrl: 'http://sails.chinesepod.com',
+    baseUrl: 'http://www.chinesepod.com',
     internalEmailAddress: 'support@chinesepod.com',
 
     // mailgunDomain: 'mg.example.com',
