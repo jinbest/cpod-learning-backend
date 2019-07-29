@@ -87,6 +87,7 @@ module.exports.routes = {
   //Lesson Recap Routes
   'GET /api/v1/get-popular-lessons':                     { action: 'recap/get-popular-lessons' },
   'POST /api/v1/recap/get-lessons':                      { action: 'recap/get-user-lesson' },
+  'POST /api/v1/recap/request-lesson':                           { action: 'recap/request-lesson' },
 
   //General Info Routes
   'GET  /api/v1/health/ip-info':                         { action: 'health/ip-info' },
