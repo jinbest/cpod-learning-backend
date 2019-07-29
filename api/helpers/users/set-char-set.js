@@ -51,7 +51,7 @@ module.exports = {
 
     let userSettings = await UserSettings.findOrCreate({user_id:inputs.userId}, {
       user_id: inputs.userId,
-      setting: `a:4:{s:5:"ctype";i:${charInt}1;s:3:"pdf";i:0;s:5:"chars";i:0;s:5:"trans";i:1;}`
+      setting: `a:4:{s:5:"ctype";i:${charInt};s:3:"pdf";i:0;s:5:"chars";i:0;s:5:"trans";i:1;}`
     });
 
     let newSetting = userSettings.setting;
