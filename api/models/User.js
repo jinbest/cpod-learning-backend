@@ -191,7 +191,7 @@ module.exports = {
       allowNull: true
     },
     credit_amount: {
-      type: 'number',
+      type: 'ref',
       columnType: 'decimal',
       defaultsTo: 0.00
     },

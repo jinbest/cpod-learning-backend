@@ -72,7 +72,7 @@ module.exports = function defineJobsHook(sails) {
       .sort('updatedAt DESC')
       .limit(1);
     let subscription = 'Free';
-    switch (userSiteLinks.usertype_id) {
+    switch (userSiteLinks[0].usertype_id) {
       case 5:
         subscription = 'Premium'; //Premium
         break;
@@ -136,16 +136,37 @@ module.exports = function defineJobsHook(sails) {
       });
 
       //If User exists - Add Mautic ID to user record
-      if (mauticUser && mauticUser.contacts.length === 1) {
+      if (mauticUser.total == 1) {
         userData = await User.updateOne({id:userData.id})
           .set({member_id: Object.keys(mauticUser.contacts)[0]})
+          .catch((err) => {
+            done(new Error(err))
+          });
+        //Push Updated Data to Mautic
+        let mauticData = {
+          subscription: subscription,
+          userid: userData.id,
+        }
+        if (levelText) {
+          mauticData.level = levelText;
+        }
+        if (userSiteLinks.expiry) {
+          mauticData.expirydate = userSiteLinks.expiry;
+        }
+        if (userData.name) {
+          mauticData.fullname = userData.name;
+        }
+        updatedUser = await mauticConnector.contacts.editContact('PATCH',mauticData,userData.member_id)
+          .catch((err) => {
+            done(new Error(err))
+          });
 
         //If User Email is not unique - throw error - THIS SHOULD NEVER HAPPEN
-      } else if (mauticUser.contacts.length > 1) {
+      } else if (mauticUser.total > 1) {
         done(null, new Error('Email was not unique on Mautic'));
 
         //If User Does not Exist on Mautic - Create a new User record
-      } else if (mauticUser.contacts.length === 0) {
+      } else if (mauticUser.total == 0) {
         let mauticData = {
           email: userData.email,
           subscription: subscription,
@@ -160,14 +181,12 @@ module.exports = function defineJobsHook(sails) {
         if (userData.name) {
           mauticData.fullname = userData.name;
         }
+        sails.log.info(mauticData);
         updatedUser = await mauticConnector.contacts.createContact( mauticData )
           .catch((err) => {
             sails.log.info('Error with New Mautic Lead Creation');
-            sails.log.error(err);
-            done(new Error('Error with New Mautic Lead Creation'))
+            done(new Error(err));
           });
-        sails.log.info(updatedUser);
-        sails.log.info(updatedUser.contact.id);
         if(updatedUser) {
           userData = await User.updateOne({id:userData.id})
             .set({member_id: updatedUser.contact.id});
@@ -189,8 +208,7 @@ module.exports = function defineJobsHook(sails) {
       }
       updatedUser = await mauticConnector.contacts.editContact('PATCH',mauticData,userData.member_id)
         .catch((err) => {
-          sails.log.error('Error with Mautic Lead Updating')
-          sails.log.error(err)
+          done(new Error(err))
         });
     }
 
@@ -218,8 +236,6 @@ module.exports = function defineJobsHook(sails) {
       userList.push(el.id)
     });
 
-    sails.log.info(usersToUpdate);
-
     let optionsToUpdate = await UserOptions.find({
       where: {
         updatedAt: {
@@ -245,20 +261,21 @@ module.exports = function defineJobsHook(sails) {
       userList.push(el.user_id)
     });
 
+    sails.log.info(userList);
+
     Array.from(new Set(userList)).forEach(function (user) {
       userInfoQueue.add('Update Data to Mautic', {
           userId: user
         },
         {
           attempts: 2,
-          timeout: 60000
+          timeout: 120000
         })
-      sails.log.info(user);
     });
   });
 
   triggerQueue.removeRepeatable('UpdateUsers',{repeat: {cron: '*/15 * * * *'}});
-  triggerQueue.add('UpdateUsers', {data:'byMinute'},{repeat: {cron: '*/15 * * * *'}});
+  triggerQueue.add('UpdateUsers', {data:'Push User Data to Mautic every 15min'},{repeat: {cron: '*/15 * * * *'}});
 
   return {
     userInfoQueue: userInfoQueue,
