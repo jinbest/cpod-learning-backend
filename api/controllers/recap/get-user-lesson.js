@@ -117,8 +117,6 @@ module.exports = {
         if (rawChar == 2) {
           charSet = 'traditional';
         }
-        //TODO Implement 'both' as a character output "chars";i:0;
-        //  `a:8:{s:5:"ctype";i:1;s:3:"pdf";i:0;s:5:"chars";i:0;s:5:"trans";i:1;s:10:"tweet_post";s:1:"1";s:16:"reply_tweet_post";s:1:"1";s:18:"group_conversation";s:1:"1";s:13:"exercise_lang";s:1:"3";}`
 
       } catch (e) {
         sails.log('No Char Setting');
