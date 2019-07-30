@@ -146,7 +146,7 @@ module.exports = {
       allowNull: true
     },
     updatedAt: {
-      type: 'string',
+      type: 'ref',
       columnType: 'datetime',
       columnName: 'updated_at',
       autoUpdatedAt: true
@@ -178,9 +178,8 @@ module.exports = {
       allowNull: true
     },
     analysis_time: {
-      type: 'string',
-      columnType: 'datetime',
-      allowNull: true
+      type: 'ref',
+      columnType: 'datetime'
     },
     status: {
       type: 'string',
@@ -189,7 +188,7 @@ module.exports = {
       allowNull: true
     },
     createdAt: {
-      type: 'string',
+      type: 'ref',
       columnType: 'datetime',
       columnName: 'created_at',
       autoCreatedAt: true
@@ -208,14 +207,12 @@ module.exports = {
       allowNull: true
     },
     cc_expiry: {
-      type: 'string',
-      columnType: 'datetime',
-      allowNull: true
+      type: 'ref',
+      columnType: 'datetime'
     },
     arb_start_date: {
-      type: 'string',
-      columnType: 'datetime',
-      allowNull: true
+      type: 'ref',
+      columnType: 'datetime'
     },
     pp_profile_id: {
       type: 'string',
@@ -244,20 +241,17 @@ module.exports = {
       allowNull: true
     },
     segment_date: {
-      type: 'string',
-      columnType: 'datetime',
-      allowNull: true
+      type: 'ref',
+      columnType: 'datetime'
     },
     segment_updated_at: {
-      type: 'string',
-      columnType: 'datetime',
-      allowNull: true
+      type: 'ref',
+      columnType: 'datetime'
     },
     priority_info: {
       type: 'string',
       columnType: 'varchar',
       maxLength: 255,
-      allowNull: true,
       allowNull: true
     },
     staff_type: {
