@@ -40,7 +40,7 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    let testers = ['mg@chinesepod.com', 'ugis@chinesepod.com'];
+    let testers = ['mg@chinesepod.com', 'ugis@chinesepod.com', 'mick@chinesepod.com'];
 
     let session = await sails.helpers.phpApi.checkSession(inputs.sessionId);
 
