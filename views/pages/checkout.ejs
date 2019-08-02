@@ -1,7 +1,7 @@
 <div id="checkout" v-cloak>
   <div class="top-spacer"></div>
   <div class="container outer">
-    <div v-show="showTrialBanner" class="banner black" id="banner">
+    <div v-show="trial && !premium" class="banner black" id="banner">
       <div class="container">
         <div class="flex">
           <div class="flex-item">
@@ -18,6 +18,7 @@
       <h1>Start learning with your free trial today!</h1>
     </div>
     <div class="body">
+
       <ajax-form name="ccForm" id="cc_form">
         <ul>
           <li class="billing-type">
@@ -27,31 +28,35 @@
             </div>
             <ul class="buttons">
               <li>
-                <a href="#" class="rbtn-blue bill-time active">Monthly - ${{ pricing[plan].monthly }}</a>
+                <a @click="billingCycle = 'monthly'" class="rbtn-blue bill-time" :class="[billingCycle === 'monthly' ? 'active' : '']">Monthly - ${{ pricing[plan].monthly }}</a>
               </li>
               <li>
-                <a href="#" class="rbtn-blue bill-time " >Quarterly - ${{ pricing[plan].quarterly }}><span>1 Week Free</span></a>
+                <a @click="billingCycle = 'quarterly'" class="rbtn-blue bill-time" :class="[billingCycle === 'quarterly' ? 'active' : '']">Quarterly - ${{ pricing[plan].quarterly }}<span>1 Week Free</span></a>
               </li>
               <li>
-                <a href="#" class="rbtn-blue bill-time ">
+                <a @click="billingCycle = 'annually'" class="rbtn-blue bill-time" :class="[billingCycle === 'annually' ? 'active' : '']">
                   Annually - ${{ pricing[plan].annually }}
                   <span>Save $99</span>
                 </a>
               </li>
+              <li>
+                <a @click="trial = !trial" class="rbtn-blue bill-time">
+                  Toggle Trial
+                </a>
+              </li>
+              <li>
+                <a @click="needsAccount = !needsAccount" class="rbtn-blue bill-time">
+                  Needs Account
+                </a>
+              </li>
             </ul>
 
-            <p class="note">When you click Join ChinesePod you’ll be charged $<span id="price"><?= $this->isPremium ? config('pricing.monthly.premium') : config('pricing.monthly.basic'); ?></span>. <a
-                href="#" class="ipc">Insert Promotion code.</a></p>
+            <p v-show="!trial" class="note">When you click Join ChinesePod you’ll be charged $<span id="price">{{ pricing[plan][billingCycle] }}</span>.
+              <a href="#" class="ipc">Insert Promotion code.</a></p>
 
+            <p v-show="trial" class="note">Don't worry you won't be charged until the end of of your 14-day free trial. <a href="#" class="ipc">Insert Promotion code.</a></p>
 
-            <?php else: ?>
-
-
-            <p class="note">Don't worry you won't be charged until the end of of your 14-day free trial. <a href="#" class="ipc">Insert Promotion code.</a></p>
-
-
-            <?php endif; ?>
-
+            <!--            TODO rework the promo logic-->
 
             <div class="row promotion-code">
               <div class="col-lg-4 col-sm-4">
@@ -64,6 +69,8 @@
                 <a id="apply-pc-btn" onClick="applyPromoCode(event)" class="rbtn-blue">Apply</a>
               </div>
             </div>
+
+
           </li>
           <li>
             <hr>
@@ -78,22 +85,20 @@
               <div class="row">
                 <div class="col-lg-4 col-sm-4">
                   <label for="first-name">First Name<span class="required-mark">&nbsp;*</span></label>
-                  <input type="text" name="first_name" placeholder="First Name" value="<?= $this->first_name ?>" required/>
+                  <input type="text" name="first_name" placeholder="First Name" v-bind:value="formData.fName" required/>
                 </div>
                 <div class="col-lg-4 col-sm-4">
                   <label for="last-name">Last Name<span class="required-mark">&nbsp;*</span></label>
-                  <input type="text" name="last_name" placeholder="Last Name" value="<?= $this->last_name ?>" required/>
+                  <input type="text" name="last_name" placeholder="Last Name" v-bind:value="formData.lName" required/>
                 </div>
               </div>
 
 
-              <?php if ($this->isTemporary) { ?>
-
-
-              <div class="row">
+              <!--              TODO ONLY FOR TEMPORARY ACCOUNTS-->
+              <div v-show="needsAccount" class="row">
                 <div class="col-lg-4 col-sm-4">
                   <label for="email">Email Address<span class="required-mark">&nbsp;*</span></label>
-                  <input type="email" name="email" placeholder="email@chinesepod.com" value="<?= $this->email ?>" required/>
+                  <input type="email" name="email" placeholder="email@domain.com" :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress" required/>
                 </div>
                 <div class="col-lg-4 col-sm-4">
                   <label for="password">Password<span class="required-mark">&nbsp;*</span></label>
@@ -101,25 +106,12 @@
                 </div>
               </div>
 
-              <?php } else { ?>
-
-              <div class="row">
-                <div class="col-lg-4 col-sm-4">
-                  <input type="hidden" name="email" placeholder="email@chinesepod.com" value="<?= $this->email ?>" required/>
-                  </br>
-                </div>
-              </div>
-
-
-              <?php } ?>
-
-
             </div>
           </li>
-          <li>
+          <li v-show="needsAccount">
             <hr>
           </li>
-          <li class="privacy">
+          <li v-show="needsAccount" class="privacy">
             <div class="heading">
               <span class="number">3</span>
               <h3>Your privacy</h3>
@@ -134,41 +126,23 @@
           </li>
           <li class="payment-info">
             <div class="heading">
-              <span class="number">4</span>
+              <span v-show="!needsAccount" class="number">3</span>
+              <span v-show="needsAccount" class="number">4</span>
               <h3>Your payment information</h3>
             </div>
-
-
-            <?php if ($this->isPremium && $this->isTrial) { ?>
-
-
-            <p>Your card won’t be charged for 14 days, If you cancel before then, your card won’t be charged.</br>
+            <p v-show="trial">Your card will not be charged for 14 days, If you cancel before then, your card won’t be charged.</br>
               You will be charged <b>
-                <span class="price-switch monthly total-amount">$<?= $this->isPremium ? config('pricing.monthly.premium') : config('pricing.monthly.basic') ?> per month</span>
-                <span class="price-switch quarterly hide">$<?= $this->isPremium ? config('pricing.quarterly.premium') : config('pricing.quarterly.basic') ?> quarterly</span>
-                <span class="price-switch yearly hide">$<?= $this->isPremium ? config('pricing.yearly.premium') : config('pricing.yearly.basic') ?> per year</span>
+                <span class="price-switch total-amount">${{ pricing[plan][billingCycle] }} {{ billingCycle }}</span>
               </b> when your trial ends.</p>
 
-
-            <?php } elseif ($this->isPremium) { ?>
-
-            <?php } elseif (!$this->isPremium) { //basic ?>
-
-
-            <p>
+            <p v-show="!trial">
               You will be charged <b>
-                <span class="price-switch monthly total-amount">$<?= $this->isPremium ? config('pricing.monthly.premium') : config('pricing.monthly.basic') ?> per month</span>
-                <span class="price-switch quarterly hide">$<?= $this->isPremium ? config('pricing.quarterly.premium') : config('pricing.quarterly.basic') ?> quarterly</span>
-                <span class="price-switch yearly hide">$<?= $this->isPremium ? config('pricing.yearly.premium') : config('pricing.yearly.basic') ?> per year</span>
+                <span class="price-switch total-amount">${{ pricing[plan][billingCycle] }} {{ billingCycle }}</span>
               </b> starting today.</p>
-
-
-            <?php } ?>
 
 
             <div class="form-group clearfix">
               <ul class="cards">
-                <li><input id="payment-type-stripe" type="radio" name="payment-type" value="stripe" checked="checked"/></li>
                 <li>
                   <label for="payment-type-stripe"><img src="/images/cc/mastercard.svg"/></label>
                 </li>
@@ -179,13 +153,10 @@
                   <label for="payment-type-stripe"><img src="/images/cc/visa.svg"/></label>
                 </li>
               </ul>
-              <ul class="cards">
-                <li><input id="payment-type-paypal" type="radio" name="payment-type" value="paypal"/></li>
-                <li>
-                  <label for="payment-type-paypal"><img src="/images/cc/paypal.svg"/></label>
-                </li>
-              </ul>
             </div>
+
+            <!-- Used to display form errors. -->
+            <div id="card-errors" role="alert"></div>
             <div class="payment-content-stripe">
               <div class="form-group clearfix pl-0">
                 <label for="card-element">Card<span class="required-mark">&nbsp;*</span></label>
@@ -199,8 +170,8 @@
                   </div>
                 </div>
                 <span class="stripe-success visible">
-                            <span class="token"></span>
-                        </span>
+                <span class="token"></span>
+                </span>
                 <span class="stripe-error visible"></span>
               </div>
               <div class="row">
@@ -228,36 +199,21 @@
           </li>
           <li class="join-cp">
             <div id="error"></div>
-            <a id="cc-submit-button" href="#" class="rbtn-blue payment-content-stripe">Join ChinesePod</a>
-            <a class="btn rbtn-blue payment-content-paypal d-none" href="javascript:;" id="paypal-submit-button">Join ChinesePod</a>
+            <ajax-button id="cc-submit-button" href="#" class="rbtn-blue payment-content-stripe">Join ChinesePod</ajax-button>
             </br>
             <div class="payment-content-stripe">
-
-
-              <?php if ($this->isPremium && $this->isTrial) { ?>
-
-
-              <p>When you click Join ChinesePod your 14-day trial will begin and you won’t be charged
-                <span class="price-switch monthly total-amount">$<?= $this->isPremium ? config('pricing.monthly.premium') : config('pricing.monthly.basic') ?></span>
-                <span class="price-switch quarterly hide">$<?= $this->isPremium ? config('pricing.quarterly.premium') : config('pricing.quarterly.basic') ?></span>
-                <span class="price-switch yearly hide">$<?= $this->isPremium ? config('pricing.yearly.premium') : config('pricing.yearly.basic') ?></span>
-                until <?= date('M d, Y', strtotime('+14 day')) ?>.</p>
-
-
-              <?php } elseif ($this->isPremium) { ?>
-              <?php } elseif (!$this->isPremium) { ?>
-
-
-              <p>When you click Join ChinesePod you’ll be charged
-                <span class="price-switch monthly total-amount">$<?= $this->isPremium ? config('pricing.monthly.premium') : config('pricing.monthly.basic') ?>.</span>
-                <span class="price-switch quarterly hide">$<?= $this->isPremium ? config('pricing.quarterly.premium') : config('pricing.quarterly.basic') ?>.</span>
-                <span class="price-switch yearly hide">$<?= $this->isPremium ? config('pricing.yearly.premium') : config('pricing.yearly.basic') ?>.</span>
-              </p>
-
-
-              <?php } ?>
-
-
+              <div v-if="premium && trial">
+                <p>When you click Join ChinesePod your 14-day trial will begin and you won’t be charged
+                  <span class="price-switch total-amount">${{ pricing[plan][billingCycle] }}</span>
+                  until <%= new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toDateString() %>.</p>
+              </div>
+              <div v-else-if="premium">
+              </div>
+              <div v-else-if="!trial">
+                <p>When you click Join ChinesePod you’ll be charged
+                  <span class="price-switch total-amount">${{ pricing[plan][billingCycle] }}.</span>
+                </p>
+              </div>
             </div>
           </li>
         </ul>

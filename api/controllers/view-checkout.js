@@ -18,8 +18,12 @@ module.exports = {
 
   fn: async function () {
 
+    const Stripe = require('stripe');
+
     // Respond with view.
-    return {};
+    return {
+      Stripe
+    };
 
   }
 
