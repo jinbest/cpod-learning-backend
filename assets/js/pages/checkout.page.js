@@ -30,10 +30,7 @@ parasails.registerPage('checkout', {
       password: '',
       promoCode: '',
       agreedToTerms: false,
-      paymentInfo: {
-        cardNumber: '',
-        zipCode: ''
-      }
+      zip: ''
     },
     // For tracking client-side validation errors in our form.
     // > Has property set to `true` for each invalid property in `formData`.
@@ -58,7 +55,7 @@ parasails.registerPage('checkout', {
   },
   mounted: async function() {
     // Create a Stripe client.
-    const stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+    const stripe = Stripe('pk_test_4VxncInS2mI0bVeyKWPOGSMY');
     this.stripe = stripe;
 
 // Create an instance of Elements.
@@ -84,31 +81,15 @@ parasails.registerPage('checkout', {
 
 // Add an instance of the card Element into the `card-element` <div>.
     this.card.mount('#card-element');
-    this.card.on('change', function (event) {
-      setOutcome(event);
-    });
+    // this.card.on('change', function (event) {
+    //   console.
+    // });
     this.card.on('focus', function (e) {
       $('#card-element').css('border', '1px solid #2487c1');
     });
     this.card.on('blur', function (e) {
       $('#card-element').css('border-color', '#e6e6e6');
     });
-    window.setOutcome = function (result) {
-      var successElement = document.querySelector('.stripe-success');
-      var errorElement = document.querySelector('.stripe-error');
-      successElement.classList.remove('visible');
-      errorElement.classList.remove('visible');
-
-      if (result.token) {
-        // Use the token to create a charge or a customer
-        // https://stripe.com/docs/charges
-        successElement.querySelector('.token').textContent = result.token.id;
-        successElement.classList.add('visible');
-      } else if (result.error) {
-        errorElement.textContent = result.error.message;
-        errorElement.classList.add('visible');
-      }
-    }
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
@@ -116,49 +97,41 @@ parasails.registerPage('checkout', {
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
     submittedForm: async function() {
-      if(this.isEmailVerificationRequired) {
-        // If email confirmation is enabled, show the success message.
-        this.cloudSuccess = true;
-      } else {
-        // Otherwise, redirect to the logged-in dashboard.
-        // > (Note that we re-enable the syncing state here.  This is on purpose--
-        // > to make sure the spinner stays there until the page navigation finishes.)
-        this.syncing = true;
-        window.location = '/';
-      }
+      // If email confirmation is enabled, show the success message.
+      this.cloudSuccess = true;
+      console.log('Submitted');
     },
-    handleParsingForm: function() {
+    handleParsingForm: async function() {
       // Clear out any pre-existing error messages.
+
+      console.log('Handle Submit');
+
       this.formErrors = {};
 
-      var argins = this.formData;
+      this.syncing = true;
 
+      var argins = this.formData;
       // Validate email:
       if(!argins.emailAddress || !parasails.util.isValidEmailAddress(argins.emailAddress)) {
         this.formErrors.emailAddress = true;
         console.log(this.formErrors);
       }
 
-      this.stripe.createToken(this.card).then(function(result) {
-        if (result.error) {
-          // Inform the user if there was an error.
-          let errorElement = document.getElementById('card-errors');
-          errorElement.textContent = result.error.message;
-        } else {
-          // Send the token to your server.
-          argins.token = result.token.id
-          console.log(result.token);
-        }
-      });
+      this.token = await this.stripe.createToken(this.card);
 
-      // If there were any issues, they've already now been communicated to the user,
-      // so simply return undefined.  (This signifies that the submission should be
-      // cancelled.)
       if (Object.keys(this.formErrors).length > 0) {
-        return;
+        console.log(this.formErrors);
+        return
       }
 
-      return argins;
+      console.log(argins);
+      await Cloud[this.pageName].with({
+        emailAddress: this.formData.emailAddress,
+        token: this.token.token.id,
+        plan: this.plan,
+        billingCycle: this.billingCycle,
+        trial: this.trial
+      });
     }
   }
 });

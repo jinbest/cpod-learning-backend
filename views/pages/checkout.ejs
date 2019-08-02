@@ -18,7 +18,7 @@
       <h1>Start learning with your free trial today!</h1>
     </div>
     <div class="body">
-      <ajax-form v-if="!cloudSuccess" name="ccForm" id="cc_form" action="signup" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
+      <ajax-form v-if="!cloudSuccess" name="ccForm" id="cc_form" action="checkout" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
         <ul>
           <li class="billing-type">
             <div class="heading">
@@ -53,7 +53,7 @@
             <p v-show="!trial" class="note">When you click Join ChinesePod you’ll be charged $<span id="price">{{ pricing[plan][billingCycle] }}</span>.
               <a href="#" class="ipc">Insert Promotion code.</a></p>
 
-            <p v-show="trial" class="note">Don't worry you won't be charged until the end of of your 14-day free trial. <a href="#" class="ipc">Insert Promotion code.</a></p>
+            <p v-show="trial" class="note">Don't worry you won't be charged until the end of of your 14-day free trial.</p>
 
             <!--            TODO rework the promo logic-->
 
@@ -168,16 +168,12 @@
                     </p>
                   </div>
                 </div>
-                <span class="stripe-success visible">
-                <span class="token"></span>
-                </span>
-                <span class="stripe-error visible"></span>
               </div>
               <div class="row">
                 <div class="col-lg-3">
                   <div class="form-group">
                     <label id="zip-label" for="zipcode">Postal Code<span class="required-mark">&nbsp;*</span></label>
-                    <input type="text" name="zipcode" placeholder="Zip" required/>
+                    <input type="text" name="zipcode" placeholder="Zip" v-bind:value="formData.zip" required/>
                   </div>
                 </div>
                 <div class="col-lg-3 payment-badge">
@@ -198,7 +194,7 @@
           </li>
           <li class="join-cp">
             <div id="error"></div>
-            <ajax-button id="cc-submit-button" href="#" class="rbtn-blue payment-content-stripe">Join ChinesePod</ajax-button>
+            <button id="cc-submit-button" :syncing="syncing"  class="rbtn-blue payment-content-stripe" @click.prevent="handleParsingForm()">Join ChinesePod</button>
             </br>
             <div class="payment-content-stripe">
               <div v-if="premium && trial">
