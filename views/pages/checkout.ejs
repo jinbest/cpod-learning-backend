@@ -18,8 +18,7 @@
       <h1>Start learning with your free trial today!</h1>
     </div>
     <div class="body">
-
-      <ajax-form name="ccForm" id="cc_form">
+      <ajax-form v-if="!cloudSuccess" name="ccForm" id="cc_form" action="signup" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
         <ul>
           <li class="billing-type">
             <div class="heading">
@@ -98,11 +97,11 @@
               <div v-show="needsAccount" class="row">
                 <div class="col-lg-4 col-sm-4">
                   <label for="email">Email Address<span class="required-mark">&nbsp;*</span></label>
-                  <input type="email" name="email" placeholder="email@domain.com" :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress" required/>
+                  <input type="email" name="email" placeholder="email@domain.com" :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress"  :required="needsAccount"/>
                 </div>
                 <div class="col-lg-4 col-sm-4">
                   <label for="password">Password<span class="required-mark">&nbsp;*</span></label>
-                  <input type="password" name="password" placeholder="Password" required/>
+                  <input type="password" name="password" placeholder="Password" :required="needsAccount"/>
                 </div>
               </div>
 
@@ -117,7 +116,7 @@
               <h3>Your privacy</h3>
             </div>
             <p class="note">
-              <input type="checkbox" name="tos" id="termsofservice" required/>
+              <input type="checkbox" name="tos" id="termsofservice" :required="needsAccount"/>
               <label for="termsofservice">&nbsp;&nbsp; have read and agree to the <a href="/privacy/">Privacy Policy</a> and <a href="/terms/">Terms of Service</a> of ChinesePod LLC.</label><span
                 class="required-mark">&nbsp;*</span></p>
           </li>

@@ -4,12 +4,12 @@ parasails.registerPage('checkout', {
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
     showTrialBanner: true,
-    trial: true,
+    trial: false,
     plan: 'premium',
     premium: true,
     billingCycle: 'monthly',
     paymentMethod: 'stripe',
-    needsAccount: true,
+    needsAccount: false,
     enablePaypal: false,
     pricing:{
       basic: {
@@ -24,9 +24,9 @@ parasails.registerPage('checkout', {
       }
     },
     formData: {
-      fName: '',
-      lName: '',
-      emailAddress: '',
+      fName: 'Ugis',
+      lName: 'Rozkalns',
+      emailAddress: 'ugis@chinesepod.com',
       password: '',
       promoCode: '',
       agreedToTerms: false,
@@ -59,18 +59,19 @@ parasails.registerPage('checkout', {
   mounted: async function() {
     // Create a Stripe client.
     const stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+    this.stripe = stripe;
 
 // Create an instance of Elements.
     const elements = stripe.elements();
 
-    const card = elements.create('card', {
+    this.card = elements.create('card', {
       style: {
         base: {
           iconColor: '#F99A52',
           color: '#666',
           lineHeight: '33px',
           fontWeight: 400,
-          fontFamily: '"Open Sans", "Helvetica Neue", "Helvetica", sans-serif',
+          fontFamily: '"Roboto", "Open Sans", "Helvetica Neue", "Helvetica", sans-serif',
           fontSize: '15px',
 
 
@@ -82,14 +83,14 @@ parasails.registerPage('checkout', {
     });
 
 // Add an instance of the card Element into the `card-element` <div>.
-    card.mount('#card-element');
-    card.on('change', function (event) {
+    this.card.mount('#card-element');
+    this.card.on('change', function (event) {
       setOutcome(event);
     });
-    card.on('focus', function (e) {
+    this.card.on('focus', function (e) {
       $('#card-element').css('border', '1px solid #2487c1');
     });
-    card.on('blur', function (e) {
+    this.card.on('blur', function (e) {
       $('#card-element').css('border-color', '#e6e6e6');
     });
     window.setOutcome = function (result) {
@@ -114,6 +115,50 @@ parasails.registerPage('checkout', {
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
-    //…
+    submittedForm: async function() {
+      if(this.isEmailVerificationRequired) {
+        // If email confirmation is enabled, show the success message.
+        this.cloudSuccess = true;
+      } else {
+        // Otherwise, redirect to the logged-in dashboard.
+        // > (Note that we re-enable the syncing state here.  This is on purpose--
+        // > to make sure the spinner stays there until the page navigation finishes.)
+        this.syncing = true;
+        window.location = '/';
+      }
+    },
+
+    handleParsingForm: function() {
+      // Clear out any pre-existing error messages.
+      this.formErrors = {};
+
+      var argins = this.formData;
+
+      // Validate email:
+      if(!argins.emailAddress || !parasails.util.isValidEmailAddress(argins.emailAddress)) {
+        this.formErrors.emailAddress = true;
+        console.log(this.formErrors);
+      }
+
+      this.stripe.createToken(this.card).then(function(result) {
+        if (result.error) {
+          // Inform the user if there was an error.
+          let errorElement = document.getElementById('card-errors');
+          errorElement.textContent = result.error.message;
+        } else {
+          // Send the token to your server.
+          argins.token = result.token.id
+        }
+      });
+
+      // If there were any issues, they've already now been communicated to the user,
+      // so simply return undefined.  (This signifies that the submission should be
+      // cancelled.)
+      if (Object.keys(this.formErrors).length > 0) {
+        return;
+      }
+
+      return argins;
+    }
   }
 });
