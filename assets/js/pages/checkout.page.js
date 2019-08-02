@@ -127,7 +127,6 @@ parasails.registerPage('checkout', {
         window.location = '/';
       }
     },
-
     handleParsingForm: function() {
       // Clear out any pre-existing error messages.
       this.formErrors = {};
@@ -148,6 +147,7 @@ parasails.registerPage('checkout', {
         } else {
           // Send the token to your server.
           argins.token = result.token.id
+          console.log(result.token);
         }
       });
 
