@@ -55,6 +55,7 @@ module.exports = {
       }
 
       return {
+        syncing: false,
         title: title,
         lessonId: latestStudiedLesson, //latestStudiedLesson
         charSet: 'simplified', //charset

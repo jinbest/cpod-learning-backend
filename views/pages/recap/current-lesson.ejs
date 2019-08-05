@@ -5,29 +5,35 @@
     <div v-show="syncing">
       <i style="font-size: 100px !important;"class="fa fa-spinner fa-spin"></i>
     </div>
-    <table v-show="!syncing && !error" class="table mb-3">
-      <tbody>
-      <tr>
-        <th scope="row">title</th>
-        <td>{{title}}</td>
-      </tr>
-      <tr>
-        <th scope="row">lessonId</th>
-        <td>{{ lessonId }}</td>
-      </tr>
-      <tr>
-        <th scope="row">charSet</th>
-        <td>{{ charSet }}</td>
-      </tr>
-      <tr>
-        <th scope="row">subscription</th>
-        <td>{{ subscription }}</td>
-      </tr>
-      </tbody>
+    <div  v-show="!syncing && !error">
+      <table class="table mb-3">
+        <tbody>
+        <tr>
+          <th scope="row">title</th>
+          <td>{{title}}</td>
+        </tr>
+        <tr>
+          <th scope="row">lessonId</th>
+          <td>{{ lessonId }}</td>
+        </tr>
+        <tr>
+          <th scope="row">charSet</th>
+          <td>{{ charSet }}</td>
+        </tr>
+        <tr>
+          <th scope="row">subscription</th>
+          <td>{{ subscription }}</td>
+        </tr>
+        </tbody>
+      </table>
       <button class="btn" :href="`https://chinesepod.com/lesson-redirect?v3id=${lessonId}`">Go to Lesson</button>
-    </table>
-    <p v-show="!syncing && error" class="mb-3">{{ error }}</p>
-    <button class="btn" href="https://chinesepod.com/dashboard">Browse More Lessons</button>
+    </div>
+    <div v-show="!syncing && error">
+      <div class="alert alert-warning mb-3" role="alert">
+        {{ error }}
+      </div>
+      <button class="btn" href="https://chinesepod.com/dashboard">Browse More Lessons</button>
+    </div>
   </div>
 </div>
 <%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
