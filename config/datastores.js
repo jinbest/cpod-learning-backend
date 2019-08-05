@@ -34,11 +34,15 @@ module.exports.datastores = {
 
   default: {
     adapter: require('sails-mysql'),
-    url: 'mysql://cpoddba:fr0t3ll@@cpodjsweb.cx6o0r5nidjs.us-east-1.rds.amazonaws.com:3306/chinesepod_production',
+    url: 'mysql://cpoddba:tr5mai81@kazuya.chinesepod.com:3306/chinesepod_production',
+    // adapter: require('sails-mysql'),
+    // url: 'mysql://cpoddba:fr0t3ll@@cpodjsweb.cx6o0r5nidjs.us-east-1.rds.amazonaws.com:3306/chinesepod_production',
   },
   logging: {
     adapter: require('sails-mysql'),
-    url: 'mysql://cpoddba:fr0t3ll@@cpodjsweb.cx6o0r5nidjs.us-east-1.rds.amazonaws.com:3306/chinesepod_logging',
+    url: 'mysql://cpoddba:tr5mai81@kazuya.chinesepod.com:3306/chinesepod_logging',
+    // adapter: require('sails-mysql'),
+    // url: 'mysql://cpoddba:fr0t3ll@@cpodjsweb.cx6o0r5nidjs.us-east-1.rds.amazonaws.com:3306/chinesepod_logging',
   },
 
 };
