@@ -45,8 +45,10 @@ module.exports = {
 
       let content = await Contents.findOne({v3_id: latestStudiedLesson});
 
+      sails.log.info(content);
+
       return {
-        title: content.title,
+        title: content.title ? content.title : 'No Title',
         lessonId: latestStudiedLesson, //latestStudiedLesson
         charSet: 'simplified', //charset
         subscription: 'premium' //subscription
@@ -124,7 +126,7 @@ module.exports = {
 
 
       let content = await Contents.findOne({v3_id: latestStudiedLesson});
-
+      sails.log.info(content);
       // Respond with view.
       return {
         syncing: false,
