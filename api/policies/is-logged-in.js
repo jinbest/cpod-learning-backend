@@ -24,6 +24,7 @@ module.exports = async function (req, res, proceed) {
       where: {id: sid},
       select: ['session_user_id']
     });
+    sails.log.info(userData);
     if (userData) {
       sails.log.info(userData);
       try {
