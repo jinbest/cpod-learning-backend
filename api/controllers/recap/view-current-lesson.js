@@ -66,7 +66,15 @@ module.exports = {
         lessonImg: lessonImg,
         emailAddress: user.email,
         charSet: 'simplified', //charset
-        subscription: 'premium' //subscription
+        subscription: 'premium', //subscription
+        rawOutput: `{
+        "lessonTitle": "${lessonTitle}",
+        "lessonId": "${latestStudiedLesson}",
+        "lessonImg": "${lessonImg}",
+        "emailAddress": "${user.email}",
+        "charSet": "simplified",
+        "subscription": "premium",
+        }`
       }
     } else {
 
@@ -152,6 +160,14 @@ module.exports = {
         emailAddress: user.email,
         charSet: charSet,
         subscription: subscription,
+        rawOutput: `{
+        "lessonTitle": "${content.title}",
+        "lessonId": "${latestStudiedLesson}",
+        "lessonImg": "${lessonImg}",
+        "emailAddress": "${user.email}",
+        "charSet": "${charSet}",
+        "subscription": "${subscription}",
+        }`
       };
     }
 
