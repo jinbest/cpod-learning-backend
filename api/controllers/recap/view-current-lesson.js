@@ -17,8 +17,8 @@ module.exports = {
 
   fn: async function () {
 
-    // const userId = this.req.session.userId;
-    const userId = 101699617;
+    const userId = this.req.session.userId;
+    // const userId = 101699617;
 
     if(!userId) {
       this.res.redirect('https://chinesepod.com/dashboard')
