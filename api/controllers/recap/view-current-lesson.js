@@ -46,18 +46,25 @@ module.exports = {
       let content = await Contents.findOne({v3_id: latestStudiedLesson});
 
       let title = '';
+      let lessonImg = '';
 
       if (!content) {
         sails.log.info('No Lesson for Testers');
-        title = 'Demo Lesson for Testers'
+        title = 'Demo Lesson for Testers';
+        lessonImg = 'https://via.placeholder.com/640x360.png?text=Sample+Image+For+Missing+Artwork';
       } else {
         title = content.title;
+        lessonImg = content.type === 'lesson'
+          ? `https://s3contents.chinesepod.com/${content.v3_id}/${content.hash_code}/${content.image}`
+          : `https://s3contents.chinesepod.com/extra/${content.v3_id}/${content.hash_code}/${content.image}`;
       }
 
       return {
         syncing: false,
         title: title,
         lessonId: latestStudiedLesson, //latestStudiedLesson
+        lessonImg: lessonImg,
+        emailAddress: user.email,
         charSet: 'simplified', //charset
         subscription: 'premium' //subscription
       }
@@ -134,12 +141,15 @@ module.exports = {
 
 
       let content = await Contents.findOne({v3_id: latestStudiedLesson});
-      sails.log.info(content);
       // Respond with view.
       return {
         syncing: false,
         title: content.title,
         lessonId: latestStudiedLesson,
+        lessonImg: content.type === 'lesson'
+          ? `https://s3contents.chinesepod.com/${content.v3_id}/${content.hash_code}/${content.image}`
+          : `https://s3contents.chinesepod.com/extra/${content.v3_id}/${content.hash_code}/${content.image}`,
+        emailAddress: user.email,
         charSet: charSet,
         subscription: subscription,
       };
