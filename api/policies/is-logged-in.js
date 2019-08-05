@@ -19,11 +19,13 @@ module.exports = async function (req, res, proceed) {
     return proceed();
   } else if (req.cookies.CPODSESSID){
     let sid = req.cookies.CPODSESSID;
+    sails.log.info(sid);
     let userData = await PhpSessions.findOne({
       where: {id: sid},
       select: ['session_user_id']
     });
     if (userData) {
+      sails.log.info(userData);
       try {
         this.req.session.userId = userData['session_user_id'];
         sails.log.info(userData);
