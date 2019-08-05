@@ -41,6 +41,22 @@ To reload (this allows a graceful startup of each app (per processor) to avoid 5
 `pm2 reload all --wait-ready --listen-timeout 15000`
 
 
-##TODOs:
-+ Sessions on Redis 
-+ Email Drip Campaign
+## TODOs:
+### Stripe
+- [ ] Stripe Integration
+- [ ] Stripe Load Screen
+- [x] Stripe Error Handling
+- [ ] Promo Codes
+- [ ] Customer ID Storage
+- [ ] Subscription Storage
+- [ ] Transaction Storage
+
+
+###Onboarding
+- [ ] Migrate Terms Acceptance
+
+###Routing
+- [ ] Handle Purchasing Routing and possible errors
+
+###Misc
+- [ ] Implement Human-readable API output page for `/recap/get-user-lesson`
