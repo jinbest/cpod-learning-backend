@@ -45,15 +45,15 @@ module.exports = {
 
       let content = await Contents.findOne({v3_id: latestStudiedLesson});
 
-      let title = '';
+      let lessonTitle = '';
       let lessonImg = '';
 
       if (!content) {
         sails.log.info('No Lesson for Testers');
-        title = 'Demo Lesson for Testers';
+        lessonTitle = 'Demo Lesson for Testers';
         lessonImg = 'https://via.placeholder.com/640x360.png?text=Sample+Image+For+Missing+Artwork';
       } else {
-        title = content.title;
+        lessonTitle = content.title;
         lessonImg = content.type === 'lesson'
           ? `https://s3contents.chinesepod.com/${content.v3_id}/${content.hash_code}/${content.image}`
           : `https://s3contents.chinesepod.com/extra/${content.v3_id}/${content.hash_code}/${content.image}`;
@@ -61,7 +61,7 @@ module.exports = {
 
       return {
         syncing: false,
-        title: title,
+        lessonTitle: lessonTitle,
         lessonId: latestStudiedLesson, //latestStudiedLesson
         lessonImg: lessonImg,
         emailAddress: user.email,
@@ -144,7 +144,7 @@ module.exports = {
       // Respond with view.
       return {
         syncing: false,
-        title: content.title,
+        lessonTitle: content.title,
         lessonId: latestStudiedLesson,
         lessonImg: content.type === 'lesson'
           ? `https://s3contents.chinesepod.com/${content.v3_id}/${content.hash_code}/${content.image}`

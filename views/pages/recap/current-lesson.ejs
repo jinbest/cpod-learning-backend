@@ -6,12 +6,12 @@
       <i style="font-size: 100px !important;"class="fa fa-spinner fa-spin"></i>
     </div>
     <div  v-show="!syncing && !error">
-      <img :src="lessonImg" class="img-fluid" :alt="`title`">
+      <img :src="lessonImg" class="img-fluid" :alt="`lessonTitle`">
       <table class="table mb-3">
         <tbody>
         <tr>
-          <th scope="row">title</th>
-          <td>{{title}}</td>
+          <th scope="row">lessonTitle</th>
+          <td>{{lessonTitle}}</td>
         </tr>
         <tr>
           <th scope="row">lessonId</th>
