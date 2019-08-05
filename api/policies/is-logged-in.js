@@ -28,7 +28,7 @@ module.exports = async function (req, res, proceed) {
     if (userData) {
       sails.log.info(userData);
       try {
-        this.req.session.userId = userData['session_user_id'];
+        req.session.userId = userData['session_user_id'];
         sails.log.info(userData);
         return proceed();
       } catch (e) {
