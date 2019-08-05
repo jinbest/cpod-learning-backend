@@ -68,13 +68,13 @@ module.exports = {
         charSet: 'simplified', //charset
         subscription: 'premium', //subscription
         rawOutput: `{
-        "lessonTitle": "${lessonTitle}",
-        "lessonId": "${latestStudiedLesson}",
-        "lessonImg": "${lessonImg}",
-        "emailAddress": "${user.email}",
-        "charSet": "simplified",
-        "subscription": "premium",
-        }`
+          "lessonTitle": "${lessonTitle}",
+          "lessonId": "${latestStudiedLesson}",
+          "lessonImg": "${lessonImg}",
+          "emailAddress": "${user.email}",
+          "charSet": "simplified",
+          "subscription": "premium"
+          }`
       }
     } else {
 
@@ -149,25 +149,27 @@ module.exports = {
 
 
       let content = await Contents.findOne({v3_id: latestStudiedLesson});
+
+      let lessonImg = content.type === 'lesson'
+          ? `https://s3contents.chinesepod.com/${content.v3_id}/${content.hash_code}/${content.image}`
+          : `https://s3contents.chinesepod.com/extra/${content.v3_id}/${content.hash_code}/${content.image}`;
       // Respond with view.
       return {
         syncing: false,
         lessonTitle: content.title,
         lessonId: latestStudiedLesson,
-        lessonImg: content.type === 'lesson'
-          ? `https://s3contents.chinesepod.com/${content.v3_id}/${content.hash_code}/${content.image}`
-          : `https://s3contents.chinesepod.com/extra/${content.v3_id}/${content.hash_code}/${content.image}`,
+        lessonImg: lessonImg,
         emailAddress: user.email,
         charSet: charSet,
         subscription: subscription,
         rawOutput: `{
-        "lessonTitle": "${content.title}",
-        "lessonId": "${latestStudiedLesson}",
-        "lessonImg": "${lessonImg}",
-        "emailAddress": "${user.email}",
-        "charSet": "${charSet}",
-        "subscription": "${subscription}",
-        }`
+          "lessonTitle": "${content.title}",
+          "lessonId": "${latestStudiedLesson}",
+          "lessonImg": "${lessonImg}",
+          "emailAddress": "${user.email}",
+          "charSet": "${charSet}",
+          "subscription": "${subscription}"
+          }`
       };
     }
 
