@@ -45,12 +45,8 @@ module.exports = {
 
       let content = await Contents.findOne({v3_id: latestStudiedLesson});
 
-      if (!content) {
-        content.title = 'Demo Lesson for Dev'
-      }
-
       return {
-        title: content.title,
+        title: content === 'undefined' ? 'Demo Lesson for Dev' : content.title,
         lessonId: latestStudiedLesson, //latestStudiedLesson
         charSet: 'simplified', //charset
         subscription: 'premium' //subscription
