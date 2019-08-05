@@ -44,6 +44,9 @@ parasails.registerPage('checkout', {
 
     // Success state when form has been submitted
     cloudSuccess: false,
+
+    // Payment Errors
+    paymentErrors: '',
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -90,6 +93,14 @@ parasails.registerPage('checkout', {
     this.card.on('blur', function (e) {
       $('#card-element').css('border-color', '#e6e6e6');
     });
+    this.card.addEventListener('change', function(event) {
+      var displayError = document.getElementById('card-errors');
+      if (event.error) {
+        displayError.textContent = event.error.message;
+      } else {
+        displayError.textContent = '';
+      }
+    });
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
@@ -123,15 +134,23 @@ parasails.registerPage('checkout', {
         console.log(this.formErrors);
         return
       }
-
-      console.log(argins);
-      await Cloud[this.pageName].with({
+      console.log('Call Cloud Method');
+      Cloud[this.pageName].with({
         emailAddress: this.formData.emailAddress,
         token: this.token.token.id,
         plan: this.plan,
         billingCycle: this.billingCycle,
         trial: this.trial
-      });
+      })
+        .then((info) => {
+          console.log('Cloud Method info returned');
+          console.log(info)
+        })
+        .catch((e) => {
+          console.log('Payment Method declined');
+          this.paymentErrors = e.responseInfo.body;
+          this.syncing = false;
+        })
     }
   }
 });

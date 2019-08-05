@@ -18,6 +18,9 @@ module.exports = {
     emailAddress: {
       type: 'string'
     },
+    userId: {
+      type: 'number'
+    },
     fName: {
       type: 'string'
     },
@@ -30,7 +33,9 @@ module.exports = {
     token: {
       type: 'string'
     },
-
+    trial: {
+      type: 'boolean'
+    }
   },
 
 
@@ -44,45 +49,207 @@ module.exports = {
       extendedDescription: 'If this request was sent from a graphical user interface, the request '+
         'parameters should have been validated/coerced _before_ they were sent.'
     },
+    declined: {
+      description: 'The provided payment method is invalid.'
+    },
   },
 
 
   fn: async function (inputs, exits) {
     const stripe = require('stripe')(sails.config.custom.stripeSecret);
+    const plans = {
+      premium: {
+        id: 5,
+        type: 2,
+        monthly: {
+          id: 2,
+          stripeId: 'Monthly Plan -2',
+          length: 1,
+        },
+        quarterly: {
+          id: 18,
+          stripeId: 'Quarterly Plan -18',
+          length: 3,
+        },
+        annually: {
+          id: 140,
+          stripeId: 'Annual Plan -140',
+          length: 12,
+        },
+        monthlyTrial: {
+          id: 271,
+          stripeId: 'Monthly Plan -271',
+          length: 1
+        }
+      },
+      basic: {
+        id: 6,
+        type: 1,
+        monthly: {
+          id: 13,
+          stripeId: 'Monthly Plan -13',
+          length: 1,
+        },
+        quarterly: {
+          id: 14,
+          stripeId: 'Quarterly Plan -14',
+          length: 3,
+        },
+        annually: {
+          id: 142,
+          stripeId: 'Annual Plan -142',
+          length: 12,
+        }
+      },
+      class: {
+        //Nothing Yet
+      }
+    };
+    //TODO REMOVE THIS TESTING SET
+    inputs.userId = '101699617';
+
+    if(!inputs.userId) {
+      try {
+        inputs.userId = this.req.session.userId;
+        sails.log.info(this.req.session.userId);
+      } catch (e) {
+        sails.log.error(e);
+        throw 'invalid';
+      }
+    }
+
     sails.log.info(inputs);
 
     if (inputs === {}) {
       throw 'invalid'
     }
 
-    // All done.
-    if (inputs.token) {
-      sails.log.info(inputs.token)
+    let customer = '';
+    let errors = [];
+
+    await stripe.customers.update(
+      `${inputs.userId}`,
+      {source: inputs.token},
+      function (err, user) {
+        if (err) {
+          switch (err.type) {
+            case 'StripeCardError':
+              // A declined card error
+              errors.push(err.message); // => e.g. "Your card's expiration year is invalid."
+              break;
+            case 'StripeRateLimitError':
+              // Too many requests made to the API too quickly
+              break;
+            case 'StripeInvalidRequestError':
+              // Invalid parameters were supplied to Stripe's API
+              break;
+            case 'StripeAPIError':
+              // An error occurred internally with Stripe's API
+              break;
+            case 'StripeConnectionError':
+              // Some kind of error occurred during the HTTPS communication
+              break;
+            case 'StripeAuthenticationError':
+              // You probably used an incorrect API key
+              break;
+            default:
+              // Handle any other types of unexpected errors
+              break;
+          }
+        } else {
+          customer = user;
+        }
+      });
+
+    //Customer Does not exist - Create One
+    if(!customer) {
+      await stripe.customers.create({
+        id: inputs.userId,
+        email: inputs.emailAddress,
+        source: inputs.token,
+      }, function (err, user) {
+        if (err) {
+          switch (err.type) {
+            case 'StripeCardError':
+              // A declined card error
+              errors.push(err.message); // => e.g. "Your card's expiration year is invalid."
+              break;
+            case 'StripeRateLimitError':
+              // Too many requests made to the API too quickly
+              break;
+            case 'StripeInvalidRequestError':
+              // Invalid parameters were supplied to Stripe's API
+              break;
+            case 'StripeAPIError':
+              // An error occurred internally with Stripe's API
+              break;
+            case 'StripeConnectionError':
+              // Some kind of error occurred during the HTTPS communication
+              break;
+            case 'StripeAuthenticationError':
+              // You probably used an incorrect API key
+              break;
+            default:
+              // Handle any other types of unexpected errors
+              break;
+          }
+        } else {
+          customer = user;
+        }
+      });
     }
-    //TODO Check if Customer Exists
-    //Research
-    //TODO Create Customer
-    const customer = await stripe.customers.create({
-      email: inputs.emailAddress,
-      source: inputs.token,
-    });
+    if(errors) {
+      sails.log.error(errors);
+      throw {declined: errors[0]};
+    }
 
+    if(!customer) {
+      throw 'invalid';
+    }
 
-    sails.log.info(customer);
-
-    //TODO Subscribe Customer to a Plan
-    const subscription = await stripe.subscriptions.create({
-      customer: customer.id,
-      items: [{plan: 'Monthly Plan -271'}],
-      trial_period_days: inputs.trial ? 14 : 0 // No trial
-    });
-
-
-    sails.log.info(subscription);
-
-    //TODO Check Subscriptions Table
+    // const cardData = customer.sources.data[0];
+    //
+    // try {
+    //   sails.log.info(customer.sources.data)
+    // } catch (e) {
+    //   sails.log.error(e)
+    // }
+    //
+    // //TODO Subscribe Customer to a Plan
+    // const subscription = await stripe.subscriptions.create({
+    //   customer: customer.id,
+    //   items: [{plan: plans[inputs.plan][inputs.billingCycle].stripeId}],
+    //   trial_period_days: inputs.trial ? 14 : 0 // No trial
+    // });
+    //
+    // sails.log.info(subscription);
+    //
+    // //TODO Check Subscriptions Table
+    // sails.log.info({
+    //   trial_end: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(),
+    //   next_billing_time: new Date(subscription['current_period_end'] * 1000).toISOString(),
+    //   payment_behavior
+    //
+    // });
+    // const cpodSubscription = await Subscriptions.create({
+    //   user_id: inputs.userId,
+    //   subscription_id: subscription.id,
+    //   subscription_from: 7, // Stripe = 7
+    //   subscription_type: plans[inputs.plan].type, // converted 'plan'
+    //   product_id: plans[inputs.plan][inputs.billingCycle].id, // Product ID
+    //   product_length: plans[inputs.plan][inputs.billingCycle].length, // converted 'billingCycle'
+    //   status: 1, //  1=active, 2=cancelled, 3=past due
+    //   next_billing_time: new Date(subscription['current_period_end'] * 1000).toISOString() ,
+    //   cc_num: cardData ? cardData.last4 : '',
+    //   cc_exp: cardData ? `${cardData.exp_month}/${cardData.exp_year}` : '',
+    // }).fetch();
 
     //TODO Check Payments Table
+
+
+    //TODO Update User Access on UserSiteLinks
+
+    //TODO Update User SessionInfo to Match Current Access Level
 
     exits.success();
 
