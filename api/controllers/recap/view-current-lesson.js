@@ -43,10 +43,16 @@ module.exports = {
         latestStudiedLesson = '4126'
       }
 
-      let content = await Contents.findOne({v3_id: latestStudiedLesson});
+      let content = {};
+      content = await Contents.findOne({v3_id: latestStudiedLesson});
+
+      if (!content) {
+        sails.log.info('No Lesson for Testers');
+        content.title = 'Demo Lesson for Testers'
+      }
 
       return {
-        title: content === 'undefined' ? 'Demo Lesson for Dev' : content.title,
+        title: content.title,
         lessonId: latestStudiedLesson, //latestStudiedLesson
         charSet: 'simplified', //charset
         subscription: 'premium' //subscription
