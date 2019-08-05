@@ -4,10 +4,11 @@ parasails.registerPage('current-lesson', {
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
     syncing: true,
-    title: '',
+    title: 'Demo Lesson',
     lessonId: '',
     subscription: '',
     charSet: '',
+    emailAddress: 'sample@chinesepod.com',
     error: ''
   },
 
