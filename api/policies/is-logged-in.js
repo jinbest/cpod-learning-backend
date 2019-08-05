@@ -21,17 +21,19 @@ module.exports = async function (req, res, proceed) {
     let sid = req.cookies.CPODSESSID;
     sails.log.info(req.cookies);
     sails.log.info(sid);
-    await PhpSessions.findOne({
+    let userData = await PhpSessions.findOne({
       where: {id: sid},
       select: ['session_user_id']
-    }).then((record) => {
-      sails.log.info(`Session Data: ${record}`);
-      req.session.userId = record['session_user_id'];
-      return proceed();
-    }).catch ((e) => {
-      sails.log.error(e);
-      return res.unauthorized();
     });
+    if (userData) {
+      try {
+        this.req.session.userId = userData['session_user_id'];
+        return proceed();
+      } catch (e) {
+        sails.log.info(e);
+        return res.unauthorized();
+      }
+    }
   }
 
   //--•
