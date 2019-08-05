@@ -23,11 +23,11 @@ module.exports = async function (req, res, proceed) {
       where: {id: sid},
       select: ['session_user_id']
     }).then((record) => {
-      console.log('Session Data');
-      console.log(record);
+      sails.log.info(`Session Data: ${record}`);
       req.session.userId = record['session_user_id'];
       return proceed();
     }).catch ((e) => {
+      sails.log.error(e);
       return res.unauthorized();
     });
   }
