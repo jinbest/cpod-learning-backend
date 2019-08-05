@@ -1,0 +1,33 @@
+<div id="current-lesson" v-cloak>
+  <div class="container text-center">
+    <h1 class="mb-3">Info About Current Recap Lesson</h1>
+    <hr/>
+    <div v-show="syncing">
+      <i style="font-size: 100px !important;"class="fa fa-spinner fa-spin"></i>
+    </div>
+    <table v-show="!syncing && !error" class="table mb-3">
+      <tbody>
+      <tr>
+        <th scope="row">title</th>
+        <td>{{title}}</td>
+      </tr>
+      <tr>
+        <th scope="row">lessonId</th>
+        <td>{{ lessonId }}</td>
+      </tr>
+      <tr>
+        <th scope="row">charSet</th>
+        <td>{{ charSet }}</td>
+      </tr>
+      <tr>
+        <th scope="row">subscription</th>
+        <td>{{ subscription }}</td>
+      </tr>
+      </tbody>
+      <button class="btn" :href="`https://chinesepod.com/lesson-redirect?v3id=${lessonId}`">Go to Lesson</button>
+    </table>
+    <p v-show="!syncing && error" class="mb-3">{{ error }}</p>
+    <button class="btn" href="https://chinesepod.com/dashboard">Browse More Lessons</button>
+  </div>
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
