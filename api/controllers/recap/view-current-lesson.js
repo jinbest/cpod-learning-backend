@@ -81,7 +81,7 @@ module.exports = {
       let availableRecaps = await sails.helpers.recap.listRecapLessons();
 
       let sql = `
-    SELECT DISTINCT log.accesslog_url
+    SELECT log.accesslog_url
     FROM chinesepod_logging.cp_accesslog log
     WHERE log.accesslog_time > $1
     AND log.accesslog_user = $2
@@ -98,6 +98,10 @@ module.exports = {
           return latestStudiedLesson = item['accesslog_url'].split('v3_id=')[1].split('&')[0];
         }
       });
+
+      // sails.log.info(availableRecaps);
+      // sails.log.info(latestLoggedLessons['rows']);
+      // sails.log.info(latestStudiedLesson);
 
       if (typeof latestStudiedLesson === 'undefined' || latestStudiedLesson.length === 0){
         sails.log.info(`No Lesson For user ${user.email}`);

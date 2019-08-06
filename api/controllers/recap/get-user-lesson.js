@@ -102,7 +102,7 @@ module.exports = {
       let availableRecaps = await sails.helpers.recap.listRecapLessons();
 
       let sql = `
-    SELECT DISTINCT log.accesslog_url
+    SELECT log.accesslog_url
     FROM chinesepod_logging.cp_accesslog log
     WHERE log.accesslog_time > $1
     AND log.accesslog_user = $2
