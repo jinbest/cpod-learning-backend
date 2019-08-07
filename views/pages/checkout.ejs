@@ -1,11 +1,11 @@
 <div id="checkout" v-cloak>
   <div class="top-spacer"></div>
   <div class="container outer">
-    <div v-if="trial && !premium" class="banner black" id="banner">
+    <div v-if="trial && plan !== 'premium'" class="banner black" id="banner">
       <div class="container">
         <div class="flex">
           <div class="flex-item">
-            <button href="/checkout?plan=premium&trial=yes" class="btn blue">Free Trial</button>
+            <a href="/checkout?plan=premium&trial=yes" class="btn blue">Free Trial</a>
           </div>
           <div class="flex-item">
             <h2>The basic learner experience does not include free trial. We recommend you to try our <b class="blue">Premium Learner trial for 14 days.</b></h2>
