@@ -40,5 +40,9 @@ module.exports.datastores = {
     adapter: require('sails-mysql'),
     url: 'mysql://cpoddba:fr0t3ll@@cpodjsweb.cx6o0r5nidjs.us-east-1.rds.amazonaws.com:3306/chinesepod_logging',
   },
+  chinesepod2015: {
+    adapter: require('sails-mysql'),
+    url: 'mysql://cpoddba:fr0t3ll@@cpodjsweb.cx6o0r5nidjs.us-east-1.rds.amazonaws.com:3306/chinesepod2015',
+  },
 
 };

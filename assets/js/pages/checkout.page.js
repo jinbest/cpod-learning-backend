@@ -11,17 +11,21 @@ parasails.registerPage('checkout', {
     paymentMethod: 'stripe',
     needsAccount: false,
     enablePaypal: false,
+    promoShow: false,
+    promoToggle: false,
+    promoLimit: 0,
     pricing:{
       basic: {
         monthly: 14,
         quarterly: 39,
-        annually: 124
+        annually: 124,
       },
       premium: {
         monthly: 29,
         quarterly: 79,
-        annually: 249
-      }
+        annually: 249,
+      },
+      discount: 0
     },
     formData: {
       fName: '',
@@ -67,6 +71,7 @@ parasails.registerPage('checkout', {
     const elements = stripe.elements();
 
     this.card = elements.create('card', {
+      hidePostalCode: true,
       style: {
         base: {
           iconColor: '#F99A52',
@@ -75,8 +80,6 @@ parasails.registerPage('checkout', {
           fontWeight: 400,
           fontFamily: '"Roboto", "Open Sans", "Helvetica Neue", "Helvetica", sans-serif',
           fontSize: '15px',
-
-
           '::placeholder': {
             color: '#7DB6D4',
           }
@@ -105,16 +108,62 @@ parasails.registerPage('checkout', {
         displayError.style.display = "none";
       }
     });
+    if (this.promoShow && this.formData.promoCode) {
+      this.promoToggle = true;
+      this.applyPromoCode();
+    }
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
+    switchBilling: function (period) {
+      this.billingCycle = period;
+      this.formData.promoCode = '';
+      this.promoToggle = false;
+    },
+    applyPromoCode: async function () {
+      this.syncing = true;
+      this.formErrors = {};
+      if (this.promoLimit < 6) {
+        // Check code for validity
+        await Cloud['checkPromo'].with({
+          promoCode: this.formData.promoCode,
+          plan: this.plan,
+          billingCycle: this.billingCycle,
+        })
+          .then((info) => {
+            //Valid Promo Code
+            console.log(info);
+            if (info.success && this.plan === info.discount.plan && this.billingCycle === info.discount.billingCycle) {
+              if (info.discount.type === 0) {
+                // Percentage Discount
+                this.pricing.discount = parseFloat(info.discount.value) * this.pricing[info.discount.plan][info.discount.billingCycle];
+              }
+              if (info.discount.type === 1) {
+                // Fixed Price Discount
+                this.pricing.discount = parseFloat(info.discount.value);
+              }
+            } else {
+              this.formErrors.promoCode = true;
+              this.promoLimit += 1;
+            }
+            this.syncing = false;
+          })
+          .catch((e) => {
+            console.log(e.responseInfo);
+            this.formErrors.promoCode = true;
+            this.promoLimit += 1;
+            this.syncing = false;
+          })
+      } else {
+        this.syncing = false;
+      }
+    },
     submittedForm: async function() {
       // If email confirmation is enabled, show the success message.
       console.log('Submitted');
-
     },
     handleSubmitting: async function() {
 

@@ -27,13 +27,13 @@
             </div>
             <ul class="buttons">
               <li>
-                <a @click="billingCycle = 'monthly'" class="rbtn-blue bill-time" :class="[billingCycle === 'monthly' ? 'active' : '']">Monthly - ${{ pricing[plan].monthly }}</a>
+                <a @click="switchBilling('monthly')" class="rbtn-blue bill-time" :class="[billingCycle === 'monthly' ? 'active' : '']">Monthly - ${{ pricing[plan].monthly }}</a>
               </li>
               <li>
-                <a @click="billingCycle = 'quarterly'" class="rbtn-blue bill-time" :class="[billingCycle === 'quarterly' ? 'active' : '']">Quarterly - ${{ pricing[plan].quarterly }}<span>1 Week Free</span></a>
+                <a @click="switchBilling('quarterly')" class="rbtn-blue bill-time" :class="[billingCycle === 'quarterly' ? 'active' : '']">Quarterly - ${{ pricing[plan].quarterly }}<span>1 Week Free</span></a>
               </li>
               <li>
-                <a @click="billingCycle = 'annually'" class="rbtn-blue bill-time" :class="[billingCycle === 'annually' ? 'active' : '']">
+                <a @click="switchBilling('annually')" class="rbtn-blue bill-time" :class="[billingCycle === 'annually' ? 'active' : '']">
                   Annually - ${{ pricing[plan].annually }}
                   <span>Save $99</span>
                 </a>
@@ -50,25 +50,9 @@
               </li>
             </ul>
 
-            <p v-if="!trial" class="note">When you click Join ChinesePod you’ll be charged $<span id="price">{{ pricing[plan][billingCycle] }}</span>.
-              <a href="#" class="ipc">Insert Promotion code.</a></p>
+            <p v-if="!trial" class="note">When you click Join ChinesePod you’ll be charged $<span id="price">{{ pricing[plan][billingCycle] }}</span>.</p>
 
-            <p v-if="trial" class="note">Don't worry you won't be charged until the end of of your 14-day free trial.</p>
-
-            <!--            TODO rework the promo logic-->
-
-            <div class="row promotion-code">
-              <div class="col-lg-4 col-sm-4">
-                <label for="promotion_code">Promotion Code</label>
-                <input type="text" id="promotionCode" name="promotion_code" placeholder="Promotion Code" value="">
-                <span class="error-email">Please fill in your basic information first.</span>
-              </div>
-              <div class="col-lg-4 col-sm-4">
-                <label></label>
-                <a id="apply-pc-btn" onClick="applyPromoCode(event)" class="rbtn-blue">Apply</a>
-              </div>
-            </div>
-
+            <p v-if="trial" class="note">Don't worry you won't be charged until the end of your 14-day free trial.</p>
 
           </li>
           <li>
@@ -117,7 +101,7 @@
             </div>
             <p class="note">
               <input type="checkbox" name="tos" id="termsofservice" :required="needsAccount"/>
-              <label for="termsofservice">&nbsp;&nbsp; have read and agree to the <a href="/privacy/">Privacy Policy</a> and <a href="/terms/">Terms of Service</a> of ChinesePod LLC.</label><span
+              <label for="termsofservice">&nbsp;&nbsp; have read and agree to the <a href="/privacy/" target="_blank">Privacy Policy</a> and <a href="/terms/" target="_blank">Terms of Service</a> of ChinesePod LLC.</label><span
                 class="required-mark">&nbsp;*</span></p>
           </li>
           <li>
@@ -136,9 +120,43 @@
 
             <p v-if="!trial">
               You will be charged <b>
-                <span class="price-switch total-amount">${{ pricing[plan][billingCycle] }} {{ billingCycle }}</span>
+                <span class="price-switch total-amount">${{ pricing[plan][billingCycle] - pricing.discount }} {{ billingCycle }}</span>
               </b> starting today.</p>
+            <div v-if="promoShow">
+              <p class="note">Do you have a Promo Code? <a @click="promoToggle = !promoToggle" class="ipc">Apply it here.</a>
+            </div>
 
+            <div v-show="promoToggle" class="row promotion-code">
+              <div class="col-lg-4 col-sm-4">
+                <label for="promotion_code">Promotion Code</label>
+                <input type="text" id="promotionCode" name="promoCode"  :class="[formErrors.promoCode ? 'is-invalid' : '']" placeholder="Promotion Code" v-model.trim="formData.promoCode">
+                <div v-if="formErrors.promoCode && promoLimit < 6" class="alert alert-warning alert-dismissible fade show" role="alert">
+                  <strong>Oh No!</strong>  Unfortunately this is not a valid code.
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div v-if="promoLimit > 5" class="alert alert-danger alert-dismissible fade show" role="alert">
+                  <strong>Oh No!</strong>  Unfortunately you've tried too many Promo Codes. Please check your code and try again later.
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-4">
+                <a id="apply-pc-btn" @click="applyPromoCode" class="btn rbtn-blue ajax-button" :class="[syncing ? 'syncing' : '']">
+                  <span class="button-text" v-if="!syncing"><slot name="default">Apply</slot></span>
+                  <span class="button-loader clearfix" v-if="syncing">
+                    <slot name="syncing-state">
+                      <div class="loading-dot dot1"></div>
+                      <div class="loading-dot dot2"></div>
+                      <div class="loading-dot dot3"></div>
+                      <div class="loading-dot dot4"></div>
+                    </slot>
+                  </span>
+                </a>
+              </div>
+            </div>
 
             <div class="form-group clearfix">
               <ul class="cards">
@@ -191,14 +209,14 @@
             <ajax-button id="cc-submit-button" :syncing="syncing" class="rbtn-blue payment-content-stripe">Join ChinesePod</ajax-button>
             </br>
             <div class="payment-content-stripe">
-              <div v-if="premium && trial">
+              <div v-if="trial">
                 <p>When you click Join ChinesePod your 14-day trial will begin and you won’t be charged
                   <span class="price-switch total-amount">${{ pricing[plan][billingCycle] }}</span>
-                  until <%= new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toDateString() %>.</p>
+                  until <%= new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric'}) %>.</p>
               </div>
-              <div v-else-if="!trial">
+              <div v-if="!trial">
                 <p>When you click Join ChinesePod you’ll be charged
-                  <span class="price-switch total-amount">${{ pricing[plan][billingCycle] }}.</span>
+                  <span class="price-switch total-amount">${{ pricing[plan][billingCycle] - pricing.discount }}.</span>
                 </p>
               </div>
             </div>
@@ -211,9 +229,6 @@
           <p class="lead">You have successfully confirmed a subscription and will be redirected to <strong>ChinesePod Dashboard</strong>.</p>
           <hr>
           <a class="btn btn-primary btn-lg" href="https://chinesepod.com/dashboard" role="button">Get Started</a>
-          <p>
-            Having trouble? <a href="https://support.chinesepod.com">Contact us</a>
-          </p>
         </div>
       </div>
     </div>

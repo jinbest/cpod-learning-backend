@@ -57,7 +57,10 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
+
     const stripe = require('stripe')(sails.config.custom.stripeSecret);
+
+
     const plans = {
       premium: {
         id: 5,
@@ -232,7 +235,6 @@ module.exports = {
       sails.log.error(e)
     }
 
-
     // Subscribe Customer to a Plan
     let subscription = await stripe.subscriptions.create({
       customer: customer.id,
@@ -242,6 +244,7 @@ module.exports = {
       sails.log.info(err);
       errors.push(err.message);
     });
+
 
     sails.log.info(errors);
 
