@@ -24,8 +24,8 @@ parasails.registerPage('checkout', {
       }
     },
     formData: {
-      fName: 'Ugis',
-      lName: 'Rozkalns',
+      fName: '',
+      lName: '',
       emailAddress: 'ugis@chinesepod.com',
       password: '',
       promoCode: '',
@@ -35,6 +35,7 @@ parasails.registerPage('checkout', {
     // For tracking client-side validation errors in our form.
     // > Has property set to `true` for each invalid property in `formData`.
     formErrors: { /* … */ },
+    cardError: false,
 
     // Syncing / loading state
     syncing: false,
@@ -47,6 +48,7 @@ parasails.registerPage('checkout', {
 
     // Payment Errors
     paymentErrors: '',
+    modal: '',
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -96,9 +98,11 @@ parasails.registerPage('checkout', {
     this.card.addEventListener('change', function(event) {
       var displayError = document.getElementById('card-errors');
       if (event.error) {
+        displayError.style.display = "block";
         displayError.textContent = event.error.message;
       } else {
         displayError.textContent = '';
+        displayError.style.display = "none";
       }
     });
   },
@@ -109,48 +113,65 @@ parasails.registerPage('checkout', {
   methods: {
     submittedForm: async function() {
       // If email confirmation is enabled, show the success message.
-      this.cloudSuccess = true;
       console.log('Submitted');
+
     },
-    handleParsingForm: async function() {
+    handleSubmitting: async function() {
+
+      await this.stripe.createToken(this.card)
+        .then((card) => {
+          this.token = card.token.id;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+
+      await Cloud[this.pageName].with({
+        emailAddress: this.formData.emailAddress,
+        token: this.token,
+        plan: this.plan,
+        billingCycle: this.billingCycle,
+        trial: this.trial
+      })
+        .then((info) => {
+          console.log('Successful Subscription');
+          this.cloudSuccess = true;
+        })
+        .catch((e) => {
+          console.log('Payment Method declined');
+          this.paymentErrors = e.responseInfo.body;
+          this.modal = 'paymentError';
+          this.syncing = false;
+        })
+    },
+    handleParsingForm: function() {
       // Clear out any pre-existing error messages.
-
-      console.log('Handle Submit');
-
       this.formErrors = {};
 
       this.syncing = true;
 
       var argins = this.formData;
+
       // Validate email:
       if(!argins.emailAddress || !parasails.util.isValidEmailAddress(argins.emailAddress)) {
         this.formErrors.emailAddress = true;
         console.log(this.formErrors);
       }
 
-      this.token = await this.stripe.createToken(this.card);
+      // Validate name:
+      if (!argins.fName) {
+        this.formErrors.fName = true;
+      }
+      if (!argins.lName) {
+        this.formErrors.lName = true;
+      }
 
       if (Object.keys(this.formErrors).length > 0) {
         console.log(this.formErrors);
         return
       }
-      console.log('Call Cloud Method');
-      Cloud[this.pageName].with({
-        emailAddress: this.formData.emailAddress,
-        token: this.token.token.id,
-        plan: this.plan,
-        billingCycle: this.billingCycle,
-        trial: this.trial
-      })
-        .then((info) => {
-          console.log('Cloud Method info returned');
-          console.log(info)
-        })
-        .catch((e) => {
-          console.log('Payment Method declined');
-          this.paymentErrors = e.responseInfo.body;
-          this.syncing = false;
-        })
+
+      return argins;
     }
   }
 });

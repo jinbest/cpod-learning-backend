@@ -1,7 +1,7 @@
 <div id="checkout" v-cloak>
   <div class="top-spacer"></div>
   <div class="container outer">
-    <div v-show="trial && !premium" class="banner black" id="banner">
+    <div v-if="trial && !premium" class="banner black" id="banner">
       <div class="container">
         <div class="flex">
           <div class="flex-item">
@@ -14,11 +14,11 @@
         </div>
       </div>
     </div>
-    <div v-show="trial" class="header">
+    <div v-if="trial" class="header">
       <h1>Start learning with your free trial today!</h1>
     </div>
     <div class="body">
-      <ajax-form v-if="!cloudSuccess" name="ccForm" id="cc_form" action="checkout" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
+      <ajax-form v-if="!cloudSuccess" name="ccForm" id="cc_form" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-submitting="handleSubmitting" :handle-parsing="handleParsingForm">
         <ul>
           <li class="billing-type">
             <div class="heading">
@@ -50,10 +50,10 @@
               </li>
             </ul>
 
-            <p v-show="!trial" class="note">When you click Join ChinesePod you’ll be charged $<span id="price">{{ pricing[plan][billingCycle] }}</span>.
+            <p v-if="!trial" class="note">When you click Join ChinesePod you’ll be charged $<span id="price">{{ pricing[plan][billingCycle] }}</span>.
               <a href="#" class="ipc">Insert Promotion code.</a></p>
 
-            <p v-show="trial" class="note">Don't worry you won't be charged until the end of of your 14-day free trial.</p>
+            <p v-if="trial" class="note">Don't worry you won't be charged until the end of of your 14-day free trial.</p>
 
             <!--            TODO rework the promo logic-->
 
@@ -84,33 +84,33 @@
               <div class="row">
                 <div class="col-lg-4 col-sm-4">
                   <label for="first-name">First Name<span class="required-mark">&nbsp;*</span></label>
-                  <input type="text" name="first_name" placeholder="First Name" v-bind:value="formData.fName" required/>
+                  <input type="text" name="first_name" placeholder="First Name" v-model="formData.fName" required/>
                 </div>
                 <div class="col-lg-4 col-sm-4">
                   <label for="last-name">Last Name<span class="required-mark">&nbsp;*</span></label>
-                  <input type="text" name="last_name" placeholder="Last Name" v-bind:value="formData.lName" required/>
+                  <input type="text" name="last_name" placeholder="Last Name" v-model="formData.lName" required/>
                 </div>
               </div>
 
-
-              <!--              TODO ONLY FOR TEMPORARY ACCOUNTS-->
-              <div v-show="needsAccount" class="row">
+              <!-- TODO ONLY FOR TEMPORARY ACCOUNTS-->
+              <div v-if="needsAccount" class="row">
                 <div class="col-lg-4 col-sm-4">
                   <label for="email">Email Address<span class="required-mark">&nbsp;*</span></label>
                   <input type="email" name="email" placeholder="email@domain.com" :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress"  :required="needsAccount"/>
+                  <div class="invalid-feedback" v-if="formErrors.emailAddress">Please enter a valid email address.</div>
                 </div>
                 <div class="col-lg-4 col-sm-4">
                   <label for="password">Password<span class="required-mark">&nbsp;*</span></label>
-                  <input type="password" name="password" placeholder="Password" :required="needsAccount"/>
+                  <input type="password" name="password" placeholder="Password" :required="needsAccount" v-model.trim="formData.password"/>
                 </div>
               </div>
 
             </div>
           </li>
-          <li v-show="needsAccount">
+          <li v-if="needsAccount">
             <hr>
           </li>
-          <li v-show="needsAccount" class="privacy">
+          <li v-if="needsAccount" class="privacy">
             <div class="heading">
               <span class="number">3</span>
               <h3>Your privacy</h3>
@@ -125,16 +125,16 @@
           </li>
           <li class="payment-info">
             <div class="heading">
-              <span v-show="!needsAccount" class="number">3</span>
-              <span v-show="needsAccount" class="number">4</span>
+              <span v-if="!needsAccount" class="number">3</span>
+              <span v-if="needsAccount" class="number">4</span>
               <h3>Your payment information</h3>
             </div>
-            <p v-show="trial">Your card will not be charged for 14 days, If you cancel before then, your card won’t be charged.</br>
+            <p v-if="trial">Your card will not be charged for 14 days, If you cancel before then, your card won’t be charged.</br>
               You will be charged <b>
                 <span class="price-switch total-amount">${{ pricing[plan][billingCycle] }} {{ billingCycle }}</span>
               </b> when your trial ends.</p>
 
-            <p v-show="!trial">
+            <p v-if="!trial">
               You will be charged <b>
                 <span class="price-switch total-amount">${{ pricing[plan][billingCycle] }} {{ billingCycle }}</span>
               </b> starting today.</p>
@@ -155,7 +155,7 @@
             </div>
 
             <!-- Used to display form errors. -->
-            <div id="card-errors" role="alert"></div>
+            <div v-show="false" id="card-errors" class="alert alert-danger" role="alert"></div>
             <div class="payment-content-stripe">
               <div class="form-group clearfix pl-0">
                 <label for="card-element">Card<span class="required-mark">&nbsp;*</span></label>
@@ -170,12 +170,6 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-lg-3">
-                  <div class="form-group">
-                    <label id="zip-label" for="zipcode">Postal Code<span class="required-mark">&nbsp;*</span></label>
-                    <input type="text" name="zipcode" placeholder="Zip" v-bind:value="formData.zip" required/>
-                  </div>
-                </div>
                 <div class="col-lg-3 payment-badge">
                   <img src="/images/secure-server.svg" width="167"/>
                 </div>
@@ -194,15 +188,13 @@
           </li>
           <li class="join-cp">
             <div id="error"></div>
-            <button id="cc-submit-button" :syncing="syncing"  class="rbtn-blue payment-content-stripe" @click.prevent="handleParsingForm()">Join ChinesePod</button>
+            <ajax-button id="cc-submit-button" :syncing="syncing" class="rbtn-blue payment-content-stripe">Join ChinesePod</ajax-button>
             </br>
             <div class="payment-content-stripe">
               <div v-if="premium && trial">
                 <p>When you click Join ChinesePod your 14-day trial will begin and you won’t be charged
                   <span class="price-switch total-amount">${{ pricing[plan][billingCycle] }}</span>
                   until <%= new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toDateString() %>.</p>
-              </div>
-              <div v-else-if="premium">
               </div>
               <div v-else-if="!trial">
                 <p>When you click Join ChinesePod you’ll be charged
@@ -213,8 +205,33 @@
           </li>
         </ul>
       </ajax-form>
+      <div v-show="cloudSuccess">
+        <div class="jumbotron text-xs-center">
+          <h1 class="display-3">Thank You!</h1>
+          <p class="lead">You have successfully confirmed a subscription and will be redirected to <strong>ChinesePod Dashboard</strong>.</p>
+          <hr>
+          <a class="btn btn-primary btn-lg" href="https://chinesepod.com/dashboard" role="button">Get Started</a>
+          <p>
+            Having trouble? <a href="https://support.chinesepod.com">Contact us</a>
+          </p>
+        </div>
+      </div>
     </div>
   </div>
+
+  <modal class="paymentError modal fade" v-if="modal==='paymentError'" @close="modal = ''" v-cloak>
+    <div class="modal-header">
+      <h2 class="modal-title">Payment Error</h2>
+      <hr/>
+      <button type="button" class="modal-close-button" data-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <h5>{{ paymentErrors }}</h5>
+    </div>
+    <div class="modal-footer flex-row-reverse justify-content-between">
+      <button type="button" data-dismiss="modal" class="btn btn-info">Close</button>
+    </div>
+  </modal>
 
   <div id="cvvpopOver" class="d-none">
     <p>

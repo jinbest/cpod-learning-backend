@@ -8,7 +8,6 @@ module.exports = {
 
 
   inputs: {
-
     plan: {
       type: 'string'
     },
@@ -38,7 +37,6 @@ module.exports = {
     }
   },
 
-
   exits: {
     success: {
       description: 'Subscription Created'
@@ -46,12 +44,15 @@ module.exports = {
     invalid: {
       responseType: 'badRequest',
       description: 'The provided email address is invalid.',
-      extendedDescription: 'If this request was sent from a graphical user interface, the request '+
+      extendedDescription: 'If this request was sent from a graphical user interface, the request ' +
         'parameters should have been validated/coerced _before_ they were sent.'
     },
     declined: {
       description: 'The provided payment method is invalid.'
     },
+    trialAlreadyUsed: {
+      description: 'User has already used a trial subscription before.'
+    }
   },
 
 
@@ -106,9 +107,9 @@ module.exports = {
       }
     };
     //TODO REMOVE THIS TESTING SET
-    inputs.userId = '101699617';
+    inputs.userId = '1016995';
 
-    if(!inputs.userId) {
+    if (!inputs.userId) {
       try {
         inputs.userId = this.req.session.userId;
         sails.log.info(this.req.session.userId);
@@ -125,11 +126,25 @@ module.exports = {
     }
 
     let customer = '';
+
     let errors = [];
 
+    // Check if User has Used a Trial before
+    if (inputs.trial) {
+      let userTrial = await User.findOne({id: inputs.userId});
+      sails.log.info(userTrial);
+      if (userTrial.trial) {
+        throw {declined: `Unfortunately, you can only enroll in a trial subscription once. 
+        It was already redeemed on ${new Date(userTrial.trial.toString()).toLocaleString()}`};
+      }
+    }
+
+
     await stripe.customers.update(
-      `${inputs.userId}`,
-      {source: inputs.token},
+      `${inputs.userId}`, {
+        source: inputs.token,
+        name: `${inputs.fName} ${inputs.lName}`
+      },
       function (err, user) {
         if (err) {
           switch (err.type) {
@@ -162,11 +177,12 @@ module.exports = {
       });
 
     //Customer Does not exist - Create One
-    if(!customer) {
+    if (!customer) {
       await stripe.customers.create({
         id: inputs.userId,
         email: inputs.emailAddress,
         source: inputs.token,
+        name: `${inputs.fName} ${inputs.lName}`
       }, function (err, user) {
         if (err) {
           switch (err.type) {
@@ -198,62 +214,91 @@ module.exports = {
         }
       });
     }
-    if(errors) {
+
+    if (errors.length > 0) {
       sails.log.error(errors);
       throw {declined: errors[0]};
     }
 
-    if(!customer) {
+    if (!customer) {
       throw 'invalid';
     }
 
-    // const cardData = customer.sources.data[0];
-    //
-    // try {
-    //   sails.log.info(customer.sources.data)
-    // } catch (e) {
-    //   sails.log.error(e)
-    // }
-    //
-    // //TODO Subscribe Customer to a Plan
-    // const subscription = await stripe.subscriptions.create({
-    //   customer: customer.id,
-    //   items: [{plan: plans[inputs.plan][inputs.billingCycle].stripeId}],
-    //   trial_period_days: inputs.trial ? 14 : 0 // No trial
-    // });
-    //
-    // sails.log.info(subscription);
-    //
-    // //TODO Check Subscriptions Table
-    // sails.log.info({
-    //   trial_end: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(),
-    //   next_billing_time: new Date(subscription['current_period_end'] * 1000).toISOString(),
-    //   payment_behavior
-    //
-    // });
-    // const cpodSubscription = await Subscriptions.create({
-    //   user_id: inputs.userId,
-    //   subscription_id: subscription.id,
-    //   subscription_from: 7, // Stripe = 7
-    //   subscription_type: plans[inputs.plan].type, // converted 'plan'
-    //   product_id: plans[inputs.plan][inputs.billingCycle].id, // Product ID
-    //   product_length: plans[inputs.plan][inputs.billingCycle].length, // converted 'billingCycle'
-    //   status: 1, //  1=active, 2=cancelled, 3=past due
-    //   next_billing_time: new Date(subscription['current_period_end'] * 1000).toISOString() ,
-    //   cc_num: cardData ? cardData.last4 : '',
-    //   cc_exp: cardData ? `${cardData.exp_month}/${cardData.exp_year}` : '',
-    // }).fetch();
+    const cardData = customer.sources.data[0];
+
+    try {
+      sails.log.info(customer.sources.data)
+    } catch (e) {
+      sails.log.error(e)
+    }
+
+
+    // Subscribe Customer to a Plan
+    let subscription = await stripe.subscriptions.create({
+      customer: customer.id,
+      items: [{plan: plans[inputs.plan][inputs.billingCycle].stripeId}],
+      trial_period_days: inputs.trial ? 14 : 0 // No trial
+    }).catch((err) => {
+      sails.log.info(err);
+      errors.push(err.message);
+    });
+
+    sails.log.info(errors);
+
+    if (errors.length > 0) {
+      sails.log.error(errors);
+      throw {declined: errors[0]};
+    }
+
+    sails.log.info(subscription);
+
+    if (!subscription) {
+      throw 'invalid';
+    }
+
+    // If Trial - Mark User Record as Such
+    if (inputs.trial) {
+      userData = await User.updateOne({id: inputs.userId})
+        .set({trial: new Date(Date.now()).toISOString()});
+      sails.log.info(userData);
+    }
+
+    // Check Subscriptions Table
+    const cpodSubscription = await Subscriptions.create({
+      user_id: inputs.userId,
+      subscription_id: subscription.id,
+      subscription_from: 7, // Stripe = 7
+      subscription_type: plans[inputs.plan].type, // converted 'plan'
+      product_id: plans[inputs.plan][inputs.billingCycle].id, // Product ID
+      product_length: plans[inputs.plan][inputs.billingCycle].length, // converted 'billingCycle'
+      status: 1, //  1=active, 2=cancelled, 3=past due
+      next_billing_time: new Date(subscription['current_period_end'] * 1000).toISOString(),
+      cc_num: cardData ? cardData.last4 : '',
+      cc_exp: cardData ? `${cardData.exp_month}/${cardData.exp_year}` : '',
+    }).fetch();
 
     //TODO Check Payments Table
 
 
+
     //TODO Update User Access on UserSiteLinks
+    const userSiteLinks = UserSiteLinks.updateOne({user_id:inputs.userId})
+      .set({usertype_id: plans[inputs.plan].id});
 
     //TODO Update User SessionInfo to Match Current Access Level
+    const phpSession = await sails.helpers.php.updateSession.with({
+      userId: inputs.userId,
+      planName: inputs.plan,
+      planId: plans[inputs.plan].id
+    });
+
+    sails.log.info(phpSession);
+
+    this.res.cookie('CPODSESSID', phpSession, {
+      domain: '.chinesepod.com',
+      expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
+    });
 
     exits.success();
-
   }
-
-
 };
