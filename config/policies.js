@@ -13,6 +13,7 @@ module.exports.policies = {
   'onboarding/view-level': 'is-logged-in',
   'placement/*': 'is-logged-in',
   'recap/view-current-lesson': 'is-logged-in',
+  'recap/set-lesson': 'is-logged-in',
 
   // // Bypass the `is-logged-in` policy for:
   // 'entrance/*': true,

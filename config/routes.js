@@ -47,6 +47,7 @@ module.exports.routes = {
   //RECAP LESSON VIEWS
   'GET /secret-page':             { action: 'recap/view-secret-page' },
   'GET /current-lesson':          { action: 'recap/view-current-lesson' },
+  'GET /set-lesson/:unused?':     { action: 'recap/set-lesson' },
 
 
 
