@@ -110,6 +110,11 @@ module.exports = {
       }
     };
     //TODO REMOVE THIS TESTING SET
+
+    //TODO Configure User Info
+
+    //TODO IF NEW USER - CREATE An Account
+
     inputs.userId = '1016995';
 
     if (!inputs.userId) {
@@ -141,7 +146,6 @@ module.exports = {
         It was already redeemed on ${new Date(userTrial.trial.toString()).toLocaleString()}`};
       }
     }
-
 
     await stripe.customers.update(
       `${inputs.userId}`, {
@@ -239,7 +243,7 @@ module.exports = {
     let subscription = await stripe.subscriptions.create({
       customer: customer.id,
       items: [{plan: plans[inputs.plan][inputs.billingCycle].stripeId}],
-      trial_period_days: inputs.trial ? 14 : 0 // No trial
+      trial_period_days: inputs.trial ? 14 : 0 // 2 weeks or No trial
     }).catch((err) => {
       sails.log.info(err);
       errors.push(err.message);
@@ -284,11 +288,11 @@ module.exports = {
 
 
 
-    //TODO Update User Access on UserSiteLinks
+    // Update User Access on UserSiteLinks
     const userSiteLinks = UserSiteLinks.updateOne({user_id:inputs.userId})
       .set({usertype_id: plans[inputs.plan].id});
 
-    //TODO Update User SessionInfo to Match Current Access Level
+    // Update User SessionInfo to Match Current Access Level
     const phpSession = await sails.helpers.php.updateSession.with({
       userId: inputs.userId,
       planName: inputs.plan,

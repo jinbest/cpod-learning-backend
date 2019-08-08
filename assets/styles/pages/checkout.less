@@ -391,11 +391,12 @@
           }
           &.join-cp{
             padding-top: 20px;
+            padding-bottom: 30px;
             .rbtn-blue{
               color: @color-white;
               background: @color-blue;
               font-weight: bold;
-
+              font-size: 24px;
               &:hover {
                 .button-hover();
               }
@@ -491,10 +492,14 @@
         width: 100%;
         .placeholder-color(@color-blue-light);
       }
-      #apply-pc-btn{
-        margin-top: 27px;
+      .apply-pc-btn{
         padding: 12px 20px;
         font-size: 15px;
+        margin-right: 10px;
+        &:hover,
+        &:active {
+          color: white;
+        }
       }
     }
   }

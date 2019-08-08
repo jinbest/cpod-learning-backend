@@ -3,30 +3,17 @@ parasails.registerPage('checkout', {
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
-    showTrialBanner: true,
     trial: false,
     plan: 'premium',
-    premium: true,
     billingCycle: 'monthly',
     paymentMethod: 'stripe',
     needsAccount: false,
+    needsOnboarding: true,
     enablePaypal: false,
     promoShow: false,
     promoToggle: false,
     promoLimit: 0,
-    pricing:{
-      basic: {
-        monthly: 14,
-        quarterly: 39,
-        annually: 124,
-      },
-      premium: {
-        monthly: 29,
-        quarterly: 79,
-        annually: 249,
-      },
-      discount: 0
-    },
+    pricing:{},
     formData: {
       fName: '',
       lName: '',
@@ -126,7 +113,7 @@ parasails.registerPage('checkout', {
     applyPromoCode: async function () {
       this.syncing = true;
       this.formErrors = {};
-      if (this.promoLimit < 6) {
+      if (this.formData.promoCode && this.promoLimit < 6) {
         // Check code for validity
         await Cloud['checkPromo'].with({
           promoCode: this.formData.promoCode,
@@ -158,14 +145,48 @@ parasails.registerPage('checkout', {
             this.syncing = false;
           })
       } else {
+        this.formErrors.promoCode = true;
         this.syncing = false;
       }
     },
+    loginForm: async function() {
+      this.needsAccount = false;
+      this.modal = '';
+      this.syncing = false;
+      this.handleSubmitting();
+    },
+    checkEmail: async function() {
+      return await Cloud['checkEmail'].with({
+        emailAddress: this.formData.emailAddress
+      })
+        .then((response) => {
+          console.log(response);
+          return response
+        })
+        .catch((err) => {
+          return
+        });
+    },
     submittedForm: async function() {
-      // If email confirmation is enabled, show the success message.
-      console.log('Submitted');
+      if (this.needsOnboarding) {
+        window.location = '/level';
+      } else {
+        window.location = '/dashboard';
+      }
     },
     handleSubmitting: async function() {
+      this.syncing = true;
+      if (this.needsAccount) {
+        // Check Email for Existing Account
+        let existingAccount = await this.checkEmail();
+
+        console.log(existingAccount);
+
+        if (existingAccount) {
+          this.modal = 'loginModal';
+          return
+        }
+      }
 
       await this.stripe.createToken(this.card)
         .then((card) => {
@@ -173,6 +194,8 @@ parasails.registerPage('checkout', {
         })
         .catch((e) => {
           console.log(e);
+          this.modal = 'paymentError';
+          this.syncing = false;
         });
 
       await Cloud[this.pageName].with({

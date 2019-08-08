@@ -9,7 +9,7 @@
           </div>
           <div class="flex-item">
             <h2>The basic learner experience does not include free trial. We recommend you to try our <b class="blue">Premium Learner trial for 14 days.</b></h2>
-            <p>You can always cancel or downgrade to Basic learner at any point before trial ends.</p>
+            <p>You can always cancel or downgrade to Basic learner at any point before trial ends on <%= new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric'}) %>.</p>
           </div>
         </div>
       </div>
@@ -30,12 +30,13 @@
                 <a @click="switchBilling('monthly')" class="rbtn-blue bill-time" :class="[billingCycle === 'monthly' ? 'active' : '']">Monthly - ${{ pricing[plan].monthly }}</a>
               </li>
               <li>
-                <a @click="switchBilling('quarterly')" class="rbtn-blue bill-time" :class="[billingCycle === 'quarterly' ? 'active' : '']">Quarterly - ${{ pricing[plan].quarterly }}<span>1 Week Free</span></a>
+                <a @click="switchBilling('quarterly')" class="rbtn-blue bill-time" :class="[billingCycle === 'quarterly' ? 'active' : '']">Quarterly - ${{ pricing[plan].quarterly }}
+                  <span>{{ pricing[plan].savingQ }}</span></a>
               </li>
               <li>
                 <a @click="switchBilling('annually')" class="rbtn-blue bill-time" :class="[billingCycle === 'annually' ? 'active' : '']">
                   Annually - ${{ pricing[plan].annually }}
-                  <span>Save $99</span>
+                  <span>{{ pricing[plan].savingA }}</span>
                 </a>
               </li>
               <li>
@@ -61,7 +62,7 @@
           <li>
             <div class="heading">
               <span class="number">2</span>
-              <h3>Your basic information</h3>
+              <h3>Your billing information</h3>
             </div>
 
             <div class="basic-info">
@@ -80,13 +81,13 @@
               <div v-if="needsAccount" class="row">
                 <div class="col-lg-4 col-sm-4">
                   <label for="email">Email Address<span class="required-mark">&nbsp;*</span></label>
-                  <input type="email" name="email" placeholder="email@domain.com" :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress"  :required="needsAccount"/>
+                  <input type="email" name="email" placeholder="email@domain.com" :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress"  :required="needsAccount" :disabled="!needsAccount"/>
                   <div class="invalid-feedback" v-if="formErrors.emailAddress">Please enter a valid email address.</div>
                 </div>
-                <div class="col-lg-4 col-sm-4">
-                  <label for="password">Password<span class="required-mark">&nbsp;*</span></label>
-                  <input type="password" name="password" placeholder="Password" :required="needsAccount" v-model.trim="formData.password"/>
-                </div>
+<!--                <div class="col-lg-4 col-sm-4">-->
+<!--                  <label for="password">Password<span class="required-mark">&nbsp;*</span></label>-->
+<!--                  <input type="password" name="password" placeholder="Password" :required="needsAccount" v-model.trim="formData.password"/>-->
+<!--                </div>-->
               </div>
 
             </div>
@@ -101,7 +102,7 @@
             </div>
             <p class="note">
               <input type="checkbox" name="tos" id="termsofservice" :required="needsAccount"/>
-              <label for="termsofservice">&nbsp;&nbsp; have read and agree to the <a href="/privacy/" target="_blank">Privacy Policy</a> and <a href="/terms/" target="_blank">Terms of Service</a> of ChinesePod LLC.</label><span
+              <label for="termsofservice">&nbsp;&nbsp; I have read and agree to the <a href="/privacy/" target="_blank">Privacy Policy</a> and <a href="/terms/" target="_blank">Terms of Service</a> of ChinesePod LLC.</label><span
                 class="required-mark">&nbsp;*</span></p>
           </li>
           <li>
@@ -143,9 +144,9 @@
                   </button>
                 </div>
               </div>
-              <div class="col-lg-4 col-sm-4">
-                <a id="apply-pc-btn" @click="applyPromoCode" class="btn rbtn-blue ajax-button" :class="[syncing ? 'syncing' : '']">
-                  <span class="button-text" v-if="!syncing"><slot name="default">Apply</slot></span>
+              <div class="col-lg-4 col-sm-4 mt-sm-4">
+                <a @click="applyPromoCode" class="btn apply-pc-btn ajax-button mt-2" :class="[syncing ? 'syncing' : '', pricing.discount ? ['rbtn', 'disabled'] : 'rbtn-blue']">
+                  <span class="button-text" v-if="!syncing && !pricing.discount"><slot name="default">Apply</slot></span>
                   <span class="button-loader clearfix" v-if="syncing">
                     <slot name="syncing-state">
                       <div class="loading-dot dot1"></div>
@@ -154,6 +155,10 @@
                       <div class="loading-dot dot4"></div>
                     </slot>
                   </span>
+                  <span class="button-text" v-if="!syncing && pricing.discount"><slot name="default"><i>Applied</i></slot></span>
+                </a>
+                <a v-show="pricing.discount" @click="formData.promoCode = ''; pricing.discount = 0" class="btn rbtn-red apply-pc-btn mt-2">
+                  <span class="button-text"><slot name="default">Clear</slot></span>
                 </a>
               </div>
             </div>
@@ -208,18 +213,6 @@
             <div id="error"></div>
             <ajax-button id="cc-submit-button" :syncing="syncing" class="rbtn-blue payment-content-stripe">Join ChinesePod</ajax-button>
             </br>
-            <div class="payment-content-stripe">
-              <div v-if="trial">
-                <p>When you click Join ChinesePod your 14-day trial will begin and you won’t be charged
-                  <span class="price-switch total-amount">${{ pricing[plan][billingCycle] }}</span>
-                  until <%= new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric'}) %>.</p>
-              </div>
-              <div v-if="!trial">
-                <p>When you click Join ChinesePod you’ll be charged
-                  <span class="price-switch total-amount">${{ pricing[plan][billingCycle] - pricing.discount }}.</span>
-                </p>
-              </div>
-            </div>
           </li>
         </ul>
       </ajax-form>
@@ -236,15 +229,40 @@
 
   <modal class="paymentError modal fade" v-if="modal==='paymentError'" @close="modal = ''" v-cloak>
     <div class="modal-header">
-      <h2 class="modal-title">Payment Error</h2>
+      <h2 class="modal-title">Error During Checkout</h2>
       <hr/>
       <button type="button" class="modal-close-button" data-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body">
-      <h5>{{ paymentErrors }}</h5>
+      <h5>{{ paymentErrors ? paymentErrors : 'An unknown error occurred during checkout. Please check your information and try again later' }}</h5>
     </div>
     <div class="modal-footer flex-row-reverse justify-content-between">
       <button type="button" data-dismiss="modal" class="btn btn-info">Close</button>
+    </div>
+  </modal>
+
+  <modal class="loginModal modal fade" v-if="modal==='loginModal'" @close="modal = ''" v-cloak>
+    <div class="container">
+      <h2 class="text-center">Seems you already have account with us. Please sign in below.</h2>
+      <div class="login-form-container">
+        <hr/>
+        <ajax-form action="login" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-errors.sync="formErrors" @submitted="loginForm()">
+          <div class="form-group">
+            <input type="email" class="form-control" placeholder="Email address" :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress" autocomplete="email" focus-first>
+            <div class="invalid-feedback" v-if="formErrors.emailAddress">Please provide a valid email address.</div>
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" placeholder="Password" :class="[formErrors.password ? 'is-invalid' : '']" v-model.trim="formData.password" autocomplete="current-password">
+            <div class="invalid-feedback" v-if="formErrors.password">Please enter your password.</div>
+          </div>
+          <p class="text-danger" v-if="cloudError==='badCombo'"><small>The credentials you entered are not associated with an account. Please check your email and/or password and try again.</small></p>
+          <p class="text-danger" v-else-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</small></p>
+          <div class="form-group">
+            <ajax-button :syncing="syncing" class="btn-dark btn-lg btn-block">Sign in</ajax-button>
+          </div>
+        </ajax-form>
+        <p class="text-center"><a href="/accounts/resetpassword" target="_blank">Forgot your password?</a></p>
+      </div>
     </div>
   </modal>
 

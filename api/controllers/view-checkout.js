@@ -36,21 +36,35 @@ module.exports = {
     if(this.req.param('period', false) && ['annually', 'quarterly', 'monthly'].includes(this.req.param('period', false).toLowerCase())) {
       period = this.req.param('period', false).toLowerCase();
     }
-    sails.log.info({
-      plan: this.req.param('plan', false),
-      period: this.req.param('period', false)
-    });
 
     // Respond with view.
     return {
-      needsAccount: !this.req.session.userId,
+      needsAccount: !this.req.me,
       trial: trial,
       plan: plan,
       billingCycle: period,
       promoShow: promo,
       formData: {
+        emailAddress: this.req.me ? this.req.me.email : '',
         promoCode: promoCode
-      }
+      },
+      pricing:{
+        basic: {
+          monthly: 14,
+          quarterly: 39,
+          annually: 124,
+          savingQ: '1 Week Free',
+          savingA: 'Save $44'
+        },
+        premium: {
+          monthly: 29,
+          quarterly: 79,
+          annually: 249,
+          savingQ: '1 Week Free',
+          savingA: 'Save $99'
+        },
+        discount: 0
+      },
     };
   }
 };

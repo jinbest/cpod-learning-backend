@@ -50,7 +50,6 @@ module.exports.routes = {
   'GET /secret-page':             { action: 'view-secret-page' },
 
 
-
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
   //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗  ┌┼─   ║║║ ║║║║║║║║  ║ ║╠═╣ ║║╚═╗
   //  ╩ ╩╩╚═╝╚═╝  ╩╚═╚═╝═╩╝╩╩╚═╚═╝╚═╝ ╩ ╚═╝  └┘   ═╩╝╚═╝╚╩╝╝╚╝╩═╝╚═╝╩ ╩═╩╝╚═╝
@@ -81,10 +80,12 @@ module.exports.routes = {
   'PUT   /api/v1/account/update-options':                { action: 'account/update-options' },
   'POST   /api/v1/placement/email-results':              { action: 'placement/email-results' },
   'POST  /api/v1/entrance/signup':                       { action: 'entrance/signup' },
+  'POST  /api/v1/entrance/login':                        { action: 'entrance/login' },
   'PUT  /api/v1/onboarding/pricing':                     { action: 'onboarding/pricing' },
   'PUT  /api/v1/onboarding/level':                       { action: 'onboarding/level' },
   'PUT  /api/v1/purchase/checkout':                      { action: 'purchase/checkout' },
   'POST  /api/v1/purchase/check-promo':                  { action: 'purchase/check-promo' },
+  'POST /api/v1/purchase/check-email':                   { action: 'purchase/check-email' },
 
   // Information Routes - Health Check
   '/api/v1/request':                                     { action: 'health/request' },
