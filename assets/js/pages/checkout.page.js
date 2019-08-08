@@ -168,23 +168,16 @@ parasails.registerPage('checkout', {
         });
     },
     submittedForm: async function() {
-      if (this.needsOnboarding) {
-        window.location = '/level';
-      } else {
-        window.location = '/dashboard';
-      }
+      console.log('form marked as submitted');
     },
     handleSubmitting: async function() {
       this.syncing = true;
       if (this.needsAccount) {
         // Check Email for Existing Account
         let existingAccount = await this.checkEmail();
-
-        console.log(existingAccount);
-
-        if (existingAccount) {
+        if (existingAccount.userData) {
           this.modal = 'loginModal';
-          return
+          return false
         }
       }
 
@@ -208,6 +201,9 @@ parasails.registerPage('checkout', {
         .then((info) => {
           console.log('Successful Subscription');
           this.cloudSuccess = true;
+          setTimeout(() => {
+            window.location = this.needsOnboarding ? '/level' : '/dashboard';
+          }, 2000);
         })
         .catch((e) => {
           console.log('Payment Method declined');

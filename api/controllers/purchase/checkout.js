@@ -52,6 +52,9 @@ module.exports = {
     },
     trialAlreadyUsed: {
       description: 'User has already used a trial subscription before.'
+    },
+    loginFirst: {
+      description: 'User email is not unique and should log in before checkout.'
     }
   },
 
@@ -109,168 +112,208 @@ module.exports = {
         //Nothing Yet
       }
     };
-    //TODO REMOVE THIS TESTING SET
-
-    //TODO Configure User Info
-
-    //TODO IF NEW USER - CREATE An Account
-
-    inputs.userId = '1016995';
-
-    if (!inputs.userId) {
-      try {
-        inputs.userId = this.req.session.userId;
-        sails.log.info(this.req.session.userId);
-      } catch (e) {
-        sails.log.error(e);
-        throw 'invalid';
-      }
-    }
-
-    sails.log.info(inputs);
 
     if (inputs === {}) {
-      throw 'invalid'
+      throw {invalid: 'No Data Submitted'}
     }
 
-    let customer = '';
+    if (!this.req.me) {
+
+      // Create a new User
+      const email = inputs.emailAddress.toLowerCase();
+      const ipdata =  require('ipdata');
+      // const axios = require('axios');
+      // const ua = require('universal-analytics');
+
+      let password = await sails.helpers.passwordGenerate();
+
+      let ipData = {};
+
+      if(this.req.ip && this.req.ip !== '::1') {
+        await ipdata.lookup(this.req.ip, sails.config.custom.ipDataKey)
+          .then((info) => {
+            ipData = info;
+          })
+          .catch((err) => {
+            sails.log.error(err);
+          });
+      }
+
+      let name = `${inputs.fName} ${inputs.lName}`;
+      let userName = name.replace(' ', '');
+      userName += Math.floor(Math.random() * Math.floor(500));
+
+      // Create new User record
+      let newUserRecord = await User.create(_.extend({
+        email: email,
+        password: await sails.helpers.passwordHash.with({
+          password: password,
+          method: 'E'
+        }),
+        username: userName,
+        name: name,
+        ip_address: this.req.ip,
+        ip_country: ipData['country_name'],
+        ip_region: ipData['region'],
+        ip_city: ipData['city'],
+        country: ipData['country_name'],
+        city: ipData['city'],
+        http_referer: this.req.headers.referer ? this.req.headers.referer : '',
+        code: await sails.helpers.strings.random('url-friendly'),
+        confirm_status: 0
+      }))
+        .intercept('E_UNIQUE', 'loginFirst')
+        .intercept({name: 'UsageError'}, 'invalid')
+        .fetch();
+
+      let newUserSite = await UserSiteLinks.create(_.extend({
+        user_id: newUserRecord.id,
+        usertype_id: 7, //Free
+        expiry: new Date().toISOString()
+      }, inputs.optIn ? {
+        academic_email: 1,
+        activity_email: 1,
+        other_email: 1,
+        show_email: 1,
+        newsletter_email: 1,
+        meetup_email: 1,
+      }:{}))
+        .fetch();
+
+      // Store the user's new id in their session.
+      inputs.userId = this.req.session.userId = newUserRecord.id;
+
+      let mauticLead = await sails.helpers.mautic.createContact.with({
+        email: email,
+        userId: newUserRecord.id,
+        optIn: inputs.optIn,
+        ipData: ipData
+      }).catch((e) => {
+        sails.log.error(e)
+      });
+
+      if (sails.config.custom.verifyEmailAddresses) {
+        await sails.helpers.sendTemplateEmail.with({
+          to: email,
+          subject: 'Please confirm your account',
+          template: 'email-verify-account',
+          templateData: {
+            fullName: name,
+            email: email,
+            password: password,
+            token: newUserRecord.code ? newUserRecord.code : '',
+            mobile: false,
+            confirmation: false
+          }
+        });
+      } else {
+        sails.log.info('Skipping new account email verification... (since `verifyEmailAddresses` is disabled)');
+      }
+
+    } else {
+      inputs.userId = this.req.me.id;
+
+      // Check if User has Used a Trial before
+      if (inputs.trial) {
+        let userTrial = await User.findOne({id: inputs.userId});
+        sails.log.info(userTrial);
+        if (userTrial.trial) {
+          throw {declined: `Unfortunately, you can only enroll in a trial subscription once. 
+        It was already redeemed on ${new Date(userTrial.trial.toString()).toLocaleString()}`};
+        }
+      }
+    }
 
     let errors = [];
 
-    // Check if User has Used a Trial before
-    if (inputs.trial) {
-      let userTrial = await User.findOne({id: inputs.userId});
-      sails.log.info(userTrial);
-      if (userTrial.trial) {
-        throw {declined: `Unfortunately, you can only enroll in a trial subscription once. 
-        It was already redeemed on ${new Date(userTrial.trial.toString()).toLocaleString()}`};
-      }
-    }
+    sails.log.info({userId: inputs.userId});
 
-    await stripe.customers.update(
-      `${inputs.userId}`, {
-        source: inputs.token,
-        name: `${inputs.fName} ${inputs.lName}`
-      },
-      function (err, user) {
-        if (err) {
-          switch (err.type) {
-            case 'StripeCardError':
-              // A declined card error
-              errors.push(err.message); // => e.g. "Your card's expiration year is invalid."
-              break;
-            case 'StripeRateLimitError':
-              // Too many requests made to the API too quickly
-              break;
-            case 'StripeInvalidRequestError':
-              // Invalid parameters were supplied to Stripe's API
-              break;
-            case 'StripeAPIError':
-              // An error occurred internally with Stripe's API
-              break;
-            case 'StripeConnectionError':
-              // Some kind of error occurred during the HTTPS communication
-              break;
-            case 'StripeAuthenticationError':
-              // You probably used an incorrect API key
-              break;
-            default:
-              // Handle any other types of unexpected errors
-              break;
-          }
-        } else {
-          customer = user;
-        }
-      });
+    let customerData = ''; let subscription = '';
+    let cardData = {};
 
-    //Customer Does not exist - Create One
-    if (!customer) {
-      await stripe.customers.create({
+    await stripe.customers
+      .create({
         id: inputs.userId,
         email: inputs.emailAddress,
         source: inputs.token,
         name: `${inputs.fName} ${inputs.lName}`
-      }, function (err, user) {
-        if (err) {
-          switch (err.type) {
-            case 'StripeCardError':
-              // A declined card error
-              errors.push(err.message); // => e.g. "Your card's expiration year is invalid."
-              break;
-            case 'StripeRateLimitError':
-              // Too many requests made to the API too quickly
-              break;
-            case 'StripeInvalidRequestError':
-              // Invalid parameters were supplied to Stripe's API
-              break;
-            case 'StripeAPIError':
-              // An error occurred internally with Stripe's API
-              break;
-            case 'StripeConnectionError':
-              // Some kind of error occurred during the HTTPS communication
-              break;
-            case 'StripeAuthenticationError':
-              // You probably used an incorrect API key
-              break;
-            default:
-              // Handle any other types of unexpected errors
-              break;
-          }
-        } else {
-          customer = user;
-        }
+      })
+      .then(async (customer) => {
+        customerData = customer;
+        sails.log.info(`New User ${customer.id} Created at ${new Date()}`);
+        subscription = await stripe.subscriptions.create({
+          customer: customer.id,
+          items: [{plan: plans[inputs.plan][inputs.billingCycle].stripeId}],
+          trial_period_days: inputs.trial ? 14 : 0 // 2 weeks or No trial
+        }).catch((err) => {
+          sails.log.info(err.message);
+          errors.shift(err.message);
+          throw {declined: errors.length > 1 ? errors[0] : 'Could not confirm the payment method. Please try again later.'};
+        })
+      })
+      .catch((err) => {
+        sails.log.info(err.message);
+        // errors.shift(err.message);  // Disregard as we expect to hi an existing User Error
       });
+
+    if (!customerData) {
+      await stripe.customers
+        .update(
+          `${inputs.userId}`, {
+            source: inputs.token,
+            name: `${inputs.fName} ${inputs.lName}`
+          })
+        .then(async (customer) => {
+          customerData = customer;
+          sails.log.info(`Found User ${customer.id} at ${new Date()}`);
+          subscription = await stripe.subscriptions.create({
+            customer: customer.id,
+            items: [{plan: plans[inputs.plan][inputs.billingCycle].stripeId}],
+            trial_period_days: inputs.trial ? 14 : 0 // 2 weeks or No trial
+          }).catch((err) => {
+            sails.log.info(err.message);
+            errors.shift(err.message);
+            throw {declined: errors.length > 1 ? errors[0] : 'Could not confirm the payment method. Please try again later.'};
+          })
+        })
+        .catch((err) => {
+          sails.log.info(err.message);
+          // errors.shift(err.message);
+        });
     }
 
+    sails.log.info({errors: errors});
+
     if (errors.length > 0) {
-      sails.log.error(errors);
+      //TODO Add More Sophisticated Faulty Payment Handling
+      sails.log.info({paymentError: errors});
       throw {declined: errors[0]};
     }
 
-    if (!customer) {
-      throw 'invalid';
-    }
+    // if (!subscription) {
+    //   sails.log.info({subscription: subscription});
+    //   throw {declined: errors.length > 1 ? errors[0] : 'Could not subscribe with the selected payment method. Please try again later.'};
+    // }
 
-    const cardData = customer.sources.data[0];
-
-    try {
-      sails.log.info(customer.sources.data)
-    } catch (e) {
-      sails.log.error(e)
-    }
-
-    // Subscribe Customer to a Plan
-    let subscription = await stripe.subscriptions.create({
-      customer: customer.id,
-      items: [{plan: plans[inputs.plan][inputs.billingCycle].stripeId}],
-      trial_period_days: inputs.trial ? 14 : 0 // 2 weeks or No trial
-    }).catch((err) => {
-      sails.log.info(err);
-      errors.push(err.message);
-    });
-
-
-    sails.log.info(errors);
-
-    if (errors.length > 0) {
-      sails.log.error(errors);
-      throw {declined: errors[0]};
-    }
-
-    sails.log.info(subscription);
-
-    if (!subscription) {
-      throw 'invalid';
-    }
-
-    // If Trial - Mark User Record as Such
+// If Trial - Mark User Record as Such
     if (inputs.trial) {
       userData = await User.updateOne({id: inputs.userId})
         .set({trial: new Date(Date.now()).toISOString()});
       sails.log.info(userData);
     }
 
-    // Check Subscriptions Table
+    try {
+      cardData = customerData.sources.data[0];
+    } catch (e) {
+      sails.log.error(e);
+    }
+
+    sails.log.info({
+      cc_num: cardData ? cardData['last4'] : '9999',
+      cc_exp: cardData ? `${cardData['exp_month']}/${cardData['exp_year']}` : '99/99',
+    });
+
+// Check Subscriptions Table
     const cpodSubscription = await Subscriptions.create({
       user_id: inputs.userId,
       subscription_id: subscription.id,
@@ -280,19 +323,19 @@ module.exports = {
       product_length: plans[inputs.plan][inputs.billingCycle].length, // converted 'billingCycle'
       status: 1, //  1=active, 2=cancelled, 3=past due
       next_billing_time: new Date(subscription['current_period_end'] * 1000).toISOString(),
-      cc_num: cardData ? cardData.last4 : '',
-      cc_exp: cardData ? `${cardData.exp_month}/${cardData.exp_year}` : '',
+      cc_num: cardData ? cardData.last4 : '9999',
+      cc_exp: cardData ? `${cardData.exp_month}/${cardData.exp_year}` : '99/99',
     }).fetch();
 
-    //TODO Check Payments Table
+//TODO Check Payments Table
 
 
 
-    // Update User Access on UserSiteLinks
+// Update User Access on UserSiteLinks
     const userSiteLinks = UserSiteLinks.updateOne({user_id:inputs.userId})
       .set({usertype_id: plans[inputs.plan].id});
 
-    // Update User SessionInfo to Match Current Access Level
+// Update User SessionInfo to Match Current Access Level
     const phpSession = await sails.helpers.php.updateSession.with({
       userId: inputs.userId,
       planName: inputs.plan,
@@ -305,7 +348,6 @@ module.exports = {
       domain: '.chinesepod.com',
       expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
     });
-
     exits.success();
   }
 };
