@@ -30,9 +30,6 @@ module.exports = {
       accesslog_urlbase: 'https://chinesepod.com/lessons/api',
     }).fetch();
 
-    return {
-      SetCurrentLesson: `Set current lesson to ${lessonId}`,
-      log: log
-    }
+    return `Set current lesson to ${lessonId} for user ${this.req.me.email}`
   }
 };
