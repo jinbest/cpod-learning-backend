@@ -31,7 +31,7 @@ module.exports = {
     }).fetch();
 
     return {
-      SetCurrentLesson: lessonId,
+      SetCurrentLesson: `Set current lesson to ${lessonId}`,
       log: log
     }
   }
