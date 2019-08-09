@@ -200,6 +200,8 @@ parasails.registerPage('checkout', {
       }
 
       await Cloud[this.pageName].with({
+        fName: this.formData.fName,
+        lName: this.formData.lName,
         emailAddress: this.formData.emailAddress,
         token: this.token,
         plan: this.plan,
