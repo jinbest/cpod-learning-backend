@@ -33,16 +33,17 @@ module.exports.routes = {
   // 'GET /account/password':   { action: 'account/view-edit-password' },
   // 'GET /account/profile':    { action: 'account/view-edit-profile' },
 
-  'GET /email-signup':          { action: 'entrance/view-signup' },
-  'GET /get-started':           { action: 'entrance/view-signup' },
-  'GET /signup':                { action: 'entrance/view-signup' },
-  'GET /email/confirm':         { action: 'entrance/confirm-email' },
+  'GET /email-signup':            { action: 'entrance/view-signup' },
+  'GET /get-started':             { action: 'entrance/view-signup' },
+  'GET /signup':                  { action: 'entrance/view-signup' },
+  'GET /email/confirm':           { action: 'entrance/confirm-email' },
 
-  'GET /pricing':               { action: 'onboarding/view-pricing' },
-  'GET /checkout':              { action: 'view-checkout' },
+  'GET /pricing':                 { action: 'onboarding/view-pricing' },
+  'GET /checkout':                { action: 'view-checkout' },
 
-  'GET /level/:unused?':        { action: 'onboarding/view-level' },
+  'GET /level/:unused?':          { action: 'onboarding/view-level' },
 
+  'GET /logout':                  { action: 'account/logout' },
 
   //RECAP LESSON VIEWS
   'GET /secret-page':             { action: 'recap/view-secret-page' },
