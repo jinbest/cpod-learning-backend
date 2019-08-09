@@ -63,7 +63,7 @@ the account verification message.)`,
   fn: async function (inputs) {
     const email = inputs.emailAddress.toLowerCase();
     const ipdata =  require('ipdata');
-    const axios = require('axios');
+    // const axios = require('axios');
     const ua = require('universal-analytics');
     var req = this.req;
 
@@ -179,25 +179,27 @@ the account verification message.)`,
     } else {
       sails.log.info('Skipping new account email verification... (since `verifyEmailAddresses` is disabled)');
     }
-    if (inputs.optIn) {
-      const data = {
-        email_address: email,
-        status: 'subscribed'
-      };
-      axios.post('https://us9.api.mailchimp.com/3.0/lists/0a8579be6a/members', data, {
-        mode: 'no-cors', // no-cors, cors, *same-origin
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'apikey d1056769726aa0f9129a5ce02a23dd93-us9'
-        }
-      }).catch((err) => {
-        console.log(err)
-      });
-    }
+
+    // Dropping Mailchimp since migration
+    // if (inputs.optIn) {
+    //   const data = {
+    //     email_address: email,
+    //     status: 'subscribed'
+    //   };
+    //   axios.post('https://us9.api.mailchimp.com/3.0/lists/0a8579be6a/members', data, {
+    //     mode: 'no-cors', // no-cors, cors, *same-origin
+    //     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'Authorization': 'apikey d1056769726aa0f9129a5ce02a23dd93-us9'
+    //     }
+    //   }).catch((err) => {
+    //     console.log(err)
+    //   });
+    // }
+
     let level = '';
     if (inputs.level) {
-      //TODO Helper Set user Level validation
       level = inputs.level.toString();
       if (['newbie', 'elementary', 'preInt', 'intermediate', 'upperInt', 'advanced'].includes(level)) {
         let levelId = 1;
