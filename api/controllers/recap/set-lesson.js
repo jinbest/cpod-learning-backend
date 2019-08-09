@@ -21,7 +21,7 @@ module.exports = {
 
     let lessonId = this.req.path.split('/')[2].toUpperCase();
 
-    return await Logging.create({
+    let log =  await Logging.create({
       id: new Date().toISOString().split('T').join(' ').split('.')[0],
       access_ip: this.req.ip,
       accesslog_url: `https://chinesepod.com/lessons/api?v3_id=${lessonId}&type=lesson`,
@@ -29,7 +29,10 @@ module.exports = {
       accesslog_user: this.req.me ? this.req.me.email : 'ugis@chinesepod.com',
       accesslog_urlbase: 'https://chinesepod.com/lessons/api',
     }).fetch();
+
+    return {
+      SetCurrentLesson: lessonId,
+      log: log
+    }
   }
-
-
 };
