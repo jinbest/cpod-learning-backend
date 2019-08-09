@@ -129,7 +129,7 @@ parasails.registerPage('checkout', {
             if (info.success && this.plan === info.discount.plan && this.billingCycle === info.discount.billingCycle) {
               if (info.discount.type === 0) {
                 // Percentage Discount
-                this.pricing.discount = parseFloat(info.discount.value) * this.pricing[info.discount.plan][info.discount.billingCycle];
+                this.pricing.discount = (parseFloat(info.discount.value) / 100) * this.pricing[info.discount.plan][info.discount.billingCycle];
               }
               if (info.discount.type === 1) {
                 // Fixed Price Discount

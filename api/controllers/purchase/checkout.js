@@ -126,6 +126,8 @@ module.exports = {
       throw {invalid: 'No Data Submitted'}
     }
 
+    let ipData = {};
+
     if (!this.req.me) {
 
       // Create a new User
@@ -135,8 +137,6 @@ module.exports = {
       // const ua = require('universal-analytics');
 
       let password = await sails.helpers.passwordGenerate();
-
-      let ipData = {};
 
       if(this.req.ip && this.req.ip !== '::1') {
         await ipdata.lookup(this.req.ip, sails.config.custom.ipDataKey)
@@ -246,6 +246,7 @@ module.exports = {
       token: inputs.token
     });
 
+
     sails.log.info({customerData: customerData});
 
     if (!customerData || customerData.err) {
@@ -261,7 +262,7 @@ module.exports = {
       if (response.success && response.data) {
         switch (response.data.type) {
           case 0:
-            discount = parseFloat(response.data.value) * plans[inputs.plan][inputs.billingCycle].price;
+            discount = (parseFloat(response.data.value) / 100) * plans[inputs.plan][inputs.billingCycle].price;
             coupon = await stripe.coupons.create({
               percent_off: parseFloat(response.data.value),
               duration: 'once'
@@ -337,12 +338,9 @@ module.exports = {
         }).fetch();
 
 //TODO Check Payments Table
-        sails.log.info('Check IPData ?');
-        if (typeof ipData  === 'undefined') {
-          sails.log.info('Yes! IPData');
-          const ipdata =  require('ipdata');
 
-          let ipData = {};
+        if (!ipData['country_name']) {
+          const ipdata = require('ipdata');
 
           if(this.req.ip && this.req.ip !== '::1') {
             await ipdata.lookup(this.req.ip, sails.config.custom.ipDataKey)
@@ -367,9 +365,9 @@ module.exports = {
           pay_status: 2,
           pay_method: 9,
           notes: 'CPOD JS PAGE',
-          region: typeof ipData !== 'undefined' ? ipData['region'] : this.req.me.ip_region,
-          country: typeof ipData !== 'undefined'  ? ipData['country_name'] : this.req.me.ip_country,
-          city: typeof ipData !== 'undefined'  ? ipData['city'] : this.req.me.ip_city,
+          region: ipData['region'] ? ipData['region'] : null,
+          country: ipData['country_name'] ? ipData['country_name'] : null,
+          city: ipData['city'] ? ipData['city'] : null,
           ip_address: this.req.ip,
           created_by: inputs.userId,
           modified_by: inputs.userId,

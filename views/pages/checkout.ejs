@@ -134,12 +134,7 @@
                 <a @click="applyPromoCode" class="btn apply-pc-btn ajax-button mt-2" :class="[syncing ? 'syncing' : '', pricing.discount ? ['rbtn', 'disabled'] : 'rbtn-blue']">
                   <span class="button-text" v-if="!syncing && !pricing.discount"><slot name="default">Apply</slot></span>
                   <span class="button-loader clearfix" v-if="syncing">
-                    <slot name="syncing-state">
-                      <div class="loading-dot dot1"></div>
-                      <div class="loading-dot dot2"></div>
-                      <div class="loading-dot dot3"></div>
-                      <div class="loading-dot dot4"></div>
-                    </slot>
+                    <slot name="syncing-state">Applying...</slot>
                   </span>
                   <span class="button-text" v-if="!syncing && pricing.discount"><slot name="default"><i>Applied</i></slot></span>
                 </a>
