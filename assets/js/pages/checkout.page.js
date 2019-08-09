@@ -40,6 +40,9 @@ parasails.registerPage('checkout', {
     // Payment Errors
     paymentErrors: '',
     modal: '',
+
+    // Stripe
+    stripeKey: 'pk_test_4VxncInS2mI0bVeyKWPOGSMY'
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -201,7 +204,8 @@ parasails.registerPage('checkout', {
         token: this.token,
         plan: this.plan,
         billingCycle: this.billingCycle,
-        trial: this.trial
+        trial: this.trial,
+        promoCode: this.pricing.discount ? this.formData.promoCode : ''
       })
         .then((info) => {
           console.log('Successful Subscription');

@@ -65,6 +65,7 @@ module.exports = {
         },
         discount: 0
       },
+      stripeKey: sails.config.custom.stripePublishableKey
     };
   }
 };

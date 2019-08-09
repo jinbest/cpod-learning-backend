@@ -34,6 +34,9 @@ module.exports = {
     },
     trial: {
       type: 'boolean'
+    },
+    promoCode: {
+      type: 'string'
     }
   },
 
@@ -71,21 +74,25 @@ module.exports = {
           id: 2,
           stripeId: 'Monthly Plan -2',
           length: 1,
+          price: 29.00,
         },
         quarterly: {
           id: 18,
           stripeId: 'Quarterly Plan -18',
           length: 3,
+          price: 79.00,
         },
         annually: {
           id: 140,
           stripeId: 'Annual Plan -140',
           length: 12,
+          price: 249.00,
         },
         monthlyTrial: {
           id: 271,
           stripeId: 'Monthly Plan -271',
-          length: 1
+          length: 1,
+          price: 29.00,
         }
       },
       basic: {
@@ -95,16 +102,19 @@ module.exports = {
           id: 13,
           stripeId: 'Monthly Plan -13',
           length: 1,
+          price: 14.00,
         },
         quarterly: {
           id: 14,
           stripeId: 'Quarterly Plan -14',
           length: 3,
+          price: 39.00,
         },
         annually: {
           id: 142,
           stripeId: 'Annual Plan -142',
           length: 12,
+          price: 124.00,
         }
       },
       class: {
@@ -243,13 +253,58 @@ module.exports = {
       throw {declined: customerData.err ? customerData.err : 'Could not confirm the payment method. Please try again later.'};
     }
 
+    let coupon = {}; let discount = 0.00;
+
+    if (inputs.promoCode) {
+      let response = await sails.helpers.promo.checkCode(inputs.promoCode, plans[inputs.plan][inputs.billingCycle].id);
+      sails.log.info({response: response});
+      if (response.success && response.data) {
+        switch (response.data.type) {
+          case 0:
+            discount = parseFloat(response.data.value) * plans[inputs.plan][inputs.billingCycle].price;
+            coupon = await stripe.coupons.create({
+              percent_off: parseFloat(response.data.value),
+              duration: 'once'
+            });
+            break;
+          case 1:
+            discount = parseFloat(response.data.value);
+            coupon = await stripe.coupons.create({
+              amount_off: parseFloat(response.data.value) * 100, // Integer to the cent
+              currency: 'USD',
+              duration: 'once'
+            });
+            break;
+          case 2:
+            //TODO ADDING THIS FOR FUTURE USES - MIGRATE STUDENT SUBSCRIPTION TO THIS
+            coupon = await stripe.coupons.create({
+              amount_off: parseFloat(response.data.value),
+              duration: 'repeating'
+            });
+            break;
+          default:
+            throw {declined: 'Invalid promotional code'}
+        }
+        sails.log.info(coupon);
+      } else {
+        throw {declined: 'Invalid promotional code'}
+      }
+    }
 
     await stripe.subscriptions.create({
       customer: customerData.id,
       items: [{plan: plans[inputs.plan][inputs.billingCycle].stripeId}],
-      trial_period_days: inputs.trial ? 14 : 0 // 2 weeks or No trial
+      trial_period_days: inputs.trial ? 14 : 0, // 2 weeks or No trial
+      coupon: coupon ? coupon.id : null
     })
       .then(async (subscription) => {
+        sails.log.info({
+          customer: customerData.id,
+          items: [{plan: plans[inputs.plan][inputs.billingCycle].stripeId}],
+          trial_period_days: inputs.trial ? 14 : 0, // 2 weeks or No trial
+          coupon: coupon ? coupon.id : null
+        });
+        sails.log.info({subscription: subscription});
 
         // If Trial - Mark User Record as Such
         if (inputs.trial) {
@@ -282,7 +337,43 @@ module.exports = {
         }).fetch();
 
 //TODO Check Payments Table
+        sails.log.info('Check IPData ?');
+        if (typeof ipData  === 'undefined') {
+          sails.log.info('Yes! IPData');
+          const ipdata =  require('ipdata');
 
+          let ipData = {};
+
+          if(this.req.ip && this.req.ip !== '::1') {
+            await ipdata.lookup(this.req.ip, sails.config.custom.ipDataKey)
+              .then((info) => {
+                ipData = info;
+              })
+              .catch((err) => {
+                sails.log.error(err);
+              });
+          }
+        }
+
+        await Transactions.create({
+          subscription_id: subscription.id,
+          user_id: inputs.userId,
+          product_id: plans[inputs.plan][inputs.billingCycle].id,
+          product_length: plans[inputs.plan][inputs.billingCycle].length,
+          product_price: plans[inputs.plan][inputs.billingCycle].price,
+          discount: discount ? discount : 0.00,
+          billed_amount: inputs.trial ? 0.00 : plans[inputs.plan][inputs.billingCycle].price - discount,
+          promotion_code: inputs.promoCode ? inputs.promoCode : null,
+          pay_status: 2,
+          pay_method: 9,
+          notes: 'CPOD JS PAGE',
+          region: typeof ipData !== 'undefined' ? ipData['region'] : this.req.me.ip_region,
+          country: typeof ipData !== 'undefined'  ? ipData['country_name'] : this.req.me.ip_country,
+          city: typeof ipData !== 'undefined'  ? ipData['city'] : this.req.me.ip_city,
+          ip_address: this.req.ip,
+          created_by: inputs.userId,
+          modified_by: inputs.userId,
+        });
 
 
 
