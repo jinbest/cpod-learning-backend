@@ -1,24 +1,24 @@
 <div id="checkout" v-cloak>
   <div class="top-spacer"></div>
   <div class="container outer">
-    <div v-show="showTrialBanner" class="banner black" id="banner">
+    <div v-if="trial && plan !== 'premium'" class="banner black" id="banner">
       <div class="container">
         <div class="flex">
           <div class="flex-item">
-            <button href="/checkout?plan=premium&trial=yes" class="btn blue">Free Trial</button>
+            <a href="/checkout?plan=premium&trial=yes" class="btn blue">Free Trial</a>
           </div>
           <div class="flex-item">
             <h2>The basic learner experience does not include free trial. We recommend you to try our <b class="blue">Premium Learner trial for 14 days.</b></h2>
-            <p>You can always cancel or downgrade to Basic learner at any point before trial ends.</p>
+            <p>You can always cancel or downgrade to Basic learner at any point before trial ends on <%= new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric'}) %>.</p>
           </div>
         </div>
       </div>
     </div>
-    <div v-show="trial" class="header">
+    <div v-if="trial" class="header">
       <h1>Start learning with your free trial today!</h1>
     </div>
     <div class="body">
-      <ajax-form name="ccForm" id="cc_form">
+      <ajax-form v-if="!cloudSuccess" name="ccForm" id="cc_form" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-submitting="handleSubmitting" :handle-parsing="handleParsingForm">
         <ul>
           <li class="billing-type">
             <div class="heading">
@@ -27,43 +27,24 @@
             </div>
             <ul class="buttons">
               <li>
-                <a href="#" class="rbtn-blue bill-time active">Monthly - ${{ pricing[plan].monthly }}</a>
+                <a @click="switchBilling('monthly')" class="rbtn-blue bill-time" :class="[billingCycle === 'monthly' ? 'active' : '']">Monthly - ${{ pricing[plan].monthly }}</a>
               </li>
               <li>
-                <a href="#" class="rbtn-blue bill-time " >Quarterly - ${{ pricing[plan].quarterly }}><span>1 Week Free</span></a>
+                <a @click="switchBilling('quarterly')" class="rbtn-blue bill-time" :class="[billingCycle === 'quarterly' ? 'active' : '']">Quarterly - ${{ pricing[plan].quarterly }}
+                  <span>{{ pricing[plan].savingQ }}</span></a>
               </li>
               <li>
-                <a href="#" class="rbtn-blue bill-time ">
+                <a @click="switchBilling('annually')" class="rbtn-blue bill-time" :class="[billingCycle === 'annually' ? 'active' : '']">
                   Annually - ${{ pricing[plan].annually }}
-                  <span>Save $99</span>
+                  <span>{{ pricing[plan].savingA }}</span>
                 </a>
               </li>
             </ul>
 
-            <p class="note">When you click Join ChinesePod you’ll be charged $<span id="price"><?= $this->isPremium ? config('pricing.monthly.premium') : config('pricing.monthly.basic'); ?></span>. <a
-                href="#" class="ipc">Insert Promotion code.</a></p>
+            <p v-if="!trial" class="note">When you click Join ChinesePod you’ll be charged $<span id="price">{{ pricing[plan][billingCycle] }}</span>.</p>
 
+            <p v-if="trial" class="note">Don't worry you won't be charged until the end of your 14-day free trial.</p>
 
-            <?php else: ?>
-
-
-            <p class="note">Don't worry you won't be charged until the end of of your 14-day free trial. <a href="#" class="ipc">Insert Promotion code.</a></p>
-
-
-            <?php endif; ?>
-
-
-            <div class="row promotion-code">
-              <div class="col-lg-4 col-sm-4">
-                <label for="promotion_code">Promotion Code</label>
-                <input type="text" id="promotionCode" name="promotion_code" placeholder="Promotion Code" value="">
-                <span class="error-email">Please fill in your basic information first.</span>
-              </div>
-              <div class="col-lg-4 col-sm-4">
-                <label></label>
-                <a id="apply-pc-btn" onClick="applyPromoCode(event)" class="rbtn-blue">Apply</a>
-              </div>
-            </div>
           </li>
           <li>
             <hr>
@@ -71,62 +52,43 @@
           <li>
             <div class="heading">
               <span class="number">2</span>
-              <h3>Your basic information</h3>
+              <h3>Your billing information</h3>
             </div>
 
             <div class="basic-info">
               <div class="row">
                 <div class="col-lg-4 col-sm-4">
                   <label for="first-name">First Name<span class="required-mark">&nbsp;*</span></label>
-                  <input type="text" name="first_name" placeholder="First Name" value="<?= $this->first_name ?>" required/>
+                  <input type="text" name="first_name" placeholder="First Name" v-model="formData.fName" required/>
                 </div>
                 <div class="col-lg-4 col-sm-4">
                   <label for="last-name">Last Name<span class="required-mark">&nbsp;*</span></label>
-                  <input type="text" name="last_name" placeholder="Last Name" value="<?= $this->last_name ?>" required/>
+                  <input type="text" name="last_name" placeholder="Last Name" v-model="formData.lName" required/>
                 </div>
               </div>
 
-
-              <?php if ($this->isTemporary) { ?>
-
-
-              <div class="row">
+              <!-- TODO ONLY FOR TEMPORARY ACCOUNTS-->
+              <div v-if="needsAccount" class="row">
                 <div class="col-lg-4 col-sm-4">
                   <label for="email">Email Address<span class="required-mark">&nbsp;*</span></label>
-                  <input type="email" name="email" placeholder="email@chinesepod.com" value="<?= $this->email ?>" required/>
-                </div>
-                <div class="col-lg-4 col-sm-4">
-                  <label for="password">Password<span class="required-mark">&nbsp;*</span></label>
-                  <input type="password" name="password" placeholder="Password" required/>
+                  <input type="email" name="email" placeholder="email@domain.com" :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress"  :required="needsAccount" :disabled="!needsAccount"/>
+                  <div class="invalid-feedback" v-if="formErrors.emailAddress">Please enter a valid email address.</div>
                 </div>
               </div>
-
-              <?php } else { ?>
-
-              <div class="row">
-                <div class="col-lg-4 col-sm-4">
-                  <input type="hidden" name="email" placeholder="email@chinesepod.com" value="<?= $this->email ?>" required/>
-                  </br>
-                </div>
-              </div>
-
-
-              <?php } ?>
-
 
             </div>
           </li>
-          <li>
+          <li v-if="needsAccount">
             <hr>
           </li>
-          <li class="privacy">
+          <li v-if="needsAccount" class="privacy">
             <div class="heading">
               <span class="number">3</span>
               <h3>Your privacy</h3>
             </div>
             <p class="note">
-              <input type="checkbox" name="tos" id="termsofservice" required/>
-              <label for="termsofservice">&nbsp;&nbsp; have read and agree to the <a href="/privacy/">Privacy Policy</a> and <a href="/terms/">Terms of Service</a> of ChinesePod LLC.</label><span
+              <input type="checkbox" name="tos" id="termsofservice" :required="needsAccount"/>
+              <label for="termsofservice">&nbsp;&nbsp; I have read and agree to the <a href="/privacy/" target="_blank">Privacy Policy</a> and <a href="/terms/" target="_blank">Terms of Service</a> of ChinesePod LLC.</label><span
                 class="required-mark">&nbsp;*</span></p>
           </li>
           <li>
@@ -134,41 +96,61 @@
           </li>
           <li class="payment-info">
             <div class="heading">
-              <span class="number">4</span>
+              <span v-if="!needsAccount" class="number">3</span>
+              <span v-if="needsAccount" class="number">4</span>
               <h3>Your payment information</h3>
             </div>
-
-
-            <?php if ($this->isPremium && $this->isTrial) { ?>
-
-
-            <p>Your card won’t be charged for 14 days, If you cancel before then, your card won’t be charged.</br>
+            <p v-if="trial">Your card will not be charged for 14 days. If you cancel before then, your card won’t be charged.</br>
               You will be charged <b>
-                <span class="price-switch monthly total-amount">$<?= $this->isPremium ? config('pricing.monthly.premium') : config('pricing.monthly.basic') ?> per month</span>
-                <span class="price-switch quarterly hide">$<?= $this->isPremium ? config('pricing.quarterly.premium') : config('pricing.quarterly.basic') ?> quarterly</span>
-                <span class="price-switch yearly hide">$<?= $this->isPremium ? config('pricing.yearly.premium') : config('pricing.yearly.basic') ?> per year</span>
+                <span class="price-switch total-amount">${{ pricing[plan][billingCycle] }} {{ billingCycle }}</span>
               </b> when your trial ends.</p>
 
-
-            <?php } elseif ($this->isPremium) { ?>
-
-            <?php } elseif (!$this->isPremium) { //basic ?>
-
-
-            <p>
+            <p v-if="!trial">
               You will be charged <b>
-                <span class="price-switch monthly total-amount">$<?= $this->isPremium ? config('pricing.monthly.premium') : config('pricing.monthly.basic') ?> per month</span>
-                <span class="price-switch quarterly hide">$<?= $this->isPremium ? config('pricing.quarterly.premium') : config('pricing.quarterly.basic') ?> quarterly</span>
-                <span class="price-switch yearly hide">$<?= $this->isPremium ? config('pricing.yearly.premium') : config('pricing.yearly.basic') ?> per year</span>
+                <span class="price-switch total-amount">${{ pricing[plan][billingCycle] - pricing.discount }} {{ billingCycle }}</span>
               </b> starting today.</p>
+            <div v-if="promoShow">
+              <p class="note">Do you have a Promo Code? <a @click="promoToggle = !promoToggle" class="ipc">Apply it here.</a>
+            </div>
 
-
-            <?php } ?>
-
+            <div v-show="promoToggle" class="row promotion-code">
+              <div class="col-lg-4 col-sm-4">
+                <label for="promotion_code">Promotion Code</label>
+                <input type="text" id="promotionCode" name="promoCode"  :class="[formErrors.promoCode ? 'is-invalid' : '']" placeholder="Promotion Code" v-model.trim="formData.promoCode">
+                <div v-if="formErrors.promoCode && promoLimit < 6" class="alert alert-warning alert-dismissible fade show" role="alert">
+                  <strong>Oh No!</strong>  Unfortunately this is not a valid code.
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div v-if="promoLimit > 5" class="alert alert-danger alert-dismissible fade show" role="alert">
+                  <strong>Oh No!</strong>  Unfortunately you've tried too many Promo Codes. Please check your code and try again later.
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-4 mt-sm-4">
+                <a @click="applyPromoCode" class="btn apply-pc-btn ajax-button mt-2" :class="[syncing ? 'syncing' : '', pricing.discount ? ['rbtn', 'disabled'] : 'rbtn-blue']">
+                  <span class="button-text" v-if="!syncing && !pricing.discount"><slot name="default">Apply</slot></span>
+                  <span class="button-loader clearfix" v-if="syncing">
+                    <slot name="syncing-state">
+                      <div class="loading-dot dot1"></div>
+                      <div class="loading-dot dot2"></div>
+                      <div class="loading-dot dot3"></div>
+                      <div class="loading-dot dot4"></div>
+                    </slot>
+                  </span>
+                  <span class="button-text" v-if="!syncing && pricing.discount"><slot name="default"><i>Applied</i></slot></span>
+                </a>
+                <a v-show="pricing.discount" @click="formData.promoCode = ''; pricing.discount = 0" class="btn rbtn-red apply-pc-btn mt-2">
+                  <span class="button-text"><slot name="default">Clear</slot></span>
+                </a>
+              </div>
+            </div>
 
             <div class="form-group clearfix">
               <ul class="cards">
-                <li><input id="payment-type-stripe" type="radio" name="payment-type" value="stripe" checked="checked"/></li>
                 <li>
                   <label for="payment-type-stripe"><img src="/images/cc/mastercard.svg"/></label>
                 </li>
@@ -178,14 +160,14 @@
                 <li>
                   <label for="payment-type-stripe"><img src="/images/cc/visa.svg"/></label>
                 </li>
-              </ul>
-              <ul class="cards">
-                <li><input id="payment-type-paypal" type="radio" name="payment-type" value="paypal"/></li>
                 <li>
-                  <label for="payment-type-paypal"><img src="/images/cc/paypal.svg"/></label>
+                  <label for="payment-type-stripe"><img src="/images/cc/unionpay.svg"/></label>
                 </li>
               </ul>
             </div>
+
+            <!-- Used to display form errors. -->
+            <div v-show="false" id="card-errors" class="alert alert-danger" role="alert"></div>
             <div class="payment-content-stripe">
               <div class="form-group clearfix pl-0">
                 <label for="card-element">Card<span class="required-mark">&nbsp;*</span></label>
@@ -198,18 +180,8 @@
                     </p>
                   </div>
                 </div>
-                <span class="stripe-success visible">
-                            <span class="token"></span>
-                        </span>
-                <span class="stripe-error visible"></span>
               </div>
               <div class="row">
-                <div class="col-lg-3">
-                  <div class="form-group">
-                    <label id="zip-label" for="zipcode">Postal Code<span class="required-mark">&nbsp;*</span></label>
-                    <input type="text" name="zipcode" placeholder="Zip" required/>
-                  </div>
-                </div>
                 <div class="col-lg-3 payment-badge">
                   <img src="/images/secure-server.svg" width="167"/>
                 </div>
@@ -228,42 +200,64 @@
           </li>
           <li class="join-cp">
             <div id="error"></div>
-            <a id="cc-submit-button" href="#" class="rbtn-blue payment-content-stripe">Join ChinesePod</a>
-            <a class="btn rbtn-blue payment-content-paypal d-none" href="javascript:;" id="paypal-submit-button">Join ChinesePod</a>
+            <ajax-button id="cc-submit-button" :syncing="syncing" class="rbtn-blue payment-content-stripe">Join ChinesePod</ajax-button>
             </br>
-            <div class="payment-content-stripe">
-
-
-              <?php if ($this->isPremium && $this->isTrial) { ?>
-
-
-              <p>When you click Join ChinesePod your 14-day trial will begin and you won’t be charged
-                <span class="price-switch monthly total-amount">$<?= $this->isPremium ? config('pricing.monthly.premium') : config('pricing.monthly.basic') ?></span>
-                <span class="price-switch quarterly hide">$<?= $this->isPremium ? config('pricing.quarterly.premium') : config('pricing.quarterly.basic') ?></span>
-                <span class="price-switch yearly hide">$<?= $this->isPremium ? config('pricing.yearly.premium') : config('pricing.yearly.basic') ?></span>
-                until <?= date('M d, Y', strtotime('+14 day')) ?>.</p>
-
-
-              <?php } elseif ($this->isPremium) { ?>
-              <?php } elseif (!$this->isPremium) { ?>
-
-
-              <p>When you click Join ChinesePod you’ll be charged
-                <span class="price-switch monthly total-amount">$<?= $this->isPremium ? config('pricing.monthly.premium') : config('pricing.monthly.basic') ?>.</span>
-                <span class="price-switch quarterly hide">$<?= $this->isPremium ? config('pricing.quarterly.premium') : config('pricing.quarterly.basic') ?>.</span>
-                <span class="price-switch yearly hide">$<?= $this->isPremium ? config('pricing.yearly.premium') : config('pricing.yearly.basic') ?>.</span>
-              </p>
-
-
-              <?php } ?>
-
-
-            </div>
           </li>
         </ul>
       </ajax-form>
+      <div v-show="cloudSuccess">
+        <div class="jumbotron text-xs-center">
+          <h1 class="display-3">Thank You!</h1>
+          <p class="lead">You have successfully confirmed a subscription and will be redirected to <strong>ChinesePod Dashboard</strong>.</p>
+          <hr>
+          <a class="btn btn-primary btn-lg" href="https://chinesepod.com/dashboard" role="button">Get Started</a>
+        </div>
+      </div>
     </div>
   </div>
+
+  <modal class="paymentError modal fade" v-if="modal==='paymentError'" @close="modal = ''" v-cloak>
+    <div class="modal-header">
+      <h2 class="modal-title">Error During Checkout</h2>
+      <hr/>
+      <button type="button" class="modal-close-button" data-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <div v-if="needsAccount">
+        <h5>We created a new account for you and sent a confirmation email. However, we encountered the following payment error:</h5>
+        <br/>
+      </div>
+      <h5>{{ paymentErrors ? 'Unfortunately the subscription was not successful. This is the potential issue: ' + paymentErrors : 'An unknown error occurred during checkout. Please check your information and try again later' }}</h5>
+    </div>
+    <div class="modal-footer flex-row-reverse justify-content-between">
+      <button type="button" data-dismiss="modal" class="btn btn-info">Close</button>
+    </div>
+  </modal>
+
+  <modal class="loginModal modal fade" v-if="modal==='loginModal'" @close="modal = ''" v-cloak>
+    <div class="container">
+      <h2 class="text-center">Seems you already have account with us. Please sign in below.</h2>
+      <div class="login-form-container">
+        <hr/>
+        <ajax-form action="login" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-errors.sync="formErrors" @submitted="loginForm()">
+          <div class="form-group">
+            <input type="email" class="form-control" placeholder="Email address" :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress" autocomplete="email" focus-first>
+            <div class="invalid-feedback" v-if="formErrors.emailAddress">Please provide a valid email address.</div>
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" placeholder="Password" :class="[formErrors.password ? 'is-invalid' : '']" v-model.trim="formData.password" autocomplete="current-password">
+            <div class="invalid-feedback" v-if="formErrors.password">Please enter your password.</div>
+          </div>
+          <p class="text-danger" v-if="cloudError==='badCombo'"><small>The credentials you entered are not associated with an account. Please check your email and/or password and try again.</small></p>
+          <p class="text-danger" v-else-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</small></p>
+          <div class="form-group">
+            <ajax-button :syncing="syncing" class="btn-dark btn-lg btn-block">Sign in</ajax-button>
+          </div>
+        </ajax-form>
+        <p class="text-center"><a href="/accounts/resetpassword" target="_blank">Forgot your password?</a></p>
+      </div>
+    </div>
+  </modal>
 
   <div id="cvvpopOver" class="d-none">
     <p>

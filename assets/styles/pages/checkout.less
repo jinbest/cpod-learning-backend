@@ -2,6 +2,8 @@
   background: url(/images/onboarding-bg.svg) no-repeat;
   background-size: cover;
   margin-top: -20px;
+  padding-bottom: 50px;
+  min-height: 100vh;
 
   .container-global > .container-fluid{
     padding: 0;
@@ -264,7 +266,7 @@
             font-size: 14px;
             a{
               color:@color-grey-6;
-              text-decoration: underline;
+              //text-decoration: underline;
             }
             label{
               font-weight: normal;
@@ -358,6 +360,7 @@
             .cards{
               float:left;
               padding-left: 0;
+              padding-bottom: 0;
               li{
                 float: left;
                 margin-right: 10px;
@@ -388,11 +391,12 @@
           }
           &.join-cp{
             padding-top: 20px;
+            padding-bottom: 30px;
             .rbtn-blue{
               color: @color-white;
               background: @color-blue;
               font-weight: bold;
-
+              font-size: 24px;
               &:hover {
                 .button-hover();
               }
@@ -481,7 +485,6 @@
       padding-top: 32px;
     }
     .promotion-code{
-      display: none;
       label{
         color: @color-grey;
       }
@@ -489,10 +492,14 @@
         width: 100%;
         .placeholder-color(@color-blue-light);
       }
-      #apply-pc-btn{
-        margin-top: 27px;
+      .apply-pc-btn{
         padding: 12px 20px;
         font-size: 15px;
+        margin-right: 10px;
+        &:hover,
+        &:active {
+          color: white;
+        }
       }
     }
   }

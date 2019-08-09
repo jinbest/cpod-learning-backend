@@ -51,7 +51,6 @@ module.exports.routes = {
 
 
 
-
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
   //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗  ┌┼─   ║║║ ║║║║║║║║  ║ ║╠═╣ ║║╚═╗
   //  ╩ ╩╩╚═╝╚═╝  ╩╚═╚═╝═╩╝╩╩╚═╚═╝╚═╝ ╩ ╚═╝  └┘   ═╩╝╚═╝╚╩╝╝╚╝╩═╝╚═╝╩ ╩═╩╝╚═╝
@@ -71,15 +70,24 @@ module.exports.routes = {
   //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝
   // Note that, in this app, these API endpoints may be accessed using the `Cloud.*()` methods
   // from the Parasails library, or by using those method names as the `action` in <ajax-form>.
+
   '/api/v1/account/logout':                              { action: 'account/logout' },
+
+  //Sample Routes
+  // '/api/v1/account/logout':                              { action: 'account/logout' },
+  // 'PUT   /api/v1/account/update-profile':                { action: 'account/update-profile' },
+  // 'PUT   /api/v1/account/update-billing-card':           { action: 'account/update-billing-card' },
+  // 'PUT   /api/v1/entrance/login':                        { action: 'entrance/login' },
+
   'PUT   /api/v1/account/update-options':                { action: 'account/update-options' },
   'POST   /api/v1/placement/email-results':              { action: 'placement/email-results' },
-  // 'PUT   /api/v1/account/update-profile':             { action: 'account/update-profile' },
-  // 'PUT   /api/v1/account/update-billing-card':        { action: 'account/update-billing-card' },
-  // 'PUT   /api/v1/entrance/login':                        { action: 'entrance/login' },
   'POST  /api/v1/entrance/signup':                       { action: 'entrance/signup' },
+  'POST  /api/v1/entrance/login':                        { action: 'entrance/login' },
   'PUT  /api/v1/onboarding/pricing':                     { action: 'onboarding/pricing' },
   'PUT  /api/v1/onboarding/level':                       { action: 'onboarding/level' },
+  'PUT  /api/v1/purchase/checkout':                      { action: 'purchase/checkout' },
+  'POST  /api/v1/purchase/check-promo':                  { action: 'purchase/check-promo' },
+  'POST /api/v1/purchase/check-email':                   { action: 'purchase/check-email' },
 
   // Information Routes - Health Check
   '/api/v1/request':                                     { action: 'health/request' },
@@ -88,11 +96,13 @@ module.exports.routes = {
   //Lesson Recap Routes
   'GET /api/v1/get-popular-lessons':                     { action: 'recap/get-popular-lessons' },
   'POST /api/v1/recap/get-lessons':                      { action: 'recap/get-user-lesson' },
-  'POST /api/v1/recap/request-lesson':                           { action: 'recap/request-lesson' },
+  'POST /api/v1/recap/request-lesson':                   { action: 'recap/request-lesson' },
 
   //General Info Routes
   'GET  /api/v1/health/ip-info':                         { action: 'health/ip-info' },
   'GET /api/v1/health/generate-words':                   { action: 'generate-words' },
+
+  //Sample Routes
   // 'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
   // 'POST  /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },
   // 'POST  /api/v1/deliver-contact-form-message':          { action: 'deliver-contact-form-message' },

@@ -46,6 +46,10 @@ module.exports = {
       maxLength: 255,
       required: true
     },
+    trial: {
+      type: 'ref',
+      columnType: 'datetime'
+    },
     ip_address: {
       type: 'string',
       columnType: 'varchar',

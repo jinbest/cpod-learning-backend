@@ -24,6 +24,7 @@ module.exports = {
   fn: async function () {
 
     if (this.req.me) {
+      sails.log.info(this.req.me);
       throw {redirect: '/'};
     }
 
