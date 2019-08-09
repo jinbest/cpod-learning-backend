@@ -19,7 +19,7 @@ module.exports = {
       autoCreatedAt: true
     },
     updatedAt: {
-      type: "string",
+      type: "ref",
       columnType: "timestamp",
       columnName: 'updated_at',
       autoUpdatedAt: true
@@ -405,7 +405,7 @@ module.exports = {
       defaultsTo: 0
     },
     last_comment_time: {
-      type: "string",
+      type: "ref",
       columnType: "datetime",
       required: true
     },

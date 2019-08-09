@@ -1,0 +1,48 @@
+<div id="current-lesson" v-cloak>
+  <div class="container text-center">
+    <h1 class="mb-3">Info About Current Recap Lesson</h1>
+    <hr/>
+    <div v-show="syncing">
+      <i style="font-size: 100px !important;"class="fa fa-spinner fa-spin"></i>
+    </div>
+    <div  v-show="!syncing && !error">
+      <img :src="lessonImg" class="img-fluid" :alt="`lessonTitle`">
+      <table class="table mb-3">
+        <tbody>
+        <tr>
+          <th scope="row">lessonTitle</th>
+          <td>{{lessonTitle}}</td>
+        </tr>
+        <tr>
+          <th scope="row">lessonId</th>
+          <td>{{ lessonId }}</td>
+        </tr>
+        <tr>
+          <th scope="row">your email</th>
+          <td>{{ emailAddress }}</td>
+        </tr>
+        <tr>
+          <th scope="row">charSet</th>
+          <td>{{ charSet }}</td>
+        </tr>
+        <tr>
+          <th scope="row">subscription</th>
+          <td>{{ subscription }}</td>
+        </tr>
+        </tbody>
+      </table>
+      <a class="btn btn-large btn-red-border" :href="`https://chinesepod.com/lesson-redirect?v3id=${lessonId}`">Go to Lesson</a>
+      <h2 class="m-4">Raw API Output</h2>
+      <p class="code">
+        {{ rawOutput }}
+      </p>
+    </div>
+    <div v-show="!syncing && error">
+      <div class="alert alert-warning mb-3" role="alert">
+        {{ error }}
+      </div>
+      <a class="btn btn-large btn-red-border" href="https://chinesepod.com/dashboard">Browse More Lessons</a>
+    </div>
+  </div>
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

@@ -1,0 +1,33 @@
+#current-lesson {
+  padding-top: 75px;
+  padding-bottom: 75px;
+
+  .thumbnail {
+    width: 100%;
+  }
+
+  .container {
+    .container-md();
+  }
+
+  .mobile-spacer {
+    display: none;
+  }
+
+  @media (max-width: 540px) {
+    br {
+      display: none;
+    }
+    .mobile-spacer {
+      display: inline;
+    }
+  }
+  .code {
+    background-color: #f6f8fa;
+    border-radius: 3px;
+    font-size: 85%;
+    line-height: 1.45;
+    overflow: auto;
+    padding: 16px;
+  }
+}

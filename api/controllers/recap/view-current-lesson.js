@@ -1,55 +1,35 @@
 module.exports = {
 
 
-  friendlyName: 'Get user lesson',
+  friendlyName: 'View current lesson',
 
 
-  description: 'Returns relevant User Lesson based on User ID',
-
-
-  inputs: {
-
-    sessionId: {
-      type:  'string',
-      description: 'Session ID provided by the PHP site API layer',
-      example: '4d99a8f17364d8caedc4b64e8d5b319e973b6abc39addbba58538f594468961a4ce883',
-      required: true
-    }
-
-  },
+  description: 'Display "Current lesson" page.',
 
 
   exits: {
 
     success: {
-      description: 'Relevant user lesson sent successfully'
-    },
-
-    invalid: {
-      responseType: 'badRequest',
-      description: 'The provided sessionid is invalid.',
-    },
-
-    noLesson: {
-      statusCode: '404',
-      description: 'User Has No Available Relevant Recap Lessons',
+      viewTemplatePath: 'pages/recap/current-lesson'
     }
-
   },
 
 
-  fn: async function (inputs) {
+  fn: async function () {
+
+    const userId = this.req.session.userId;
+    // const userId = 101699617;
+
+    if(!userId) {
+      this.res.redirect('https://chinesepod.com/dashboard')
+    }
 
     let testers = ['mg@chinesepod.com', 'ugis@chinesepod.com', 'mick@chinesepod.com'];
 
-    let session = await sails.helpers.phpApi.checkSession(inputs.sessionId);
-
-    if(!session) {
-      throw 'invalid'
-    }
+    let user = await User.findOne({id: userId});
 
     //TODO REMOVE THIS DUMMY API CALL PROCESS
-    if (testers.includes(session.email)) {
+    if (testers.includes(user.email)) {
       let currentHour = new Date(new Date() - 4 * 60 * 60 * 1000).getHours(); //NY Time
       let latestStudiedLesson = '4121';
 
@@ -80,24 +60,23 @@ module.exports = {
       }
 
       return {
+        syncing: false,
         lessonTitle: lessonTitle,
         lessonId: latestStudiedLesson, //latestStudiedLesson
         lessonImg: lessonImg,
-        emailAddress: session.email,
+        emailAddress: user.email,
         charSet: 'simplified', //charset
-        subscription: 'premium' //subscription
+        subscription: 'premium', //subscription
+        rawOutput: `{
+          "lessonTitle": "${lessonTitle}",
+          "lessonId": "${latestStudiedLesson}",
+          "lessonImg": "${lessonImg}",
+          "emailAddress": "${user.email}",
+          "charSet": "simplified",
+          "subscription": "premium"
+          }`
       }
-
     } else {
-      let user = await User.findOne({
-        email: session.email
-      });
-
-      if(!user) {
-        throw 'invalid'
-      }
-      //Connect Sails Session to PHP API Session
-      this.req.session.userId = user.id;
 
       let availableRecaps = await sails.helpers.recap.listRecapLessons();
 
@@ -111,23 +90,34 @@ module.exports = {
     `;
 
       let latestLoggedLessons = await sails.sendNativeQuery(
-        sql, [new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], session.email]
+        sql, [new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], user.email]
       );
 
-      if (latestLoggedLessons['rows'].length === 0){
-        throw 'noLesson'
+      if (latestLoggedLessons['rows'][0] === 0){
+        sails.log.info(`No Lesson For user ${user.email}`);
+        return {
+          syncing: false,
+          error: 'No Lesson Available. Please try again Later.'
+        }
       }
 
-      let latestStudiedLesson = latestLoggedLessons['rows'][0]['accesslog_url'].split('v3_id=')[1].split('&')[0]; // Switching to latest Log
-
+      let latestStudiedLesson = latestLoggedLessons['rows'][0]['accesslog_url'].split('v3_id=')[1].split('&')[0];
       // latestLoggedLessons['rows'].some( function(item) {
       //   if (availableRecaps.includes(item['accesslog_url'].split('v3_id=')[1].split('&')[0])) {
       //     return latestStudiedLesson = item['accesslog_url'].split('v3_id=')[1].split('&')[0];
       //   }
       // });
 
+      // sails.log.info(availableRecaps);
+      // sails.log.info(latestLoggedLessons['rows']);
+      // sails.log.info(latestStudiedLesson);
+
       if (typeof latestStudiedLesson === 'undefined' || latestStudiedLesson.length === 0){
-        throw 'noLesson'
+        sails.log.info(`No Lesson For user ${user.email}`);
+        return {
+          syncing: false,
+          error: 'No Lesson Available. Please try again Later.'
+        }
       }
 
       //Select User CharSet
@@ -170,6 +160,7 @@ module.exports = {
           break;
       }
 
+
       let content = await Contents.findOne({v3_id: latestStudiedLesson});
       let lessonImg = '';
       if (content) {
@@ -177,25 +168,31 @@ module.exports = {
           ? `https://s3contents.chinesepod.com/${content.v3_id}/${content.hash_code}/${content.image}`
           : `https://s3contents.chinesepod.com/extra/${content.v3_id}/${content.hash_code}/${content.image}`;
       }
+
       // Respond with view.
-      try {
-        return {
-          lessonTitle: content ? content.title : 'ChinesePod Lesson',
-          lessonId: latestStudiedLesson,
-          lessonImg: lessonImg,
-          emailAddress: session.email,
-          charSet: charSet,
-          subscription: subscription,
-        };
-      } catch (e) {
-        sails.log.error(e);
-        return {
-          lessonId: latestStudiedLesson,
-          charSet: charSet,
-          subscription: subscription,
-        };
-      }
+      return {
+        syncing: false,
+        lessonTitle: content ? content.title : 'ChinesePod Lesson',
+        lessonId: latestStudiedLesson,
+        lessonImg: lessonImg,
+        emailAddress: user.email,
+        charSet: charSet,
+        subscription: subscription,
+        rawOutput: `{
+          "lessonTitle": "${content ? content.title : 'ChinesePod Lesson'}",
+          "lessonId": "${latestStudiedLesson}",
+          "lessonImg": "${lessonImg}",
+          "emailAddress": "${user.email}",
+          "charSet": "${charSet}",
+          "subscription": "${subscription}"
+          }`
+      };
     }
+
+
+
+
   }
+
 
 };

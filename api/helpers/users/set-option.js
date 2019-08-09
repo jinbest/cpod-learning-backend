@@ -33,7 +33,6 @@ module.exports = {
       description: 'All done.',
     },
     invalid: {
-      responseType: 'badRequest',
       description: 'The provided ID does not match a valid user.'
     },
 
