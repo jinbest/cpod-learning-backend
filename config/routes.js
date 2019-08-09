@@ -71,7 +71,7 @@ module.exports.routes = {
   //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝
   // Note that, in this app, these API endpoints may be accessed using the `Cloud.*()` methods
   // from the Parasails library, or by using those method names as the `action` in <ajax-form>.
-  // '/api/v1/account/logout':                           { action: 'account/logout' },
+  '/api/v1/account/logout':                              { action: 'account/logout' },
   'PUT   /api/v1/account/update-options':                { action: 'account/update-options' },
   'POST   /api/v1/placement/email-results':              { action: 'placement/email-results' },
   // 'PUT   /api/v1/account/update-profile':             { action: 'account/update-profile' },

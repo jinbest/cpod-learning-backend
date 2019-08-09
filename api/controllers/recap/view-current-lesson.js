@@ -92,12 +92,21 @@ module.exports = {
       let latestLoggedLessons = await sails.sendNativeQuery(
         sql, [new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], user.email]
       );
-      let latestStudiedLesson = [];
-      latestLoggedLessons['rows'].some( function(item) {
-        if (availableRecaps.includes(item['accesslog_url'].split('v3_id=')[1].split('&')[0])) {
-          return latestStudiedLesson = item['accesslog_url'].split('v3_id=')[1].split('&')[0];
+
+      if (latestLoggedLessons['rows'][0] === 0){
+        sails.log.info(`No Lesson For user ${user.email}`);
+        return {
+          syncing: false,
+          error: 'No Lesson Available. Please try again Later.'
         }
-      });
+      }
+
+      let latestStudiedLesson = latestLoggedLessons['rows'][0]['accesslog_url'].split('v3_id=')[1].split('&')[0];
+      // latestLoggedLessons['rows'].some( function(item) {
+      //   if (availableRecaps.includes(item['accesslog_url'].split('v3_id=')[1].split('&')[0])) {
+      //     return latestStudiedLesson = item['accesslog_url'].split('v3_id=')[1].split('&')[0];
+      //   }
+      // });
 
       // sails.log.info(availableRecaps);
       // sails.log.info(latestLoggedLessons['rows']);
@@ -153,21 +162,24 @@ module.exports = {
 
 
       let content = await Contents.findOne({v3_id: latestStudiedLesson});
-
-      let lessonImg = content.type === 'lesson'
+      let lessonImg = '';
+      if (content) {
+        lessonImg = content.type === 'lesson'
           ? `https://s3contents.chinesepod.com/${content.v3_id}/${content.hash_code}/${content.image}`
           : `https://s3contents.chinesepod.com/extra/${content.v3_id}/${content.hash_code}/${content.image}`;
+      }
+
       // Respond with view.
       return {
         syncing: false,
-        lessonTitle: content.title,
+        lessonTitle: content ? content.title : 'ChinesePod Lesson',
         lessonId: latestStudiedLesson,
         lessonImg: lessonImg,
         emailAddress: user.email,
         charSet: charSet,
         subscription: subscription,
         rawOutput: `{
-          "lessonTitle": "${content.title}",
+          "lessonTitle": "${content ? content.title : 'ChinesePod Lesson'}",
           "lessonId": "${latestStudiedLesson}",
           "lessonImg": "${lessonImg}",
           "emailAddress": "${user.email}",
