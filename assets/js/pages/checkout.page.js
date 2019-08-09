@@ -168,7 +168,6 @@ parasails.registerPage('checkout', {
         });
     },
     submittedForm: async function() {
-      console.log('form marked as submitted');
     },
     handleSubmitting: async function() {
       this.syncing = true;
@@ -187,9 +186,15 @@ parasails.registerPage('checkout', {
         })
         .catch((e) => {
           console.log(e);
-          this.modal = 'paymentError';
+          // this.modal = 'paymentError';
           this.syncing = false;
+          return
         });
+
+      if(!this.token){
+        this.syncing = false;
+        return
+      }
 
       await Cloud[this.pageName].with({
         emailAddress: this.formData.emailAddress,
@@ -234,8 +239,12 @@ parasails.registerPage('checkout', {
         this.formErrors.lName = true;
       }
 
+      if (document.getElementById('card-errors').textContent){
+        this.formErrors.cardError = true;
+      }
+
       if (Object.keys(this.formErrors).length > 0) {
-        console.log(this.formErrors);
+        this.syncing = false;
         return
       }
 

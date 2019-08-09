@@ -39,16 +39,6 @@
                   <span>{{ pricing[plan].savingA }}</span>
                 </a>
               </li>
-              <li>
-                <a @click="trial = !trial" class="rbtn-blue bill-time">
-                  Toggle Trial
-                </a>
-              </li>
-              <li>
-                <a @click="needsAccount = !needsAccount" class="rbtn-blue bill-time">
-                  Needs Account
-                </a>
-              </li>
             </ul>
 
             <p v-if="!trial" class="note">When you click Join ChinesePod you’ll be charged $<span id="price">{{ pricing[plan][billingCycle] }}</span>.</p>
@@ -84,10 +74,6 @@
                   <input type="email" name="email" placeholder="email@domain.com" :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress"  :required="needsAccount" :disabled="!needsAccount"/>
                   <div class="invalid-feedback" v-if="formErrors.emailAddress">Please enter a valid email address.</div>
                 </div>
-<!--                <div class="col-lg-4 col-sm-4">-->
-<!--                  <label for="password">Password<span class="required-mark">&nbsp;*</span></label>-->
-<!--                  <input type="password" name="password" placeholder="Password" :required="needsAccount" v-model.trim="formData.password"/>-->
-<!--                </div>-->
               </div>
 
             </div>
@@ -114,7 +100,7 @@
               <span v-if="needsAccount" class="number">4</span>
               <h3>Your payment information</h3>
             </div>
-            <p v-if="trial">Your card will not be charged for 14 days, If you cancel before then, your card won’t be charged.</br>
+            <p v-if="trial">Your card will not be charged for 14 days. If you cancel before then, your card won’t be charged.</br>
               You will be charged <b>
                 <span class="price-switch total-amount">${{ pricing[plan][billingCycle] }} {{ billingCycle }}</span>
               </b> when your trial ends.</p>
@@ -237,7 +223,11 @@
       <button type="button" class="modal-close-button" data-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body">
-      <h5>{{ paymentErrors ? paymentErrors : 'An unknown error occurred during checkout. Please check your information and try again later' }}</h5>
+      <div v-if="needsAccount">
+        <h5>We created a new account for you and sent a confirmation email. However, we encountered the following payment error:</h5>
+        <br/>
+      </div>
+      <h5>{{ paymentErrors ? 'Unfortunately the subscription was not successful. This is the potential issue: ' + paymentErrors : 'An unknown error occurred during checkout. Please check your information and try again later' }}</h5>
     </div>
     <div class="modal-footer flex-row-reverse justify-content-between">
       <button type="button" data-dismiss="modal" class="btn btn-info">Close</button>

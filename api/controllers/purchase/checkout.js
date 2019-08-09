@@ -227,127 +227,89 @@ module.exports = {
 
     sails.log.info({userId: inputs.userId});
 
-    let customerData = ''; let subscription = '';
     let cardData = {};
 
-    await stripe.customers
-      .create({
-        id: inputs.userId,
-        email: inputs.emailAddress,
-        source: inputs.token,
-        name: `${inputs.fName} ${inputs.lName}`
-      })
-      .then(async (customer) => {
-        customerData = customer;
-        sails.log.info(`New User ${customer.id} Created at ${new Date()}`);
-        // subscription = await stripe.subscriptions.create({
-        //   customer: customer.id,
-        //   items: [{plan: plans[inputs.plan][inputs.billingCycle].stripeId}],
-        //   trial_period_days: inputs.trial ? 14 : 0 // 2 weeks or No trial
-        // }).catch((err) => {
-        //   sails.log.info(err.message);
-        //   errors.shift(err.message);
-        //   throw {declined: errors.length > 1 ? errors[0] : 'Could not confirm the payment method. Please try again later.'};
-        // })
-      })
-      .catch((err) => {
-        sails.log.info(err.message);
-        // errors.shift(err.message);  // Disregard as we expect to hi an existing User Error
-      });
+    let customerData = await sails.helpers.stripe.createOrUpdateCustomer.with({
+      userId: inputs.userId,
+      emailAddress: inputs.emailAddress.toLowerCase(),
+      fullName: `${inputs.fName} ${inputs.lName}`,
+      token: inputs.token
+    });
 
-    await stripe.customers
-      .update(
-        `${inputs.userId}`, {
-          source: inputs.token,
-          name: `${inputs.fName} ${inputs.lName}`
-        })
-      .then(async (customer) => {
-        customerData = customer;
-        sails.log.info(`Found User ${customer.id} at ${new Date()}`);
-        await stripe.subscriptions.create({
-          customer: customer.id,
-          items: [{plan: plans[inputs.plan][inputs.billingCycle].stripeId}],
-          trial_period_days: inputs.trial ? 14 : 0 // 2 weeks or No trial
-        })
-          .then(async (subscription) => {
-            sails.log.info({errors: errors});
+    sails.log.info({customerData: customerData});
 
-            if (errors.length > 0) {
-              //TODO Add More Sophisticated Faulty Payment Handling
-              sails.log.info({paymentError: errors});
-              throw {declined: errors[0]};
-            }
+    if (!customerData || customerData.err) {
+      //TODO STORE THIS SOMEWHERE
+      throw {declined: customerData.err ? customerData.err : 'Could not confirm the payment method. Please try again later.'};
+    }
 
-            // if (!subscription) {
-            //   sails.log.info({subscription: subscription});
-            //   throw {declined: errors.length > 1 ? errors[0] : 'Could not subscribe with the selected payment method. Please try again later.'};
-            // }
 
-// If Trial - Mark User Record as Such
-            if (inputs.trial) {
-              userData = await User.updateOne({id: inputs.userId})
-                .set({trial: new Date(Date.now()).toISOString()});
-              sails.log.info(userData);
-            }
+    await stripe.subscriptions.create({
+      customer: customerData.id,
+      items: [{plan: plans[inputs.plan][inputs.billingCycle].stripeId}],
+      trial_period_days: inputs.trial ? 14 : 0 // 2 weeks or No trial
+    })
+      .then(async (subscription) => {
 
-            try {
-              cardData = customerData.sources.data[0];
-            } catch (e) {
-              sails.log.error(e);
-            }
+        // If Trial - Mark User Record as Such
+        if (inputs.trial) {
+          userData = await User.updateOne({id: inputs.userId})
+            .set({trial: new Date(Date.now()).toISOString()});
+          sails.log.info(userData);
+        }
+        try {
+          cardData = customerData.sources.data[0];
+        } catch (e) {
+          sails.log.error(e);
+        }
+        sails.log.info({
+          cc_num: cardData ? cardData['last4'] : '9999',
+          cc_exp: cardData ? `${cardData['exp_month']}/${cardData['exp_year']}` : '99/99',
+        });
 
-            sails.log.info({
-              cc_num: cardData ? cardData['last4'] : '9999',
-              cc_exp: cardData ? `${cardData['exp_month']}/${cardData['exp_year']}` : '99/99',
-            });
-
-// Check Subscriptions Table
-            const cpodSubscription = await Subscriptions.create({
-              user_id: inputs.userId,
-              subscription_id: subscription.id,
-              subscription_from: 7, // Stripe = 7
-              subscription_type: plans[inputs.plan].type, // converted 'plan'
-              product_id: plans[inputs.plan][inputs.billingCycle].id, // Product ID
-              product_length: plans[inputs.plan][inputs.billingCycle].length, // converted 'billingCycle'
-              status: 1, //  1=active, 2=cancelled, 3=past due
-              next_billing_time: new Date(subscription['current_period_end'] * 1000).toISOString(),
-              cc_num: cardData ? cardData.last4 : '9999',
-              cc_exp: cardData ? `${cardData.exp_month}/${cardData.exp_year}` : '99/99',
-            }).fetch();
+        // Check Subscriptions Table
+        const cpodSubscription = await Subscriptions.create({
+          user_id: inputs.userId,
+          subscription_id: subscription.id,
+          subscription_from: 7, // Stripe = 7
+          subscription_type: plans[inputs.plan].type, // converted 'plan'
+          product_id: plans[inputs.plan][inputs.billingCycle].id, // Product ID
+          product_length: plans[inputs.plan][inputs.billingCycle].length, // converted 'billingCycle'
+          status: 1, //  1=active, 2=cancelled, 3=past due
+          next_billing_time: new Date(subscription['current_period_end'] * 1000).toISOString(),
+          cc_num: cardData ? cardData.last4 : '9999',
+          cc_exp: cardData ? `${cardData.exp_month}/${cardData.exp_year}` : '99/99',
+        }).fetch();
 
 //TODO Check Payments Table
 
 
 
+
 // Update User Access on UserSiteLinks
-            const userSiteLinks = UserSiteLinks.updateOne({user_id:inputs.userId})
-              .set({usertype_id: plans[inputs.plan].id});
+        const userSiteLinks = UserSiteLinks.updateOne({user_id:inputs.userId})
+          .set({usertype_id: plans[inputs.plan].id});
 
 // Update User SessionInfo to Match Current Access Level
-            const phpSession = await sails.helpers.php.updateSession.with({
-              userId: inputs.userId,
-              planName: inputs.plan,
-              planId: plans[inputs.plan].id
-            });
+        const phpSession = await sails.helpers.php.updateSession.with({
+          userId: inputs.userId,
+          planName: inputs.plan,
+          planId: plans[inputs.plan].id
+        });
 
-            sails.log.info(phpSession);
+        sails.log.info(phpSession);
 
-            this.res.cookie('CPODSESSID', phpSession, {
-              domain: '.chinesepod.com',
-              expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
-            });
-            exits.success();
-          })
-          .catch((err) => {
-            sails.log.info(err.message);
-            errors.shift(err.message);
-            throw {declined: errors.length > 1 ? errors[0] : 'Could not confirm the payment method. Please try again later.'};
-          })
+        this.res.cookie('CPODSESSID', phpSession, {
+          domain: '.chinesepod.com',
+          expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
+        });
+        exits.success();
       })
       .catch((err) => {
+        //TODO STORE THIS SOMEWHERE
         sails.log.info(err.message);
-        // errors.shift(err.message);
-        throw {declined: errors.length > 1 ? errors[0] : 'Could not confirm the payment method. Please try again later.'};
-      });
+        errors.push(err.message);
+        throw {declined: errors.length > 0 ? errors[0] : 'Could not confirm the payment method. Please try again later.'};
+      })
   }
 };
