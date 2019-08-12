@@ -54,7 +54,7 @@ parasails.registerPage('checkout', {
   },
   mounted: async function() {
     // Create a Stripe client.
-    const stripe = Stripe('pk_test_4VxncInS2mI0bVeyKWPOGSMY');
+    const stripe = Stripe(this.stripeKey);
     this.stripe = stripe;
 
 // Create an instance of Elements.
