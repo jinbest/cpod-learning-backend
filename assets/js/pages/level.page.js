@@ -37,13 +37,15 @@ parasails.registerPage('level', {
       this.postData();
     },
     setCharSet (charSet) {
+      this.syncing = true;
       this.charSet = charSet;
       this.postData();
-      window.location = '/dashboard/free';
+      window.location = '/dashboard';
     },
     skip () {
+      this.syncing = true;
       this.postData();
-      window.location = '/dashboard/free';
+      window.location = '/dashboard';
     },
     flipPage() {
       this.nextPage = !this.nextPage;
