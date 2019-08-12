@@ -45,13 +45,13 @@ parasails.registerPage('pricing', {
           window.location = '/level';
           break;
         case 'premium':
-          window.location = '/checkout';
+          window.location = '/store/purchase/create-order?product_id=2&redirect=true';
           break;
         case 'basic':
-          window.location = '/checkout?plan=basic';
+          window.location = '/store/purchase/create-order?product_id=13&redirect=true';
           break;
         case 'premiumTrial':
-          window.location = '/checkout?trial=yes';
+          window.location = '/store/purchase/free-trial?redirect=true';
           break;
       }
     }
