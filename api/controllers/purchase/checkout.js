@@ -126,6 +126,8 @@ module.exports = {
       throw {invalid: 'No Data Submitted'}
     }
 
+    sails.log.info({newCheckout: inputs});
+
     let ipData = {};
 
     if (!this.req.me) {
