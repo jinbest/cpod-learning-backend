@@ -103,6 +103,12 @@ module.exports.routes = {
   'GET  /api/v1/health/ip-info':                         { action: 'health/ip-info' },
   'GET /api/v1/health/generate-words':                   { action: 'generate-words' },
 
+  //Dashboard Routes
+  'GET  /api/v1/dashboard/history':                       { action: 'dashboard/history' },
+  'GET  /api/v1/dashboard/bookmarks':                     { action: 'dashboard/bookmarks' },
+  'GET  /api/v1/dashboard/user-courses':                  { action: 'dashboard/user-courses' },
+  'GET  /api/v1/dashboard/course-lessons':                { action: 'dashboard/course-lessons' },
+
   //Sample Routes
   // 'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
   // 'POST  /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },

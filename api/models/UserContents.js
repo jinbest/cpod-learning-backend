@@ -12,11 +12,9 @@ module.exports = {
       isInteger: true,
       required: true
     },
-    v3_id: {
-      type: "string",
-      columnType: "varchar",
-      maxLength: 20,
-      required: true
+    lesson: {
+      model: 'LessonData',
+      columnName: 'v3_id'
     },
     user_id: {
       type: "number",
@@ -41,14 +39,14 @@ module.exports = {
       isInteger: true,
       required: true
     },
-    createdAt: {
-      type: "string",
+    updatedAt: {
+      type: "ref",
       columnType: "timestamp",
       columnName: 'created_at',
-      defaultsTo: "CURRENT_TIMESTAMP"
+      autoUpdatedAt: true
     },
     scheduled_date: {
-      type: "string",
+      type: "ref",
       columnType: "date",
       required: true
     },
@@ -59,7 +57,7 @@ module.exports = {
       defaultsTo: 0
     },
     expiry: {
-      type: "string",
+      type: "ref",
       columnType: "datetime"
     },
     lesson_type: {
@@ -86,6 +84,6 @@ module.exports = {
       isInteger: true,
       defaultsTo: 0
     },
-    updatedAt: false
+    createdAt: false,
   }
 };

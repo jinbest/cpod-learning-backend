@@ -4,12 +4,24 @@
  */
 
 module.exports = {
+  tableName: 'contents',
+  customToJSON: function() {
+    // Return a shallow copy of this record with the password and ssn removed.
+    return _.pick(this, ['id', 'title', 'slug', 'hash_code', 'image', 'type', 'level', 'hosts' , 'publication_timestamp', 'userContents'])
+  },
   attributes: {
-    id: {
+    content_id: {
       type: "number",
       columnType: "int",
       columnName: 'content_id',
       isInteger: true,
+      required: true
+    },
+    id: {
+      type: "string",
+      columnType: "varchar",
+      columnName: 'v3_id',
+      maxLength: 20,
       required: true
     },
     createdAt: {
@@ -130,12 +142,6 @@ module.exports = {
       maxLength: 255,
       required: true
     },
-    v3_id: {
-      type: "string",
-      columnType: "varchar",
-      maxLength: 20,
-      required: true
-    },
     hash_code: {
       type: "string",
       columnType: "varchar",
@@ -143,7 +149,7 @@ module.exports = {
       required: true
     },
     publication_timestamp: {
-      type: 'ref',
+      type: "ref",
       columnType: "timestamp",
       defaultsTo: "0000-00-00 00:00:00"
     },
@@ -428,6 +434,10 @@ module.exports = {
       type: "string",
       columnType: "text",
       required: true
+    },
+    userContents: {
+      collection: 'UserContents',
+      via: 'lesson'
     }
   }
 };
