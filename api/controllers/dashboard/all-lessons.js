@@ -29,6 +29,7 @@ module.exports = {
         publication_timestamp: {
           '<=': new Date()
         },
+        status_published: 'published'
       },
       sort: 'publication_timestamp DESC',
       limit: inputs.limit ? inputs.limit : 10
