@@ -28,12 +28,23 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    return await CourseContents.find({
+    let courseData = await CourseContents.find({
       where: {course_id: inputs.courseId},
       select: ['course_id', 'lesson', 'displaysort'],
       limit: inputs.limit ? inputs.limit : 10
-    }).populate('lesson')
+    }).populate('lesson.userContents', {
+      where: {
+        user_id: 1016995
+      },
+      select: ['saved', 'studied']
+    });
 
+    let returnData = [];
+    courseData.forEach((lesson) => {
+      returnData.push(lesson.lesson);
+    });
+
+    return returnData
   }
 
 

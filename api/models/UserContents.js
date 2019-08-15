@@ -5,6 +5,10 @@
 
 module.exports = {
   tableName: 'user_contents',
+  customToJSON: function() {
+    // Return a shallow copy of this record with the password and ssn removed.
+    return _.pick(this, ['updatedAt', 'saved', 'studied', 'lesson'])
+  },
   attributes: {
     id: {
       type: "number",
@@ -17,10 +21,7 @@ module.exports = {
       columnName: 'v3_id'
     },
     user_id: {
-      type: "number",
-      columnType: "int",
-      isInteger: true,
-      required: true
+      model: 'User'
     },
     status: {
       type: "string",
@@ -42,6 +43,7 @@ module.exports = {
     updatedAt: {
       type: "ref",
       columnType: "timestamp",
+      // columnName: 'user_contents.created_at',
       columnName: 'created_at',
       autoUpdatedAt: true
     },

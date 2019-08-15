@@ -166,9 +166,8 @@ module.exports = {
       required: true
     },
     text: {
-      type: "string",
-      columnType: "blob",
-      required: true
+      type: "ref",
+      columnType: "blob"
     },
     transcription1: {
       type: "string",
@@ -233,53 +232,55 @@ module.exports = {
     ppt: {
       type: "string",
       columnType: "varchar",
-      maxLength: 255
+      maxLength: 255,
+      allowNull: true
     },
     ppt_size: {
       type: "number",
       columnType: "int",
-      isInteger: true
+      isInteger: true,
+      allowNull: true
     },
     video_fix: {
       type: "string",
       columnType: "text",
-      required: true
+      allowNull: true
     },
     link_source: {
       type: "string",
       columnType: "text",
-      required: true
+      allowNull: true
     },
     link_related: {
       type: "string",
       columnType: "text",
-      required: true
+      allowNull: true
     },
     exercises_exercise1: {
       type: "string",
       columnType: "text",
-      required: true
+      allowNull: true
     },
     exercises_exercise2: {
       type: "string",
       columnType: "text",
-      required: true
+      allowNull: true
     },
     exercises_exercise3: {
       type: "string",
       columnType: "text",
-      required: true
+      allowNull: true
     },
     exercises_exercise4: {
       type: "string",
       columnType: "text",
-      required: true
+      allowNull: true
     },
     xml_file_name: {
       type: "string",
       columnType: "varchar",
       maxLength: 255,
-      required: true
+      allowNull: true
     },
     mp3_dialogue_size: {
       type: "number",
@@ -362,47 +363,47 @@ module.exports = {
       type: "number",
       columnType: "int",
       isInteger: true,
-      required: true
+      allowNull: true
     },
     video_flv_length: {
       type: "string",
       columnType: "varchar",
       maxLength: 20,
-      required: true
+      allowNull: true
     },
     video_mp4: {
       type: "string",
       columnType: "text",
-      required: true
+      allowNull: true
     },
     video_mp4_size: {
       type: "number",
       columnType: "int",
       isInteger: true,
-      required: true
+      allowNull: true
     },
     video_mp4_length: {
       type: "string",
       columnType: "varchar",
       maxLength: 20,
-      required: true
+      allowNull: true
     },
     video_m4v: {
       type: "string",
       columnType: "text",
-      required: true
+      allowNull: true
     },
     video_m4v_size: {
       type: "number",
       columnType: "int",
       isInteger: true,
-      required: true
+      allowNull: true
     },
     video_m4v_length: {
       type: "string",
       columnType: "varchar",
       maxLength: 20,
-      required: true
+      allowNull: true
     },
     last_comment_id: {
       type: "number",
@@ -413,7 +414,6 @@ module.exports = {
     last_comment_time: {
       type: "ref",
       columnType: "datetime",
-      required: true
     },
     is_private: {
       type: "number",
@@ -423,17 +423,18 @@ module.exports = {
     },
     video: {
       type: "string",
-      columnType: "text"
+      columnType: "text",
+      allowNull: true
     },
     lesson_plan: {
       type: "string",
       columnType: "text",
-      required: true
+      allowNull: true
     },
     lesson_assignment: {
       type: "string",
       columnType: "text",
-      required: true
+      allowNull: true
     },
     userContents: {
       collection: 'UserContents',

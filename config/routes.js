@@ -104,10 +104,11 @@ module.exports.routes = {
   'GET /api/v1/health/generate-words':                   { action: 'generate-words' },
 
   //Dashboard Routes
-  'GET  /api/v1/dashboard/history':                       { action: 'dashboard/history' },
-  'GET  /api/v1/dashboard/bookmarks':                     { action: 'dashboard/bookmarks' },
-  'GET  /api/v1/dashboard/user-courses':                  { action: 'dashboard/user-courses' },
-  'GET  /api/v1/dashboard/course-lessons':                { action: 'dashboard/course-lessons' },
+  'GET /api/v1/dashboard/history':                       { action: 'dashboard/history' },
+  'GET /api/v1/dashboard/bookmarks':                     { action: 'dashboard/bookmarks' },
+  'GET /api/v1/dashboard/user-courses':                  { action: 'dashboard/user-courses' },
+  'GET /api/v1/dashboard/course-lessons':                { action: 'dashboard/course-lessons' },
+  'GET /api/v1/dashboard/all-lessons':                   { action: 'dashboard/all-lessons' },
 
   //Sample Routes
   // 'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },

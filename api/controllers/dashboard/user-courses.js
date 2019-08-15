@@ -27,8 +27,5 @@ module.exports = {
       sort: 'updatedAt DESC'
     })
       .populate('course');
-
   }
-
-
 };

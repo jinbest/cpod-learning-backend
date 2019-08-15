@@ -281,6 +281,10 @@ module.exports = {
       columnType: 'int',
       isInteger: true,
       defaultsTo: 0
+    },
+    lessonHistory: {
+      collection: 'UserContents',
+      via: 'user_id'
     }
   }
 };

@@ -31,25 +31,27 @@ module.exports = {
   fn: async function (inputs) {
     let userId = '1016995';
 
-    return await UserContents.find({
+    let userLessons = await UserContents.find({
       where: {
         user_id: userId,
         studied: 1
       },
-      select: ['lesson', 'saved', 'studied'],  //  'title', 'slug', 'image', 'hash_code', 'publication_timestamp'
+      select: ['lesson', 'saved', 'studied', 'updatedAt'],  //  'title', 'slug', 'image', 'hash_code', 'publication_timestamp'
       sort: 'updatedAt DESC',
       limit: inputs.limit ? inputs.limit : 10,
     })
-      .populate('lesson')
+      // .sort('updatedAt DESC')
+      .populate('lesson');
 
-    // return await LessonData.find()
-    //   .populate('userContents', {
-    //     where: {
-    //       user_id: userId,
-    //       studied: 1
-    //     }})
-
+    let returnData = [];
+    userLessons.forEach((item) => {
+      item.lesson.userContents = [{
+        saved: item.saved,
+        studied: item.studied
+      }];
+      returnData.push(item.lesson);
+    });
+    return returnData
   }
-
 
 };
