@@ -7,7 +7,7 @@ module.exports = {
   tableName: 'course_detail',
   customToJSON: function() {
     // Return a shallow copy of this record with the password and ssn removed.
-    return _.pick(this, ['id', 'course_title', 'course_introduction', 'course_image', 'hash_code']);
+    return _.pick(this, ['id', 'course_title', 'course_introduction', 'course_image', 'hash_code', 'channel_id']);
   },
   attributes: {
     id: {
