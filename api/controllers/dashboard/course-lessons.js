@@ -34,14 +34,22 @@ module.exports = {
       limit: inputs.limit ? inputs.limit : 10
     }).populate('lesson.userContents', {
       where: {
-        user_id: 1016995
+        user_id: 1016995,
+        lesson_type: 0
       },
       select: ['saved', 'studied']
     });
 
     let returnData = [];
     courseData.forEach((lesson) => {
-      returnData.push(lesson.lesson);
+      if (lesson.lesson.userContents[0]) {
+        lesson.lesson.saved = lesson.lesson.userContents[0].saved;
+        lesson.lesson.studied = lesson.lesson.userContents[0].studied;
+        delete lesson.lesson.userContents;
+        returnData.push(lesson.lesson);
+      } else {
+        returnData.push(lesson.lesson);
+      }
     });
 
     return returnData

@@ -14,7 +14,7 @@ module.exports = {
       type: "number",
       columnType: "int",
       isInteger: true,
-      required: true
+      autoIncrement: true,
     },
     lesson: {
       model: 'LessonData',
@@ -38,7 +38,7 @@ module.exports = {
       type: "number",
       columnType: "bigint",
       isInteger: true,
-      required: true
+      // required: true
     },
     updatedAt: {
       type: "ref",
@@ -50,7 +50,8 @@ module.exports = {
     scheduled_date: {
       type: "ref",
       columnType: "date",
-      required: true
+      defaultsTo: '2099-01-01'
+      // required: true
     },
     content_sort: {
       type: "number",
