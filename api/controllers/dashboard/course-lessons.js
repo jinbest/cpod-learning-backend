@@ -16,6 +16,9 @@ module.exports = {
     limit: {
       type: 'number',
       isInteger: true
+    },
+    studied: {
+      type: 'boolean'
     }
 
   },
@@ -31,7 +34,7 @@ module.exports = {
     let courseData = await CourseContents.find({
       where: {course_id: inputs.courseId},
       select: ['course_id', 'lesson', 'displaysort'],
-      limit: inputs.limit ? inputs.limit : 10
+      limit: inputs.limit ? inputs.limit : 50
     }).populate('lesson.userContents', {
       where: {
         user_id: 1016995,

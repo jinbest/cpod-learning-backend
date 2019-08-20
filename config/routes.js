@@ -110,8 +110,9 @@ module.exports.routes = {
   'GET /api/v1/dashboard/more-courses':                  { action: 'dashboard/more-courses' },
   'GET /api/v1/dashboard/course-lessons':                { action: 'dashboard/course-lessons' },
   'GET /api/v1/dashboard/all-lessons':                   { action: 'dashboard/all-lessons' },
-  'POST /api/v1/dashboard/toggle-saved':                  { action: 'dashboard/toggle-saved' },
-  'POST /api/v1/dashboard/toggle-studied':                { action: 'dashboard/toggle-studied' },
+  'POST /api/v1/dashboard/toggle-saved':                 { action: 'dashboard/toggle-saved' },
+  'POST /api/v1/dashboard/toggle-studied':               { action: 'dashboard/toggle-studied' },
+  'GET /api/v1/dashboard/get-stats':                     { action: 'dashboard/get-stats' },
 
   //Sample Routes
   // 'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
