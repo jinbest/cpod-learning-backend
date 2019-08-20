@@ -22,7 +22,11 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    inputs.lessonId = this.req.url.split('?') ? this.req.url.split('?')[1] : 'AI001';
+    inputs.lessonId = this.req.url.split('?') ? this.req.url.split('?')[1] : 'REDIRECT';
+
+    if (inputs.lessonId === 'REDIRECT') {
+      this.res.redirect('/')
+    }
 
     let sql = `
     SELECT log.accesslog_url, log.accesslog_user, u.name, log.accesslog_time
