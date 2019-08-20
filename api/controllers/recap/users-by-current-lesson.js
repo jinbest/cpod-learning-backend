@@ -21,11 +21,10 @@ module.exports = {
 
 
   fn: async function (inputs) {
+    inputs.lessonId = this.req.url.split('?') ? this.req.url.split('?')[1] : undefined;
 
-    inputs.lessonId = this.req.url.split('?') ? this.req.url.split('?')[1] : 'REDIRECT';
-
-    if (inputs.lessonId === 'REDIRECT') {
-      this.res.redirect('/')
+    if (typeof inputs.lessonId === "undefined") {
+      return this.res.redirect('/')
     }
 
     let sql = `
