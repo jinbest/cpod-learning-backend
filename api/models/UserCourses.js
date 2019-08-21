@@ -11,7 +11,7 @@ module.exports = {
       columnType: "int",
       columnName: 'user_course_id',
       isInteger: true,
-      required: true
+      autoIncrement: true
     },
     user_id: {
       model: 'User'

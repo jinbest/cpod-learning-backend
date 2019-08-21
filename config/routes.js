@@ -112,6 +112,7 @@ module.exports.routes = {
   'GET /api/v1/dashboard/all-lessons':                   { action: 'dashboard/all-lessons' },
   'POST /api/v1/dashboard/toggle-saved':                 { action: 'dashboard/toggle-saved' },
   'POST /api/v1/dashboard/toggle-studied':               { action: 'dashboard/toggle-studied' },
+  'POST /api/v1/dashboard/toggle-course':                { action: 'dashboard/toggle-course' },
   'GET /api/v1/dashboard/get-stats':                     { action: 'dashboard/get-stats' },
 
   //Sample Routes

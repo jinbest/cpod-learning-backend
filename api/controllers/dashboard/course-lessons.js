@@ -34,7 +34,7 @@ module.exports = {
     let courseData = await CourseContents.find({
       where: {course_id: inputs.courseId},
       select: ['course_id', 'lesson', 'displaysort'],
-      limit: inputs.limit ? inputs.limit : 50
+      limit: 50 // inputs.limit ? inputs.limit : 50
     }).populate('lesson.userContents', {
       where: {
         user_id: 1016995,
@@ -55,7 +55,7 @@ module.exports = {
       }
     });
 
-    return returnData
+    return (returnData.filter((lesson) => {return lesson.studied === 0})).slice(0, inputs.limit)
   }
 
 
