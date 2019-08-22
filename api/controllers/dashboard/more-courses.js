@@ -41,17 +41,27 @@ module.exports = {
 
     sails.log.info(enrolledCourses);
 
-    return await CourseDetail.find({
+    let leveledCourses = await CourseDetail.find({
       where: {
         pubstatus: 1,
         is_private: 0,
-        id: { nin: enrolledCourses},
+        // id: { nin: enrolledCourses},
         channel_id: { in: [await sails.helpers.convert.levelToChannelId(userLevel), await sails.helpers.convert.levelToChannelId(levelHigher)]}
       },
       select: ['id', 'course_title', 'course_introduction'],
       sort: 'id DESC'
-    })
-
+    });
+    let mixedCourses = await CourseDetail.find({
+      where: {
+        pubstatus: 1,
+        is_private: 0,
+        // id: { nin: enrolledCourses},
+        channel_id: 181
+      },
+      select: ['id', 'course_title', 'course_introduction'],
+      sort: 'id DESC'
+    });
+    return leveledCourses.concat(mixedCourses)
   }
 
 
