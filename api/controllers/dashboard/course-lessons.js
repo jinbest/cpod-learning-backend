@@ -55,7 +55,7 @@ module.exports = {
       }
     });
 
-    return (returnData.filter((lesson) => {return lesson.studied === 0})).slice(0, inputs.limit)
+    return (returnData.filter((lesson) => {return lesson.studied !== 1})).slice(0, inputs.limit)
   }
 
 

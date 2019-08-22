@@ -39,7 +39,7 @@ module.exports = {
         created_by: inputs.userId,
       })
     } else {
-      await UserCourses.destroyOne({
+      await UserCourses.destroy({
         user_id: inputs.userId,
         course: inputs.courseId
       })
