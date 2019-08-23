@@ -15,7 +15,7 @@
   ],
   "orientation": "portrait",
   "scope": "/dash/",
-  "start_url": "/dash",
+  "start_url": "/dash/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#E1001E"

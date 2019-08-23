@@ -28,12 +28,12 @@ self.__precacheManifest = [
     "url": "/dash/img/logo.a070ebf6.png"
   },
   {
-    "revision": "2fad952a20fbbcfd1bf2ebb210dccf7a",
-    "url": "/dash/fonts/element-icons.2fad952a.woff"
-  },
-  {
     "revision": "6f0a76321d30f3c8120915e57f7bd77e",
     "url": "/dash/fonts/element-icons.6f0a7632.ttf"
+  },
+  {
+    "revision": "2fad952a20fbbcfd1bf2ebb210dccf7a",
+    "url": "/dash/fonts/element-icons.2fad952a.woff"
   },
   {
     "revision": "d7c26c3af7979c14ed3da333f9de6e59",
@@ -44,12 +44,12 @@ self.__precacheManifest = [
     "url": "/dash/img/qing-wen.e4b6e6c5.jpg"
   },
   {
-    "revision": "c1733565b32b585676302d4233c39da8",
-    "url": "/dash/fonts/nucleo-icons.c1733565.eot"
-  },
-  {
     "revision": "426439788ec5ba772cdf94057f6f4659",
     "url": "/dash/fonts/nucleo-icons.42643978.woff2"
+  },
+  {
+    "revision": "c1733565b32b585676302d4233c39da8",
+    "url": "/dash/fonts/nucleo-icons.c1733565.eot"
   },
   {
     "revision": "2569aaea6eaaf8cd210db7f2fa016743",
@@ -88,12 +88,12 @@ self.__precacheManifest = [
     "url": "/dash/favicon.png"
   },
   {
-    "revision": "365fc333c183bf39ef777a760ca718cf",
-    "url": "/dash/img/brand/brand-white.svg"
-  },
-  {
     "revision": "71a94f831411548a0c3e531a248e922a",
     "url": "/dash/img/brand/brand-black.svg"
+  },
+  {
+    "revision": "365fc333c183bf39ef777a760ca718cf",
+    "url": "/dash/img/brand/brand-white.svg"
   },
   {
     "revision": "61f77c5e336a55fb8dc944a0676c5f5b",
@@ -112,6 +112,10 @@ self.__precacheManifest = [
     "url": "/dash/img/brand/logo.png"
   },
   {
+    "revision": "80e1be1af3ceb667c97f030110e2023e",
+    "url": "/dash/img/brand/symbol-black-center.jpg"
+  },
+  {
     "revision": "d7c26c3af7979c14ed3da333f9de6e59",
     "url": "/dash/img/brand/symbol-black-center.svg"
   },
@@ -120,24 +124,24 @@ self.__precacheManifest = [
     "url": "/dash/img/brand/symbol-black.svg"
   },
   {
-    "revision": "80e1be1af3ceb667c97f030110e2023e",
-    "url": "/dash/img/brand/symbol-black-center.jpg"
-  },
-  {
     "revision": "2add6b402c3d7fbbaa4fb0613c6c4a38",
     "url": "/dash/img/brand/symbol-white.svg"
-  },
-  {
-    "revision": "f9b78d93af8ccff72e6e853d649a19cd",
-    "url": "/dash/img/brand/symbol.svg"
   },
   {
     "revision": "776e8317ed66d1e2ec7ef1853377375b",
     "url": "/dash/img/brand/white.png"
   },
   {
+    "revision": "f9b78d93af8ccff72e6e853d649a19cd",
+    "url": "/dash/img/brand/symbol.svg"
+  },
+  {
     "revision": "4bc57bd7c9fd6fe19a5cba5c2b57b0fb",
     "url": "/dash/img/preloader-square.svg"
+  },
+  {
+    "revision": "3762712e1f8dafb6820d6bf33e9f9cd9",
+    "url": "/dash/img/preloader.gif"
   },
   {
     "revision": "92d40536b4008c9e966baf28829ce412",
@@ -146,10 +150,6 @@ self.__precacheManifest = [
   {
     "revision": "e4b6e6c5749ebe66252e0da478f72b5b",
     "url": "/dash/img/qing-wen.jpg"
-  },
-  {
-    "revision": "1f533d2fdc40493ee834dd8e4288220c",
-    "url": "/dash/img/theme/angular.jpg"
   },
   {
     "revision": "c993e3af563e68abaf9eaee2551ad321",
@@ -164,24 +164,24 @@ self.__precacheManifest = [
     "url": "/dash/img/theme/landing-1.png"
   },
   {
-    "revision": "d136a071cf09ba5ab8dc2ada1ab04015",
-    "url": "/dash/img/theme/bootstrap.jpg"
-  },
-  {
     "revision": "9757d88edecdaab6e32ccb6c5e03f962",
     "url": "/dash/img/theme/landing-2.png"
   },
   {
-    "revision": "3762712e1f8dafb6820d6bf33e9f9cd9",
-    "url": "/dash/img/preloader.gif"
+    "revision": "1f533d2fdc40493ee834dd8e4288220c",
+    "url": "/dash/img/theme/angular.jpg"
   },
   {
-    "revision": "50dd5fdc839dfc16739b15370650485c",
-    "url": "/dash/img/theme/react.jpg"
+    "revision": "d136a071cf09ba5ab8dc2ada1ab04015",
+    "url": "/dash/img/theme/bootstrap.jpg"
   },
   {
     "revision": "64f0dfdc1cc6dccb7d994ffc1ad7163e",
     "url": "/dash/img/theme/landing-3.png"
+  },
+  {
+    "revision": "50dd5fdc839dfc16739b15370650485c",
+    "url": "/dash/img/theme/react.jpg"
   },
   {
     "revision": "3b8c576082e5ca27bae21a839f1290f6",
@@ -196,12 +196,12 @@ self.__precacheManifest = [
     "url": "/dash/img/theme/team-3.jpg"
   },
   {
-    "revision": "c532f6f0176968caa6265864ee1abb35",
-    "url": "/dash/img/theme/vue.jpg"
-  },
-  {
     "revision": "be997d5226b992ffad34816870c6b7aa",
     "url": "/dash/img/theme/team-2.jpg"
+  },
+  {
+    "revision": "c532f6f0176968caa6265864ee1abb35",
+    "url": "/dash/img/theme/vue.jpg"
   },
   {
     "revision": "6c4e407c3a02a9376884f4b73f6a6936",
