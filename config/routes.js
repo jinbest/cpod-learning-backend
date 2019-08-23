@@ -101,6 +101,8 @@ module.exports.routes = {
   'GET /api/v1/get-popular-lessons':                     { action: 'recap/get-popular-lessons' },
   'POST /api/v1/recap/get-lessons':                      { action: 'recap/get-user-lesson' },
   'POST /api/v1/recap/request-lesson':                   { action: 'recap/request-lesson' },
+  'GET /api/v1/recap/users':                             { action: 'recap/users-by-current-lesson' },
+  'GET /users':                                          { action: 'recap/users-by-current-lesson' }, //TODO REMOVE THIS WHEN SAFE
 
   //General Info Routes
   'GET  /api/v1/health/ip-info':                         { action: 'health/ip-info' },
