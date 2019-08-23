@@ -14,7 +14,7 @@
     }
   ],
   "orientation": "portrait",
-  "start_url": "/",
+  "start_url": "/dash",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#E1001E"
