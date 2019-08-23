@@ -116,7 +116,7 @@ and exposed as \`req.me\`.)`
 
     await sails.helpers.createPhpSession.with({
       userId: userRecord.id,
-      sessionId: this.req.session.id
+      // sessionId: this.req.session.id
     })
       .then((phpSessionId) => {
         console.log(phpSessionId);
