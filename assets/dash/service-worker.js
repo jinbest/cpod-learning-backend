@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/dash/precache-manifest.318762fb08ff753fbb308e5b79a170dc.js"
+  "/dash/precache-manifest.186167d53a0ef0eff813bc13c6793336.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "chinesepod-dashboard"});
@@ -30,6 +30,6 @@ workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
 workbox.routing.registerRoute(/\.(?:jpg|jpeg|svg|gif|png)/, workbox.strategies.cacheFirst({ "cacheName":"images", plugins: [new workbox.cacheableResponse.Plugin({"statuses":[0,200]}), new workbox.expiration.Plugin({"maxEntries":120,"maxAgeSeconds":2592000,"purgeOnQuotaError":false})] }), 'GET');
 workbox.routing.registerRoute(/^https:\/\/chinesepod.com\/images\//, workbox.strategies.cacheFirst({ "cacheName":"images", plugins: [new workbox.cacheableResponse.Plugin({"statuses":[0,200]}), new workbox.expiration.Plugin({"maxEntries":120,"maxAgeSeconds":2592000,"purgeOnQuotaError":false})] }), 'GET');
-workbox.routing.registerRoute(/^https:\/\/staging.chinesepod.com\/images\//, workbox.strategies.cacheFirst({ "cacheName":"images", plugins: [new workbox.cacheableResponse.Plugin({"statuses":[0,200]}), new workbox.expiration.Plugin({"maxEntries":120,"maxAgeSeconds":2592000,"purgeOnQuotaError":false})] }), 'GET');
-workbox.routing.registerRoute(/^https:\/\/staging.chinesepod.com\/api\/dashboard\//, workbox.strategies.staleWhileRevalidate({ "cacheName":"api-course-cache", plugins: [] }), 'GET');
-workbox.routing.registerRoute(/^https:\/\/staging.chinesepod.com\/api\//, workbox.strategies.networkFirst({ "cacheName":"api-cache","networkTimeoutSeconds":1, plugins: [] }), 'GET');
+workbox.routing.registerRoute(/^https:\/\/www.chinesepod.com\/images\//, workbox.strategies.cacheFirst({ "cacheName":"images", plugins: [new workbox.cacheableResponse.Plugin({"statuses":[0,200]}), new workbox.expiration.Plugin({"maxEntries":120,"maxAgeSeconds":2592000,"purgeOnQuotaError":false})] }), 'GET');
+workbox.routing.registerRoute(/^https:\/\/www.chinesepod.com\/api\/dashboard\//, workbox.strategies.staleWhileRevalidate({ "cacheName":"api-course-cache", plugins: [] }), 'GET');
+workbox.routing.registerRoute(/^https:\/\/www.chinesepod.com\/api\//, workbox.strategies.networkFirst({ "cacheName":"api-cache","networkTimeoutSeconds":1, plugins: [] }), 'GET');
