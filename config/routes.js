@@ -45,7 +45,7 @@ module.exports.routes = {
 
   'GET /level/:unused?':          { action: 'onboarding/view-level' },
 
-  //DASHBOARDsai
+  //DASHBOARD
   'GET /dash/:unused?': 'DashController.serve',
 
   //RECAP LESSON VIEWS
