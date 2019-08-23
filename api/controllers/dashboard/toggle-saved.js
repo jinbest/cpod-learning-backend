@@ -33,7 +33,7 @@ module.exports = {
     // let userId = 1016995;
     inputs.userId = this.req.session.userId;
 
-    let currentStatus = await UserContents.findOne({user_id: userId, lesson: inputs.lessonId, lesson_type: 0});
+    let currentStatus = await UserContents.findOne({user_id: inputs.userId, lesson: inputs.lessonId, lesson_type: 0});
     if (currentStatus) {
       await UserContents.updateOne({id: currentStatus.id})
         .set({saved: inputs.status ? 1 : 0})
