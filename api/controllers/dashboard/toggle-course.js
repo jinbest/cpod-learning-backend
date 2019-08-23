@@ -30,7 +30,8 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    inputs.userId = 1016995;
+    // inputs.userId = 1016995;
+    inputs.userId = this.req.session.userId;
 
     if (inputs.status === true) {
       await UserCourses.create({

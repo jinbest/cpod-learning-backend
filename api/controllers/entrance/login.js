@@ -113,5 +113,17 @@ and exposed as \`req.me\`.)`
     // Modify the active session instance.
     // (This will be persisted when the response is sent.)
     this.req.session.userId = userRecord.id;
+
+    await sails.helpers.createPhpSession.with({
+      userId: userRecord.id,
+      sessionId: this.req.session.id
+    })
+      .then((phpSessionId) => {
+        console.log(phpSessionId);
+        this.res.cookie('CPODSESSID', phpSessionId, {
+          domain: '.chinesepod.com',
+          expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
+        });
+      });
   }
 };

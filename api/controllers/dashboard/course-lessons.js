@@ -37,7 +37,7 @@ module.exports = {
       limit: 50 // inputs.limit ? inputs.limit : 50
     }).populate('lesson.userContents', {
       where: {
-        user_id: 1016995,
+        user_id: this.req.session.userId,
         lesson_type: 0
       },
       select: ['saved', 'studied']

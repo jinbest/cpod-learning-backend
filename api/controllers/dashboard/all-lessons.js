@@ -22,7 +22,8 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    let userId = 1016995;
+    // let userId = 1016995;
+    inputs.userId = this.req.session.userId;
 
     let rawData = await LessonData.find({
       where: {
@@ -34,7 +35,7 @@ module.exports = {
       sort: 'publication_timestamp DESC',
       limit: inputs.limit ? inputs.limit : 10
     }).populate('userContents', {
-      where: {user_id: userId, lesson_type: 0}
+      where: {user_id: inputs.userId, lesson_type: 0}
     });
 
     let cleanData = [];

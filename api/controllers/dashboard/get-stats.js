@@ -19,12 +19,13 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    inputs.userId = 1016995;
+    // inputs.userId = 1016995;
+    inputs.userId = this.req.session.userId;
 
     let userOptions = await UserOptions.findOne({user_id: inputs.userId, option_key: 'level'});
 
     return {
-      userId: 1016995,
+      userId: this.req.session.userId,
       progress: {
         current: 67,
         target: 15

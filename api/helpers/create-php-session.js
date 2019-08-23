@@ -13,6 +13,10 @@ module.exports = {
       description: 'User ID from the Database',
       required: true
     },
+    sessionId: {
+      type: 'string',
+      description: 'Expected session ID'
+    }
 
   },
 
@@ -62,7 +66,7 @@ module.exports = {
       + `s:7:"site_id";s:1:"2";`
       + `s:17:"user_site_link_id";s:${userSiteLink.id.toString().length}:"${userSiteLink.id}";}`;
     let session = await PhpSessions.create({
-      id: sails.helpers.strings.random(),
+      id: inputs.sessionId ? inputs.sessionId : sails.helpers.strings.random(),
       session_user_id: userId,
       session_start: (currentTime.getTime()/1000).toFixed(0),
       session_time: (expiryTime.getTime()/1000).toFixed(0), //Creation + 1 year
@@ -71,15 +75,5 @@ module.exports = {
       .fetch();
     return session.id;
   }
-  // user|a:8:{
-  // s:2:"id";s:7:"1016995"; //changes
-  // s:8:"group_id";s:1:"1"; //changes
-  // s:5:"group";s:5:"admin"; //changes
-  // s:6:"active";s:1:"1";
-  // s:10:"created_at";s:19:"2017-10-16 06:14:32"; //changes
-  // s:6:"expiry";s:19:"2030-06-01 00:00:00";
-  // s:7:"site_id";s:1:"2";
-  // s:17:"user_site_link_id";s:7:"1066872";} //changes
-
 };
 

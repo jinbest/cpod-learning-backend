@@ -36,14 +36,17 @@ module.exports.routes = {
   'GET /email-signup':            { action: 'entrance/view-signup' },
   'GET /get-started':             { action: 'entrance/view-signup' },
   'GET /signup':                  { action: 'entrance/view-signup' },
+  'GET /login':                   { action: 'entrance/view-login' },
   'GET /email/confirm':           { action: 'entrance/confirm-email' },
+  'GET /logout':                  { action: 'account/logout' },
 
   'GET /pricing':                 { action: 'onboarding/view-pricing' },
   'GET /checkout':                { action: 'view-checkout' },
 
   'GET /level/:unused?':          { action: 'onboarding/view-level' },
 
-  'GET /logout':                  { action: 'account/logout' },
+  //DASHBOARDsai
+  'GET /dash/:unused?': 'DashController.serve',
 
   //RECAP LESSON VIEWS
   'GET /secret-page':             { action: 'recap/view-secret-page' },

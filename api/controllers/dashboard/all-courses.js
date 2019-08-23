@@ -19,7 +19,7 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    let userId = '1016995';
+    let userId = this.req.session.userId;
 
     return await UserCourses.find({user_id: userId})
       .populate('course');
