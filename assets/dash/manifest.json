@@ -14,6 +14,7 @@
     }
   ],
   "orientation": "portrait",
+  "scope": "/dash/",
   "start_url": "/dash",
   "display": "standalone",
   "background_color": "#ffffff",
