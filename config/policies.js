@@ -9,7 +9,6 @@
  */
 
 module.exports.policies = {
-
   'onboarding/view-level': 'is-logged-in',
   'placement/*': 'is-logged-in',
   'recap/view-current-lesson': 'is-logged-in',

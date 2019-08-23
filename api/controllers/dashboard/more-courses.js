@@ -8,6 +8,9 @@ module.exports = {
 
 
   inputs: {
+    userId: {
+      type: 'number'
+    }
 
   },
 
@@ -18,11 +21,14 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    let userId = this.req.session.userId;
+    let userId = inputs.userId ? inputs.userId : this.req.session.userId;
 
     let userOptions = await UserOptions.findOne({
-      user_id: userId,
-      option_key: 'level'
+      where: {
+        user_id: userId,
+        option_key: 'level'
+      },
+      select: ['option_value']
     });
 
     let userLevel = await sails.helpers.convert.intToLevel(userOptions.option_value);

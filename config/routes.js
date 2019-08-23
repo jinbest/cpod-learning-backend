@@ -48,6 +48,10 @@ module.exports.routes = {
   //DASHBOARD
   'GET /dash/:unused?': 'DashController.serve',
 
+
+  //PLACEMENT TEST
+  'GET /placement/:unused?': 'PlacementController.serve',
+
   //RECAP LESSON VIEWS
   'GET /secret-page':             { action: 'recap/view-secret-page' },
   'GET /current-lesson':          { action: 'recap/view-current-lesson' },
