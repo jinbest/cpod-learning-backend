@@ -21,11 +21,11 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    let userId = inputs.userId ? inputs.userId : this.req.session.userId;
+    inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
     let userOptions = await UserOptions.findOne({
       where: {
-        user_id: userId,
+        user_id: inputs.userId,
         option_key: 'level'
       },
       select: ['option_value']
@@ -35,7 +35,7 @@ module.exports = {
     let levelHigher = await sails.helpers.convert.oneLevelHigher(userLevel);
 
     let userCourses = await UserCourses.find({
-      where: {user_id: userId},
+      where: {user_id: inputs.userId},
       select: ['course']
     });
 

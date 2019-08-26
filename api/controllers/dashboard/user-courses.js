@@ -19,10 +19,10 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    let userId = this.req.session.userId;
+    inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
     return await UserCourses.find({
-      where: {user_id: userId},
+      where: {user_id: inputs.userId},
       select: ['course'],
       sort: 'updatedAt DESC'
     })

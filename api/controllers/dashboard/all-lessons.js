@@ -22,8 +22,7 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    // let userId = 1016995;
-    inputs.userId = this.req.session.userId;
+    inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
     let rawData = await LessonData.find({
       where: {

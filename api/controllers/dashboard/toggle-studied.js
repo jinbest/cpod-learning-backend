@@ -29,8 +29,7 @@ module.exports = {
   },
 
   fn: async function (inputs) {
-    // let userId = 1016995;
-    inputs.userId = this.req.session.userId;
+    inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
     let currentStatus = await UserContents.findOne({user_id: inputs.userId, lesson: inputs.lessonId, lesson_type: 0});
     if (currentStatus) {

@@ -31,13 +31,15 @@ module.exports = {
 
   fn: async function (inputs) {
 
+    inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
+
     let courseData = await CourseContents.find({
       where: {course_id: inputs.courseId},
       select: ['course_id', 'lesson', 'displaysort'],
       limit: 50 // inputs.limit ? inputs.limit : 50
     }).populate('lesson.userContents', {
       where: {
-        user_id: this.req.session.userId,
+        user_id: inputs.userId,
         lesson_type: 0
       },
       select: ['saved', 'studied']

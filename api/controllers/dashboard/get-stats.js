@@ -18,14 +18,12 @@ module.exports = {
 
 
   fn: async function (inputs) {
-
-    // inputs.userId = 1016995;
-    inputs.userId = this.req.session.userId;
+    inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
     let userOptions = await UserOptions.findOne({user_id: inputs.userId, option_key: 'level'});
 
     return {
-      userId: this.req.session.userId,
+      userId: inputs.userId,
       progress: {
         current: 67,
         target: 15
