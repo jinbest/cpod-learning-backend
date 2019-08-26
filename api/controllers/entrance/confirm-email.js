@@ -96,7 +96,12 @@ then redirect to either a special landing page (for newly-signed up users), or t
             domain: '.chinesepod.com',
             expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
           });
-          throw { redirect: '/pricing' };
+          return this.res.view('pages/onboarding/pricing', {
+            locals: {
+              conversion: true
+            },
+            conversion: true
+          });
         });
     }
 

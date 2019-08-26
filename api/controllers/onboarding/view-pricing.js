@@ -24,7 +24,8 @@ module.exports = {
       trial = true
     }
     return {
-      trial: trial
+      trial: trial,
+      conversion: false
     };
 
   }
