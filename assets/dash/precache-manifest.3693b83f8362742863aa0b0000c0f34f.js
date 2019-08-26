@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "7a85cc2bc5eb55be883c",
+    "revision": "3e81760918c4affb8eb6",
     "url": "/dash/css/app.f62b2e88.css"
   },
   {
-    "revision": "7a85cc2bc5eb55be883c",
-    "url": "/dash/js/app.3b2ac635.js"
+    "revision": "3e81760918c4affb8eb6",
+    "url": "/dash/js/app.1f644d81.js"
   },
   {
     "revision": "933e8a8a09eb7a8c51c6",
@@ -76,7 +76,7 @@ self.__precacheManifest = [
     "url": "/dash/img/preloader-square.4bc57bd7.svg"
   },
   {
-    "revision": "661e5bc99fc9670c6dec4e2483ba93b2",
+    "revision": "572260f2f73ca6aecc8d2110751469f1",
     "url": "/dash/index.html"
   },
   {
@@ -88,68 +88,68 @@ self.__precacheManifest = [
     "url": "/dash/favicon.png"
   },
   {
-    "revision": "5bcf46d00bb2f8cc17d2257003803d93",
-    "url": "/dash/img/brand/favicon.png"
-  },
-  {
     "revision": "71a94f831411548a0c3e531a248e922a",
     "url": "/dash/img/brand/brand-black.svg"
-  },
-  {
-    "revision": "d7c26c3af7979c14ed3da333f9de6e59",
-    "url": "/dash/img/brand/symbol-black-center.svg"
   },
   {
     "revision": "365fc333c183bf39ef777a760ca718cf",
     "url": "/dash/img/brand/brand-white.svg"
   },
   {
-    "revision": "f9b78d93af8ccff72e6e853d649a19cd",
-    "url": "/dash/img/brand/symbol.svg"
+    "revision": "61f77c5e336a55fb8dc944a0676c5f5b",
+    "url": "/dash/img/brand/brand.svg"
   },
   {
-    "revision": "0cb9b4ee343314f2c6ec0a014c9d2af6",
-    "url": "/dash/img/brand/symbol-black.svg"
+    "revision": "5bcf46d00bb2f8cc17d2257003803d93",
+    "url": "/dash/img/brand/favicon.png"
   },
   {
     "revision": "a158e68b2ab402fc3f58861935f523ac",
     "url": "/dash/img/brand/green.png"
   },
   {
-    "revision": "2add6b402c3d7fbbaa4fb0613c6c4a38",
-    "url": "/dash/img/brand/symbol-white.svg"
-  },
-  {
-    "revision": "776e8317ed66d1e2ec7ef1853377375b",
-    "url": "/dash/img/brand/white.png"
-  },
-  {
-    "revision": "61f77c5e336a55fb8dc944a0676c5f5b",
-    "url": "/dash/img/brand/brand.svg"
+    "revision": "a070ebf69a7fcaea3c17fbbc56deebac",
+    "url": "/dash/img/brand/logo.png"
   },
   {
     "revision": "80e1be1af3ceb667c97f030110e2023e",
     "url": "/dash/img/brand/symbol-black-center.jpg"
   },
   {
-    "revision": "a070ebf69a7fcaea3c17fbbc56deebac",
-    "url": "/dash/img/brand/logo.png"
+    "revision": "d7c26c3af7979c14ed3da333f9de6e59",
+    "url": "/dash/img/brand/symbol-black-center.svg"
   },
   {
-    "revision": "6c4e407c3a02a9376884f4b73f6a6936",
-    "url": "/dash/robots.txt"
+    "revision": "0cb9b4ee343314f2c6ec0a014c9d2af6",
+    "url": "/dash/img/brand/symbol-black.svg"
+  },
+  {
+    "revision": "2add6b402c3d7fbbaa4fb0613c6c4a38",
+    "url": "/dash/img/brand/symbol-white.svg"
+  },
+  {
+    "revision": "f9b78d93af8ccff72e6e853d649a19cd",
+    "url": "/dash/img/brand/symbol.svg"
+  },
+  {
+    "revision": "776e8317ed66d1e2ec7ef1853377375b",
+    "url": "/dash/img/brand/white.png"
   },
   {
     "revision": "4bc57bd7c9fd6fe19a5cba5c2b57b0fb",
     "url": "/dash/img/preloader-square.svg"
   },
   {
+    "revision": "e4b6e6c5749ebe66252e0da478f72b5b",
+    "url": "/dash/img/qing-wen.jpg"
+  },
+  {
     "revision": "92d40536b4008c9e966baf28829ce412",
     "url": "/dash/img/preloader.svg"
   },
   {
-    "revision": "e4b6e6c5749ebe66252e0da478f72b5b",
-    "url": "/dash/img/qing-wen.jpg"
+    "revision": "6c4e407c3a02a9376884f4b73f6a6936",
+    "url": "/dash/robots.txt"
   },
   {
     "revision": "3762712e1f8dafb6820d6bf33e9f9cd9",
