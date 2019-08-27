@@ -35,7 +35,6 @@ module.exports.swaggerConfig = {
     host: "staging.chinesepod.com",
     basePath: "/",
     schemes: [
-      "http",
       "https"
     ],
     externalDocs: {
