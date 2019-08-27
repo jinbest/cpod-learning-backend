@@ -1,6 +1,6 @@
 <div id="login" v-cloak>
   <div class="container">
-    <h1 class="display-4 text-white headline text-center">Sign in to your account</h1>
+    <h1 class="text-white headline text-center">Sign in to your account</h1>
     <div class="login-form-container card p-5">
       <ajax-form action="login" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-rules="formRules" :form-errors.sync="formErrors" @submitted="submittedForm()">
         <div class="form-group">
