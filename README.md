@@ -18,11 +18,11 @@ This app was originally generated on Fri Jun 21 2019 12:13:43 GMT+0800 (Hong Kon
 
 ### Deployment
 
-####Development localhost version
+#### Development localhost version
 
 `sails lift`
 
-####Staging version on https://staging.chinesepod.com
+#### Staging version on https://staging.chinesepod.com
 
 `NODE_ENV=production sails_environment=staging pm2 start app.js -i 0`
 
@@ -30,7 +30,7 @@ To stop
 
 `pm2 stop all`
 
-####Production version on https://staging.chinesepod.com
+#### Production version on https://staging.chinesepod.com
 
 To launch
 
