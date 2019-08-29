@@ -124,6 +124,11 @@ module.exports.routes = {
   'POST /api/v1/dashboard/toggle-course':                { action: 'dashboard/toggle-course' },
   'GET /api/v1/dashboard/get-stats':                     { action: 'dashboard/get-stats' },
 
+
+
+  // LOG ROUTES
+  'PUT /api/v1/logs/game-logs':                           { action: 'logs/game-logs' },
+
   //Sample Routes
   // 'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
   // 'POST  /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },
