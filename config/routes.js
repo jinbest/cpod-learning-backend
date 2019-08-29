@@ -48,7 +48,6 @@ module.exports.routes = {
   //DASHBOARD
   'GET /dash/:unused?': 'DashController.serve',
 
-
   //PLACEMENT TEST
   'GET /placement/:unused?': 'PlacementController.serve',
 
@@ -125,6 +124,9 @@ module.exports.routes = {
   'GET /api/v1/dashboard/get-stats':                     { action: 'dashboard/get-stats' },
 
 
+  //Lesson Routes
+  'GET /api/v1/lessons/get-lesson':                       { action: 'lessons/get-lesson' },
+  'GET /api/v1/lesson/get-dialogue':                      { action: 'lessons/get-dialogue' },
 
   // LOG ROUTES
   'PUT /api/v1/logs/game-logs':                           { action: 'logs/game-logs' },
