@@ -16,6 +16,10 @@ module.exports = {
     sessionId: {
       type: 'string',
     },
+    identifier: {
+      type: 'string',
+      description: 'Identifier string signifying a unique device ID'
+    },
     logData: {
       type: ['ref'],
       description: `JSON list of objects containing relevant logs in the following format`
