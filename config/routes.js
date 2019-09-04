@@ -126,7 +126,8 @@ module.exports.routes = {
 
   //Lesson Routes
   'GET /api/v1/lessons/get-lesson':                       { action: 'lessons/get-lesson' },
-  'GET /api/v1/lesson/get-dialogue':                      { action: 'lessons/get-dialogue' },
+  'GET /api/v1/lessons/get-dialogue':                      { action: 'lessons/get-dialogue' },
+  'GET /api/v1/lessons/get-vocab':                        { action: 'lessons/get-vocab' },
 
   // LOG ROUTES
   'PUT /api/v1/logs/game-logs':                           { action: 'logs/game-logs' },

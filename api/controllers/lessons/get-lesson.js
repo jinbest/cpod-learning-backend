@@ -29,6 +29,8 @@ module.exports = {
 
 
   fn: async function (inputs) {
+    const sanitizeHtml = require('sanitize-html');
+
     if (!inputs.slug && !inputs.lessonId) {
       throw 'invalid'
     }
@@ -38,13 +40,25 @@ module.exports = {
     let lessonData = {};
 
     if (inputs.slug) {
-      lessonData = await LessonData.findOne({slug: inputs.slug})
+      sails.log.info('DB Lookup');
+      lessonData = await LessonData.findOne({slug: encodeURI(inputs.slug)})
     } else {
       lessonData = await LessonData.findOne({id: inputs.lessonId})
     }
 
+    sails.log.info(lessonData);
+
     if (lessonData.slug) {
-      return lessonData
+      let lesson =  _.pick(lessonData, ['id', 'title', 'introduction','hash_code', 'image', 'type', 'level', 'hosts' ,
+        'publication_timestamp','saved', 'studied', 'video', 'transcription1', 'transcription2', 'mp3_public',
+        'mp3_private', 'mp3_thefix', 'pdf1', 'pdf2', 'mp3_public_size', 'mp3_private_size', 'mp3_thefix_size'])
+      lesson.transcription1 = lesson.transcription1.split('\n');
+      lesson.transcription2 = lesson.transcription2.split('\n');
+      lesson.introduction = sanitizeHtml(lesson.introduction, {
+        allowedTags: [],
+        allowedAttributes: {}
+      });
+      return lesson
     } else {
       throw 'invalid'
     }
