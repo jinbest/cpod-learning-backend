@@ -112,6 +112,9 @@ module.exports = function defineJobsHook(sails) {
       }
     }
 
+    let userSettings = await UserSettings.findOne({user_id: userData.id});
+
+
     const MauticConnector = require('node-mautic');
     const mauticConnector = new MauticConnector({
       apiUrl: 'https://email.chinesepod.com',
@@ -196,7 +199,7 @@ module.exports = function defineJobsHook(sails) {
       let mauticData = {
         subscription: subscription,
         userid: userData.id,
-      }
+      };
       if (levelText) {
         mauticData.level = levelText;
       }

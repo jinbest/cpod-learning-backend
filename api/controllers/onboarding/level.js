@@ -39,7 +39,9 @@ module.exports = {
   },
 
   fn: async function (inputs) {
-    if (!this.req.session.userId) {
+    inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
+
+    if (!inputs.userId) {
       // this.req.session.userId = 1016995;
       throw 'invalid';
     }
@@ -47,6 +49,10 @@ module.exports = {
     if(!inputs.level && !inputs.charSet){
       throw 'invalidInputs';
     }
+
+    sails.log.info(inputs);
+
+    let returnData = {};
 
     let levelValue = 1;
     if (inputs.level) {
@@ -72,22 +78,24 @@ module.exports = {
           levelValue = 5;
           break;
       }
-      await sails.helpers.users.setOption.with({
-        userId: this.req.session.userId,
+      returnData.level = await sails.helpers.users.setOption.with({
+        userId: inputs.userId,
         type: 'level',
         value: levelValue
       });
-      await sails.helpers.users.setOption.with({
-        userId: this.req.session.userId,
+      returnData.levels = await sails.helpers.users.setOption.with({
+        userId: inputs.userId,
         type: 'levels',
         value: level.toLowerCase()
       });
     }
     if (inputs.charSet) {
-      await sails.helpers.users.setCharSet.with({
-        userId: this.req.session.userId,
+      returnData.charSet = await sails.helpers.users.setCharSet.with({
+        userId: inputs.userId,
         charSet: inputs.charSet.toLowerCase()
       });
     }
+    sails.log.info(returnData);
+    return returnData
   }
 };
