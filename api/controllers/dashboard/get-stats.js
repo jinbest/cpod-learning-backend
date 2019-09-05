@@ -34,6 +34,11 @@ module.exports = {
       media: 80
     };
 
+    const levelMap = {
+      'upper intermediate': 'upperInt',
+      'pre intermediate': 'preInt'
+    };
+
     let level = await sails.helpers.convert.intToLevel(userOptions.option_value);
 
     let charSet = await UserOptions.findOne({user_id: inputs.userId, option_key: 'charSet'});
@@ -50,7 +55,7 @@ module.exports = {
       .populate('lesson');
 
     let progressData = userLessons.filter(function (item) {
-      return item.lesson.level.toLowerCase() === level
+      return levelMap[item.lesson.level.toLowerCase()] ? levelMap[item.lesson.level.toLowerCase()] === level : item.lesson.level.toLowerCase() === level
     });
 
     let thisMonth = userLessons.filter(function (item) {
