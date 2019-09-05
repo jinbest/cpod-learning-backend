@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "8bd8f91d3efee0653ef2",
+    "revision": "8e6801a5f23319965168",
     "url": "/dash/css/app.282a778f.css"
   },
   {
-    "revision": "8bd8f91d3efee0653ef2",
-    "url": "/dash/js/app.89f043d2.js"
+    "revision": "8e6801a5f23319965168",
+    "url": "/dash/js/app.66211dcf.js"
   },
   {
     "revision": "933e8a8a09eb7a8c51c6",
@@ -28,12 +28,12 @@ self.__precacheManifest = [
     "url": "/dash/img/logo.a070ebf6.png"
   },
   {
-    "revision": "6f0a76321d30f3c8120915e57f7bd77e",
-    "url": "/dash/fonts/element-icons.6f0a7632.ttf"
-  },
-  {
     "revision": "2fad952a20fbbcfd1bf2ebb210dccf7a",
     "url": "/dash/fonts/element-icons.2fad952a.woff"
+  },
+  {
+    "revision": "6f0a76321d30f3c8120915e57f7bd77e",
+    "url": "/dash/fonts/element-icons.6f0a7632.ttf"
   },
   {
     "revision": "e4b6e6c5749ebe66252e0da478f72b5b",
@@ -52,12 +52,12 @@ self.__precacheManifest = [
     "url": "/dash/fonts/nucleo-icons.2569aaea.woff"
   },
   {
-    "revision": "f82ec6ba2dc4181db2af35c499462840",
-    "url": "/dash/fonts/nucleo-icons.f82ec6ba.ttf"
-  },
-  {
     "revision": "0b8a30b10cbe7708d5f3a4b007c1d665",
     "url": "/dash/img/nucleo-icons.0b8a30b1.svg"
+  },
+  {
+    "revision": "f82ec6ba2dc4181db2af35c499462840",
+    "url": "/dash/fonts/nucleo-icons.f82ec6ba.ttf"
   },
   {
     "revision": "92d40536b4008c9e966baf28829ce412",
@@ -72,7 +72,7 @@ self.__precacheManifest = [
     "url": "/dash/img/preloader-square.4bc57bd7.svg"
   },
   {
-    "revision": "bbc5d1f682ae0c9666382bd4632b0fa8",
+    "revision": "f41875470001c0f101aacb93c0c76d1c",
     "url": "/dash/index.html"
   },
   {
@@ -120,12 +120,12 @@ self.__precacheManifest = [
     "url": "/dash/img/brand/symbol-black.svg"
   },
   {
-    "revision": "2add6b402c3d7fbbaa4fb0613c6c4a38",
-    "url": "/dash/img/brand/symbol-white.svg"
-  },
-  {
     "revision": "f9b78d93af8ccff72e6e853d649a19cd",
     "url": "/dash/img/brand/symbol.svg"
+  },
+  {
+    "revision": "2add6b402c3d7fbbaa4fb0613c6c4a38",
+    "url": "/dash/img/brand/symbol-white.svg"
   },
   {
     "revision": "776e8317ed66d1e2ec7ef1853377375b",
