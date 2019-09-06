@@ -58,6 +58,7 @@ module.exports.routes = {
   'GET /set-lesson/:unused?':     { action: 'recap/set-lesson' },
   'GET /recap':                   { action: 'recap/view-recap' },
   'GET /recapp':                  { action: 'recap/view-recap' },
+  'GET /app':                  { action: 'recap/view-recap' },
 
 
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
