@@ -89,6 +89,7 @@ module.exports = {
       },
       level: level,
       charSet: charSet['option_value'],
+      access: await sails.helpers.users.getAccessType(inputs.userId)
     };
   }
 };

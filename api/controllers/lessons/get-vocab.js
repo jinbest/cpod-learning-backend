@@ -33,11 +33,14 @@ module.exports = {
         {vocabulary_class: 'ASC'},
         {display_order: 'ASC'}
       ]);
+    let returnData = [];
     _.each(vocab, function (item) {
-      return _.mapKeys(item, function (value, key) {
-        return keyMap[key]
-      })
+      item['s'] = item.column_1;
+      item['p'] = item.column_2;
+      item['en'] = item.column_3;
+      item['t'] = item.column_4;
+      returnData.push(_.pick(item, ['s', 't', 'p', 'en', 'audio','vocabulary_class']));
     });
-    return vocab
+    return returnData
   }
 };

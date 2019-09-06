@@ -25,30 +25,37 @@ module.exports = {
       .sort('display_order ASC');
 
     let dialogueData = [];
+    let speakers = [];
 
     rawDialogues.forEach((dialogue) => {
+      if (dialogue.speaker) {
+        speakers.push(dialogue.speaker);
+      }
       dialogue.vocabulary = [];
       dialogue.sentence = [];
       dialogue['row_1'].replace(/\(event,\'(.*?)\',\'(.*?)\',\'(.*?)\',\'(.*?)\'.*?\>(.*?)\<\/span\>([^\<]+)?/g, function(a, b, c, d, e, f, g, h) {
         dialogue.sentence.push({
-          en: decodeURI(b),
-          p: decodeURI(c),
           s: decodeURI(d),
-          t: decodeURI(e)
+          t: decodeURI(e),
+          p: decodeURI(c),
+          en: decodeURI(b)
         });
         if (g) {
           dialogue.sentence.push(decodeURI(g))
         }
         dialogue.vocabulary.push({
-          en: b,
-          p: c,
           s: d,
-          t: e
+          t: e,
+          p: c,
+          en: b
         })
       });
       dialogueData.push(_.pick(dialogue, ['display_order', 'speaker', 'row_2', 'audio', 'v3_id', 'vocabulary', 'sentence']))
     });
 
-    return dialogueData
+    return {
+      speakers: speakers,
+      dialogue: dialogueData
+    }
   }
 };
