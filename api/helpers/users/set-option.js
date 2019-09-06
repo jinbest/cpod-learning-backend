@@ -46,21 +46,23 @@ module.exports = {
       option_key: inputs.type,
       option_value: inputs.value
     };
-    return await UserOptions.findOrCreate({
+
+    let currentData = await UserOptions.findOne({
       user_id: inputs.userId,
       option_key: inputs.type
-    },valuesToSet)
-      .exec(async(err, userOptions, wasCreated) => {
-        if (err) { throw 'invalid' }
-        if (wasCreated) {
-        } else {
-          valuesToSet.id = userOptions.id;
-          return await UserOptions.updateOne({id: userOptions.id})
-            .set(valuesToSet);
-        }
-      })
+    });
+
+    let newData = {};
+
+    if (!currentData) {
+      newData = await UserOptions.create(valuesToSet).fetch()
+    } else {
+      newData = await UserOptions.updateOne({id: currentData.id})
+        .set(valuesToSet)
+    }
+
+    return newData;
+
   }
-
-
 };
 
