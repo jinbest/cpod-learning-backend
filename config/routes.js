@@ -130,6 +130,7 @@ module.exports.routes = {
   'GET /api/v1/lessons/get-lesson':                       { action: 'lessons/get-lesson' },
   'GET /api/v1/lessons/get-dialogue':                      { action: 'lessons/get-dialogue' },
   'GET /api/v1/lessons/get-vocab':                        { action: 'lessons/get-vocab' },
+  'GET /api/v1/lessons/get-downloads':                        { action: 'lessons/get-downloads' },
 
   // LOG ROUTES
   'PUT /api/v1/logs/game-logs':                           { action: 'logs/game-logs' },
