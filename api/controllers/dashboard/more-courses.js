@@ -21,6 +21,8 @@ module.exports = {
 
 
   fn: async function (inputs) {
+    const sanitizeHtml = require('sanitize-html');
+
     inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
     let userOptions = await UserOptions.findOne({
@@ -66,6 +68,19 @@ module.exports = {
       },
       select: ['id', 'course_title', 'course_introduction'],
       sort: 'id DESC'
+    });
+    leveledCourses.forEach((course) => {
+      course.course_introduction = sanitizeHtml(course.course_introduction, {
+        allowedTags: [],
+        allowedAttributes: {}
+      });
+    });
+
+    mixedCourses.forEach((course) => {
+      course.course_introduction = sanitizeHtml(course.course_introduction, {
+        allowedTags: [],
+        allowedAttributes: {}
+      });
     });
     return leveledCourses.concat(mixedCourses)
   }

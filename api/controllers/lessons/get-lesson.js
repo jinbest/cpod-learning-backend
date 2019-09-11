@@ -50,10 +50,8 @@ module.exports = {
 
     if (lessonData.slug) {
       let lesson =  _.pick(lessonData, ['id', 'title', 'introduction','hash_code', 'image', 'type', 'level', 'hosts' ,
-        'publication_timestamp','saved', 'studied', 'video', 'transcription1', 'transcription2', 'mp3_dialogue', 'mp3_public',
-        'mp3_private', 'mp3_thefix', 'pdf1', 'pdf2', 'mp3_public_size', 'mp3_private_size', 'mp3_thefix_size'])
-      lesson.transcription1 = lesson.transcription1.split('\n');
-      lesson.transcription2 = lesson.transcription2.split('\n');
+        'publication_timestamp','saved', 'studied', 'video', 'mp3_dialogue', 'mp3_public',
+        'mp3_private', 'mp3_thefix', 'pdf1', 'pdf2', 'mp3_public_size', 'mp3_private_size', 'mp3_thefix_size']);
       lesson.introduction = sanitizeHtml(lesson.introduction, {
         allowedTags: [],
         allowedAttributes: {}
