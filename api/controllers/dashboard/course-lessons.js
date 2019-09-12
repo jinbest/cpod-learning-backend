@@ -19,8 +19,11 @@ module.exports = {
     },
     studied: {
       type: 'boolean'
+    },
+    exclude: {
+      type: ['ref'],
+      description: 'list of lessonIDs to exclude'
     }
-
   },
 
 
@@ -57,7 +60,7 @@ module.exports = {
       }
     });
 
-    return (returnData.filter((lesson) => {return lesson.studied !== 1})).slice(0, inputs.limit)
+    return (returnData.filter((lesson) => {return lesson.studied !== 1 && (inputs.exclude ? !inputs.exclude.includes(lesson.id) : true)})).slice(0, inputs.limit)
   }
 
 

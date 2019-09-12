@@ -29,6 +29,8 @@ module.exports = {
 
 
   fn: async function (inputs) {
+    inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
+
     const sanitizeHtml = require('sanitize-html');
 
     if (!inputs.slug && !inputs.lessonId) {
@@ -56,6 +58,22 @@ module.exports = {
         allowedTags: [],
         allowedAttributes: {}
       });
+
+      let userLessons = await UserContents.find({
+        where: {
+          lesson: lessonData.id,
+          user_id: inputs.userId,
+          lesson_type: 0
+        },
+        select: ['lesson', 'saved', 'studied', 'updatedAt'],  //  'title', 'slug', 'image', 'hash_code', 'publication_timestamp'
+        sort: 'updatedAt DESC',
+        limit: inputs.limit ? inputs.limit : 10,
+      });
+      console.log(userLessons);
+      if (userLessons[0]) {
+        lesson.studied = userLessons[0].studied ? userLessons[0].studied : false;
+        lesson.saved = userLessons[0].saved ? userLessons[0].saved : false;
+      }
       return lesson
     } else {
       throw 'invalid'

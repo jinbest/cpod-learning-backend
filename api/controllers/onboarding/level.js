@@ -88,14 +88,16 @@ module.exports = {
         type: 'levels',
         value: level.toLowerCase()
       });
+      returnData.finished = true;
     }
     if (inputs.charSet) {
       returnData.charSet = await sails.helpers.users.setCharSet.with({
         userId: inputs.userId,
         charSet: inputs.charSet.toLowerCase()
       });
+      returnData.finished = true;
     }
-    sails.log.info(returnData);
+    sails.log.info({returnData: returnData});
     return returnData
   }
 };
