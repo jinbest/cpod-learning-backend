@@ -110,6 +110,7 @@ parasails.registerPage('checkout', {
   methods: {
     switchBilling: function (period) {
       this.billingCycle = period;
+      this.pricing.discount = 0;
       this.formData.promoCode = '';
       this.promoToggle = false;
     },
