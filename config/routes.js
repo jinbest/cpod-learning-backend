@@ -47,7 +47,7 @@ module.exports.routes = {
 
   //DASHBOARD
   'GET /dash/:unused?': 'DashController.serve',
-  'GET /lesson/:unused?': 'DashController.serve',
+  'GET /lesson/:unused?/:unused?': 'DashController.serve',
 
   //PLACEMENT TEST
   'GET /placement/:unused?': 'PlacementController.serve',
@@ -58,7 +58,7 @@ module.exports.routes = {
   'GET /set-lesson/:unused?':     { action: 'recap/set-lesson' },
   'GET /recap':                   { action: 'recap/view-recap' },
   'GET /recapp':                  { action: 'recap/view-recap' },
-  'GET /app':                  { action: 'recap/view-recap' },
+  'GET /app':                     { action: 'recap/view-recap' },
 
 
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
