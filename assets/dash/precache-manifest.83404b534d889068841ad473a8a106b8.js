@@ -1,15 +1,15 @@
 self.__precacheManifest = [
   {
-    "revision": "7f328d4257477fd1384e",
-    "url": "/dash/css/app.cea3e09e.css"
+    "revision": "5e695beaa9402a4dcd70",
+    "url": "/dash/css/app.2147479e.css"
   },
   {
-    "revision": "7f328d4257477fd1384e",
-    "url": "/dash/js/app.354d89c8.js"
+    "revision": "5e695beaa9402a4dcd70",
+    "url": "/dash/js/app.d22b6dbb.js"
   },
   {
-    "revision": "933e8a8a09eb7a8c51c6",
-    "url": "/dash/js/chunk-47475f48.0c949370.js"
+    "revision": "10b67935427ac32a61b1",
+    "url": "/dash/js/chunk-47475f48.44703406.js"
   },
   {
     "revision": "b24dc5d12e09dd4ec83e",
@@ -28,16 +28,20 @@ self.__precacheManifest = [
     "url": "/dash/img/logo.a070ebf6.png"
   },
   {
-    "revision": "6f0a76321d30f3c8120915e57f7bd77e",
-    "url": "/dash/fonts/element-icons.6f0a7632.ttf"
-  },
-  {
     "revision": "2fad952a20fbbcfd1bf2ebb210dccf7a",
     "url": "/dash/fonts/element-icons.2fad952a.woff"
   },
   {
+    "revision": "6f0a76321d30f3c8120915e57f7bd77e",
+    "url": "/dash/fonts/element-icons.6f0a7632.ttf"
+  },
+  {
     "revision": "e4b6e6c5749ebe66252e0da478f72b5b",
     "url": "/dash/img/qing-wen.e4b6e6c5.jpg"
+  },
+  {
+    "revision": "0b8a30b10cbe7708d5f3a4b007c1d665",
+    "url": "/dash/img/nucleo-icons.0b8a30b1.svg"
   },
   {
     "revision": "c1733565b32b585676302d4233c39da8",
@@ -56,10 +60,6 @@ self.__precacheManifest = [
     "url": "/dash/fonts/nucleo-icons.2569aaea.woff"
   },
   {
-    "revision": "0b8a30b10cbe7708d5f3a4b007c1d665",
-    "url": "/dash/img/nucleo-icons.0b8a30b1.svg"
-  },
-  {
     "revision": "92d40536b4008c9e966baf28829ce412",
     "url": "/dash/img/preloader.92d40536.svg"
   },
@@ -72,7 +72,7 @@ self.__precacheManifest = [
     "url": "/dash/img/preloader-square.4bc57bd7.svg"
   },
   {
-    "revision": "3f6b1dfbdb1aa7e2789840f7c98f0e68",
+    "revision": "c467f025b90c2fcfea6d8f4288d03993",
     "url": "/dash/index.html"
   },
   {
@@ -92,16 +92,12 @@ self.__precacheManifest = [
     "url": "/dash/img/brand/favicon.png"
   },
   {
-    "revision": "365fc333c183bf39ef777a760ca718cf",
-    "url": "/dash/img/brand/brand-white.svg"
+    "revision": "a158e68b2ab402fc3f58861935f523ac",
+    "url": "/dash/img/brand/green.png"
   },
   {
     "revision": "61f77c5e336a55fb8dc944a0676c5f5b",
     "url": "/dash/img/brand/brand.svg"
-  },
-  {
-    "revision": "a158e68b2ab402fc3f58861935f523ac",
-    "url": "/dash/img/brand/green.png"
   },
   {
     "revision": "a070ebf69a7fcaea3c17fbbc56deebac",
@@ -112,16 +108,8 @@ self.__precacheManifest = [
     "url": "/dash/img/brand/symbol-black-center.svg"
   },
   {
-    "revision": "80e1be1af3ceb667c97f030110e2023e",
-    "url": "/dash/img/brand/symbol-black-center.jpg"
-  },
-  {
     "revision": "0cb9b4ee343314f2c6ec0a014c9d2af6",
     "url": "/dash/img/brand/symbol-black.svg"
-  },
-  {
-    "revision": "776e8317ed66d1e2ec7ef1853377375b",
-    "url": "/dash/img/brand/white.png"
   },
   {
     "revision": "2add6b402c3d7fbbaa4fb0613c6c4a38",
@@ -132,6 +120,18 @@ self.__precacheManifest = [
     "url": "/dash/img/brand/symbol.svg"
   },
   {
+    "revision": "776e8317ed66d1e2ec7ef1853377375b",
+    "url": "/dash/img/brand/white.png"
+  },
+  {
+    "revision": "80e1be1af3ceb667c97f030110e2023e",
+    "url": "/dash/img/brand/symbol-black-center.jpg"
+  },
+  {
+    "revision": "365fc333c183bf39ef777a760ca718cf",
+    "url": "/dash/img/brand/brand-white.svg"
+  },
+  {
     "revision": "4bc57bd7c9fd6fe19a5cba5c2b57b0fb",
     "url": "/dash/img/preloader-square.svg"
   },
@@ -140,12 +140,12 @@ self.__precacheManifest = [
     "url": "/dash/img/preloader.svg"
   },
   {
-    "revision": "e4b6e6c5749ebe66252e0da478f72b5b",
-    "url": "/dash/img/qing-wen.jpg"
-  },
-  {
     "revision": "6c4e407c3a02a9376884f4b73f6a6936",
     "url": "/dash/robots.txt"
+  },
+  {
+    "revision": "e4b6e6c5749ebe66252e0da478f72b5b",
+    "url": "/dash/img/qing-wen.jpg"
   },
   {
     "revision": "3762712e1f8dafb6820d6bf33e9f9cd9",
