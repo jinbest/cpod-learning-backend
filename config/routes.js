@@ -47,6 +47,7 @@ module.exports.routes = {
 
   //DASHBOARD
   'GET /dash/:unused?': 'DashController.serve',
+  'GET /lesson/:unused?': 'DashController.serve',
 
   //PLACEMENT TEST
   'GET /placement/:unused?': 'PlacementController.serve',
