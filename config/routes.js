@@ -128,13 +128,15 @@ module.exports.routes = {
 
 
   //Lesson Routes
-  'GET /api/v1/lessons/get-lesson':                       { action: 'lessons/get-lesson' },
-  'GET /api/v1/lessons/get-dialogue':                      { action: 'lessons/get-dialogue' },
-  'GET /api/v1/lessons/get-vocab':                        { action: 'lessons/get-vocab' },
-  'GET /api/v1/lessons/get-downloads':                        { action: 'lessons/get-downloads' },
+  'GET /api/v1/lessons/get-lesson':                      { action: 'lessons/get-lesson' },
+  'GET /api/v1/lessons/get-dialogue':                    { action: 'lessons/get-dialogue' },
+  'GET /api/v1/lessons/get-vocab':                       { action: 'lessons/get-vocab' },
+  'GET /api/v1/lessons/get-downloads':                   { action: 'lessons/get-downloads' },
+  'GET /api/v1/lessons/get-expansion':                   { action: 'lessons/get-expansion' },
+  'GET /api/v1/lessons/get-grammar':                     { action: 'lessons/get-grammar' },
 
   // LOG ROUTES
-  'PUT /api/v1/logs/game-logs':                           { action: 'logs/game-logs' },
+  'PUT /api/v1/logs/game-logs':                          { action: 'logs/game-logs' },
 
   //Sample Routes
   // 'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
