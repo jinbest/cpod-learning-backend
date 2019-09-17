@@ -6,7 +6,6 @@
 module.exports = {
   tableName: 'grammar_detail',
   customToJSON: function() {
-    // Return a shallow copy of this record with the password and ssn removed.
     return _.pick(this, ['id', 'name', 'introduction', 'createdAt'])
   },
   attributes: {
