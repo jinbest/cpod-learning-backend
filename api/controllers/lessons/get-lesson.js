@@ -15,8 +15,10 @@ module.exports = {
     lessonId: {
       type: 'string',
       description: 'Designated Lesson ID'
+    },
+    comments: {
+      type: 'boolean'
     }
-
   },
 
 
@@ -33,6 +35,11 @@ module.exports = {
 
     const sanitizeHtml = require('sanitize-html');
 
+    const sanitizeOptions = {
+      allowedTags: [],
+      allowedAttributes: {}
+    };
+
     if (!inputs.slug && !inputs.lessonId) {
       throw 'invalid'
     }
@@ -42,22 +49,22 @@ module.exports = {
     let lessonData = {};
 
     if (inputs.slug) {
-      sails.log.info('DB Lookup');
-      lessonData = await LessonData.findOne({slug: encodeURI(inputs.slug)})
+      if (inputs.comments) {
+        lessonData = await LessonData.findOne({slug: encodeURI(inputs.slug)})
+          .populate('comments', {where: {type: 'lesson'}})
+      } else {
+        lessonData = await LessonData.findOne({slug: encodeURI(inputs.slug)})
+      }
     } else {
       lessonData = await LessonData.findOne({id: inputs.lessonId})
+        .populate('comments')
     }
 
     sails.log.info(lessonData);
 
     if (lessonData.slug) {
-      let lesson =  _.pick(lessonData, ['id', 'title', 'introduction','hash_code', 'image', 'type', 'level', 'hosts' ,
-        'publication_timestamp','saved', 'studied', 'video', 'mp3_dialogue', 'mp3_public',
-        'mp3_private', 'mp3_thefix', 'pdf1', 'pdf2', 'mp3_public_size', 'mp3_private_size', 'mp3_thefix_size']);
-      lesson.introduction = sanitizeHtml(lesson.introduction, {
-        allowedTags: [],
-        allowedAttributes: {}
-      });
+      let lesson = lessonData;
+      lesson.introduction = sanitizeHtml(lesson.introduction, sanitizeOptions);
 
       let userLessons = await UserContents.find({
         where: {
@@ -69,12 +76,20 @@ module.exports = {
         sort: 'updatedAt DESC',
         limit: inputs.limit ? inputs.limit : 10,
       });
-      console.log(userLessons);
+
       if (userLessons[0]) {
         lesson.studied = userLessons[0].studied ? userLessons[0].studied : false;
         lesson.saved = userLessons[0].saved ? userLessons[0].saved : false;
       }
+
+      // if (lesson.comments && lesson.comments.length > 0) {
+      //   _.each(lesson.comments, function (comment) {
+      //     sanitizeHtml(comment, sanitizeOptions)
+      //   })
+      // }
+
       return lesson
+
     } else {
       throw 'invalid'
     }
