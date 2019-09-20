@@ -56,7 +56,7 @@ module.exports = function defineJobsHook(sails) {
         });
     }
 
-    if (!userData || !userData.id) {
+    if (!userData || typeof userData === 'undefined') {
       //TODO SOMETHING HERE
       done( null, 'No Such User on ChinesePod')
     }
