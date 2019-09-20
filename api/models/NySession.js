@@ -36,7 +36,8 @@ module.exports = {
       type: "string",
       columnType: "varchar",
       columnName: 'session_user_id',
-      maxLength: 200
+      maxLength: 200,
+      allowNull: true
     },
     session_folder_id: {
       type: "string",
@@ -77,7 +78,8 @@ module.exports = {
     session_ip_address: {
       type: "string",
       columnType: "varchar",
-      maxLength: 200
+      maxLength: 200,
+      allowNull: true
     },
     session_inactive: {
       type: "number",
@@ -86,7 +88,7 @@ module.exports = {
       allowNull: true
     },
     client_id: {
-      type: "string",
+      type: "ref",
       columnType: "varchar",
       maxLength: 100,
     },

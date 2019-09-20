@@ -119,7 +119,6 @@ and exposed as \`req.me\`.)`
       // sessionId: this.req.session.id
     })
       .then((phpSessionId) => {
-        console.log(phpSessionId);
         this.res.cookie('CPODSESSID', phpSessionId, {
           domain: '.chinesepod.com',
           expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)

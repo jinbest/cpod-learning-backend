@@ -160,9 +160,8 @@ module.exports = {
       required: true
     },
     text: {
-      type: "string",
-      columnType: "blob",
-      required: true
+      type: "ref",
+      columnType: "blob"
     },
     transcription1: {
       type: "string",
