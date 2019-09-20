@@ -20,7 +20,7 @@ module.exports = {
   fn: async function (inputs) {
     inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
-    let userOptions = await UserOptions.findOne({user_id: inputs.userId, option_key: 'level'});
+    let userOptions = (await UserOptions.find({user_id: inputs.userId, option_key: 'level'}).limit(1))[0];
 
     let userData = await User.findOne({id: inputs.userId});
 
@@ -41,7 +41,7 @@ module.exports = {
 
     let level = await sails.helpers.convert.intToLevel(userOptions.option_value);
 
-    let charSet = await UserOptions.findOne({user_id: inputs.userId, option_key: 'charSet'});
+    let charSet = (await UserOptions.find({user_id: inputs.userId, option_key: 'charSet'}).limit(1))[0];
 
     let userLessons = await UserContents.find({
       where: {
