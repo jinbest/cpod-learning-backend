@@ -48,8 +48,19 @@ module.exports = {
           expansion.sentence.push(decodeURI(g))
         }
       });
+      expansion['target'] = expansion['row_2'];
+      delete expansion['row_1'];
+      delete expansion['row_2'];
     });
-    return groupByVocab(rawExpansions);
+    let groupedData = groupByVocab(rawExpansions);
+    let returnData = [];
+    Object.keys(groupedData).forEach((expansion) => {
+      returnData.push({
+        phrase: expansion,
+        examples: groupedData[expansion]
+      })
+    });
+    return returnData
   }
 
 

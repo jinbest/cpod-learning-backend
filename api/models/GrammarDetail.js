@@ -6,7 +6,7 @@
 module.exports = {
   tableName: 'grammar_detail',
   customToJSON: function() {
-    return _.pick(this, ['id', 'name', 'introduction', 'createdAt'])
+    return _.pick(this, ['id', 'name', 'introduction', 'tree', 'createdAt'])
   },
   attributes: {
     id: {

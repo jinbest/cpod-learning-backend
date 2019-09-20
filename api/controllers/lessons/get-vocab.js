@@ -28,7 +28,13 @@ module.exports = {
       column_4: 't'
     };
 
-    let vocab = await Vocabulary.find({v3_id: inputs.lessonId})
+    let vocab = await Vocabulary.find({
+      v3_id: inputs.lessonId,
+      vocabulary_class: {
+        in: ['Key Vocabulary', 'Supplementary']
+      }
+
+    })
       .sort([
         {vocabulary_class: 'ASC'},
         {display_order: 'ASC'}

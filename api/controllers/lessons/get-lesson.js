@@ -57,12 +57,12 @@ module.exports = {
       }
     } else {
       lessonData = await LessonData.findOne({id: inputs.lessonId})
-        .populate('comments')
+        .populate('comments', {where: {type: 'lesson'}})
     }
 
     sails.log.info(lessonData);
 
-    if (lessonData.slug) {
+    if (lessonData && lessonData.slug) {
       let lesson = lessonData;
       lesson.introduction = sanitizeHtml(lesson.introduction, sanitizeOptions);
 
