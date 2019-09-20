@@ -37,7 +37,7 @@ module.exports = {
     let sessionStart = currentTime.toISOString().split('T').join(' ').split('.')[0];
     let sessionEnd = expiryTime.toISOString().split('T').join(' ').split('.')[0];
 
-    let userSiteLink = await UserSiteLinks.findOne({ user_id: userId});
+    let userSiteLink = await UserSiteLinks.findOne({ user_id: userId, site_id: 2});
 
     let groupId = userSiteLink.usertype_id;
     let groupName = 'free';

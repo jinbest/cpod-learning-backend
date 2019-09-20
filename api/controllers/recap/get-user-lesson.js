@@ -150,7 +150,8 @@ module.exports = {
 
       //Select User Subscription Status
       let UserSiteLink = await UserSiteLinks.findOne({
-        user_id: user.id
+        user_id: user.id,
+        site_id: 2
       });
 
       let subscription = 'free';

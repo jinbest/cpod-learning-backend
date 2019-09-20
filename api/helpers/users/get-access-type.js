@@ -46,7 +46,7 @@ module.exports = {
       }
     }
 
-    let userAccess = await UserSiteLinks.findOne({user_id: inputs.userId});
+    let userAccess = await UserSiteLinks.findOne({user_id: inputs.userId, site_id: 2});
     return accessMap(userAccess.usertype_id)
   }
 };

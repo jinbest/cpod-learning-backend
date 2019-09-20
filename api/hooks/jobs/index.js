@@ -68,7 +68,7 @@ module.exports = function defineJobsHook(sails) {
       //TODO SOMETHING HERE
     });
 
-    let userSiteLinks = await UserSiteLinks.find({user_id: userData.id})
+    let userSiteLinks = await UserSiteLinks.find({user_id: userData.id, site_id: 2})
       .sort('updatedAt DESC')
       .limit(1);
     let subscription = 'Free';
