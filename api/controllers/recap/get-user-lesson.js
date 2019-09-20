@@ -115,7 +115,8 @@ module.exports = {
       );
 
       if (latestLoggedLessons['rows'].length === 0){
-        throw 'noLesson'
+        return {message: 'No Lesson Vailable'}
+        // throw 'noLesson'
       }
 
       let latestStudiedLesson = latestLoggedLessons['rows'][0]['accesslog_url'].split('v3_id=')[1].split('&')[0]; // Switching to latest Log
@@ -127,7 +128,8 @@ module.exports = {
       // });
 
       if (typeof latestStudiedLesson === 'undefined' || latestStudiedLesson.length === 0){
-        throw 'noLesson'
+        return {message: 'No Lesson Vailable'}
+        // throw 'noLesson'
       }
 
       //Select User CharSet
