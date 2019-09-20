@@ -5,7 +5,7 @@
     <div v-show="syncing">
       <i style="font-size: 100px !important;"class="fa fa-spinner fa-spin"></i>
     </div>
-    <div  v-show="!syncing && !error">
+    <div  v-if="!syncing && !error">
       <img :src="lessonImg" class="img-fluid" :alt="`lessonTitle`">
       <table class="table mb-3">
         <tbody>
@@ -37,7 +37,7 @@
         {{ rawOutput }}
       </p>
     </div>
-    <div v-show="!syncing && error">
+    <div v-if="!syncing && error">
       <div class="alert alert-warning mb-3" role="alert">
         {{ error }}
       </div>

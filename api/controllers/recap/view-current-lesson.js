@@ -101,16 +101,16 @@ module.exports = {
         }
       }
 
-      let latestStudiedLesson = latestLoggedLessons['rows'][0]['accesslog_url'].split('v3_id=')[1].split('&')[0];
-      // latestLoggedLessons['rows'].some( function(item) {
-      //   if (availableRecaps.includes(item['accesslog_url'].split('v3_id=')[1].split('&')[0])) {
-      //     return latestStudiedLesson = item['accesslog_url'].split('v3_id=')[1].split('&')[0];
-      //   }
-      // });
-
-      // sails.log.info(availableRecaps);
-      // sails.log.info(latestLoggedLessons['rows']);
-      // sails.log.info(latestStudiedLesson);
+      let latestStudiedLesson = [];
+      try {
+        latestStudiedLesson = latestLoggedLessons['rows'][0]['accesslog_url'].split('v3_id=')[1].split('&')[0];
+      } catch (e) {
+        sails.log.error(e);
+        return {
+          syncing: false,
+          error: 'No Lesson Available. Please try again Later.'
+        }
+      }
 
       if (typeof latestStudiedLesson === 'undefined' || latestStudiedLesson.length === 0){
         sails.log.info(`No Lesson For user ${user.email}`);
