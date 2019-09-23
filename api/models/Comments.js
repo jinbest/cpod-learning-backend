@@ -6,8 +6,8 @@
 module.exports = {
   customToJSON: function() {
     // Return a shallow copy of this record with the password and ssn removed.
-    return _.pick(this, ['content', 'user_id', 'reply_to_id', 'reply_to_id_2', 'reply_to_user_id',
-      'comment_from', 'reply_count', 'createdAt'])
+    return _.pick(this, ['id', 'content', 'user', 'reply_to_id', 'reply_to_id_2', 'reply_to_user_id',
+      'comment_from', 'nestedComments', 'reply_count', 'createdAt'])
   },
   attributes: {
     id: {
@@ -29,8 +29,9 @@ module.exports = {
       isInteger: true,
       defaultsTo: 1
     },
-    user_id: {
+    user: {
       model: 'User',
+      columnName: 'user_id',
       required: true
     },
     type: {
