@@ -30,9 +30,7 @@ module.exports = {
       defaultsTo: 1
     },
     user_id: {
-      type: "number",
-      columnType: "int",
-      isInteger: true,
+      model: 'User',
       required: true
     },
     type: {
