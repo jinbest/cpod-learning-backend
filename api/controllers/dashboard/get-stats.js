@@ -13,6 +13,9 @@ module.exports = {
 
 
   exits: {
+    invalid: {
+      responseType: 'badRequest'
+    }
 
   },
 
@@ -20,9 +23,19 @@ module.exports = {
   fn: async function (inputs) {
     inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
+    if (!inputs.userId || typeof inputs.userId === 'undefined') {
+      throw 'invalid'
+    }
+
+    let returnData = {};
+
     let userOptions = (await UserOptions.find({user_id: inputs.userId, option_key: 'level'}).limit(1))[0];
 
     let userData = await User.findOne({id: inputs.userId});
+
+    if (!userData) {
+      throw 'invalid'
+    }
 
     const targets = {
       newbie: 50,
@@ -39,7 +52,13 @@ module.exports = {
       'pre intermediate': 'preInt'
     };
 
-    let level = await sails.helpers.convert.intToLevel(userOptions.option_value);
+    let level = 'newbie';
+
+    if (userOptions && userOptions.option_value) {
+      level = await sails.helpers.convert.intToLevel(userOptions.option_value);
+    } else {
+      returnData.levelUnset = true;
+    }
 
     let charSet = (await UserOptions.find({user_id: inputs.userId, option_key: 'charSet'}).limit(1))[0];
 
@@ -74,7 +93,7 @@ module.exports = {
       return item.updatedAt > new Date(Date.now() - 2 * 7 * 24 * 60 * 60 * 1000) && item.updatedAt < new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
     });
 
-    return {
+    return {...returnData, ...{
       userId: inputs.userId,
       name: userData.name,
       goals: {
@@ -88,8 +107,9 @@ module.exports = {
         target: targets[level]
       },
       level: level,
-      charSet: charSet['option_value'],
+      charSet: (charSet && charSet['option_value']) ? charSet['option_value'] : 'simplified',
       access: await sails.helpers.users.getAccessType(inputs.userId)
-    };
+    }};
+
   }
 };
