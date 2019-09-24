@@ -43,17 +43,18 @@ module.exports = function defineJobsHook(sails) {
 
     let userData = '';
     if (!job.data.userId) {
-      userData = await User.findOne({email: job.data.email})
-        .catch((err) => {
-          //TODO SOMETHING HERE
-          done( null, 'No Such User on ChinesePod')
-        });
+      userData = await User.findOne({email: job.data.email});
+
+      if (!userData) {
+        done( null, 'No Such User on ChinesePod')
+      }
+
     } else {
-      userData = await User.findOne({id: job.data.userId})
-        .catch((err) => {
-          //TODO SOMETHING HERE
-          done( null, 'No Such User on ChinesePod')
-        });
+      userData = await User.findOne({id: job.data.userId});
+
+      if (!userData) {
+        done( null, 'No Such User on ChinesePod')
+      }
     }
 
     if (!userData || typeof userData === 'undefined') {
@@ -61,12 +62,18 @@ module.exports = function defineJobsHook(sails) {
       done( null, 'No Such User on ChinesePod')
     }
 
-    let userOptions = await UserOptions.findOne({
-      user_id: userData.id,
-      option_key: 'level'
-    }).catch((err) => {
-      //TODO SOMETHING HERE
-    });
+    let userOptions = {};
+
+    try {
+      userOptions = await UserOptions.findOne({
+        user_id: userData.id,
+        option_key: 'level'
+      })
+    } catch (e) {
+      sails.log.error(e);
+      done( null, 'No Such User on ChinesePod')
+    }
+
 
     let userSiteLinks = await UserSiteLinks.find({user_id: userData.id, site_id: 2})
       .sort('updatedAt DESC')
