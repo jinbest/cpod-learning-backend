@@ -135,6 +135,9 @@ module.exports.routes = {
   'GET /api/v1/lessons/get-expansion':                   { action: 'lessons/get-expansion' },
   'GET /api/v1/lessons/get-grammar':                     { action: 'lessons/get-grammar' },
   'GET /api/v1/lessons/get-comments':                    { action: 'lessons/get-comments' },
+  'POST /api/v1/lessons/comments':                       { action: 'lessons/comments/create' },
+  'PATCH /api/v1/lessons/comments':                        { action: 'lessons/comments/update' },
+  'DELETE /api/v1/lessons/comments':                     { action: 'lessons/comments/delete' },
 
   // LOG ROUTES
   'PUT /api/v1/logs/game-logs':                          { action: 'logs/game-logs' },

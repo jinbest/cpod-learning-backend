@@ -14,7 +14,7 @@ module.exports = {
       type: "number",
       columnType: "int",
       isInteger: true,
-      required: true
+      autoIncrement: true
     },
     parent_id: {
       model: 'LessonData'
@@ -38,7 +38,7 @@ module.exports = {
       type: "string",
       columnType: "enum",
       isIn: ["lesson", "post", "grammar", "dictionary", "group"],
-      required: true
+      defaultsTo: 'lesson'
     },
     reply_to_id: {
       type: "number",
@@ -50,13 +50,13 @@ module.exports = {
       type: "number",
       columnType: "int",
       isInteger: true,
-      required: true
+      defaultsTo: 0
     },
     reply_to_user_id: {
       type: "number",
       columnType: "int",
       isInteger: true,
-      required: true
+      defaultsTo: 0
     },
     comment_from: {
       type: "number",
@@ -86,13 +86,13 @@ module.exports = {
       type: "ref",
       columnType: "timestamp",
       columnName: 'created_at',
-      defaultsTo: "CURRENT_TIMESTAMP"
+      autoCreatedAt: true
     },
     updatedAt: {
       type: "ref",
       columnType: "timestamp",
       columnName: 'updated_at',
-      defaultsTo: "0000-00-00 00:00:00"
+      autoUpdatedAt: true
     },
   }
 };
