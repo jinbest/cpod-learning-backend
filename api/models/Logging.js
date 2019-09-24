@@ -9,7 +9,12 @@ module.exports = {
   attributes: {
     id: {
       type: "string",
-      // columnType: "datetime",
+      columnName: 'accesslog_user',
+      required: true,
+    },
+    createdAt: {
+      type: "string",
+      columnType: "datetime",
       columnName: 'accesslog_time',
       required: true,
       unique: false,
@@ -25,11 +30,6 @@ module.exports = {
       allowNull: true
     },
     accesslog_sessionid: {
-      type: "string",
-      columnType: "varchar",
-      allowNull: true
-    },
-    accesslog_user: {
       type: "string",
       columnType: "varchar",
       allowNull: true
@@ -60,6 +60,5 @@ module.exports = {
       allowNull: true
     },
     updatedAt: false,
-    cratedAt: false
   }
 };

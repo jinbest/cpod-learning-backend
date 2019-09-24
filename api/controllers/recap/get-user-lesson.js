@@ -101,11 +101,11 @@ module.exports = {
 
       let latestLesson = await Logging.find({
         where: {
-          accesslog_user: user.email,
+          id: user.email,
           accesslog_urlbase: 'https://chinesepod.com/lessons/api'
         },
         select: ['accesslog_url'],
-        sort: 'id DESC',
+        sort: 'createdAt DESC',
         limit: 1
       });
 

@@ -21,7 +21,7 @@ module.exports = {
     // const userId = 101699617;
 
     if(!userId) {
-      this.res.redirect('https://chinesepod.com/dashboard')
+      this.res.redirect('https://www.chinesepod.com/login')
     }
 
     let testers = ['mg@chinesepod.com', 'ugis@chinesepod.com', 'mick@chinesepod.com'];
@@ -80,11 +80,11 @@ module.exports = {
 
       let latestLesson = await Logging.find({
         where: {
-          accesslog_user: user.email,
+          id: user.email,
           accesslog_urlbase: 'https://chinesepod.com/lessons/api'
         },
         select: ['accesslog_url'],
-        sort: 'id DESC',
+        sort: 'createdAt DESC',
         limit: 1
       });
 
@@ -162,11 +162,5 @@ module.exports = {
           }`
       };
     }
-
-
-
-
   }
-
-
 };
