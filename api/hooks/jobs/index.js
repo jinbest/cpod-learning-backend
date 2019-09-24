@@ -41,6 +41,9 @@ module.exports = function defineJobsHook(sails) {
 
   userInfoQueue.process('Update Data to Mautic', 100,async function (job, done) {
 
+    if (!job.data) {
+      done( null, 'No job data')
+    }
     let userData = '';
     if (!job.data.userId && job.data.email) {
       userData = await User.findOne({email: job.data.email});

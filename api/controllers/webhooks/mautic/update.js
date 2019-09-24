@@ -76,13 +76,17 @@ module.exports = {
       userData.mauticData = mauticData;
     }
 
-    sails.hooks.jobs.userInfoQueue.add('Update Data to Mautic',
-      userData,
-      {
-        attempts: 2,
-        timeout: 180000
-      })
+    if (!userData.email && !userData.userId) {
+      throw 'invalid'
+    } else {
+      sails.hooks.jobs.userInfoQueue.add('Update Data to Mautic',
+        userData,
+        {
+          attempts: 2,
+          timeout: 180000
+        })
 
+    }
   }
 
 
