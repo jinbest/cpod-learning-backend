@@ -69,7 +69,7 @@ module.exports = {
       let lessonImg = '';
 
       if (!content) {
-        sails.log.info('No Lesson for Testers');
+        sails.log.error('No Recap Lesson for Testers');
         lessonTitle = 'Demo Lesson for Testers';
         lessonImg = 'https://via.placeholder.com/640x360.png?text=Sample+Image+For+Missing+Artwork';
       } else {
@@ -99,43 +99,47 @@ module.exports = {
       //Connect Sails Session to PHP API Session
       this.req.session.userId = user.id;
 
-      let availableRecaps = await sails.helpers.recap.listRecapLessons();
+      let latestLesson = await Logging.find({
+        where: {
+          accesslog_user: user.email,
+          accesslog_urlbase: 'https://chinesepod.com/lessons/api'
+        },
+        select: ['accesslog_url'],
+        sort: 'id DESC',
+        limit: 1
+      });
 
-      let sql = `
-    SELECT log.accesslog_url
-    FROM chinesepod_logging.cp_accesslog log
-    WHERE log.accesslog_time > $1
-    AND log.accesslog_user = $2
-    AND log.accesslog_url LIKE '%v3_id%'
-    ORDER BY log.accesslog_time DESC;
-    `;
-
-      let latestLoggedLessons = await sails.sendNativeQuery(
-        sql, [new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], session.email]
-      );
-
-      if (latestLoggedLessons['rows'].length === 0){
-        return {message: 'No Lesson Vailable'}
-        // throw 'noLesson'
+      if (!latestLesson){
+        return {
+          message: 'No Lesson Available',
+          lessonId: `0000`,
+          emailAddress: session.email,
+        }
       }
 
-      let latestStudiedLesson = latestLoggedLessons['rows'][0]['accesslog_url'].split('v3_id=')[1].split('&')[0]; // Switching to latest Log
+      let latestStudiedLesson = [];
 
-      // latestLoggedLessons['rows'].some( function(item) {
-      //   if (availableRecaps.includes(item['accesslog_url'].split('v3_id=')[1].split('&')[0])) {
-      //     return latestStudiedLesson = item['accesslog_url'].split('v3_id=')[1].split('&')[0];
-      //   }
-      // });
+      try {
+        latestStudiedLesson = latestLesson[0]['accesslog_url'].split('v3_id=')[1].split('&')[0]; // Switching to latest Log
+      } catch (e) {
+        sails.log.error(e);
+        return {
+          message: 'No Lesson Available',
+          lessonId: `0000`,
+          emailAddress: session.email,
+        }
+      }
 
-      if (typeof latestStudiedLesson === 'undefined' || latestStudiedLesson.length === 0){
-        return {message: 'No Lesson Vailable'}
-        // throw 'noLesson'
+      if (!latestStudiedLesson){
+        return {
+          message: 'No Lesson Available',
+          lessonId: `0000`,
+          emailAddress: session.email,
+        }
       }
 
       //Select User CharSet
-      let userSettings = await UserSettings.findOne({
-        user_id: user.id
-      });
+      let userSettings = await UserSettings.findOne({user_id: user.id});
 
       let charSet = 'simplified';
 
@@ -146,31 +150,7 @@ module.exports = {
         }
 
       } catch (e) {
-        sails.log('No Char Setting');
         await sails.helpers.users.setCharSet(user.id, charSet);
-      }
-
-      //Select User Subscription Status
-      let UserSiteLink = await UserSiteLinks.findOne({
-        user_id: user.id,
-        site_id: 2
-      });
-
-      let subscription = 'free';
-      sails.log.info(UserSiteLink.usertype_id);
-      switch (UserSiteLink.usertype_id) {
-        case 1:
-          subscription = 'premium';
-          break;
-        case 5:
-          subscription = 'premium';
-          break;
-        case 6:
-          subscription = 'basic';
-          break;
-        case 7:
-          subscription = 'free';
-          break;
       }
 
       let content = await Contents.findOne({v3_id: latestStudiedLesson});
@@ -180,7 +160,7 @@ module.exports = {
           ? `https://s3contents.chinesepod.com/${content.v3_id}/${content.hash_code}/${content.image}`
           : `https://s3contents.chinesepod.com/extra/${content.v3_id}/${content.hash_code}/${content.image}`;
       }
-      // Respond with view.
+
       try {
         return {
           lessonTitle: content ? content.title : 'ChinesePod Lesson',
@@ -188,14 +168,14 @@ module.exports = {
           lessonImg: lessonImg,
           emailAddress: session.email,
           charSet: charSet,
-          subscription: subscription,
+          subscription: await sails.helpers.users.getAccessType(user.id),
         };
       } catch (e) {
         sails.log.error(e);
         return {
           lessonId: latestStudiedLesson,
           charSet: charSet,
-          subscription: subscription,
+          subscription: await sails.helpers.users.getAccessType(user.id),
         };
       }
     }

@@ -4,7 +4,7 @@
  */
 
 module.exports = {
-  datastore: 'loggingDb',
+  datastore: 'logging',
   tableName: 'cp_accesslog',
   attributes: {
     id: {
@@ -12,6 +12,7 @@ module.exports = {
       // columnType: "datetime",
       columnName: 'accesslog_time',
       required: true,
+      unique: false,
     },
     access_ip: {
       type: "string",
