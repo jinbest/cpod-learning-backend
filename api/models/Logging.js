@@ -16,8 +16,7 @@ module.exports = {
       type: "string",
       columnType: "datetime",
       columnName: 'accesslog_time',
-      required: true,
-      unique: false,
+      autoCreatedAt: true
     },
     access_ip: {
       type: "string",
