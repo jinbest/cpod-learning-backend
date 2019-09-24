@@ -29,13 +29,13 @@ module.exports = {
 
     let returnData = {};
 
-    let userOptions = (await UserOptions.find({user_id: inputs.userId, option_key: 'level'}).limit(1))[0];
-
     let userData = await User.findOne({id: inputs.userId});
 
     if (!userData) {
       throw 'invalid'
     }
+
+    let userOptions = (await UserOptions.find({user_id: inputs.userId, option_key: 'level'}).limit(1))[0];
 
     const targets = {
       newbie: 50,
