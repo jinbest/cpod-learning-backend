@@ -44,21 +44,16 @@ module.exports = function defineJobsHook(sails) {
     let userData = '';
     if (!job.data.userId) {
       userData = await User.findOne({email: job.data.email});
-
-      if (!userData) {
-        done( null, 'No Such User on ChinesePod')
-      }
-
     } else {
       userData = await User.findOne({id: job.data.userId});
-
-      if (!userData) {
-        done( null, 'No Such User on ChinesePod')
-      }
     }
 
     if (!userData || typeof userData === 'undefined') {
       //TODO SOMETHING HERE
+      sails.log.error({
+        jobData: job.data,
+        userData: userData
+      });
       done( null, 'No Such User on ChinesePod')
     }
 
