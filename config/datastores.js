@@ -36,7 +36,7 @@ module.exports.datastores = {
     adapter: require('sails-mysql'),
     url: 'mysql://cpoddba:tr5mai81@kazuya.chinesepod.com:3306/chinesepod_production',
   },
-  loggingDb: {
+  logging: {
     adapter: require('sails-mysql'),
     url: 'mysql://cpoddba:tr5mai81@kazuya.chinesepod.com:3306/chinesepod_logging',
   },

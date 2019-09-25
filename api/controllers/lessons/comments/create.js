@@ -12,10 +12,6 @@ module.exports = {
       type: 'string',
       required: true
     },
-    commentId: {
-      type: 'number',
-      required: true
-    },
     content: {
       type: 'ref',
       required: true
@@ -58,11 +54,16 @@ module.exports = {
     };
 
     if (inputs.replyToId) {
+      const replyToComment = await Comments.updateOne(inputs.replyToId).set({reply_count: 1});
+      if (!replyToComment) {
+        throw 'invalid'
+      }
       newComment = {...newComment, ...{
         reply_to_id: inputs.replyToId ? inputs.replyToId : 0,
         reply_to_id_2: inputs.replyToId2 ? inputs.replyToId2 : 0,
-        reply_to_user_id: inputs.replyToId ? (await Comments.findOne({id: inputs.replyToId}))['user'] : 0
-      }}
+        reply_to_user_id: inputs.replyToId ? replyToComment['user'] : 0
+      }};
+      // await Comments.updateOne({id: inputs.replyToId).set({reply_count: replyToComment.reply_count + 1})
     }
     return await Comments.create(newComment).fetch();
   }

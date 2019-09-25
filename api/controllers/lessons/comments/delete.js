@@ -45,6 +45,7 @@ module.exports = {
     }
 
     if (inputs.isAdmin || inputs.userId === commentData.user) {
+      await Comments.destroy({reply_to_id: inputs.commentId, type: 'lesson'});
       return await Comments.destroyOne({id: inputs.commentId})
     } else {
       throw 'invalid'

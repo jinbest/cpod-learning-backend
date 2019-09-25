@@ -110,6 +110,5 @@ module.exports = {
       charSet: (charSet && charSet['option_value']) ? charSet['option_value'] : 'simplified',
       access: await sails.helpers.users.getAccessType(inputs.userId)
     }};
-
   }
 };
