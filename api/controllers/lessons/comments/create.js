@@ -49,7 +49,7 @@ module.exports = {
 
     let newComment = {
       parent_id: inputs.lessonId,
-      content: inputs.content,
+      content: inputs.content.toString(),
       user: inputs.userId,
     };
 
@@ -65,6 +65,7 @@ module.exports = {
       }};
       // await Comments.updateOne({id: inputs.replyToId).set({reply_count: replyToComment.reply_count + 1})
     }
-    return await Comments.create(newComment).fetch();
+    sails.log.info({comment: newComment, commentSaved:  await Comments.create(newComment).fetch()});
+    // return await Comments.create(newComment).fetch();
   }
 };

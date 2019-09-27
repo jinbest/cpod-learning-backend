@@ -9,6 +9,7 @@ module.exports = {
     return _.pick(this, ['id', 'content', 'user', 'reply_to_id', 'reply_to_id_2', 'reply_to_user_id',
       'comment_from', 'nestedComments', 'reply_count', 'createdAt'])
   },
+  datastore: 'comments',
   attributes: {
     id: {
       type: "number",
@@ -21,7 +22,7 @@ module.exports = {
     },
     content: {
       type: "string",
-      columnType: "text"
+      columnType: "TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
     },
     published: {
       type: "number",

@@ -7,7 +7,7 @@ module.exports = {
   tableName: 'users',
   customToJSON: function() {
     // Return a shallow copy of this record with the password and ssn removed.
-    return _.pick(this, ['id', 'username'])
+    return _.pick(this, ['id', 'username', 'preferences'])
   },
   attributes: {
     id: {
@@ -289,6 +289,6 @@ module.exports = {
     lessonHistory: {
       collection: 'UserContents',
       via: 'user_id'
-    }
+    },
   }
 };

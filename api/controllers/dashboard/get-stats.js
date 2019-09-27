@@ -62,6 +62,8 @@ module.exports = {
 
     let charSet = (await UserOptions.find({user_id: inputs.userId, option_key: 'charSet'}).limit(1))[0];
 
+    let userPreferences = await UserPreferences.findOne(inputs.userId);
+
     let userLessons = await UserContents.find({
       where: {
         user_id: inputs.userId,
@@ -94,21 +96,24 @@ module.exports = {
     });
 
     return {...returnData, ...{
-      userId: inputs.userId,
-      name: userData.name,
-      goals: {
-        thisWeek: thisWeek.length,
-        lastWeek: lastWeek.length,
-        thisMonth: thisMonth.length,
-        lastMonth: lastMonth.length,
-      },
-      progress: {
-        current: progressData.length,
-        target: targets[level]
-      },
-      level: level,
-      charSet: (charSet && charSet['option_value']) ? charSet['option_value'] : 'simplified',
-      access: await sails.helpers.users.getAccessType(inputs.userId)
-    }};
+        userId: inputs.userId,
+        name: userData.name,
+        username: userData.username,
+        userAvatar: userPreferences['avatar_url'],
+        lastLogin: userPreferences['last_login'],
+        goals: {
+          thisWeek: thisWeek.length,
+          lastWeek: lastWeek.length,
+          thisMonth: thisMonth.length,
+          lastMonth: lastMonth.length,
+        },
+        progress: {
+          current: progressData.length,
+          target: targets[level]
+        },
+        level: level,
+        charSet: (charSet && charSet['option_value']) ? charSet['option_value'] : 'simplified',
+        access: await sails.helpers.users.getAccessType(inputs.userId)
+      }};
   }
 };
