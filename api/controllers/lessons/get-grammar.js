@@ -33,26 +33,28 @@ module.exports = {
     let returnData = [];
 
     await asyncForEach(grammarIds, async (item) => {
-      let grammarBlock = await GrammarBlock
-        .findOne({grammar: item.grammar_id})
+      let grammarBlocks = await GrammarBlock
+        .find({grammar: item.grammar_id})
         .populate('grammar')
         .populate('examples');
-      grammarBlock['examples'].forEach((example) => {
-        example.sentence = [];
-        example['source_annotate'].replace(/\(event,\'(.*?)\',\'(.*?)\',\'(.*?)\',\'(.*?)\'.*?\>(.*?)\<\/span\>([^\<]+)?/g, function (a, b, c, d, e, f, g, h) {
-          example.sentence.push({
-            s: decodeURI(d),
-            t: decodeURI(e),
-            p: decodeURI(c),
-            en: decodeURI(b)
+      grammarBlocks.forEach((block) => {
+        block['examples'].forEach((example) => {
+          example.sentence = [];
+          example['source_annotate'].replace(/\(event,\'(.*?)\',\'(.*?)\',\'(.*?)\',\'(.*?)\'.*?\>(.*?)\<\/span\>([^\<]+)?/g, function (a, b, c, d, e, f, g, h) {
+            example.sentence.push({
+              s: decodeURI(d),
+              t: decodeURI(e),
+              p: decodeURI(c),
+              en: decodeURI(b)
+            });
+            if (g) {
+              example.sentence.push(decodeURI(g))
+            }
           });
-          if (g) {
-            example.sentence.push(decodeURI(g))
-          }
-        });
+        })
       });
-      sails.log.info(grammarBlock);
-      returnData.push(grammarBlock);
+      sails.log.info(grammarBlocks);
+      grammarBlocks.forEach((block) => returnData.push(block));
     });
 
     return returnData
