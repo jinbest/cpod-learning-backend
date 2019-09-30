@@ -139,6 +139,11 @@ module.exports.routes = {
   'PATCH /api/v1/lessons/comments':                      { action: 'lessons/comments/update' },
   'DELETE /api/v1/lessons/comments':                     { action: 'lessons/comments/delete' },
 
+  //Exercise Routes
+  'GET /api/v1/exercises/get-questions':                 { action: 'exercises/get-questions' },
+  'GET /api/v1/exercises/results':                       { action: 'exercises/results/get' },
+  'POST /api/v1/exercises/results':                      { action: 'exercises/results/post' },
+
   // LOG ROUTES
   'PUT /api/v1/logs/game-logs':                          { action: 'logs/game-logs' },
 
