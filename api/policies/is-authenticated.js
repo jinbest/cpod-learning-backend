@@ -22,7 +22,7 @@ module.exports = function(req, res, proceed) {
     if(err) {
       return res.status(401).json({err: 'Invalid token'});
     }
-    req.user = decoded;
+    req.session.userId = decoded;
     return proceed();
   });
 };

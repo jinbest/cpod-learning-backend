@@ -257,8 +257,6 @@ module.exports = {
       'http://chinesepod.com',
       'https://www.chinesepod.com',
       'http://www.chinesepod.com',
-      'http://sails.chinesepod.com',
-      'https://sails.chinesepod.com',
     ],
 
 
