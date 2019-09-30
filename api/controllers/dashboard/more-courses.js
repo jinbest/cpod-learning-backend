@@ -23,7 +23,7 @@ module.exports = {
   fn: async function (inputs) {
     const sanitizeHtml = require('sanitize-html');
 
-    inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
+    inputs.userId = sails.config.environment === 'development' ? 1056787 : this.req.session.userId;
 
     let userOptions = await UserOptions.findOne({
       where: {
@@ -37,7 +37,7 @@ module.exports = {
     let levelHigher = await sails.helpers.convert.oneLevelHigher(userLevel);
 
     let userCourses = await UserCourses.find({
-      where: {user_id: inputs.userId},
+      where: {user_id: inputs.userId, course: {'>': 0}},
       select: ['course']
     });
 
@@ -53,7 +53,7 @@ module.exports = {
       where: {
         pubstatus: 1,
         is_private: 0,
-        // id: { nin: enrolledCourses},
+        id: { nin: enrolledCourses},
         channel_id: { in: [await sails.helpers.convert.levelToChannelId(userLevel), await sails.helpers.convert.levelToChannelId(levelHigher)]}
       },
       select: ['id', 'course_title', 'course_introduction'],
@@ -63,7 +63,7 @@ module.exports = {
       where: {
         pubstatus: 1,
         is_private: 0,
-        // id: { nin: enrolledCourses},
+        id: { nin: enrolledCourses},
         channel_id: 181
       },
       select: ['id', 'course_title', 'course_introduction'],
