@@ -101,4 +101,8 @@ module.exports.custom = {
 
   // IP Data Key
   ipDataKey: '67ce141658c735941e1307cf08fcf9a40cd5101a64f19ea674688fff',
+
+
+  // JWT Secret
+  jwtSecret: 'e24qwkdj6wm7inne45fau5my7zuk2q8l3w5xn7ct'
 };
