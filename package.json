@@ -33,7 +33,8 @@
     "sanitize-html": "^1.20.1",
     "stripe": "^7.5.4",
     "universal-analytics": "^0.4.20",
-    "xkpasswd": "^1.0.5"
+    "xkpasswd": "^1.0.5",
+    "xml-js": "^1.6.11"
   },
   "devDependencies": {
     "@sailshq/eslint": "^4.19.3",
