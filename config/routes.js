@@ -147,7 +147,6 @@ module.exports.routes = {
   // LOG ROUTES
   'PUT /api/v1/logs/game-logs':                          { action: 'logs/game-logs' },
 
-
   // Token Routes
   'GET /api/v1/token':                                   {action: 'token/check'},
   'POST /api/v1/token':                                  {action: 'token/get'},
