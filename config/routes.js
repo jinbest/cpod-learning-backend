@@ -67,6 +67,8 @@ module.exports.routes = {
   // '/terms':                   '/legal/terms',
   // '/logout':                  '/api/v1/account/logout',
 
+  'GET /chinese/:unused?/:unused?': { action: 'redirect/why-choose-us'},
+
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝

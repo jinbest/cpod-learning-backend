@@ -56,13 +56,13 @@ module.exports = {
       }
 
     } catch (e) {
-      sails.log('Invalid Webhook Event');
+      sails.log.error('Invalid Webhook Event');
     }
 
     if (email === '' && inputs.email) {
       email = inputs.email;
     } else if (email === '') {
-      throw 'invalid'
+      return
     }
 
     let userData = {};
@@ -77,7 +77,7 @@ module.exports = {
     }
 
     if (!userData.email && !userData.userId) {
-      throw 'invalid'
+      return
     } else {
       sails.hooks.jobs.userInfoQueue.add('Update Data to Mautic',
         userData,
