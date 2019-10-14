@@ -56,7 +56,7 @@ module.exports = {
       }
 
     } catch (e) {
-      sails.log('Invalid Webhook Event');
+      sails.log.error('Invalid Webhook Event');
     }
 
     if (email === '' && inputs.email) {

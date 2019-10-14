@@ -79,19 +79,21 @@ module.exports = function defineJobsHook(sails) {
       .sort('updatedAt DESC')
       .limit(1);
     let subscription = 'Free';
-    switch (userSiteLinks[0].usertype_id) {
-      case 5:
-        subscription = 'Premium'; //Premium
-        break;
-      case 6:
-        subscription = 'Basic'; //Basic
-        break;
-      case 7:
-        subscription = 'Free'; //Free
-        break;
-      case 1:
-        subscription = 'Premium'; //Admin
-        break;
+    if (userSiteLinks.length > 0) {
+      switch (userSiteLinks[0].usertype_id) {
+        case 5:
+          subscription = 'Premium'; //Premium
+          break;
+        case 6:
+          subscription = 'Basic'; //Basic
+          break;
+        case 7:
+          subscription = 'Free'; //Free
+          break;
+        case 1:
+          subscription = 'Premium'; //Admin
+          break;
+      }
     }
 
     let levelText = '';
@@ -118,9 +120,8 @@ module.exports = function defineJobsHook(sails) {
           break;
       }
     }
-
+    //TODO IMPLEMENT USER CHAR SETS
     let userSettings = await UserSettings.findOne({user_id: userData.id});
-
 
     const MauticConnector = require('node-mautic');
     const mauticConnector = new MauticConnector({
