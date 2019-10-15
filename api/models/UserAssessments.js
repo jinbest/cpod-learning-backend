@@ -11,25 +11,16 @@ module.exports = {
       type: "number",
       columnType: "int",
       isInteger: true,
-      required: true
+      autoIncrement: true,
     },
     user_id: {
-      type: "number",
-      columnType: "int",
-      isInteger: true,
-      required: true
+      model: 'user'
     },
     assessment_id: {
-      type: "number",
-      columnType: "int",
-      isInteger: true,
-      required: true
+      model: 'assessments'
     },
     lesson_id: {
-      type: "number",
-      columnType: "int",
-      isInteger: true,
-      required: true
+      model: 'lessonData'
     },
     assessment_name: {
       type: "string",
@@ -53,7 +44,7 @@ module.exports = {
       type: "string",
       columnType: "varchar",
       maxLength: 20,
-      required: true
+      defaultsTo: 'ChinesePod'
     },
     created_by: {
       type: "number",
@@ -65,7 +56,7 @@ module.exports = {
       type: "ref",
       columnName: 'created_at',
       columnType: "datetime",
-      required: true
+      autoCreatedAt: true
     },
     updatedAt: false
   }

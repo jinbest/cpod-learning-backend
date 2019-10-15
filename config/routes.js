@@ -148,6 +148,10 @@ module.exports.routes = {
   // LOG ROUTES
   'PUT /api/v1/logs/game-logs':                          { action: 'logs/game-logs' },
 
+  // Token Routes
+  'GET /api/v1/token':                                   {action: 'token/check'},
+  'POST /api/v1/token':                                  {action: 'token/get'},
+
   //Sample Routes
   // 'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
   // 'POST  /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },
