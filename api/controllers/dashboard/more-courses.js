@@ -23,7 +23,7 @@ module.exports = {
   fn: async function (inputs) {
     const sanitizeHtml = require('sanitize-html');
 
-    inputs.userId = sails.config.environment === 'development' ? 1056787 : this.req.session.userId;
+    inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
     let userOptions = await UserOptions.findOne({
       where: {
