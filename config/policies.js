@@ -15,10 +15,10 @@ module.exports.policies = {
   'recap/set-lesson': 'is-logged-in',
   'dash/*': 'is-logged-in',
 
-  'dashboard/*': 'is-authenticated',
-  'lessons/*': 'is-authenticated',
-  'exercises/*': 'is-authenticated',
-  'token/check': 'is-authenticated',
+  // 'dashboard/*': 'is-authenticated',
+  // 'lessons/*': 'is-authenticated',
+  // 'exercises/*': 'is-authenticated',
+  // 'token/check': 'is-authenticated',
 
   // // Bypass the `is-logged-in` policy for:
   // 'entrance/*': true,
