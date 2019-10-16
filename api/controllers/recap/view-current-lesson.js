@@ -17,7 +17,7 @@ module.exports = {
 
   fn: async function () {
 
-    const userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
+    const userId = sails.config.environment === 'development' ? 1027014 : this.req.session.userId; //1016995
 
     if(!userId) {
       this.res.redirect('https://www.chinesepod.com/login')
@@ -84,7 +84,8 @@ module.exports = {
             'in': [
               'https://chinesepod.com/lessons/api',
               'https://ws.chinesepod.com:444/1.0.0/instances/prod/lessons/get-lesson-detail',
-              'https://server4.chinesepod.com:444/1.0.0/instances/prod/lessons/get-lesson-detail'
+              'https://server4.chinesepod.com:444/1.0.0/instances/prod/lessons/get-lesson-detail',
+              'https://server4.chinesepod.com:444/1.0.0/instances/prod/lessons/get-dialogue'
             ]}
         },
         select: ['accesslog_url'],

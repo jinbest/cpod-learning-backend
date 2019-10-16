@@ -106,7 +106,8 @@ module.exports = {
             'in': [
               'https://chinesepod.com/lessons/api',
               'https://ws.chinesepod.com:444/1.0.0/instances/prod/lessons/get-lesson-detail',
-              'https://server4.chinesepod.com:444/1.0.0/instances/prod/lessons/get-lesson-detail'
+              'https://server4.chinesepod.com:444/1.0.0/instances/prod/lessons/get-lesson-detail',
+              'https://server4.chinesepod.com:444/1.0.0/instances/prod/lessons/get-dialogue'
             ]}
         },
         select: ['accesslog_url'],
