@@ -93,7 +93,7 @@ module.exports = {
         email: session.email
       });
 
-      if(!user) {
+      if(!user.id) {
         throw 'invalid'
       }
       //Connect Sails Session to PHP API Session
@@ -102,7 +102,12 @@ module.exports = {
       let latestLesson = await Logging.find({
         where: {
           id: user.email,
-          accesslog_urlbase: 'https://chinesepod.com/lessons/api'
+          accesslog_urlbase: {
+            'in': [
+              'https://chinesepod.com/lessons/api',
+              'https://ws.chinesepod.com:444/1.0.0/instances/prod/lessons/get-lesson-detail',
+              'https://server4.chinesepod.com:444/1.0.0/instances/prod/lessons/get-lesson-detail'
+            ]}
         },
         select: ['accesslog_url'],
         sort: 'createdAt DESC',

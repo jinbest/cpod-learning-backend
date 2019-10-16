@@ -17,14 +17,13 @@ module.exports = {
 
   fn: async function () {
 
-    const userId = this.req.session.userId;
-    // const userId = 101699617;
+    const userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
     if(!userId) {
       this.res.redirect('https://www.chinesepod.com/login')
     }
 
-    let testers = ['mg@chinesepod.com', 'ugis@chinesepod.com', 'mick@chinesepod.com'];
+    let testers = ['mg@chinesepod.com', 'mick@chinesepod.com'];
 
     let user = await User.findOne({id: userId});
 
@@ -81,7 +80,12 @@ module.exports = {
       let latestLesson = await Logging.find({
         where: {
           id: user.email,
-          accesslog_urlbase: 'https://chinesepod.com/lessons/api'
+          accesslog_urlbase: {
+            'in': [
+              'https://chinesepod.com/lessons/api',
+              'https://ws.chinesepod.com:444/1.0.0/instances/prod/lessons/get-lesson-detail',
+              'https://server4.chinesepod.com:444/1.0.0/instances/prod/lessons/get-lesson-detail'
+            ]}
         },
         select: ['accesslog_url'],
         sort: 'createdAt DESC',
