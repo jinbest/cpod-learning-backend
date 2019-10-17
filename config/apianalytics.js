@@ -1,5 +1,13 @@
 module.exports.apianalytics = {
   onRequest: function (report, req) {
+    const ignore = [
+      '/api/v1/health/time'
+    ];
+
+    if(ignore.includes(req.path)) {
+      return
+    }
+
     sails.hooks.jobs.loggingQueue.add('Logging Requests',
       {
         userId: req.session.userId,
