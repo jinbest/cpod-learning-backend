@@ -321,16 +321,23 @@ module.exports = function defineJobsHook(sails) {
         .catch((err) => sails.log.error(err));
     }
 
-    await Logging.create({
-      id: userData.email ? userData.email : 'NONE',
-      access_ip: job.data.ip,
-      accesslog_url: job.data.url,
-      accesslog_sessionid: job.data.sessionId,
-      accesslog_urlbase: job.data.urlbase,
-      accesslog_country: ipData['country_name'] ? ipData['country_name'] : null,
-      referer: job.data.referer
-    });
-    done(null, userData.email ? `Logged Request for User: ${userData.email}` : `Logged Request for Unknown User`)
+    if ([
+      'https://www.chinesepod.com/dash',
+      'https://www.chinesepod.com/signup',
+      'https://www.chinesepod.com/checkout'].includes(job.data.urlbase) || userData.email) {
+      await Logging.create({
+        id: userData.email ? userData.email : 'NONE',
+        access_ip: job.data.ip,
+        accesslog_url: job.data.url,
+        accesslog_sessionid: job.data.sessionId,
+        accesslog_urlbase: job.data.urlbase,
+        accesslog_country: ipData['country_name'] ? ipData['country_name'] : null,
+        referer: job.data.referer
+      });
+      done(null, userData.email ? `Logged Request for User: ${userData.email}` : `Logged Request for Unknown User`)
+    } else {
+      done(null, 'Ignoring this log')
+    }
   });
 
   return {

@@ -1,7 +1,8 @@
 module.exports.apianalytics = {
   onRequest: function (report, req) {
     const ignore = [
-      '/api/v1/health/time'
+      '/api/v1/health/time',
+      '/api/v1/webhooks/mautic/update'
     ];
 
     if(!ignore.includes(req.path)) {
