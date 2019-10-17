@@ -324,7 +324,9 @@ module.exports = function defineJobsHook(sails) {
     if ([
       'https://www.chinesepod.com/dash',
       'https://www.chinesepod.com/signup',
-      'https://www.chinesepod.com/checkout'].includes(job.data.urlbase) || userData.email) {
+      'https://www.chinesepod.com/checkout',
+      'https://www.chinesepod.com/login'
+    ].includes(job.data.urlbase) || userData.email) {
       await Logging.create({
         id: userData.email ? userData.email : 'NONE',
         access_ip: job.data.ip,
