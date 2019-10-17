@@ -311,7 +311,10 @@ module.exports = function defineJobsHook(sails) {
 
     let ipData = {};
 
-    if(job.data.ip && job.data.ip !== '::1' && ['/dash', '/signup', '/checkout'].includes(job.data.urlbase)) {
+    if(job.data.ip && job.data.ip !== '::1' && [
+      'https://www.chinesepod.com/dash',
+      'https://www.chinesepod.com/signup',
+      'https://www.chinesepod.com/checkout'].includes(job.data.urlbase)) {
       await ipdata.lookup(job.data.ip, sails.config.custom.ipDataKey)
         .then((info) => {ipData = info})
         .catch((err) => sails.log.error(err));
