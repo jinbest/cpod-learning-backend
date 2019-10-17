@@ -315,6 +315,7 @@ module.exports = function defineJobsHook(sails) {
       'https://www.chinesepod.com/dash',
       'https://www.chinesepod.com/signup',
       'https://www.chinesepod.com/checkout'].includes(job.data.urlbase)) {
+      const ipdata =  require('ipdata');
       await ipdata.lookup(job.data.ip, sails.config.custom.ipDataKey)
         .then((info) => {ipData = info})
         .catch((err) => sails.log.error(err));
