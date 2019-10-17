@@ -79,7 +79,7 @@ module.exports = Object.assign({}, PRODUCTION_CONFIG, {
         'https://staging.chinesepod.com',
         'http://staging.chinesepod.com',
       ],
-      allowCredentials: false
+      allowCredentials: true
     },
   }),
 
