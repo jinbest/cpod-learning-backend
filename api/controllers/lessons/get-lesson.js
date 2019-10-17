@@ -44,8 +44,6 @@ module.exports = {
       throw 'invalid'
     }
 
-    sails.log.info(inputs);
-
     let lessonData = {};
 
     if (inputs.slug) {
@@ -60,7 +58,6 @@ module.exports = {
         .populate('comments', {where: {type: 'lesson'}})
     }
 
-    sails.log.info(lessonData);
 
     if (lessonData && lessonData.slug) {
       let lesson = lessonData;
@@ -80,16 +77,25 @@ module.exports = {
       if (userLessons[0]) {
         lesson.studied = userLessons[0].studied ? userLessons[0].studied : false;
         lesson.saved = userLessons[0].saved ? userLessons[0].saved : false;
+      } else {
+        lesson.studied = false;
+        lesson.saved = false;
       }
 
-      // if (lesson.comments && lesson.comments.length > 0) {
-      //   _.each(lesson.comments, function (comment) {
-      //     sanitizeHtml(comment, sanitizeOptions)
-      //   })
-      // }
+      // sails.hooks.jobs.loggingQueue.add('Logging Requests',
+      //   {
+      //     userId: inputs.userId,
+      //     ip: this.req.ip,
+      //     url: `https://www.chinesepod.com/lessons/api?v3_id=${lesson.id}&type=lesson`,
+      //     sessionId: this.req.session.id,
+      //     urlbase: 'https://www.chinesepod.com/lessons/api',
+      //   },
+      //   {
+      //     attempts: 2,
+      //     timeout: 120000
+      //   });
 
       return lesson
-
     } else {
       throw 'invalid'
     }

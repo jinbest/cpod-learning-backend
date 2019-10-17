@@ -99,8 +99,8 @@ module.exports = {
         userId: inputs.userId,
         name: userData.name,
         username: userData.username,
-        userAvatar: userPreferences['avatar_url'],
-        lastLogin: userPreferences['last_login'],
+        userAvatar: userPreferences ? userPreferences['avatar_url'] : 'https://www.chinesepod.com/dash/img/brand/symbol-black-center.svg',
+        lastLogin: userPreferences ? userPreferences['last_login'] : '',
         goals: {
           thisWeek: thisWeek.length,
           lastWeek: lastWeek.length,
@@ -113,6 +113,7 @@ module.exports = {
         },
         level: level,
         charSet: (charSet && charSet['option_value']) ? charSet['option_value'] : 'simplified',
+        pinyin: false,
         access: await sails.helpers.users.getAccessType(inputs.userId)
       }};
   }

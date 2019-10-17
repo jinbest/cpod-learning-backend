@@ -33,6 +33,10 @@ module.exports = {
       select: ['option_value']
     });
 
+    if (!userOptions || !userOptions.option_value) {
+      userOptions.option_value = 1
+    }
+
     let userLevel = await sails.helpers.convert.intToLevel(userOptions.option_value);
     let levelHigher = await sails.helpers.convert.oneLevelHigher(userLevel);
 
@@ -46,8 +50,6 @@ module.exports = {
     userCourses.forEach((course) => {
       enrolledCourses.push(course.course)
     });
-
-    sails.log.info(enrolledCourses);
 
     let leveledCourses = await CourseDetail.find({
       where: {
@@ -84,6 +86,4 @@ module.exports = {
     });
     return leveledCourses.concat(mixedCourses)
   }
-
-
 };
