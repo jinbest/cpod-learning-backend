@@ -9,6 +9,13 @@
  * https://sailsjs.com/config/http
  */
 
+var bugsnag = require('@bugsnag/js');
+var bugsnagExpress = require('@bugsnag/plugin-express');
+var bugsnagClient = bugsnag('bbd87dc5093af09c41acfb4fc805c784');
+bugsnagClient.use(bugsnagExpress);
+
+var bugsnagmiddleware = bugsnagClient.getPlugin('express');
+
 module.exports.http = {
 
   /****************************************************************************
@@ -32,7 +39,9 @@ module.exports.http = {
     order: [
       'cookieParser',
       'session',
+      'requestHandler',
       'bodyParser',
+      'errorHandler',
       'compress',
       'poweredBy',
       'router',
@@ -54,6 +63,8 @@ module.exports.http = {
       var middlewareFn = skipper({ strict: true });
       return middlewareFn;
     })(),
+    requestHandler: bugsnagmiddleware.requestHandler,
+    errorHandler: bugsnagmiddleware.errorHandler,
   },
 
   trustProxy: true,

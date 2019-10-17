@@ -5,6 +5,8 @@
   "description": "ChinesePod Javascript Stack",
   "keywords": [],
   "dependencies": {
+    "@bugsnag/js": "^6.4.2",
+    "@bugsnag/plugin-express": "^6.4.1",
     "@logisticinfotech/sails-hook-actions2-swagger": "0.0.9",
     "@sailshq/connect-redis": "^3.2.1",
     "@sailshq/lodash": "^3.10.3",
