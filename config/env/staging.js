@@ -71,7 +71,14 @@ module.exports = Object.assign({}, PRODUCTION_CONFIG, {
   security: Object.assign({}, PRODUCTION_CONFIG.security, {
     cors: {
       allRoutes: true,
-      allowOrigins: '*',
+      allowOrigins: [
+        'https://chinesepod.com',
+        'http://chinesepod.com',
+        'https://www.chinesepod.com',
+        'http://www.chinesepod.com',
+        'https://staging.chinesepod.com',
+        'http://staging.chinesepod.com',
+      ],
       allowCredentials: false
     },
   }),
