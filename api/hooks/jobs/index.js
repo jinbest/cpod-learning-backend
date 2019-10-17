@@ -317,7 +317,7 @@ module.exports = function defineJobsHook(sails) {
         .catch((err) => sails.log.error(err));
     }
 
-    let log = await Logging.create({
+    await Logging.create({
       id: userData.email ? userData.email : 'NONE',
       access_ip: job.data.ip,
       accesslog_url: job.data.url,
@@ -325,8 +325,8 @@ module.exports = function defineJobsHook(sails) {
       accesslog_urlbase: job.data.urlbase,
       accesslog_country: ipData['country_name'] ? ipData['country_name'] : null,
       referer: job.data.referer
-    }).fetch();
-    done(null, `Logged Request for User: ${log.id}`)
+    });
+    done(null, userData.email ? `Logged Request for User: ${userData.email}` : `Logged Request for Unknown User`)
   });
 
   return {
