@@ -14,6 +14,8 @@ module.exports = function defineJobsHook(sails) {
 
   var triggerQueue = new Queue('TriggerQueue', sails.config.jobs.url);
 
+  var loggingQueue = new Queue('LoggingQueue', sails.config.jobs.url);
+
   userInfoQueue.on('ready', () => {
     sails.log.info('userInfoQueue ready!');
   });
@@ -288,8 +290,49 @@ module.exports = function defineJobsHook(sails) {
   triggerQueue.removeRepeatable('UpdateUsers',{repeat: {cron: '*/15 * * * *'}});
   triggerQueue.add('UpdateUsers', {data:'Push User Data to Mautic every 15min'},{repeat: {cron: '*/15 * * * *'}});
 
+
+
+  loggingQueue.on('ready', () => {
+    sails.log.info('loggingQueue ready!');
+  });
+  loggingQueue.on('failed', (job, e) => {
+    sails.log.error('loggingQueue failed:', job.id, e);
+  });
+
+  loggingQueue.process('Logging Requests', 100,async function (job, done) {
+    if (!job.data) {
+      done( null, 'No job data')
+    }
+    let userData = {};
+
+    if (job.data.userId) {
+      userData = await User.findOne({id: job.data.userId});
+    }
+
+    let ipData = {};
+
+    if(job.data.ip && job.data.ip !== '::1' && ['/dash', '/signup', '/checkout'].includes(job.data.urlbase)) {
+      await ipdata.lookup(job.data.ip, sails.config.custom.ipDataKey)
+        .then((info) => {ipData = info})
+        .catch((err) => sails.log.error(err));
+    }
+
+    let log = await Logging.create({
+      id: userData.email ? userData.email : 'NONE',
+      access_ip: job.data.ip,
+      accesslog_url: job.data.url,
+      accesslog_sessionid: job.data.sessionId,
+      accesslog_urlbase: job.data.urlbase,
+      accesslog_country: ipData['country_name'] ? ipData['country_name'] : null,
+      referer: job.data.referer
+    }).fetch();
+    done(null, `Logged Request for User: ${log.id}`)
+  });
+
   return {
     userInfoQueue: userInfoQueue,
+
+    loggingQueue: loggingQueue,
 
     initialize: async function () {
       sails.log.info('Initializing Rozkalns\' hook (`Bull Jobs`) 😎')
