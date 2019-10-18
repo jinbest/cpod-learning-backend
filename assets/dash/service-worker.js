@@ -15,7 +15,7 @@ importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox
 
 importScripts(
   "/dash/updateSW.js",
-  "/dash/precache-manifest.083d889e95cc7f01b6e0dc986f7bf13f.js"
+  "/dash/precache-manifest.66de5ac75a5be18f98be8ccd2311b750.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "chinesepod-dashboard"});
@@ -32,5 +32,4 @@ workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 workbox.routing.registerRoute(/\.(?:jpg|jpeg|svg|gif|png)/, workbox.strategies.cacheFirst({ "cacheName":"images", plugins: [new workbox.cacheableResponse.Plugin({"statuses":[0,200]}), new workbox.expiration.Plugin({"maxEntries":120,"maxAgeSeconds":2592000,"purgeOnQuotaError":false})] }), 'GET');
 workbox.routing.registerRoute(/^https:\/\/chinesepod.com\/images\//, workbox.strategies.cacheFirst({ "cacheName":"images", plugins: [new workbox.cacheableResponse.Plugin({"statuses":[0,200]}), new workbox.expiration.Plugin({"maxEntries":120,"maxAgeSeconds":2592000,"purgeOnQuotaError":false})] }), 'GET');
 workbox.routing.registerRoute(/^https:\/\/www.chinesepod.com\/images\//, workbox.strategies.cacheFirst({ "cacheName":"images", plugins: [new workbox.cacheableResponse.Plugin({"statuses":[0,200]}), new workbox.expiration.Plugin({"maxEntries":120,"maxAgeSeconds":2592000,"purgeOnQuotaError":false})] }), 'GET');
-workbox.routing.registerRoute(/^https:\/\/www.chinesepod.com\/api\/dashboard\//, workbox.strategies.staleWhileRevalidate({ "cacheName":"api-course-cache", plugins: [] }), 'GET');
 workbox.routing.registerRoute(/^https:\/\/www.chinesepod.com\/api\//, workbox.strategies.networkFirst({ "cacheName":"api-cache","networkTimeoutSeconds":1, plugins: [] }), 'GET');
