@@ -48,6 +48,7 @@ module.exports.routes = {
   //DASHBOARD
   'GET /dash/:unused?': 'DashController.serve',
   'GET /lesson/:unused?/:unused?': 'DashController.serve',
+  'GET /podcasts/:unused?/:unused?': 'DashController.serve',
 
   //PLACEMENT TEST
   'GET /placement/:unused?': 'PlacementController.serve',
@@ -69,7 +70,8 @@ module.exports.routes = {
 
   'GET /chinese/:unused?/:unused?': { action: 'redirect/why-choose-us'},
   'GET /sitemap' :                 { action: 'sitemap'},
-  'GET /sitemap2' :                 'SitemapController.serve',
+
+  'GET /users':                                          { action: 'recap/users-by-current-lesson' }, //TODO REMOVE THIS WHEN SAFE
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
@@ -111,7 +113,6 @@ module.exports.routes = {
   'POST /api/v1/recap/get-lessons':                      { action: 'recap/get-user-lesson' },
   'POST /api/v1/recap/request-lesson':                   { action: 'recap/request-lesson' },
   'GET /api/v1/recap/users':                             { action: 'recap/users-by-current-lesson' },
-  'GET /users':                                          { action: 'recap/users-by-current-lesson' }, //TODO REMOVE THIS WHEN SAFE
 
   //General Info Routes
   'GET  /api/v1/health/ip-info':                         { action: 'health/ip-info' },
