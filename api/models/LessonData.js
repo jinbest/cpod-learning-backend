@@ -27,7 +27,7 @@ module.exports = {
       required: true
     },
     createdAt: {
-      type: "string",
+      type: "ref",
       columnType: "timestamp",
       columnName: 'created_at',
       autoCreatedAt: true
