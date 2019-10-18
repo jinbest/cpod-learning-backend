@@ -46,9 +46,9 @@ module.exports.routes = {
   'GET /level/:unused?':          { action: 'onboarding/view-level' },
 
   //DASHBOARD
-  'GET /dash/:unused?': 'DashController.serve',
+  'GET /dash/:unused?':           'DashController.serve',
   'GET /lesson/:unused?/:unused?': 'DashController.serve',
-  'GET /podcasts/:unused?/:unused?': 'DashController.serve',
+  'GET /podcasts/:unused?': 'PodcastsController.serve',
 
   //PLACEMENT TEST
   'GET /placement/:unused?': 'PlacementController.serve',
