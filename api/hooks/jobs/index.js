@@ -7,6 +7,14 @@
 
 module.exports = function defineJobsHook(sails) {
 
+  if (process.env.NODE_ENV !== 'production') {
+    return {
+      initialize: async function () {
+        sails.log.info('Ignoring Rozkalns\' hook (`Bull Jobs`) 😎 for DEV')
+      }
+    }
+  }
+
   var Queue = require('bull');
 
   var userInfoQueue = new Queue('UserInfoQueue', sails.config.jobs.url);
