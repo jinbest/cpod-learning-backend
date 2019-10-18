@@ -68,6 +68,8 @@ module.exports.routes = {
   // '/logout':                  '/api/v1/account/logout',
 
   'GET /chinese/:unused?/:unused?': { action: 'redirect/why-choose-us'},
+  'GET /sitemap' :                 { action: 'sitemap'},
+  'GET /sitemap2' :                 'SitemapController.serve',
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
