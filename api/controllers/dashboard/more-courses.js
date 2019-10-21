@@ -33,11 +33,13 @@ module.exports = {
       select: ['option_value']
     });
 
-    if (!userOptions || !userOptions.option_value) {
-      userOptions.option_value = 1
+    let levelInt = 1;
+
+    if (userOptions && userOptions.option_value) {
+      levelInt = userOptions.option_value
     }
 
-    let userLevel = await sails.helpers.convert.intToLevel(userOptions.option_value);
+    let userLevel = await sails.helpers.convert.intToLevel(levelInt);
     let levelHigher = await sails.helpers.convert.oneLevelHigher(userLevel);
 
     let userCourses = await UserCourses.find({
