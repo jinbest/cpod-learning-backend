@@ -11,7 +11,8 @@
 
 var bugsnag = require('@bugsnag/js');
 var bugsnagExpress = require('@bugsnag/plugin-express');
-var bugsnagClient = bugsnag('bbd87dc5093af09c41acfb4fc805c784');
+let pkjson = require('../package.json');
+var bugsnagClient = bugsnag({ apiKey: 'bbd87dc5093af09c41acfb4fc805c784', appVersion: pkjson.version });
 bugsnagClient.use(bugsnagExpress);
 
 var bugsnagmiddleware = bugsnagClient.getPlugin('express');
@@ -37,9 +38,9 @@ module.exports.http = {
     ***************************************************************************/
 
     order: [
+      'requestHandler',
       'cookieParser',
       'session',
-      'requestHandler',
       'bodyParser',
       'errorHandler',
       'compress',

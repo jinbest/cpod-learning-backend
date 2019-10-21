@@ -133,6 +133,18 @@ module.exports = function defineJobsHook(sails) {
     //TODO IMPLEMENT USER CHAR SETS
     let userSettings = await UserSettings.findOne({user_id: userData.id});
 
+    let charSet = 'simplified';
+
+    try {
+      let rawChar = userSettings.setting.split('"ctype";i:')[1].slice(0,1);
+      if (rawChar == 2) {
+        charSet = 'traditional';
+      }
+
+    } catch (e) {
+      await sails.helpers.users.setCharSet(userData.id, charSet);
+    }
+
     const MauticConnector = require('node-mautic');
     const mauticConnector = new MauticConnector({
       apiUrl: 'https://email.chinesepod.com',
@@ -217,6 +229,7 @@ module.exports = function defineJobsHook(sails) {
       let mauticData = {
         subscription: subscription,
         userid: userData.id,
+        charset: charSet
       };
       if (levelText) {
         mauticData.level = levelText;
