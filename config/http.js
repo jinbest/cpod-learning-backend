@@ -16,8 +16,6 @@ bugsnagClient.use(bugsnagExpress);
 
 var bugsnagmiddleware = bugsnagClient.getPlugin('express');
 
-const isProd = process.env.NODE_ENV === 'production';
-
 module.exports.http = {
 
   /****************************************************************************
