@@ -78,6 +78,7 @@ module.exports.routes = {
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝
   // …
   'POST /api/v1/webhooks/mautic/update':                  { action: 'webhooks/mautic/update' },
+  'POST /api/v1/webhooks/stripe/failed':                  { action: 'webhooks/stripe/failed' },
 
 
   //  ╔═╗╔═╗╦  ╔═╗╔╗╔╔╦╗╔═╗╔═╗╦╔╗╔╔╦╗╔═╗
