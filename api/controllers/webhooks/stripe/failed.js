@@ -21,6 +21,20 @@ module.exports = {
 
     let Mailgun = require('machinepack-mailgun');
 
+    let payload = this.req.body;
+
+    let message = JSON.stringify(payload);
+
+    switch (payload.type) {
+      case 'charge.failed':
+        message = `ChinesePod Team,\nA user payment has failed. Additional information below:\nUser: ${payload.data.object.billing_details.name}\nCRM:https://www2.chinesepod.com/marketingcenter/users/index/view?user_id=${payload.data.object.source.customer}\nEmail: ${payload.data.object.billing_details.email}\nDescription: ${payload.data.object.description}\nIssue: ${payload.data.object.failure_message}\nReceipt: ${payload.data.object.receipt_url}\nSincerely,\nThe Reporting System`;
+        break;
+    }
+
+
+
+
+
     Mailgun.sendPlaintextEmail({
 
       apiKey: sails.config.custom.mailgunSecret,
@@ -33,7 +47,7 @@ module.exports = {
 
       subject: 'Stripe Payment Error!',
 
-      message: JSON.stringify(this.req.body),
+      message: message,
 
       fromEmail: 'stripe@chinesepod.com',
 
