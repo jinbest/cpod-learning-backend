@@ -58,7 +58,7 @@ module.exports = {
 // An unexpected error occurred.
 
       error: function (err) {
-        bugsnagClient.notify(err)
+        sails.log.error(err);
       },
 
 // OK.

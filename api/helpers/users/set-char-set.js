@@ -69,7 +69,6 @@ module.exports = {
         newSetting = oldSetting[0] + `"ctype";i:${charInt}` + oldSetting[1].slice(1);
       } else {
         sails.log.error({userId: inputs.userId,newSetting: newSetting});
-        bugsnagClient.notify({userId: inputs.userId,newSetting: newSetting});
         let count = parseInt(newSetting.split(':')[1].split(':')[0]);
         let oldSetting = newSetting.split('{').slice(1);
         newSetting = `a:${count + 1}:{s:5:"ctype";i:${charInt};${oldSetting.join()}`;

@@ -198,7 +198,6 @@ module.exports = {
         optIn: inputs.optIn,
         ipData: ipData
       }).catch((e) => {
-        bugsnagClient.notify(e);
         sails.log.error(e)
       });
 
@@ -248,7 +247,7 @@ module.exports = {
 
     if (!customerData || customerData.err) {
       //TODO STORE THIS SOMEWHERE
-      bugsnagClient.notify(customerData.err);
+      sails.log.error(customerData.err);
       throw {declined: customerData.err ? customerData.err : 'Could not confirm the payment method. Please try again later.'};
     }
 
@@ -306,7 +305,6 @@ module.exports = {
           cardData = customerData.sources.data[0];
         } catch (e) {
           sails.log.error(e);
-          bugsnagClient.notify(e);
         }
 
         // Check Subscriptions Table
@@ -334,7 +332,6 @@ module.exports = {
                 ipData = info;
               })
               .catch((err) => {
-                bugsnagClient.notify(err);
                 sails.log.error(err);
               });
           }
@@ -379,9 +376,8 @@ module.exports = {
       })
       .catch((err) => {
         //TODO STORE THIS SOMEWHERE
-        sails.log.error(err.message);
+        sails.log.error(err);
         errors.push(err.message);
-        bugsnagClient.notify(err);
         throw {declined: errors.length > 0 ? errors[0] : 'Could not confirm the payment method. Please try again later.'};
       })
   }
