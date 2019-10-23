@@ -37,10 +37,6 @@ module.exports = {
     let charInt = 1;
     let charString = 'simplified';
 
-    sails.log.info(inputs);
-
-    sails.log.info('Set-Char-Set Helper');
-
     if (!isNaN(inputs.charSet) && [1, 2].includes(parseInt(inputs.charSet))) {
       charInt = inputs.charSet;
       charString = inputs.charSet === 1 ? 'simplified' : 'traditional';
@@ -72,6 +68,8 @@ module.exports = {
         let oldSetting = newSetting.split('"ctype";i:');
         newSetting = oldSetting[0] + `"ctype";i:${charInt}` + oldSetting[1].slice(1);
       } else {
+        sails.log.error({userId: inputs.userId,newSetting: newSetting});
+        bugsnagClient.notify({userId: inputs.userId,newSetting: newSetting});
         let count = parseInt(newSetting.split(':')[1].split(':')[0]);
         let oldSetting = newSetting.split('{').slice(1);
         newSetting = `a:${count + 1}:{s:5:"ctype";i:${charInt};${oldSetting.join()}`;
