@@ -54,7 +54,9 @@ module.exports = function defineJobsHook(sails) {
     if (!job.data) {
       done( null, 'No job data')
     }
+
     let userData = {};
+
     if (!job.data.userId && job.data.email) {
       userData = await User.findOne({email: job.data.email});
     } else if (job.data.userId) {
@@ -63,7 +65,7 @@ module.exports = function defineJobsHook(sails) {
       done( null, 'Not Enough Job Data to Pursue')
     }
 
-    if (!userData.id) {
+    if (!userData || !userData.id) {
       //TODO SOMETHING HERE
       sails.log.error({
         jobData: job.data,
