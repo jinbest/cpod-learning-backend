@@ -68,10 +68,15 @@ module.exports = {
         let oldSetting = newSetting.split('"ctype";i:');
         newSetting = oldSetting[0] + `"ctype";i:${charInt}` + oldSetting[1].slice(1);
       } else {
-        sails.log.error({userId: inputs.userId,newSetting: newSetting});
-        let count = parseInt(newSetting.split(':')[1].split(':')[0]);
-        let oldSetting = newSetting.split('{').slice(1);
-        newSetting = `a:${count + 1}:{s:5:"ctype";i:${charInt};${oldSetting.join()}`;
+        // sails.log.error({userId: inputs.userId,newSetting: newSetting});
+        try {
+          let count = parseInt(newSetting.split(':')[1].split(':')[0]);
+          let oldSetting = newSetting.split('{').slice(1);
+          newSetting = `a:${count + 1}:{s:5:"ctype";i:${charInt};${oldSetting.join()}`;
+        } catch (e) {
+          sails.log.error({error: e, setting: userSettings.setting});
+          newSetting = `a:4:{s:5:"ctype";i:${charInt};s:3:"pdf";i:0;s:5:"chars";i:0;s:5:"trans";i:1;}`
+        }
       }
       let userData = await UserSettings.updateOne({user_id: inputs.userId})
         .set({setting: newSetting});
