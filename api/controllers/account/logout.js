@@ -40,6 +40,10 @@ actually logged in.  (If they weren't, then this action is just a no-op.)`,
     // Then finish up, sending an appropriate response.
     // > Under the covers, this persists the now-logged-out session back
     // > to the underlying session store.
+    this.res.cookie('CPODSESSID', '', {
+      domain: '.chinesepod.com',
+      expires: new Date(Date.now())
+    });
     this.res.clearCookie('CPODSESSID', {path:'/'});
 
     if (!this.req.wantsJSON) {

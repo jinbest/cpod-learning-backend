@@ -126,8 +126,6 @@ module.exports = {
       throw {invalid: 'No Data Submitted'}
     }
 
-    sails.log.info({newCheckout: inputs});
-
     let ipData = {};
 
     if (!this.req.me) {
@@ -200,6 +198,7 @@ module.exports = {
         optIn: inputs.optIn,
         ipData: ipData
       }).catch((e) => {
+        bugsnagClient.notify(e);
         sails.log.error(e)
       });
 
@@ -237,8 +236,6 @@ module.exports = {
 
     let errors = [];
 
-    sails.log.info({userId: inputs.userId});
-
     let cardData = {};
 
     let customerData = await sails.helpers.stripe.createOrUpdateCustomer.with({
@@ -249,10 +246,9 @@ module.exports = {
     });
 
 
-    sails.log.info({customerData: customerData});
-
     if (!customerData || customerData.err) {
       //TODO STORE THIS SOMEWHERE
+      bugsnagClient.notify(customerData.err);
       throw {declined: customerData.err ? customerData.err : 'Could not confirm the payment method. Please try again later.'};
     }
 
@@ -260,7 +256,7 @@ module.exports = {
 
     if (inputs.promoCode) {
       let response = await sails.helpers.promo.checkCode(inputs.promoCode, plans[inputs.plan][inputs.billingCycle].id);
-      sails.log.info({response: response});
+
       if (response.success && response.data) {
         switch (response.data.type) {
           case 0:
@@ -288,7 +284,6 @@ module.exports = {
           default:
             throw {declined: 'Invalid promotional code'}
         }
-        sails.log.info(coupon);
       } else {
         throw {declined: 'Invalid promotional code'}
       }
@@ -301,29 +296,18 @@ module.exports = {
       coupon: coupon ? coupon.id : null
     })
       .then(async (subscription) => {
-        sails.log.info({
-          customer: customerData.id,
-          items: [{plan: plans[inputs.plan][inputs.billingCycle].stripeId}],
-          trial_period_days: inputs.trial ? 14 : 0, // 2 weeks or No trial
-          coupon: coupon ? coupon.id : null
-        });
-        sails.log.info({subscription: subscription});
 
         // If Trial - Mark User Record as Such
         if (inputs.trial) {
           userData = await User.updateOne({id: inputs.userId})
             .set({trial: new Date(Date.now()).toISOString()});
-          sails.log.info(userData);
         }
         try {
           cardData = customerData.sources.data[0];
         } catch (e) {
           sails.log.error(e);
+          bugsnagClient.notify(e);
         }
-        sails.log.info({
-          cc_num: cardData ? cardData['last4'] : '9999',
-          cc_exp: cardData ? `${cardData['exp_month']}/${cardData['exp_year']}` : '99/99',
-        });
 
         // Check Subscriptions Table
         const cpodSubscription = await Subscriptions.create({
@@ -350,6 +334,7 @@ module.exports = {
                 ipData = info;
               })
               .catch((err) => {
+                bugsnagClient.notify(err);
                 sails.log.error(err);
               });
           }
@@ -375,8 +360,6 @@ module.exports = {
           modified_by: inputs.userId,
         });
 
-
-
 // Update User Access on UserSiteLinks
         const userSiteLinks = UserSiteLinks.updateOne({user_id:inputs.userId})
           .set({usertype_id: plans[inputs.plan].id});
@@ -388,8 +371,6 @@ module.exports = {
           planId: plans[inputs.plan].id
         });
 
-        sails.log.info(phpSession);
-
         this.res.cookie('CPODSESSID', phpSession, {
           domain: '.chinesepod.com',
           expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
@@ -398,8 +379,9 @@ module.exports = {
       })
       .catch((err) => {
         //TODO STORE THIS SOMEWHERE
-        sails.log.info(err.message);
+        sails.log.error(err.message);
         errors.push(err.message);
+        bugsnagClient.notify(err);
         throw {declined: errors.length > 0 ? errors[0] : 'Could not confirm the payment method. Please try again later.'};
       })
   }
