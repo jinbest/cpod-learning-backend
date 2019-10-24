@@ -16,16 +16,16 @@ self.__precacheManifest = [
     "url": "/dash/js/chunk-ab7e0cd8.c11a7f99.js"
   },
   {
-    "revision": "92d40536b4008c9e966baf28829ce412",
-    "url": "/dash/img/preloader.svg"
+    "revision": "e4b6e6c5749ebe66252e0da478f72b5b",
+    "url": "/dash/img/qing-wen.jpg"
   },
   {
     "revision": "0f11b905368d5b9c9ddd",
     "url": "/dash/js/chunk-vendors.6714e586.js"
   },
   {
-    "revision": "e4b6e6c5749ebe66252e0da478f72b5b",
-    "url": "/dash/img/qing-wen.jpg"
+    "revision": "92d40536b4008c9e966baf28829ce412",
+    "url": "/dash/img/preloader.svg"
   },
   {
     "revision": "8f4558a92148e43e6a98e557961522a4",
@@ -44,20 +44,20 @@ self.__precacheManifest = [
     "url": "/dash/img/qing-wen.e4b6e6c5.jpg"
   },
   {
-    "revision": "de0738d35b41f31226b03570e4904102",
+    "revision": "c8744c57764b444e2f24f5fa5c012bdd",
     "url": "/dash/index.html"
   },
   {
-    "revision": "2b01746e469b59926906",
-    "url": "/dash/js/app.596c0ac1.js"
+    "revision": "636873328b75b9dd150a",
+    "url": "/dash/js/app.33cac7cf.js"
   },
   {
     "revision": "f9b78d93af8ccff72e6e853d649a19cd",
     "url": "/dash/img/symbol.f9b78d93.svg"
   },
   {
-    "revision": "0cb9b4ee343314f2c6ec0a014c9d2af6",
-    "url": "/dash/img/brand/symbol-black.svg"
+    "revision": "2add6b402c3d7fbbaa4fb0613c6c4a38",
+    "url": "/dash/img/brand/symbol-white.svg"
   },
   {
     "revision": "c1733565b32b585676302d4233c39da8",
@@ -88,12 +88,12 @@ self.__precacheManifest = [
     "url": "/dash/img/preloader.92d40536.svg"
   },
   {
-    "revision": "a070ebf69a7fcaea3c17fbbc56deebac",
-    "url": "/dash/img/brand/logo.png"
+    "revision": "365fc333c183bf39ef777a760ca718cf",
+    "url": "/dash/img/brand/brand-white.svg"
   },
   {
-    "revision": "71a94f831411548a0c3e531a248e922a",
-    "url": "/dash/img/brand/brand-black.svg"
+    "revision": "a070ebf69a7fcaea3c17fbbc56deebac",
+    "url": "/dash/img/brand/logo.png"
   },
   {
     "revision": "365fc333c183bf39ef777a760ca718cf",
@@ -108,24 +108,20 @@ self.__precacheManifest = [
     "url": "/dash/img/brand/brand.svg"
   },
   {
-    "revision": "365fc333c183bf39ef777a760ca718cf",
-    "url": "/dash/img/brand/brand-white.svg"
+    "revision": "71a94f831411548a0c3e531a248e922a",
+    "url": "/dash/img/brand/brand-black.svg"
   },
   {
     "revision": "d7c26c3af7979c14ed3da333f9de6e59",
     "url": "/dash/img/brand/symbol-black-center.svg"
   },
   {
-    "revision": "776e8317ed66d1e2ec7ef1853377375b",
-    "url": "/dash/img/brand/white.png"
+    "revision": "0cb9b4ee343314f2c6ec0a014c9d2af6",
+    "url": "/dash/img/brand/symbol-black.svg"
   },
   {
     "revision": "f82ec6ba2dc4181db2af35c499462840",
     "url": "/dash/fonts/nucleo-icons.f82ec6ba.ttf"
-  },
-  {
-    "revision": "2add6b402c3d7fbbaa4fb0613c6c4a38",
-    "url": "/dash/img/brand/symbol-white.svg"
   },
   {
     "revision": "f9b78d93af8ccff72e6e853d649a19cd",
@@ -134,6 +130,10 @@ self.__precacheManifest = [
   {
     "revision": "5bcf46d00bb2f8cc17d2257003803d93",
     "url": "/dash/img/brand/favicon.png"
+  },
+  {
+    "revision": "776e8317ed66d1e2ec7ef1853377375b",
+    "url": "/dash/img/brand/white.png"
   },
   {
     "revision": "a158e68b2ab402fc3f58861935f523ac",
@@ -152,6 +152,10 @@ self.__precacheManifest = [
     "url": "/dash/fonts/icomoon.00d29777.eot"
   },
   {
+    "revision": "e9c8d6429bab307155971201fd98217b",
+    "url": "/dash/fonts/icomoon.e9c8d642.ttf"
+  },
+  {
     "revision": "426439788ec5ba772cdf94057f6f4659",
     "url": "/dash/fonts/nucleo-icons.42643978.woff2"
   },
@@ -162,10 +166,6 @@ self.__precacheManifest = [
   {
     "revision": "6f0a76321d30f3c8120915e57f7bd77e",
     "url": "/dash/fonts/element-icons.6f0a7632.ttf"
-  },
-  {
-    "revision": "e9c8d6429bab307155971201fd98217b",
-    "url": "/dash/fonts/icomoon.e9c8d642.ttf"
   },
   {
     "revision": "eee8b9b975b37eef73cda9641feb8f6f",
@@ -180,8 +180,8 @@ self.__precacheManifest = [
     "url": "/dash/css/chunk-vendors.6accebf2.css"
   },
   {
-    "revision": "2b01746e469b59926906",
-    "url": "/dash/css/app.3bdf86e0.css"
+    "revision": "636873328b75b9dd150a",
+    "url": "/dash/css/app.1e7c494a.css"
   },
   {
     "revision": "5f52dbefcf63c9f677ace09fcf8bc7d8",
