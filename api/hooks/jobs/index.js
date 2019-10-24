@@ -69,35 +69,25 @@ module.exports = function defineJobsHook(sails) {
     }
 
     if (!userData || !userData.id || typeof userData === 'undefined') {
-      //TODO SOMETHING HERE
-      sails.log.error({
-        jobData: job.data,
-        userData: userData
-      });
-      sails.hooks.bugsnag.notify({
-        jobData: job.data,
-        userData: userData
-      });
-      done( null, 'No Such User on ChinesePod')
+      sails.log.error({jobData: job.data, userData: userData});
+      done(userData);
     }
 
     let userOptions = {};
 
     try {
-      userOptions = await UserOptions.findOne({
-        user_id: userData.id,
-        option_key: 'level'
-      })
+      userOptions = await UserOptions.findOne({user_id: userData.id, option_key: 'level'})
     } catch (e) {
       sails.log.error(e);
       done( null, 'No Such User on ChinesePod')
     }
 
-
     let userSiteLinks = await UserSiteLinks.find({user_id: userData.id, site_id: 2})
       .sort('updatedAt DESC')
       .limit(1);
+
     let subscription = 'Free';
+
     if (userSiteLinks.length > 0) {
       switch (userSiteLinks[0].usertype_id) {
         case 5:

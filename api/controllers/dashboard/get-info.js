@@ -57,7 +57,8 @@ module.exports = {
 
     let access = await sails.helpers.users.getAccessType(inputs.userId);
 
-    if (!['premium', 'admin'].includes(access)) {
+    // if (!['premium', 'admin'].includes(access)) {
+    if (true) {
       let lessonCount = await Logging.find({
         where: {
           id: userData.email,
@@ -65,6 +66,7 @@ module.exports = {
             'in': [
               'https://chinesepod.com/lessons/api',
               'https://www.chinesepod.com/lessons/api',
+              'https://www.chinesepod.com/api/v1/lessons/get-lesson'
             ]},
           createdAt: {
             '>': new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
@@ -72,11 +74,19 @@ module.exports = {
         },
         select: ['accesslog_url'],
         sort: 'createdAt DESC',
-        limit: 15   // Upper Limit Trigger
+        limit: 30   // Upper Limit Trigger
       });
-      if (lessonCount.length <= 10) {
-        access = 'premium';
-        returnData.needsUpgrade = true
+
+      lessonCount = [...new Set(lessonCount.map(x => x.accesslog_url))];
+
+      // if (lessonCount.length <= 10) {
+      if (true) {
+        // access = 'premium';
+        access = 'free';
+        returnData.needsUpgrade = true;
+        returnData.lessonCount = lessonCount.length;
+        returnData.canDismiss = true;
+        returnData.upgradePath = 3
       }
     }
 
