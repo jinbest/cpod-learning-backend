@@ -325,8 +325,6 @@ module.exports = {
           cc_exp: cardData ? `${cardData.exp_month}/${cardData.exp_year}` : '99/99',
         }).fetch();
 
-//TODO Check Payments Table
-
         if (!ipData['country_name']) {
           const ipdata = require('ipdata');
 

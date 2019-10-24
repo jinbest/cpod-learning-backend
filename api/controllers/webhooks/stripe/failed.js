@@ -25,14 +25,21 @@ module.exports = {
 
     let message = JSON.stringify(payload);
 
-    switch (payload.type) {
-      case 'charge.failed':
-        message = `ChinesePod Team,\nA user payment has failed. Additional information below:\nUser: ${payload.data.object.billing_details.name}\nCRM:https://www2.chinesepod.com/marketingcenter/users/index/view?user_id=${payload.data.object.source.customer}\nEmail: ${payload.data.object.billing_details.email}\nDescription: ${payload.data.object.description}\nIssue: ${payload.data.object.failure_message}\nReceipt: ${payload.data.object.receipt_url}\nSincerely,\nThe Reporting System`;
-        break;
+    let userData = null;
+
+    if (payload.data.object.source.customer) {
+      let userId = parseInt(payload.data.object.source.customer);
+      userData = await User.findOne({id: userId});
     }
 
+    let userName = payload.data.object.billing_details.name ? payload.data.object.billing_details.name : userData.name;
+    let email = userData.email;
 
-
+    switch (payload.type) {
+      case 'charge.failed':
+        message = `ChinesePod Team,\n\nA user payment has failed. Additional information below:\nUser: ${userName}\nCRM: https://www2.chinesepod.com/marketingcenter/users/index/view?user_id=${payload.data.object.source.customer}\nEmail: ${email}\nDescription: ${payload.data.object.description}\nIssue: ${payload.data.object.failure_message}\nReceipt: ${payload.data.object.receipt_url}\n\nSincerely,\nThe Reporting System`;
+        break;
+    }
 
 
     Mailgun.sendPlaintextEmail({
@@ -45,20 +52,20 @@ module.exports = {
 
       toName: 'Ugis Rozkalns',
 
-      subject: 'Stripe Payment Error!',
+      subject: 'Stripe Recurring Payment Error!',
 
       message: message,
 
       fromEmail: 'stripe@chinesepod.com',
 
-      fromName: 'ChinesePod Stripe Report',
+      fromName: 'ChinesePod Stripe',
 
     }).exec({
 
 // An unexpected error occurred.
 
       error: function (err) {
-        sails.log.error(err);
+        sails.hooks.bugsnag.notify(err);
       },
 
 // OK.
