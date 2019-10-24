@@ -65,9 +65,13 @@ module.exports = function defineJobsHook(sails) {
       done( null, 'Not Enough Job Data to Pursue')
     }
 
-    if (!userData || !userData.id) {
+    if (!userData || !userData.id || typeof userData === 'undefined') {
       //TODO SOMETHING HERE
       sails.log.error({
+        jobData: job.data,
+        userData: userData
+      });
+      sails.hooks.bugsnag.notify({
         jobData: job.data,
         userData: userData
       });
