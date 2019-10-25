@@ -63,7 +63,7 @@ module.exports = {
 
     const createdLogs = await GameLogs.createEach(inputs.logData).fetch();
 
-    return `Created ${createdLogs.length} log${createdLogs.length===1?'':'s'}`
+    return {success: 1, data: `Created ${createdLogs.length} log${createdLogs.length===1?'':'s'}`}
   }
 
 
