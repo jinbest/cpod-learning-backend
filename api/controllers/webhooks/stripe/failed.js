@@ -52,7 +52,7 @@ module.exports = {
 
       toName: 'Ugis Rozkalns',
 
-      subject: 'Stripe Recurring Payment Error!',
+      subject: 'Stripe Payment Error!',
 
       message: message,
 
