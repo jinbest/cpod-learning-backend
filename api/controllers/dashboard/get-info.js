@@ -59,34 +59,44 @@ module.exports = {
 
     // if (!['premium', 'admin'].includes(access)) {
     if (true) {
-      let lessonCount = await Logging.find({
+      let lessonTimeline = await Logging.find({
         where: {
           id: userData.email,
           accesslog_urlbase: {
             'in': [
-              'https://chinesepod.com/lessons/api',
-              'https://www.chinesepod.com/lessons/api',
+              // 'https://chinesepod.com/lessons/api',
+              // 'https://www.chinesepod.com/lessons/api',
               'https://www.chinesepod.com/api/v1/lessons/get-lesson'
             ]},
           createdAt: {
-            '>': new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+            '>': new Date(Date.now() - 1 * 24 * 60 * 60 * 1000)
           }
         },
-        select: ['accesslog_url'],
+        select: ['accesslog_url', 'createdAt'],
         sort: 'createdAt DESC',
         limit: 30   // Upper Limit Trigger
       });
 
-      lessonCount = [...new Set(lessonCount.map(x => x.accesslog_url))];
+      let lessonCount = [...new Set(lessonTimeline.map(x => x.accesslog_url))].length;
 
-      // if (lessonCount.length <= 10) {
-      if (true) {
-        // access = 'premium';
+      if (lessonCount < 10) {
+        access = 'premium';
+        returnData.upgrade = {
+          needsUpgrade: true,
+          allowedCount:10,
+          lessonCount: lessonCount,
+          lessonTimeline: lessonTimeline,
+        }
+      } else {
         access = 'free';
-        returnData.needsUpgrade = true;
-        returnData.lessonCount = lessonCount.length;
-        returnData.canDismiss = true;
-        returnData.upgradePath = 3
+        returnData.upgrade = {
+          needsUpgrade: false,
+          allowedCount:10,
+          lessonCount: lessonCount,
+          lessonTimeline: lessonTimeline,
+          canDismiss: true,
+          upgradePath: 3
+        }
       }
     }
 
