@@ -48,17 +48,17 @@ module.exports = {
 
       domain: sails.config.custom.mailgunDomain,
 
-      toEmail: 'ugis@chinesepod.com',
+      toEmail: 'followup@chinesepod.com',
 
-      toName: 'Ugis Rozkalns',
+      toName: 'ChinesePod Followup Team',
 
-      subject: 'Stripe Payment Error!',
+      subject: payload.data && payload.data.object && payload.data.object.description ? payload.data.object.description : 'Stripe Payment Error!',
 
       message: message,
 
       fromEmail: 'stripe@chinesepod.com',
 
-      fromName: 'ChinesePod Stripe',
+      fromName: 'ChinesePod Stripe Issue',
 
     }).exec({
 
