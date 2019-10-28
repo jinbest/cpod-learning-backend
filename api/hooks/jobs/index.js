@@ -58,7 +58,7 @@ module.exports = function defineJobsHook(sails) {
       done( null, 'No job data')
     }
 
-    let userData = {};
+    let userData = null;
 
     if (!job.data.userId && job.data.email) {
       userData = await User.findOne({email: job.data.email});
@@ -75,10 +75,10 @@ module.exports = function defineJobsHook(sails) {
         userData: userData
       });
       done( null, 'No Such User on ChinesePod');
-      done();
+      return
     }
 
-    let userOptions = {};
+    let userOptions = null;
 
     try {
       userOptions = await UserOptions.findOne({
@@ -86,15 +86,21 @@ module.exports = function defineJobsHook(sails) {
         option_key: 'level'
       })
     } catch (e) {
-      sails.log.error(e);
       sails.hooks.bugsnag.notify(e);
       done( null, 'No Such User on ChinesePod')
     }
 
+    let userSiteLinks = [];
 
-    let userSiteLinks = await UserSiteLinks.find({user_id: userData.id, site_id: 2})
-      .sort('updatedAt DESC')
-      .limit(1);
+    try {
+      userSiteLinks = await UserSiteLinks.find({user_id: userData.id, site_id: 2})
+        .sort('updatedAt DESC')
+        .limit(1);
+    } catch (e) {
+      sails.hooks.bugsnag.notify(e);
+      done( null, 'No Such User on ChinesePod')
+    }
+
     let subscription = 'Free';
     if (userSiteLinks.length > 0) {
       switch (userSiteLinks[0].usertype_id) {
@@ -114,7 +120,7 @@ module.exports = function defineJobsHook(sails) {
     }
 
     let levelText = '';
-    if(userOptions) {
+    if(userOptions && userOptions.option_value) {
       switch (userOptions.option_value) {
         case 1:
           levelText = 'Newbie';
@@ -138,7 +144,13 @@ module.exports = function defineJobsHook(sails) {
       }
     }
     //TODO IMPLEMENT USER CHAR SETS
-    let userSettings = await UserSettings.findOne({user_id: userData.id});
+    let userSettings = null;
+
+    try {
+      userSettings = await UserSettings.findOne({user_id: userData.id});
+    } catch (e) {
+
+    }
 
     let charSet = 'simplified';
 
