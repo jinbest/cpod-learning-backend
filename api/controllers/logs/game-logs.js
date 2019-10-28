@@ -47,15 +47,13 @@ module.exports = {
 
     //TODO Check Data for Validity
 
-    sails.log.info(inputs.logData);
-
     if (!inputs.logData) {
       throw 'invalid'
     } else {
       let userInfo = inputs.sessionId ? await NySession.findOne({id: inputs.sessionId}) : null;
       inputs.logData.forEach((log) => {
         log.app = inputs.clientId;
-        log.user = userInfo ? userInfo.id : null;
+        log.user = userInfo ? userInfo.email : null;
         log.identifier = inputs.identifier ? inputs.identifier : null
       });
       sails.log.info(inputs.logData)
@@ -63,7 +61,7 @@ module.exports = {
 
     const createdLogs = await GameLogs.createEach(inputs.logData).fetch();
 
-    return `Created ${createdLogs.length} log${createdLogs.length===1?'':'s'}`
+    return {success: 1, data: `Created ${createdLogs.length} log${createdLogs.length===1?'':'s'}`}
   }
 
 

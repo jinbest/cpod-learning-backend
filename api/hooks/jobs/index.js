@@ -65,29 +65,37 @@ module.exports = function defineJobsHook(sails) {
     } else if (job.data.userId) {
       userData = await User.findOne({id: job.data.userId});
     } else {
-      done( null, 'Not Enough Job Data to Pursue')
+      done( null, 'Not Enough Job Data to Pursue');
     }
 
     if (!userData || !userData.id || typeof userData === 'undefined') {
-      sails.log.error({jobData: job.data, userData: userData});
-      done(userData);
+      //TODO SOMETHING HERE
+      sails.log.error({
+        jobData: job.data,
+        userData: userData
+      });
+      done( null, 'No Such User on ChinesePod');
+      done();
     }
 
     let userOptions = {};
 
     try {
-      userOptions = await UserOptions.findOne({user_id: userData.id, option_key: 'level'})
+      userOptions = await UserOptions.findOne({
+        user_id: userData.id,
+        option_key: 'level'
+      })
     } catch (e) {
       sails.log.error(e);
+      sails.hooks.bugsnag.notify(e);
       done( null, 'No Such User on ChinesePod')
     }
+
 
     let userSiteLinks = await UserSiteLinks.find({user_id: userData.id, site_id: 2})
       .sort('updatedAt DESC')
       .limit(1);
-
     let subscription = 'Free';
-
     if (userSiteLinks.length > 0) {
       switch (userSiteLinks[0].usertype_id) {
         case 5:
@@ -346,7 +354,7 @@ module.exports = function defineJobsHook(sails) {
       'https://www.chinesepod.com/signup',
       'https://www.chinesepod.com/checkout',
       'https://www.chinesepod.com/login'
-    ].includes(job.data.urlbase) || userData.email) {
+    ].includes(job.data.urlbase) || (userData && userData.email)) {
       await Logging.create({
         id: userData.email ? userData.email : 'NONE',
         access_ip: job.data.ip,
@@ -393,7 +401,7 @@ module.exports = function defineJobsHook(sails) {
   });
 
   emailTriggerQueue.removeRepeatable('SendEmails',{repeat: {cron: '*/15 * * * *'}});
-  emailTriggerQueue.add('SendEmails', {data:'Send Failed Email Payments every 15min'},{repeat: {cron: '*/15 * * * *'}});
+  // emailTriggerQueue.add('SendEmails', {data:'Send Failed Email Payments every 15min'},{repeat: {cron: '*/15 * * * *'}});
 
   paymentEmailQueue.process('SendEmail', 100,async function (job, done){
 
@@ -418,9 +426,9 @@ module.exports = function defineJobsHook(sails) {
 
       domain: sails.config.custom.mailgunDomain,
 
-      toEmail: 'ugis@chinesepod.com',
+      toEmail: 'followup@chinesepod.com',
 
-      toName: 'Ugis Rozkalns',
+      toName: 'ChinesePod Followup Team',
 
       subject: 'Stripe New Subscription Payment Error!',
 
