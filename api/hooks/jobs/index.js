@@ -248,7 +248,10 @@ module.exports = function defineJobsHook(sails) {
       let mauticData = {
         subscription: subscription,
         userid: userData.id,
-        charset: charSet
+        charset: charSet,
+        confirmed: userData.confirm_status,
+        confirmlink: url.resolve(sails.config.custom.baseUrl,'/email/confirm') + '?code=' + encodeURIComponent(userData.code),
+        lessoncount: await sails.helpers.users.countLessons.with({email: userData.email, timeframe: 7})
       };
       if (levelText) {
         mauticData.level = levelText;
@@ -258,6 +261,9 @@ module.exports = function defineJobsHook(sails) {
       }
       if (userData.name) {
         mauticData.fullname = userData.name;
+        if (userData.name.split(' ').length > 1) {
+          mauticData.firstname = userData.name.split(' ')[0]
+        }
       }
       updatedUser = await mauticConnector.contacts.editContact('PATCH',mauticData,userData.member_id)
         .catch((err) => {
@@ -472,8 +478,6 @@ module.exports = function defineJobsHook(sails) {
     userInfoQueue: userInfoQueue,
 
     loggingQueue: loggingQueue,
-
-    paymentEmailQueue: paymentEmailQueue,
 
     initialize: async function () {
       sails.log.info('Initializing Rozkalns\' hook (`Bull Jobs`) 😎')
