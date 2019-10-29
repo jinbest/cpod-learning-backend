@@ -248,6 +248,7 @@ module.exports = function defineJobsHook(sails) {
       let mauticData = {
         subscription: subscription,
         userid: userData.id,
+        email: userData.email,
         charset: charSet,
         confirmed: userData.confirm_status,
         confirmlink: `${sails.config.custom.baseUrl}/email/confirm?code=${encodeURIComponent(userData.code)}`,
