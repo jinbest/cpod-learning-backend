@@ -250,7 +250,7 @@ module.exports = function defineJobsHook(sails) {
         userid: userData.id,
         charset: charSet,
         confirmed: userData.confirm_status,
-        confirmlink: url.resolve(sails.config.custom.baseUrl,'/email/confirm') + '?code=' + encodeURIComponent(userData.code),
+        confirmlink: `${sails.config.custom.baseUrl}/email/confirm?code=${encodeURIComponent(userData.code)}`,
         lessoncount: await sails.helpers.users.countLessons.with({email: userData.email, timeframe: 7})
       };
       if (levelText) {
