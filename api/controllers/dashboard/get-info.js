@@ -104,6 +104,7 @@ module.exports = {
         userId: inputs.userId,
         name: userData.name,
         username: userData.username,
+        trial: userData.trial,
         userAvatar: userPreferences ? userPreferences['avatar_url'] : 'https://www.chinesepod.com/dash/img/brand/symbol-black-center.svg',
         lastLogin: userPreferences ? userPreferences['last_login'] : '',
         level: level,
