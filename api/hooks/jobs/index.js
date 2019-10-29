@@ -198,6 +198,11 @@ module.exports = function defineJobsHook(sails) {
         let mauticData = {
           subscription: subscription,
           userid: userData.id,
+          email: userData.email,
+          charset: charSet,
+          confirmed: userData.confirm_status,
+          confirmlink: `${sails.config.custom.baseUrl}/email/confirm?code=${encodeURIComponent(userData.code)}`,
+          lessoncount: await sails.helpers.users.countLessons.with({email: userData.email, timeframe: 7})
         }
         if (levelText) {
           mauticData.level = levelText;
@@ -223,6 +228,10 @@ module.exports = function defineJobsHook(sails) {
           email: userData.email,
           subscription: subscription,
           userid: userData.id,
+          charset: charSet,
+          confirmed: userData.confirm_status,
+          confirmlink: `${sails.config.custom.baseUrl}/email/confirm?code=${encodeURIComponent(userData.code)}`,
+          lessoncount: await sails.helpers.users.countLessons.with({email: userData.email, timeframe: 7})
         }
         if (levelText) {
           mauticData.level = levelText;
