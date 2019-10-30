@@ -202,8 +202,9 @@ module.exports = function defineJobsHook(sails) {
           charset: charSet,
           confirmed: userData.confirm_status,
           confirmlink: `${sails.config.custom.baseUrl}/email/confirm?code=${encodeURIComponent(userData.code)}`,
-          lessoncount: await sails.helpers.users.countLessons.with({email: userData.email, timeframe: 7})
-        }
+          lessoncount: await sails.helpers.users.countLessons.with({email: userData.email, timeframe: 7}),
+          subscribedate: userData.createdAt
+        };
         if (levelText) {
           mauticData.level = levelText;
         }
@@ -231,8 +232,10 @@ module.exports = function defineJobsHook(sails) {
           charset: charSet,
           confirmed: userData.confirm_status,
           confirmlink: `${sails.config.custom.baseUrl}/email/confirm?code=${encodeURIComponent(userData.code)}`,
-          lessoncount: await sails.helpers.users.countLessons.with({email: userData.email, timeframe: 7})
-        }
+          lessoncount: await sails.helpers.users.countLessons.with({email: userData.email, timeframe: 7}),
+          subscribedate: userData.createdAt
+        };
+
         if (levelText) {
           mauticData.level = levelText;
         }
@@ -248,6 +251,7 @@ module.exports = function defineJobsHook(sails) {
             sails.log.info('Error with New Mautic Lead Creation');
             done(new Error(err));
           });
+
         if(updatedUser) {
           userData = await User.updateOne({id:userData.id})
             .set({member_id: updatedUser.contact.id});
@@ -261,7 +265,8 @@ module.exports = function defineJobsHook(sails) {
         charset: charSet,
         confirmed: userData.confirm_status,
         confirmlink: `${sails.config.custom.baseUrl}/email/confirm?code=${encodeURIComponent(userData.code)}`,
-        lessoncount: await sails.helpers.users.countLessons.with({email: userData.email, timeframe: 7})
+        lessoncount: await sails.helpers.users.countLessons.with({email: userData.email, timeframe: 7}),
+        subscribedate: userData.createdAt
       };
       if (levelText) {
         mauticData.level = levelText;
@@ -296,7 +301,7 @@ module.exports = function defineJobsHook(sails) {
     let usersToUpdate = await User.find({
       where: {
         updatedAt: {
-          '>=': new Date(Date.now() - 15 * 60 * 1000)
+          '>=': new Date(Date.now() - 15 * 60 * 1000 - 4 * 60 * 60 * 1000 - 24 * 60 * 60 * 1000) // -1 day
         }
       },
       select: ['id']
@@ -308,7 +313,7 @@ module.exports = function defineJobsHook(sails) {
     let optionsToUpdate = await UserOptions.find({
       where: {
         updatedAt: {
-          '>=': new Date(Date.now() - 15 * 60 * 1000)
+          '>=': new Date(Date.now() - 15 * 60 * 1000 - 4 * 60 * 60 * 1000 - 24 * 60 * 60 * 1000) // -1 day
         }
       },
       select: ['user_id']
@@ -321,7 +326,7 @@ module.exports = function defineJobsHook(sails) {
     let subscriptionsToUpdate = await UserSiteLinks.find({
       where: {
         updatedAt: {
-          '>=': new Date(Date.now() - 15 * 60 * 1000)
+          '>=': new Date(Date.now() - 15 * 60 * 1000 - 4 * 60 * 60 * 1000 - 24 * 60 * 60 * 1000) // -1 day
         }
       },
       select: ['user_id']
