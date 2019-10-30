@@ -300,7 +300,7 @@ module.exports = function defineJobsHook(sails) {
     let usersToUpdate = await User.find({
       where: {
         updatedAt: {
-          '>=': new Date(Date.now() - 15 * 60 * 1000 - 5 * 60 * 60 * 1000 - 24 * 60 * 60 * 1000)
+          '>=': new Date(Date.now() - 15 * 60 * 1000 - 5 * 60 * 60 * 1000)
         }
       },
       select: ['id']
