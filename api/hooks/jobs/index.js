@@ -7,13 +7,13 @@
 
 module.exports = function defineJobsHook(sails) {
 
-  if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === 'staging') {
-    return {
-      initialize: async function () {
-        sails.log.info('Ignoring Rozkalns\' hook (`Bull Jobs`) 😎 for DEV')
-      }
-    }
-  }
+  // if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === 'staging') {
+  //   return {
+  //     initialize: async function () {
+  //       sails.log.info('Ignoring Rozkalns\' hook (`Bull Jobs`) 😎 for DEV')
+  //     }
+  //   }
+  // }
 
   var Queue = require('bull');
 
@@ -198,7 +198,7 @@ module.exports = function defineJobsHook(sails) {
         let mauticData = {
           subscription: subscription,
           userid: userData.id,
-          email: userData.email,
+          // email: userData.email,
           charset: charSet,
           confirmed: userData.confirm_status,
           confirmlink: `${sails.config.custom.baseUrl}/email/confirm?code=${encodeURIComponent(userData.code)}`,
@@ -216,7 +216,7 @@ module.exports = function defineJobsHook(sails) {
         }
         updatedUser = await mauticConnector.contacts.editContact('PATCH',mauticData,userData.member_id)
           .catch((err) => {
-            done(new Error(err))
+            done({mauticData: mauticData, err: err})
           });
 
         //If User Email is not unique - throw error - THIS SHOULD NEVER HAPPEN
@@ -248,8 +248,7 @@ module.exports = function defineJobsHook(sails) {
         sails.log.info(mauticData);
         updatedUser = await mauticConnector.contacts.createContact( mauticData )
           .catch((err) => {
-            sails.log.info('Error with New Mautic Lead Creation');
-            done(new Error(err));
+            done({mauticData: mauticData, err: err})
           });
 
         if(updatedUser) {
@@ -261,7 +260,7 @@ module.exports = function defineJobsHook(sails) {
       let mauticData = {
         subscription: subscription,
         userid: userData.id,
-        email: userData.email,
+        // email: userData.email,
         charset: charSet,
         confirmed: userData.confirm_status,
         confirmlink: `${sails.config.custom.baseUrl}/email/confirm?code=${encodeURIComponent(userData.code)}`,
@@ -282,7 +281,7 @@ module.exports = function defineJobsHook(sails) {
       }
       updatedUser = await mauticConnector.contacts.editContact('PATCH',mauticData,userData.member_id)
         .catch((err) => {
-          done(new Error(err))
+          done({mauticData: mauticData, err: err})
         });
     }
 
@@ -301,7 +300,7 @@ module.exports = function defineJobsHook(sails) {
     let usersToUpdate = await User.find({
       where: {
         updatedAt: {
-          '>=': new Date(Date.now() - 15 * 60 * 1000 - 4 * 60 * 60 * 1000 - 24 * 60 * 60 * 1000) // -1 day
+          '>=': new Date(Date.now() - 15 * 60 * 1000 - 5 * 60 * 60 * 1000)
         }
       },
       select: ['id']
@@ -313,7 +312,7 @@ module.exports = function defineJobsHook(sails) {
     let optionsToUpdate = await UserOptions.find({
       where: {
         updatedAt: {
-          '>=': new Date(Date.now() - 15 * 60 * 1000 - 4 * 60 * 60 * 1000 - 24 * 60 * 60 * 1000) // -1 day
+          '>=': new Date(Date.now() - 15 * 60 * 1000 - 5 * 60 * 60 * 1000)
         }
       },
       select: ['user_id']
@@ -321,19 +320,19 @@ module.exports = function defineJobsHook(sails) {
     optionsToUpdate.map(function (el) {
       userList.push(el.user_id)
     });
-
-
-    let subscriptionsToUpdate = await UserSiteLinks.find({
-      where: {
-        updatedAt: {
-          '>=': new Date(Date.now() - 15 * 60 * 1000 - 4 * 60 * 60 * 1000 - 24 * 60 * 60 * 1000) // -1 day
-        }
-      },
-      select: ['user_id']
-    });
-    subscriptionsToUpdate.map(function (el) {
-      userList.push(el.user_id)
-    });
+    //
+    //
+    // let subscriptionsToUpdate = await UserSiteLinks.find({
+    //   where: {
+    //     updatedAt: {
+    //       '>=': new Date(Date.now() - 15 * 60 * 1000 - 5 * 60 * 60 * 1000)
+    //     }
+    //   },
+    //   select: ['user_id']
+    // });
+    // subscriptionsToUpdate.map(function (el) {
+    //   userList.push(el.user_id)
+    // });
 
     sails.log.info(userList);
 
@@ -349,7 +348,8 @@ module.exports = function defineJobsHook(sails) {
   });
 
   triggerQueue.removeRepeatable('UpdateUsers',{repeat: {cron: '*/15 * * * *'}});
-  triggerQueue.add('UpdateUsers', {data:'Push User Data to Mautic every 15min'},{repeat: {cron: '*/15 * * * *'}});
+  triggerQueue.removeRepeatable('UpdateUsers',{repeat: {cron: '*/1 * * * *'}});
+  triggerQueue.add('UpdateUsers', {data:'Push User Data to Mautic every 15min'},{repeat: {cron: '*/1 * * * *'}});
 
 
 
