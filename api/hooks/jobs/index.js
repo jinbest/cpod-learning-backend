@@ -201,7 +201,7 @@ module.exports = function defineJobsHook(sails) {
           // email: userData.email,
           charset: charSet,
           confirmed: userData.confirm_status,
-          confirmlink: `${sails.config.custom.baseUrl}/email/confirm?code=${encodeURIComponent(userData.code)}`,
+          confirmlink: `https://www.chinesepod.com/email/confirm?code=${encodeURIComponent(userData.code)}`,
           lessoncount: await sails.helpers.users.countLessons.with({email: userData.email, timeframe: 7}),
           subscribedate: userData.createdAt
         };
@@ -231,7 +231,7 @@ module.exports = function defineJobsHook(sails) {
           userid: userData.id,
           charset: charSet,
           confirmed: userData.confirm_status,
-          confirmlink: `${sails.config.custom.baseUrl}/email/confirm?code=${encodeURIComponent(userData.code)}`,
+          confirmlink: `https://www.chinesepod.com/email/confirm?code=${encodeURIComponent(userData.code)}`,
           lessoncount: await sails.helpers.users.countLessons.with({email: userData.email, timeframe: 7}),
           subscribedate: userData.createdAt
         };
@@ -263,7 +263,7 @@ module.exports = function defineJobsHook(sails) {
         // email: userData.email,
         charset: charSet,
         confirmed: userData.confirm_status,
-        confirmlink: `${sails.config.custom.baseUrl}/email/confirm?code=${encodeURIComponent(userData.code)}`,
+        confirmlink: `https://www.chinesepod.com/email/confirm?code=${encodeURIComponent(userData.code)}`,
         lessoncount: await sails.helpers.users.countLessons.with({email: userData.email, timeframe: 7}),
         subscribedate: userData.createdAt
       };
@@ -320,19 +320,19 @@ module.exports = function defineJobsHook(sails) {
     optionsToUpdate.map(function (el) {
       userList.push(el.user_id)
     });
-    //
-    //
-    // let subscriptionsToUpdate = await UserSiteLinks.find({
-    //   where: {
-    //     updatedAt: {
-    //       '>=': new Date(Date.now() - 15 * 60 * 1000 - 5 * 60 * 60 * 1000)
-    //     }
-    //   },
-    //   select: ['user_id']
-    // });
-    // subscriptionsToUpdate.map(function (el) {
-    //   userList.push(el.user_id)
-    // });
+
+
+    let subscriptionsToUpdate = await UserSiteLinks.find({
+      where: {
+        updatedAt: {
+          '>=': new Date(Date.now() - 15 * 60 * 1000 - 5 * 60 * 60 * 1000)
+        }
+      },
+      select: ['user_id']
+    });
+    subscriptionsToUpdate.map(function (el) {
+      userList.push(el.user_id)
+    });
 
     sails.log.info(userList);
 
@@ -347,9 +347,42 @@ module.exports = function defineJobsHook(sails) {
     });
   });
 
+  triggerQueue.process('UpdateAllUsers',100,async function (job){
+    // Update Users to Mautic
+
+    let userList = [];
+
+    let usersToUpdate = await User.find({
+      where: {
+        updatedAt: {
+          '>=': '2019-01-01'
+        }
+      },
+      select: ['id']
+    });
+    usersToUpdate.map(function (el) {
+      userList.push(el.id)
+    });
+
+    Array.from(new Set(userList)).forEach(function (user) {
+      userInfoQueue.add('Update Data to Mautic', {
+          userId: user
+        },
+        {
+          attempts: 2,
+          timeout: 120000
+        })
+    });
+  });
+
   triggerQueue.removeRepeatable('UpdateUsers',{repeat: {cron: '*/15 * * * *'}});
   triggerQueue.removeRepeatable('UpdateUsers',{repeat: {cron: '*/1 * * * *'}});
-  triggerQueue.add('UpdateUsers', {data:'Push User Data to Mautic every 15min'},{repeat: {cron: '*/1 * * * *'}});
+  triggerQueue.add('UpdateUsers', {data:'Push User Data to Mautic every 15min'},{repeat: {cron: '*/15 * * * *'}});
+
+  triggerQueue.removeRepeatable('UpdateAllUsers',{repeat: {cron: '0 0 1 * *'}});
+  triggerQueue.removeRepeatable('UpdateAllUsers',{repeat: {cron: '0 1 * * *'}});
+  triggerQueue.add('UpdateAllUsers', {data:'Push All User Data to Mautic once a Month'},{repeat: {cron: '0 0 1 * * *'}});
+  triggerQueue.add('UpdateAllUsers', {data:'Push All User Data to Mautic once a Month'},{repeat: {cron: '0 1 * * * *'}});
 
 
 
