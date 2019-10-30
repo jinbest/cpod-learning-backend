@@ -7,13 +7,13 @@
 
 module.exports = function defineJobsHook(sails) {
 
-  if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === 'staging') {
-    return {
-      initialize: async function () {
-        sails.log.info('Ignoring Rozkalns\' hook (`Bull Jobs`) 😎 for DEV')
-      }
-    }
-  }
+  // if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === 'staging') {
+  //   return {
+  //     initialize: async function () {
+  //       sails.log.info('Ignoring Rozkalns\' hook (`Bull Jobs`) 😎 for DEV')
+  //     }
+  //   }
+  // }
 
   var Queue = require('bull');
 
@@ -37,8 +37,8 @@ module.exports = function defineJobsHook(sails) {
     sails.log.info('userInfoQueue job finished:', job.data.id ? job.data.id : job.data.email, result);
     cleanupQueue.add(job, {
       jobId: job.id,
-      // delete job after one week
-      delay: 1000 * 60 * 60 * 24 * 7,
+      // delete job after one day
+      delay: 1000 * 60 * 60 * 24,
       removeOnComplete: true
     });
   });
@@ -293,7 +293,6 @@ module.exports = function defineJobsHook(sails) {
   });
 
   triggerQueue.process('UpdateUsers',100,async function (job){
-    // Update Users to Mautic
 
     let userList = [];
 
@@ -311,8 +310,11 @@ module.exports = function defineJobsHook(sails) {
 
     let optionsToUpdate = await UserOptions.find({
       where: {
+        option_key: {
+          'in': ['level']
+        },
         updatedAt: {
-          '>=': new Date(Date.now() - 15 * 60 * 1000 - 4 * 60 * 60 * 1000)
+          '>=': new Date(Date.now() - 15 * 60 * 1000 - 5 * 60 * 60 * 1000)
         }
       },
       select: ['user_id']
@@ -325,7 +327,7 @@ module.exports = function defineJobsHook(sails) {
     let subscriptionsToUpdate = await UserSiteLinks.find({
       where: {
         updatedAt: {
-          '>=': new Date(Date.now() - 15 * 60 * 1000 - 4 * 60 * 60 * 1000)
+          '>=': new Date(Date.now() - 15 * 60 * 1000 - 5 * 60 * 60 * 1000)
         }
       },
       select: ['user_id']
@@ -334,20 +336,26 @@ module.exports = function defineJobsHook(sails) {
       userList.push(el.user_id)
     });
 
-    sails.log.info(userList);
+    sails.log.info({count: userList.length});
 
-    Array.from(new Set(userList)).forEach(function (user) {
-      userInfoQueue.add('Update Data to Mautic', {
-          userId: user
-        },
-        {
-          attempts: 2,
-          timeout: 120000
-        })
-    });
+    // if(userList.length > 400) {
+    //
+    //   return 'done'
+    //
+    // } else {
+    //   Array.from(new Set(userList)).forEach(function (user) {
+    //     userInfoQueue.add('Update Data to Mautic', {
+    //         userId: user
+    //       },
+    //       {
+    //         attempts: 2,
+    //         timeout: 120000
+    //       })
+    //   });
+    // }
   });
 
-  triggerQueue.process('UpdateAllUsers',100,async function (job){
+  triggerQueue.process('UpdateAllUsers',5,async function (job){
     // Update Users to Mautic
 
     let userList = [];
@@ -364,26 +372,31 @@ module.exports = function defineJobsHook(sails) {
       userList.push(el.id)
     });
 
-    Array.from(new Set(userList)).forEach(function (user) {
-      userInfoQueue.add('Update Data to Mautic', {
-          userId: user
-        },
-        {
-          attempts: 2,
-          timeout: 120000
-        })
-    });
+    sails.log.info(userList.length);
+
+    if(userList.length > 400) {
+      return 'done'
+    } else {
+      Array.from(new Set(userList)).forEach(function (user) {
+        userInfoQueue.add('Update Data to Mautic', {
+            userId: user
+          },
+          {
+            attempts: 2,
+            timeout: 120000
+          })
+      });
+    }
   });
 
   triggerQueue.removeRepeatable('UpdateUsers',{repeat: {cron: '*/15 * * * *'}});
   triggerQueue.removeRepeatable('UpdateUsers',{repeat: {cron: '*/1 * * * *'}});
   triggerQueue.add('UpdateUsers', {data:'Push User Data to Mautic every 15min'},{repeat: {cron: '*/15 * * * *'}});
 
-  triggerQueue.removeRepeatable('UpdateAllUsers',{repeat: {cron: '0 0 1 * *'}});
-  triggerQueue.removeRepeatable('UpdateAllUsers',{repeat: {cron: '0 1 * * *'}});
+  // triggerQueue.removeRepeatable('UpdateAllUsers',{repeat: {cron: '0 0 1 * *'}});
+  // triggerQueue.removeRepeatable('UpdateAllUsers',{repeat: {cron: '0 1 * * *'}});
   // triggerQueue.add('UpdateAllUsers', {data:'Push All User Data to Mautic once a Month'},{repeat: {cron: '0 0 1 * * *'}});
   // triggerQueue.add('UpdateAllUsers', {data:'Push All User Data to Mautic once a Month'},{repeat: {cron: '0 1 * * * *'}});
-  //
 
   loggingQueue.on('ready', () => {
     sails.log.info('loggingQueue ready!');
