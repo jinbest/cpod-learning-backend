@@ -8,7 +8,7 @@ module.exports = {
   exits: {
 
     success: {
-      description: 'New user account was created successfully.'
+      description: 'Health Check Passed'
     },
 
     invalid: {
