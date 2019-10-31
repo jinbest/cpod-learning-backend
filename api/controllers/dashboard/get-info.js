@@ -57,8 +57,8 @@ module.exports = {
 
     let access = await sails.helpers.users.getAccessType(inputs.userId);
 
-    if (!['premium', 'admin'].includes(access)) {
-    // if (true) {
+    // if (!['premium', 'admin'].includes(access)) {
+    if (true) {
       let lessonTimeline = await Logging.find({
         where: {
           id: userData.email,
