@@ -389,9 +389,9 @@ module.exports = function defineJobsHook(sails) {
   triggerQueue.add('UpdateUsers', {data:'Push User Data to Mautic every 15min'},{repeat: {cron: '*/15 * * * *'}});
 
   triggerQueue.removeRepeatable('UpdateAllUsers',{repeat: {cron: '0 0 1 * *'}});
-  triggerQueue.removeRepeatable('UpdateAllUsers',{repeat: {cron: '0 2 31 * *'}});
+  triggerQueue.removeRepeatable('UpdateAllUsers',{repeat: {cron: '0 6 31 * *'}});
   // triggerQueue.removeRepeatable('UpdateAllUsers',{repeat: {cron: '0 1 * * *'}});
-  triggerQueue.add('UpdateAllUsers', {data:'Push All User Data to Mautic once a Month'},{repeat: {cron: '0 2 31 * *'}});
+  triggerQueue.add('UpdateAllUsers', {data:'Push All User Data to Mautic once a Month'},{repeat: {cron: '0 6 31 * *'}});
   // triggerQueue.add('UpdateAllUsers', {data:'Push All User Data to Mautic once a Month'},{repeat: {cron: '0 1 * * *'}});
 
   loggingQueue.on('ready', () => {
