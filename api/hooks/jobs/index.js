@@ -221,7 +221,7 @@ module.exports = function defineJobsHook(sails) {
 
         //If User Email is not unique - throw error - THIS SHOULD NEVER HAPPEN
       } else if (mauticUser.total > 1) {
-        done(null, new Error('Email was not unique on Mautic'));
+        done(new Error('Email was not unique on Mautic'));
 
         //If User Does not Exist on Mautic - Create a new User record
       } else if (mauticUser.total == 0) {
