@@ -64,12 +64,7 @@ module.exports = {
       let lessonTimeline = await Logging.find({
         where: {
           id: userData.email,
-          accesslog_urlbase: {
-            'in': [
-              // 'https://chinesepod.com/lessons/api',
-              // 'https://www.chinesepod.com/lessons/api',
-              'https://www.chinesepod.com/api/v1/lessons/get-lesson'
-            ]},
+          accesslog_urlbase: 'https://www.chinesepod.com/api/v1/lessons/get-lesson',
           createdAt: {
             '>': new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
           }
