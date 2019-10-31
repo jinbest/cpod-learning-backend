@@ -69,7 +69,7 @@ module.exports = {
               'https://www.chinesepod.com/api/v1/lessons/get-lesson'
             ]},
           createdAt: {
-            '>': new Date(Date.now() - 1 * 24 * 60 * 60 * 1000)
+            '>': new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
           }
         },
         select: ['accesslog_url', 'createdAt'],
