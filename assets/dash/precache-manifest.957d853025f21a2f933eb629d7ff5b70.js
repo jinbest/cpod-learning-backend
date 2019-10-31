@@ -1,10 +1,10 @@
 self.__precacheManifest = [
   {
-    "revision": "2569aaea6eaaf8cd210db7f2fa016743",
-    "url": "/dash/fonts/nucleo-icons.2569aaea.woff"
+    "revision": "426439788ec5ba772cdf94057f6f4659",
+    "url": "/dash/fonts/nucleo-icons.42643978.woff2"
   },
   {
-    "revision": "b81563d18f2ed8c57233f7a834441da4",
+    "revision": "552b01625915bccdcdff6f2147e880e4",
     "url": "/dash/index.html"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = [
     "url": "/dash/js/chunk-ab7e0cd8-legacy.aa1a51be.js"
   },
   {
-    "revision": "1bfa0bd4f1e67f1e3c9a",
-    "url": "/dash/js/app-legacy.2f58bf08.js"
+    "revision": "a18967e380d2eba11504",
+    "url": "/dash/js/app-legacy.2750456b.js"
   },
   {
     "revision": "7e8f571bc49760fa8761",
@@ -52,8 +52,8 @@ self.__precacheManifest = [
     "url": "/dash/img/preloader.92d40536.svg"
   },
   {
-    "revision": "00d2977773069da3cd07cfca2c2482e6",
-    "url": "/dash/fonts/icomoon.00d29777.eot"
+    "revision": "eee8b9b975b37eef73cda9641feb8f6f",
+    "url": "/dash/fonts/icomoon.eee8b9b9.woff"
   },
   {
     "revision": "7e8f571bc49760fa8761",
@@ -68,8 +68,8 @@ self.__precacheManifest = [
     "url": "/dash/fonts/element-icons.2fad952a.woff"
   },
   {
-    "revision": "eee8b9b975b37eef73cda9641feb8f6f",
-    "url": "/dash/fonts/icomoon.eee8b9b9.woff"
+    "revision": "00d2977773069da3cd07cfca2c2482e6",
+    "url": "/dash/fonts/icomoon.00d29777.eot"
   },
   {
     "revision": "e9c8d6429bab307155971201fd98217b",
@@ -84,8 +84,8 @@ self.__precacheManifest = [
     "url": "/dash/img/icomoon.d9cfd664.svg"
   },
   {
-    "revision": "426439788ec5ba772cdf94057f6f4659",
-    "url": "/dash/fonts/nucleo-icons.42643978.woff2"
+    "revision": "2569aaea6eaaf8cd210db7f2fa016743",
+    "url": "/dash/fonts/nucleo-icons.2569aaea.woff"
   },
   {
     "revision": "61f77c5e336a55fb8dc944a0676c5f5b",
@@ -100,7 +100,7 @@ self.__precacheManifest = [
     "url": "/dash/img/brand-white.365fc333.svg"
   },
   {
-    "revision": "1bfa0bd4f1e67f1e3c9a",
+    "revision": "a18967e380d2eba11504",
     "url": "/dash/css/app.c6f2e166.css"
   }
 ];
