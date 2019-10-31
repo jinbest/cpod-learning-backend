@@ -82,19 +82,6 @@ module.exports = {
         lesson.saved = false;
       }
 
-      // sails.hooks.jobs.loggingQueue.add('Logging Requests',
-      //   {
-      //     userId: inputs.userId,
-      //     ip: this.req.ip,
-      //     url: `https://www.chinesepod.com/lessons/api?v3_id=${lesson.id}&type=lesson`,
-      //     sessionId: this.req.session.id,
-      //     urlbase: 'https://www.chinesepod.com/lessons/api',
-      //   },
-      //   {
-      //     attempts: 2,
-      //     timeout: 120000
-      //   });
-
       return lesson
     } else {
       throw 'invalid'

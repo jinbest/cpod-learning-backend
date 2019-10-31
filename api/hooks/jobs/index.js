@@ -7,7 +7,7 @@
 
 module.exports = function defineJobsHook(sails) {
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === 'staging') {
     return {
       initialize: async function () {
         sails.log.info('Ignoring Rozkalns\' hook (`Bull Jobs`) 😎 for DEV')
@@ -37,8 +37,8 @@ module.exports = function defineJobsHook(sails) {
     sails.log.info('userInfoQueue job finished:', job.data.id ? job.data.id : job.data.email, result);
     cleanupQueue.add(job, {
       jobId: job.id,
-      // delete job after one week
-      delay: 1000 * 60 * 60 * 24 * 7,
+      // delete job after one day
+      delay: 1000 * 60 * 60 * 24,
       removeOnComplete: true
     });
   });
@@ -52,13 +52,13 @@ module.exports = function defineJobsHook(sails) {
     userInfoJob.remove();
   });
 
-  userInfoQueue.process('Update Data to Mautic', 100,async function (job, done) {
+  userInfoQueue.process('Update Data to Mautic', 5,async function (job, done) {
 
     if (!job.data) {
       done( null, 'No job data')
     }
 
-    let userData = {};
+    let userData = null;
 
     if (!job.data.userId && job.data.email) {
       userData = await User.findOne({email: job.data.email});
@@ -75,10 +75,10 @@ module.exports = function defineJobsHook(sails) {
         userData: userData
       });
       done( null, 'No Such User on ChinesePod');
-      done();
+      return
     }
 
-    let userOptions = {};
+    let userOptions = null;
 
     try {
       userOptions = await UserOptions.findOne({
@@ -86,15 +86,21 @@ module.exports = function defineJobsHook(sails) {
         option_key: 'level'
       })
     } catch (e) {
-      sails.log.error(e);
       sails.hooks.bugsnag.notify(e);
       done( null, 'No Such User on ChinesePod')
     }
 
+    let userSiteLinks = [];
 
-    let userSiteLinks = await UserSiteLinks.find({user_id: userData.id, site_id: 2})
-      .sort('updatedAt DESC')
-      .limit(1);
+    try {
+      userSiteLinks = await UserSiteLinks.find({user_id: userData.id, site_id: 2})
+        .sort('updatedAt DESC')
+        .limit(1);
+    } catch (e) {
+      sails.hooks.bugsnag.notify(e);
+      done( null, 'No Such User on ChinesePod')
+    }
+
     let subscription = 'Free';
     if (userSiteLinks.length > 0) {
       switch (userSiteLinks[0].usertype_id) {
@@ -114,7 +120,7 @@ module.exports = function defineJobsHook(sails) {
     }
 
     let levelText = '';
-    if(userOptions) {
+    if(userOptions && userOptions.option_value) {
       switch (userOptions.option_value) {
         case 1:
           levelText = 'Newbie';
@@ -138,7 +144,13 @@ module.exports = function defineJobsHook(sails) {
       }
     }
     //TODO IMPLEMENT USER CHAR SETS
-    let userSettings = await UserSettings.findOne({user_id: userData.id});
+    let userSettings = null;
+
+    try {
+      userSettings = await UserSettings.findOne({user_id: userData.id});
+    } catch (e) {
+
+    }
 
     let charSet = 'simplified';
 
@@ -186,7 +198,13 @@ module.exports = function defineJobsHook(sails) {
         let mauticData = {
           subscription: subscription,
           userid: userData.id,
-        }
+          email: userData.email,
+          charset: charSet,
+          confirmed: userData.confirm_status,
+          confirmlink: `https://www.chinesepod.com/email/confirm?code=${encodeURIComponent(userData.code)}`,
+          lessoncount: await sails.helpers.users.countLessons.with({email: userData.email, timeframe: 7}),
+          subscribedate: userData.createdAt
+        };
         if (levelText) {
           mauticData.level = levelText;
         }
@@ -198,7 +216,7 @@ module.exports = function defineJobsHook(sails) {
         }
         updatedUser = await mauticConnector.contacts.editContact('PATCH',mauticData,userData.member_id)
           .catch((err) => {
-            done(new Error(err))
+            done({mauticData: mauticData, err: err})
           });
 
         //If User Email is not unique - throw error - THIS SHOULD NEVER HAPPEN
@@ -211,7 +229,13 @@ module.exports = function defineJobsHook(sails) {
           email: userData.email,
           subscription: subscription,
           userid: userData.id,
-        }
+          charset: charSet,
+          confirmed: userData.confirm_status,
+          confirmlink: `https://www.chinesepod.com/email/confirm?code=${encodeURIComponent(userData.code)}`,
+          lessoncount: await sails.helpers.users.countLessons.with({email: userData.email, timeframe: 7}),
+          subscribedate: userData.createdAt
+        };
+
         if (levelText) {
           mauticData.level = levelText;
         }
@@ -224,9 +248,9 @@ module.exports = function defineJobsHook(sails) {
         sails.log.info(mauticData);
         updatedUser = await mauticConnector.contacts.createContact( mauticData )
           .catch((err) => {
-            sails.log.info('Error with New Mautic Lead Creation');
-            done(new Error(err));
+            done({mauticData: mauticData, err: err})
           });
+
         if(updatedUser) {
           userData = await User.updateOne({id:userData.id})
             .set({member_id: updatedUser.contact.id});
@@ -236,7 +260,12 @@ module.exports = function defineJobsHook(sails) {
       let mauticData = {
         subscription: subscription,
         userid: userData.id,
-        charset: charSet
+        email: userData.email,
+        charset: charSet,
+        confirmed: userData.confirm_status,
+        confirmlink: `https://www.chinesepod.com/email/confirm?code=${encodeURIComponent(userData.code)}`,
+        lessoncount: await sails.helpers.users.countLessons.with({email: userData.email, timeframe: 7}),
+        subscribedate: userData.createdAt
       };
       if (levelText) {
         mauticData.level = levelText;
@@ -246,10 +275,13 @@ module.exports = function defineJobsHook(sails) {
       }
       if (userData.name) {
         mauticData.fullname = userData.name;
+        if (userData.name.split(' ').length > 1) {
+          mauticData.firstname = userData.name.split(' ')[0]
+        }
       }
       updatedUser = await mauticConnector.contacts.editContact('PATCH',mauticData,userData.member_id)
         .catch((err) => {
-          done(new Error(err))
+          done({mauticData: mauticData, err: err})
         });
     }
 
@@ -261,14 +293,13 @@ module.exports = function defineJobsHook(sails) {
   });
 
   triggerQueue.process('UpdateUsers',100,async function (job){
-    // Update Users to Mautic
 
     let userList = [];
 
     let usersToUpdate = await User.find({
       where: {
         updatedAt: {
-          '>=': new Date(Date.now() - 15 * 60 * 1000)
+          '>=': new Date(Date.now() - 15 * 60 * 1000 - 5 * 60 * 60 * 1000)
         }
       },
       select: ['id']
@@ -279,8 +310,11 @@ module.exports = function defineJobsHook(sails) {
 
     let optionsToUpdate = await UserOptions.find({
       where: {
+        option_key: {
+          'in': ['level']
+        },
         updatedAt: {
-          '>=': new Date(Date.now() - 15 * 60 * 1000)
+          '>=': new Date(Date.now() - 15 * 60 * 1000 - 5 * 60 * 60 * 1000)
         }
       },
       select: ['user_id']
@@ -293,7 +327,7 @@ module.exports = function defineJobsHook(sails) {
     let subscriptionsToUpdate = await UserSiteLinks.find({
       where: {
         updatedAt: {
-          '>=': new Date(Date.now() - 15 * 60 * 1000)
+          '>=': new Date(Date.now() - 15 * 60 * 1000 - 5 * 60 * 60 * 1000)
         }
       },
       select: ['user_id']
@@ -302,23 +336,63 @@ module.exports = function defineJobsHook(sails) {
       userList.push(el.user_id)
     });
 
-    sails.log.info(userList);
+    sails.log.info({count: userList.length});
+
+    if(userList.length < 400) {
+      Array.from(new Set(userList)).forEach(function (user) {
+        userInfoQueue.add('Update Data to Mautic', {
+            userId: user
+          },
+          {
+            attempts: 2,
+            timeout: 120000
+          })
+      });
+    }
+  });
+
+  triggerQueue.process('UpdateAllUsers',5,async function (job){
+    // Update Users to Mautic
+
+    let userList = [];
+
+    let usersToUpdate = await User.find({
+      where: {
+        member_id: {
+          '!': null
+        },
+        updatedAt: {
+          '>=': '2019-10-01'
+        }
+      },
+      select: ['id']
+    });
+    usersToUpdate.map(function (el) {
+      userList.push(el.id)
+    });
+
+    sails.log.info(userList.length);
 
     Array.from(new Set(userList)).forEach(function (user) {
       userInfoQueue.add('Update Data to Mautic', {
           userId: user
         },
         {
-          attempts: 2,
+          attempts: 1,
           timeout: 120000
         })
     });
   });
 
   triggerQueue.removeRepeatable('UpdateUsers',{repeat: {cron: '*/15 * * * *'}});
+  triggerQueue.removeRepeatable('UpdateUsers',{repeat: {cron: '*/1 * * * *'}});
   triggerQueue.add('UpdateUsers', {data:'Push User Data to Mautic every 15min'},{repeat: {cron: '*/15 * * * *'}});
 
-
+  triggerQueue.removeRepeatable('UpdateAllUsers',{repeat: {cron: '0 0 1 * *'}});
+  triggerQueue.removeRepeatable('UpdateAllUsers',{repeat: {cron: '0 6 31 * *'}});
+  // triggerQueue.removeRepeatable('UpdateAllUsers',{repeat: {cron: '0 1 * * *'}});
+  triggerQueue.add('UpdateAllUsers', {data:'Push All User Data to Mautic once a Month'},{repeat: {cron: '0 6 31 * *'}});
+  // triggerQueue.add('UpdateAllUsers', {data:'Push All User Data to Mautic once a Month'},{repeat: {cron: '0 1 * * *'}});
 
   loggingQueue.on('ready', () => {
     sails.log.info('loggingQueue ready!');
@@ -390,7 +464,7 @@ module.exports = function defineJobsHook(sails) {
     failedPayments.forEach(function (payment) {
       if (payment.user_id && payment.user_id !== 0) {
         paymentEmailQueue.add('SendEmail', {
-          payment
+            payment
           },
           {
             attempts: 2,
@@ -460,8 +534,6 @@ module.exports = function defineJobsHook(sails) {
     userInfoQueue: userInfoQueue,
 
     loggingQueue: loggingQueue,
-
-    paymentEmailQueue: paymentEmailQueue,
 
     initialize: async function () {
       sails.log.info('Initializing Rozkalns\' hook (`Bull Jobs`) 😎')
