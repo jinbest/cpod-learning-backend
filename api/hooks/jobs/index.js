@@ -336,7 +336,7 @@ module.exports = function defineJobsHook(sails) {
       userList.push(el.user_id)
     });
 
-    sails.log.info({count: userList.length});
+    sails.log.error({count: userList.length});
 
     // if(userList.length > 400) {
     //
