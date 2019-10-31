@@ -163,9 +163,16 @@ will be disabled and/or hidden in the UI.
             if (!req.session.userId) { return next(); }
 
             // Otherwise, look up the logged-in user.
-            var loggedInUser = await User.findOne({
-              id: req.session.userId
-            });
+            var loggedInUser = null;
+            try {
+              loggedInUser = await User.findOne({
+                id: req.session.userId
+              });
+            } catch (e) {
+              sails.log.error({id: req.session.userId, error: e});
+              sails.hooks.bugsnag.notify(e)
+            }
+
 
             // If the logged-in user has gone missing, log a warning,
             // wipe the user id from the requesting user agent's session,
