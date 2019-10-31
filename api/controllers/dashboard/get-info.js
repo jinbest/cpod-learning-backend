@@ -48,7 +48,7 @@ module.exports = {
     let charData = await UserOptions.find({user_id: inputs.userId, option_key: 'charSet'}).sort('updatedAt DESC').limit(1);
 
     if (charData.length > 0) {
-      charSet = charData[0]['option_value'] ? charSet[0]['option_value'] : 'simplified'
+      charSet = charData[0]['option_value'] ? charData[0]['option_value'] : 'simplified'
     } else {
       returnData.charSetUnset = true;
     }
@@ -60,7 +60,6 @@ module.exports = {
     returnData.upgradePath = 0;
 
     if (!['premium', 'admin'].includes(access)) {
-    // if (true) {
       let lessonTimeline = await Logging.find({
         where: {
           id: userData.email,
