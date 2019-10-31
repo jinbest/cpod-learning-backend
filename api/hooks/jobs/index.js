@@ -52,7 +52,7 @@ module.exports = function defineJobsHook(sails) {
     userInfoJob.remove();
   });
 
-  userInfoQueue.process('Update Data to Mautic', 100,async function (job, done) {
+  userInfoQueue.process('Update Data to Mautic', 5,async function (job, done) {
 
     if (!job.data) {
       done( null, 'No job data')
@@ -358,8 +358,11 @@ module.exports = function defineJobsHook(sails) {
 
     let usersToUpdate = await User.find({
       where: {
+        member_id: {
+          '!': null
+        },
         updatedAt: {
-          '>=': '2019-01-01'
+          '>=': '2019-10-01'
         }
       },
       select: ['id']
@@ -370,28 +373,24 @@ module.exports = function defineJobsHook(sails) {
 
     sails.log.info(userList.length);
 
-    if(userList.length > 400) {
-      return 'done'
-    } else {
-      Array.from(new Set(userList)).forEach(function (user) {
-        userInfoQueue.add('Update Data to Mautic', {
-            userId: user
-          },
-          {
-            attempts: 2,
-            timeout: 120000
-          })
-      });
-    }
+    Array.from(new Set(userList)).forEach(function (user) {
+      userInfoQueue.add('Update Data to Mautic', {
+          userId: user
+        },
+        {
+          attempts: 1,
+          timeout: 120000
+        })
+    });
   });
 
   triggerQueue.removeRepeatable('UpdateUsers',{repeat: {cron: '*/15 * * * *'}});
   triggerQueue.removeRepeatable('UpdateUsers',{repeat: {cron: '*/1 * * * *'}});
   triggerQueue.add('UpdateUsers', {data:'Push User Data to Mautic every 15min'},{repeat: {cron: '*/15 * * * *'}});
 
-  // triggerQueue.removeRepeatable('UpdateAllUsers',{repeat: {cron: '0 0 1 * *'}});
+  triggerQueue.removeRepeatable('UpdateAllUsers',{repeat: {cron: '0 0 1 * *'}});
   // triggerQueue.removeRepeatable('UpdateAllUsers',{repeat: {cron: '0 1 * * *'}});
-  // triggerQueue.add('UpdateAllUsers', {data:'Push All User Data to Mautic once a Month'},{repeat: {cron: '0 0 1 * * *'}});
+  triggerQueue.add('UpdateAllUsers', {data:'Push All User Data to Mautic once a Month'},{repeat: {cron: '0 0 1 * * *'}});
   // triggerQueue.add('UpdateAllUsers', {data:'Push All User Data to Mautic once a Month'},{repeat: {cron: '0 1 * * * *'}});
 
   loggingQueue.on('ready', () => {
