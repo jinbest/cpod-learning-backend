@@ -81,10 +81,8 @@ module.exports = function defineArenaHook(sails) {
               disableListen: true
             });
 
+          // expressApp.get('/arena-job-queue/:unused?/:unused?/:unused?', function (req, res, next) {
           expressApp.get('/arena-job-queue', function (req, res, next) {
-
-            sails.log.info({req: req.session, joint: !req.session || !req.session.userId || !req.session.userId === 1016995, sessionExists: req.session, isUgis: req.session.userId === 1016995, id: req.session.userId});
-
             if (!req.session || !req.session.userId ) {
               return res.redirect('/login');
             }//•
