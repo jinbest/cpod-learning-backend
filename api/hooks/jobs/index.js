@@ -198,7 +198,7 @@ module.exports = function defineJobsHook(sails) {
         let mauticData = {
           subscription: subscription,
           userid: userData.id,
-          // email: userData.email,
+          email: userData.email,
           charset: charSet,
           confirmed: userData.confirm_status,
           confirmlink: `https://www.chinesepod.com/email/confirm?code=${encodeURIComponent(userData.code)}`,
@@ -260,7 +260,7 @@ module.exports = function defineJobsHook(sails) {
       let mauticData = {
         subscription: subscription,
         userid: userData.id,
-        // email: userData.email,
+        email: userData.email,
         charset: charSet,
         confirmed: userData.confirm_status,
         confirmlink: `https://www.chinesepod.com/email/confirm?code=${encodeURIComponent(userData.code)}`,
