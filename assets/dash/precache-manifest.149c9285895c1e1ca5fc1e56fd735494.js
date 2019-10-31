@@ -44,12 +44,12 @@ self.__precacheManifest = [
     "url": "/dash/img/qing-wen.e4b6e6c5.jpg"
   },
   {
-    "revision": "3a8346136c72c4d22ea5d15fd1d84417",
+    "revision": "34c5ac25c3f6b90d08f68eddf4f8ade9",
     "url": "/dash/index.html"
   },
   {
-    "revision": "3f541b77315af7b4d912",
-    "url": "/dash/js/app.6c2a3969.js"
+    "revision": "c172c3ca5bd631f254d9",
+    "url": "/dash/js/app.36db77d9.js"
   },
   {
     "revision": "f9b78d93af8ccff72e6e853d649a19cd",
@@ -92,8 +92,8 @@ self.__precacheManifest = [
     "url": "/dash/img/brand/logo.png"
   },
   {
-    "revision": "365fc333c183bf39ef777a760ca718cf",
-    "url": "/dash/img/brand/brand-white.svg"
+    "revision": "61f77c5e336a55fb8dc944a0676c5f5b",
+    "url": "/dash/img/brand/brand.svg"
   },
   {
     "revision": "365fc333c183bf39ef777a760ca718cf",
@@ -104,8 +104,8 @@ self.__precacheManifest = [
     "url": "/dash/img/brand.61f77c5e.svg"
   },
   {
-    "revision": "61f77c5e336a55fb8dc944a0676c5f5b",
-    "url": "/dash/img/brand/brand.svg"
+    "revision": "365fc333c183bf39ef777a760ca718cf",
+    "url": "/dash/img/brand/brand-white.svg"
   },
   {
     "revision": "71a94f831411548a0c3e531a248e922a",
@@ -124,6 +124,10 @@ self.__precacheManifest = [
     "url": "/dash/fonts/nucleo-icons.f82ec6ba.ttf"
   },
   {
+    "revision": "a158e68b2ab402fc3f58861935f523ac",
+    "url": "/dash/img/brand/green.png"
+  },
+  {
     "revision": "f9b78d93af8ccff72e6e853d649a19cd",
     "url": "/dash/img/brand/symbol.svg"
   },
@@ -134,10 +138,6 @@ self.__precacheManifest = [
   {
     "revision": "776e8317ed66d1e2ec7ef1853377375b",
     "url": "/dash/img/brand/white.png"
-  },
-  {
-    "revision": "a158e68b2ab402fc3f58861935f523ac",
-    "url": "/dash/img/brand/green.png"
   },
   {
     "revision": "2569aaea6eaaf8cd210db7f2fa016743",
@@ -180,7 +180,7 @@ self.__precacheManifest = [
     "url": "/dash/css/chunk-vendors.ca920566.css"
   },
   {
-    "revision": "3f541b77315af7b4d912",
+    "revision": "c172c3ca5bd631f254d9",
     "url": "/dash/css/app.c6f2e166.css"
   },
   {
