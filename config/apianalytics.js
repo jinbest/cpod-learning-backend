@@ -5,10 +5,20 @@ module.exports.apianalytics = {
       '/api/v1/webhooks/mautic/update'
     ];
 
+    let userId = null;
+
+    if (req.session.userId) {
+      if (req.session.userId.data) {
+        userId = req.session.userId.data
+      } else {
+        userId = req.session.userId
+      }
+    }
+
     if(!ignore.includes(req.path)) {
       sails.hooks.jobs.loggingQueue.add('Logging Requests',
         {
-          userId: req.session.userId.data ? req.session.userId.data : req.session.userId,
+          userId: userId,
           ip: req.ip,
           url: `https://www.chinesepod.com${req.url}`,
           sessionId: req.session.id,
