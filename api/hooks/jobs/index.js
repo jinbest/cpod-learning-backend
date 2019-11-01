@@ -13,22 +13,21 @@ module.exports = function defineJobsHook(sails) {
         sails.log.info('Ignoring Rozkalns\' hook (`Bull Jobs`) 😎 for DEV')
       }
     }
+  } else {
+    var Queue = require('bull');
+
+    let loggingQueue = require('./loggingQueue.js');
+
+    let userInfoQueue = require('./userQueue.js');
+
+    return {
+      userInfoQueue: userInfoQueue,
+
+      loggingQueue: loggingQueue,
+
+      initialize: async function () {
+        sails.log.info('Initializing Rozkalns\' hook (`Bull Jobs`) 😎')
+      }
+    };
   }
-
-  var Queue = require('bull');
-
-  let loggingQueue = require('./loggingQueue.js');
-
-  let userInfoQueue = require('./userQueue.js');
-
-  return {
-    userInfoQueue: userInfoQueue,
-
-    loggingQueue: loggingQueue,
-
-    initialize: async function () {
-      sails.log.info('Initializing Rozkalns\' hook (`Bull Jobs`) 😎')
-    }
-  };
-
 };

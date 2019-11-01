@@ -405,10 +405,12 @@ triggerQueue.process('UpdateAllUsers',1,async function (job){
 
 triggerQueue.removeRepeatable('UpdateUsers',{repeat: {cron: '*/15 * * * *'}});
 triggerQueue.removeRepeatable('UpdateUsersWithNoID',{repeat: {cron: '15 * * * *'}});
+triggerQueue.removeRepeatable('UpdateUsersWithNoID',{repeat: {cron: '15 4 * * *'}});
 // triggerQueue.removeRepeatable('UpdateUsers',{repeat: {cron: '*/1 * * * *'}});
 
 triggerQueue.add('UpdateUsers', {data:'Push User Data to Mautic every 15min'},{repeat: {cron: '*/15 * * * *'}});
 triggerQueue.add('UpdateUsersWithNoID', {data:'Push Missing User Data to Mautic every hour'},{repeat: {cron: '15 * * * *'}});
+triggerQueue.add('UpdateUsersWithNoID', {data:'Push Missing User Data to Mautic every hour'},{repeat: {cron: '15 4 * * *'}});
 
 // triggerQueue.removeRepeatable('UpdateAllUsers',{repeat: {cron: '0 0 1 * *'}});
 triggerQueue.removeRepeatable('UpdateAllUsers',{repeat: {cron: '5 4 * * 7'}});
