@@ -196,7 +196,7 @@ userInfoQueue.process('Update Data to Mautic', 5,async function (job, done) {
         .catch(async(err) => {
           await MauticErrorLogs.create({
             userId: userData.id,
-            error: `${err}`
+            error: JSON.stringify({mauticData: mauticData, err:`${err}`})
           });
           done({mauticData: mauticData, err: err})
         });
@@ -232,7 +232,7 @@ userInfoQueue.process('Update Data to Mautic', 5,async function (job, done) {
         .catch(async(err) => {
           await MauticErrorLogs.create({
             userId: userData.id,
-            error: `${err}`
+            error: JSON.stringify({mauticData: mauticData, err:`${err}`})
           });
           done({mauticData: mauticData, err: err})
         });
@@ -269,7 +269,7 @@ userInfoQueue.process('Update Data to Mautic', 5,async function (job, done) {
       .catch(async(err) => {
         await MauticErrorLogs.create({
           userId: userData.id,
-          error: `${err}`
+          error: JSON.stringify({mauticData: mauticData, err:`${err}`})
         });
         done({mauticData: mauticData, err: err})
       });
