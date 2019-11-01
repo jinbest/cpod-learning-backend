@@ -282,7 +282,7 @@ userInfoQueue.process('Update Data to Mautic', 5,async function (job, done) {
   }
 });
 
-triggerQueue.process('UpdateUsers',100,async function (job){
+triggerQueue.process('UpdateUsers',1,async function (job){
 
   let userList = [];
 
@@ -341,7 +341,7 @@ triggerQueue.process('UpdateUsers',100,async function (job){
   }
 });
 
-triggerQueue.process('UpdateAllUsers',5,async function (job){
+triggerQueue.process('UpdateAllUsers',1,async function (job){
   // Update Users to Mautic
 
   let userList = [];
@@ -376,12 +376,12 @@ triggerQueue.process('UpdateAllUsers',5,async function (job){
 
 triggerQueue.removeRepeatable('UpdateUsers',{repeat: {cron: '*/15 * * * *'}});
 triggerQueue.removeRepeatable('UpdateUsers',{repeat: {cron: '*/1 * * * *'}});
-// triggerQueue.add('UpdateUsers', {data:'Push User Data to Mautic every 15min'},{repeat: {cron: '*/15 * * * *'}});
+triggerQueue.add('UpdateUsers', {data:'Push User Data to Mautic every 15min'},{repeat: {cron: '*/15 * * * *'}});
 
 triggerQueue.removeRepeatable('UpdateAllUsers',{repeat: {cron: '0 0 1 * *'}});
 triggerQueue.removeRepeatable('UpdateAllUsers',{repeat: {cron: '0 6 31 * *'}});
 // triggerQueue.removeRepeatable('UpdateAllUsers',{repeat: {cron: '0 1 * * *'}});
-// triggerQueue.add('UpdateAllUsers', {data:'Push All User Data to Mautic once a Month'},{repeat: {cron: '0 6 31 * *'}});
+// triggerQueue.add('UpdateAllUsers', {data:'Push All User Data to Mautic once a Month'},{repeat: {cron: '0 7 1 * *'}});
 // triggerQueue.add('UpdateAllUsers', {data:'Push All User Data to Mautic once a Month'},{repeat: {cron: '0 1 * * *'}});
 
 module.exports = userInfoQueue;
