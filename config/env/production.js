@@ -22,7 +22,7 @@
 
 var bugsnag = require('@bugsnag/js');
 var bugsnagExpress = require('@bugsnag/plugin-express');
-let pkjson = require('../package.json');
+let pkjson = require('../../package.json');
 var bugsnagClient = bugsnag({ apiKey: 'bbd87dc5093af09c41acfb4fc805c784', appVersion: pkjson.version });
 bugsnagClient.use(bugsnagExpress);
 
