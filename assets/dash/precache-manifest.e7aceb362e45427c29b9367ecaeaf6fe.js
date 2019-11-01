@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/dash/fonts/nucleo-icons.2569aaea.woff"
   },
   {
-    "revision": "1d651c94a0e388f773b8fa385fa943ea",
+    "revision": "19ad7f02f53d18c3e467bf85191a8d31",
     "url": "/dash/index.html"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = [
     "url": "/dash/js/chunk-ab7e0cd8-legacy.aa1a51be.js"
   },
   {
-    "revision": "262cd5e94e285f83d98e",
-    "url": "/dash/js/app-legacy.a59b8b7b.js"
+    "revision": "13f97bead5337ef97e5b",
+    "url": "/dash/js/app-legacy.ec20e5fb.js"
   },
   {
     "revision": "7e8f571bc49760fa8761",
@@ -100,7 +100,7 @@ self.__precacheManifest = [
     "url": "/dash/img/brand-white.365fc333.svg"
   },
   {
-    "revision": "262cd5e94e285f83d98e",
+    "revision": "13f97bead5337ef97e5b",
     "url": "/dash/css/app.faa6c9f6.css"
   }
 ];
