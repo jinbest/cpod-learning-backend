@@ -72,6 +72,21 @@ module.exports = Object.assign({}, PRODUCTION_CONFIG, {
     level: 'info'
   },
 
+  http: {
+    middleware: {
+      order: [
+        'cookieParser',
+        'session',
+        'bodyParser',
+        'compress',
+        'poweredBy',
+        'router',
+        'www',
+        'favicon',
+      ],
+    }
+  },
+
   security: Object.assign({}, PRODUCTION_CONFIG.security, {
     cors: {
       allRoutes: true,
