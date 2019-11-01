@@ -16,9 +16,9 @@ module.exports.policies = {
   'dash/*': 'is-logged-in',
   'podcasts/*': true,
 
-  // 'dashboard/*': 'is-authenticated',
-  // 'lessons/*': 'is-authenticated',
-  // 'exercises/*': 'is-authenticated',
+  'dashboard/*': 'is-authenticated',
+  'lessons/*': 'is-authenticated',
+  'exercises/*': 'is-authenticated',
   // 'token/check': 'is-authenticated',
 
   // // Bypass the `is-logged-in` policy for:

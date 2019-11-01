@@ -39,7 +39,8 @@ module.exports = {
     level_id: {
       type: "number",
       columnType: "int",
-      isInteger: true
+      isInteger: true,
+      allowNull: true
     },
     image: {
       type: "string",
