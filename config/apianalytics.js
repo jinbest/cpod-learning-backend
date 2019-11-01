@@ -8,7 +8,7 @@ module.exports.apianalytics = {
     if(!ignore.includes(req.path)) {
       sails.hooks.jobs.loggingQueue.add('Logging Requests',
         {
-          userId: req.session.userId,
+          userId: req.session.userId.data ? req.session.userId.data : req.session.userId,
           ip: req.ip,
           url: `https://www.chinesepod.com${req.url}`,
           sessionId: req.session.id,
