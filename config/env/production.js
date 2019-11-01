@@ -16,8 +16,17 @@
  * > don't add private/sensitive data (like API secrets / db passwords) to this file!
  *
  * For more best practices and tips, see:
- * https://sailsjs.com/docs/concepts/deployment
+ * https://sailsjs.com/docs/concepts/deployment0
  */
+
+
+var bugsnag = require('@bugsnag/js');
+var bugsnagExpress = require('@bugsnag/plugin-express');
+let pkjson = require('../package.json');
+var bugsnagClient = bugsnag({ apiKey: 'bbd87dc5093af09c41acfb4fc805c784', appVersion: pkjson.version });
+bugsnagClient.use(bugsnagExpress);
+
+var bugsnagmiddleware = bugsnagClient.getPlugin('express');
 
 module.exports = {
 
@@ -313,6 +322,46 @@ module.exports = {
      *                                                                          *
      ***************************************************************************/
     cache: 60 * 60 * 1000, // One hour
+
+    middleware: {
+
+      /***************************************************************************
+       *                                                                          *
+       * The order in which middleware should be run for HTTP requests.           *
+       * (This Sails app's routes are handled by the "router" middleware below.)  *
+       *                                                                          *
+       ***************************************************************************/
+
+      order: [
+        'requestHandler',
+        'cookieParser',
+        'session',
+        'bodyParser',
+        'errorHandler',
+        'compress',
+        'poweredBy',
+        'router',
+        'www',
+        'favicon',
+      ],
+
+
+      /***************************************************************************
+       *                                                                          *
+       * The body parser that will handle incoming multipart HTTP requests.       *
+       *                                                                          *
+       * https://sailsjs.com/config/http#?customizing-the-body-parser             *
+       *                                                                          *
+       ***************************************************************************/
+
+      bodyParser: (function _configureBodyParser(){
+        var skipper = require('skipper');
+        var middlewareFn = skipper({ strict: true });
+        return middlewareFn;
+      })(),
+      requestHandler: bugsnagmiddleware.requestHandler,
+      errorHandler: bugsnagmiddleware.errorHandler,
+    },
 
     /***************************************************************************
      *                                                                          *
