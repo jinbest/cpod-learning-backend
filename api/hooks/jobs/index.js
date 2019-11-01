@@ -7,13 +7,13 @@
 
 module.exports = function defineJobsHook(sails) {
 
-  // if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === 'staging') {
-  //   return {
-  //     initialize: async function () {
-  //       sails.log.info('Ignoring Rozkalns\' hook (`Bull Jobs`) 😎 for DEV')
-  //     }
-  //   }
-  // }
+  if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === 'staging') {
+    return {
+      initialize: async function () {
+        sails.log.info('Ignoring Rozkalns\' hook (`Bull Jobs`) 😎 for DEV')
+      }
+    }
+  }
 
   var Queue = require('bull');
 
