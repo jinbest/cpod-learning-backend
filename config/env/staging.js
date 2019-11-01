@@ -68,6 +68,10 @@ module.exports = Object.assign({}, PRODUCTION_CONFIG, {
     //--------------------------------------------------------------------------
   }),
 
+  log: {
+    level: 'info'
+  },
+
   security: Object.assign({}, PRODUCTION_CONFIG.security, {
     cors: {
       allRoutes: true,
