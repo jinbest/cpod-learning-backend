@@ -44,12 +44,12 @@ self.__precacheManifest = [
     "url": "/dash/img/qing-wen.e4b6e6c5.jpg"
   },
   {
-    "revision": "82fe94f46a6176eb765a6603f869629e",
+    "revision": "9ba0e7fb36cdcc07c8b623853e72003f",
     "url": "/dash/index.html"
   },
   {
-    "revision": "6903cc1957b26f2a68a7",
-    "url": "/dash/js/app.f65da95c.js"
+    "revision": "3740c6c36a8bb805dd98",
+    "url": "/dash/js/app.20c064a5.js"
   },
   {
     "revision": "f9b78d93af8ccff72e6e853d649a19cd",
@@ -68,12 +68,12 @@ self.__precacheManifest = [
     "url": "/dash/img/nucleo-icons.0b8a30b1.svg"
   },
   {
-    "revision": "4bc57bd7c9fd6fe19a5cba5c2b57b0fb",
-    "url": "/dash/img/preloader-square.svg"
-  },
-  {
     "revision": "a070ebf69a7fcaea3c17fbbc56deebac",
     "url": "/dash/img/logo.a070ebf6.png"
+  },
+  {
+    "revision": "4bc57bd7c9fd6fe19a5cba5c2b57b0fb",
+    "url": "/dash/img/preloader-square.svg"
   },
   {
     "revision": "80e1be1af3ceb667c97f030110e2023e",
@@ -92,8 +92,8 @@ self.__precacheManifest = [
     "url": "/dash/img/brand/logo.png"
   },
   {
-    "revision": "365fc333c183bf39ef777a760ca718cf",
-    "url": "/dash/img/brand/brand-white.svg"
+    "revision": "61f77c5e336a55fb8dc944a0676c5f5b",
+    "url": "/dash/img/brand/brand.svg"
   },
   {
     "revision": "365fc333c183bf39ef777a760ca718cf",
@@ -104,8 +104,8 @@ self.__precacheManifest = [
     "url": "/dash/img/brand.61f77c5e.svg"
   },
   {
-    "revision": "61f77c5e336a55fb8dc944a0676c5f5b",
-    "url": "/dash/img/brand/brand.svg"
+    "revision": "365fc333c183bf39ef777a760ca718cf",
+    "url": "/dash/img/brand/brand-white.svg"
   },
   {
     "revision": "71a94f831411548a0c3e531a248e922a",
@@ -116,16 +116,12 @@ self.__precacheManifest = [
     "url": "/dash/img/brand/green.png"
   },
   {
-    "revision": "d7c26c3af7979c14ed3da333f9de6e59",
-    "url": "/dash/img/brand/symbol-black-center.svg"
+    "revision": "2add6b402c3d7fbbaa4fb0613c6c4a38",
+    "url": "/dash/img/brand/symbol-white.svg"
   },
   {
     "revision": "f82ec6ba2dc4181db2af35c499462840",
     "url": "/dash/fonts/nucleo-icons.f82ec6ba.ttf"
-  },
-  {
-    "revision": "2add6b402c3d7fbbaa4fb0613c6c4a38",
-    "url": "/dash/img/brand/symbol-white.svg"
   },
   {
     "revision": "f9b78d93af8ccff72e6e853d649a19cd",
@@ -134,6 +130,10 @@ self.__precacheManifest = [
   {
     "revision": "5bcf46d00bb2f8cc17d2257003803d93",
     "url": "/dash/img/brand/favicon.png"
+  },
+  {
+    "revision": "d7c26c3af7979c14ed3da333f9de6e59",
+    "url": "/dash/img/brand/symbol-black-center.svg"
   },
   {
     "revision": "776e8317ed66d1e2ec7ef1853377375b",
@@ -180,7 +180,7 @@ self.__precacheManifest = [
     "url": "/dash/css/chunk-vendors.ca920566.css"
   },
   {
-    "revision": "6903cc1957b26f2a68a7",
+    "revision": "3740c6c36a8bb805dd98",
     "url": "/dash/css/app.faa6c9f6.css"
   },
   {
