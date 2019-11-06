@@ -77,7 +77,7 @@ module.exports = {
       isInteger: true,
       defaultsTo: 0
     },
-    cratedAt: {
+    createdAt: {
       type: "string",
       columnType: "timestamp",
       columnName: 'created_at',

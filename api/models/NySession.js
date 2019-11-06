@@ -14,7 +14,7 @@ module.exports = {
       required: true,
       unique: true,
     },
-    createAt: {
+    createdAt: {
       type: "string",
       columnType: "datetime",
       columnName: 'start_session_date',

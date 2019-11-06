@@ -75,9 +75,13 @@ module.exports.routes = {
   // '/privacy':                   '/legal/privacy',
   // '/logout':                  '/api/v1/account/logout',
 
-  'GET /chinese/:unused?/:unused?': { action: 'redirect/why-choose-us'},
-  'GET /sitemap' :                 { action: 'sitemap'},
+  'GET /chinese/:unused?/:unused?':                      { action: 'redirect/why-choose-us'},
+  'GET /sitemap' :                                       { action: 'sitemap'},
   'GET /users':                                          { action: 'recap/users-by-current-lesson' }, //TODO REMOVE THIS WHEN SAFE
+  'GET /recap/users':                                    { action: 'recap/list-users' },
+  'GET /recap/users-and-time':                           { action: 'recap/list-users-and-time' },
+  'GET /charactercrush/users':                           { action: 'charactercrush/list-users' },
+  'GET /charactercrush/users-and-time':                  { action: 'charactercrush/list-users-and-time' },
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
