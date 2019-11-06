@@ -73,6 +73,12 @@ module.exports.routes = {
   // '/privacy':                   '/legal/privacy',
   // '/logout':                  '/api/v1/account/logout',
 
+
+  'GET /api/v1/auth/facebook': {controller: 'PassportController', action: 'facebookAuth'},
+  'GET /api/v1/auth/facebook/callback': {controller: 'PassportController', action: 'facebookCallback'},
+  'GET /api/v1/auth/google':                {controller: 'PassportController', action: 'googleAuth'},
+  'GET /api/v1/auth/google/callback':       {controller: 'PassportController', action: 'googleCallback'},
+
   'GET /chinese/:unused?/:unused?':                      { action: 'redirect/why-choose-us'},
   'GET /sitemap' :                                       { action: 'sitemap'},
   'GET /users':                                          { action: 'recap/users-by-current-lesson' }, //TODO REMOVE THIS WHEN SAFE
