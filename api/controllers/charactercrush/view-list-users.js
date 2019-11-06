@@ -1,38 +1,27 @@
 module.exports = {
 
 
-  friendlyName: 'List recap users',
+  friendlyName: 'List charactercrush users',
 
 
   description: '',
 
-
-  inputs: {
-
-  },
-
-
   exits: {
 
+    success: {
+      viewTemplatePath: 'pages/charactercrush/list-users'
+    }
+
   },
 
 
-  fn: async function (inputs) {
+  fn: async function () {
 
     const asyncForEach = async (array, callback) => {
       for (let index = 0; index < array.length; index++) {
         await callback(array[index], index, array)
       }
     };
-
-    const groupBy = key => array =>
-      array.reduce((objectsByKeyValue, obj) => {
-        const value = obj[key];
-        objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
-        return objectsByKeyValue;
-      }, {});
-
-    const groupByEmail = groupBy('id');
 
     const query = `
     SELECT DISTINCT game_logs.user
@@ -61,6 +50,6 @@ module.exports = {
       })
     });
 
-    return returnData
+    return {users: returnData.sort((a, b) => b.lastUse.localeCompare(a.lastUse))}
   }
 };

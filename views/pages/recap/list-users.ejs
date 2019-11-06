@@ -1,0 +1,26 @@
+<div id="recap-list-users" v-cloak>
+
+  <div class="container">
+    <h1 class="text-white font-weight-bold headline text-center my-3 pb-3">Recap App Users</h1>
+    <div class="recap-card text-center card p-5">
+
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Email</th>
+          <th scope="col">Last Log (UTC)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(user, index) in users" :key="index">
+          <th scope="row">{{ index + 1 }}</th>
+          <td>{{ user.email }}</td>
+          <td>{{ user.lastUse }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

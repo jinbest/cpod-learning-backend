@@ -13,7 +13,9 @@ module.exports = {
 
 
   exits: {
-
+    success: {
+      viewTemplatePath: 'pages/recap/list-users'
+    }
   },
 
 
@@ -63,6 +65,6 @@ module.exports = {
       })
     });
 
-    return returnData
+    return {users: returnData.sort((a, b) => b.lastUse.localeCompare(a.lastUse))}
   }
 };

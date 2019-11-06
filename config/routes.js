@@ -61,12 +61,10 @@ module.exports.routes = {
   'GET /recapp':                  { action: 'recap/view-recap' },
   'GET /app':                     { action: 'recap/view-recap' },
 
-
   //LEGAL PAGES
   'GET /terms':             { action:   'legal/view-terms' },
   'GET /terms-and-conditions':             { action:   'legal/view-terms' },
   'GET /privacy':           { action:   'legal/view-privacy' },
-
 
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
   //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗  ┌┼─   ║║║ ║║║║║║║║  ║ ║╠═╣ ║║╚═╗
@@ -78,10 +76,8 @@ module.exports.routes = {
   'GET /chinese/:unused?/:unused?':                      { action: 'redirect/why-choose-us'},
   'GET /sitemap' :                                       { action: 'sitemap'},
   'GET /users':                                          { action: 'recap/users-by-current-lesson' }, //TODO REMOVE THIS WHEN SAFE
-  'GET /recap/users':                                    { action: 'recap/list-users' },
-  'GET /recap/users-and-time':                           { action: 'recap/list-users-and-time' },
-  'GET /charactercrush/users':                           { action: 'charactercrush/list-users' },
-  'GET /charactercrush/users-and-time':                  { action: 'charactercrush/list-users-and-time' },
+  'GET /recap/users':                                    { action: 'recap/view-list-users' },
+  'GET /charactercrush/users':                           { action: 'charactercrush/view-list-users' },
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
