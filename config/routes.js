@@ -62,15 +62,21 @@ module.exports.routes = {
   'GET /app':                     { action: 'recap/view-recap' },
 
 
+  //LEGAL PAGES
+  'GET /terms':             { action:   'legal/view-terms' },
+  'GET /terms-and-conditions':             { action:   'legal/view-terms' },
+  'GET /privacy':           { action:   'legal/view-privacy' },
+
+
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
   //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗  ┌┼─   ║║║ ║║║║║║║║  ║ ║╠═╣ ║║╚═╗
   //  ╩ ╩╩╚═╝╚═╝  ╩╚═╚═╝═╩╝╩╩╚═╚═╝╚═╝ ╩ ╚═╝  └┘   ═╩╝╚═╝╚╩╝╝╚╝╩═╝╚═╝╩ ╩═╩╝╚═╝
   // '/terms':                   '/legal/terms',
+  // '/privacy':                   '/legal/privacy',
   // '/logout':                  '/api/v1/account/logout',
 
   'GET /chinese/:unused?/:unused?': { action: 'redirect/why-choose-us'},
   'GET /sitemap' :                 { action: 'sitemap'},
-
   'GET /users':                                          { action: 'recap/users-by-current-lesson' }, //TODO REMOVE THIS WHEN SAFE
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
