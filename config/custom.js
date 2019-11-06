@@ -99,10 +99,12 @@ module.exports.custom = {
   awsKey: 'AKIA4DQYSAHG3CJYO4XH',
   awsSecret: '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',
 
+  downloadBase: 'https://s3.amazonaws.com/chinesepod.com',
+
   // IP Data Key
   ipDataKey: '67ce141658c735941e1307cf08fcf9a40cd5101a64f19ea674688fff',
 
 
   // JWT Secret
-  jwtSecret: 'e24qwkdj6wm7inne45fau5my7zuk2q8l3w5xn7ct'
+  jwtSecret: 'e24qwkdj6wm7inne45fau5my7zuk2q8l3w5xn7ct',
 };
