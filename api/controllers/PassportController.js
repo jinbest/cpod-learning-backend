@@ -62,19 +62,11 @@ module.exports = {
             confirm_status: 1
           }).fetch();
 
-          await UserSiteLinks.create(_.extend({
+          await UserSiteLinks.create({
             user_id: userData.id,
             usertype_id: 7, //Free
             expiry: new Date().toISOString()
-          }, inputs.optIn ? {
-            academic_email: 1,
-            activity_email: 1,
-            other_email: 1,
-            show_email: 1,
-            newsletter_email: 1,
-            meetup_email: 1,
-          }:{}))
-            .fetch();
+          })
         }
 
         // Modify the active session instance.
@@ -148,19 +140,11 @@ module.exports = {
             confirm_status: 1
           }).fetch();
 
-          await UserSiteLinks.create(_.extend({
+          await UserSiteLinks.create({
             user_id: userData.id,
             usertype_id: 7, //Free
             expiry: new Date().toISOString()
-          }, inputs.optIn ? {
-            academic_email: 1,
-            activity_email: 1,
-            other_email: 1,
-            show_email: 1,
-            newsletter_email: 1,
-            meetup_email: 1,
-          }:{}))
-            .fetch();
+          })
         }
 
         // Modify the active session instance.
