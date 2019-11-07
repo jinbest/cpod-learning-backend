@@ -80,6 +80,8 @@ and exposed as \`req.me\`.)`
       email: inputs.emailAddress.toLowerCase(),
     });
 
+    sails.log.info({userRecord: userRecord});
+
     // If there was no matching user, respond thru the "badCombo" exit.
     if(!userRecord) {
       throw 'badCombo';
@@ -115,6 +117,8 @@ and exposed as \`req.me\`.)`
     // Modify the active session instance.
     // (This will be persisted when the response is sent.)
     this.req.session.userId = userRecord.id;
+
+    sails.log.info({sessionId: this.req.session.userId});
 
     await sails.helpers.createPhpSession.with({
       userId: userRecord.id,
