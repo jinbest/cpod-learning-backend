@@ -332,10 +332,16 @@ module.exports = {
        *                                                                          *
        ***************************************************************************/
 
+
+      passportInit: require('passport').initialize(),
+      passportSession: require('passport').session(),
+
       order: [
         'requestHandler',
         'cookieParser',
         'session',
+        'passportInit',
+        'passportSession',
         'bodyParser',
         'errorHandler',
         'compress',
