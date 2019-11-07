@@ -61,21 +61,35 @@ module.exports = {
             code: user.id,
             confirm_status: 1
           }).fetch();
+
+          await UserSiteLinks.create(_.extend({
+            user_id: newUserRecord.id,
+            usertype_id: 7, //Free
+            expiry: new Date().toISOString()
+          }, inputs.optIn ? {
+            academic_email: 1,
+            activity_email: 1,
+            other_email: 1,
+            show_email: 1,
+            newsletter_email: 1,
+            meetup_email: 1,
+          }:{}))
+            .fetch();
         }
 
         // Modify the active session instance.
         // (This will be persisted when the response is sent.)
         req.session.userId = userData.id;
 
-        // await sails.helpers.createPhpSession.with({
-        //   userId: userData.id,
-        // })
-        //   .then((phpSessionId) => {
-        //     res.cookie('CPODSESSID', phpSessionId, {
-        //       domain: '.chinesepod.com',
-        //       expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
-        //     });
-        //   });
+        await sails.helpers.createPhpSession.with({
+          userId: userData.id,
+        })
+          .then((phpSessionId) => {
+            res.cookie('CPODSESSID', phpSessionId, {
+              domain: '.chinesepod.com',
+              expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
+            });
+          });
 
         res.redirect('/dash')
 
@@ -133,21 +147,35 @@ module.exports = {
             code: user.id,
             confirm_status: 1
           }).fetch();
+
+          await UserSiteLinks.create(_.extend({
+            user_id: newUserRecord.id,
+            usertype_id: 7, //Free
+            expiry: new Date().toISOString()
+          }, inputs.optIn ? {
+            academic_email: 1,
+            activity_email: 1,
+            other_email: 1,
+            show_email: 1,
+            newsletter_email: 1,
+            meetup_email: 1,
+          }:{}))
+            .fetch();
         }
 
         // Modify the active session instance.
         // (This will be persisted when the response is sent.)
         req.session.userId = userData.id;
 
-        // await sails.helpers.createPhpSession.with({
-        //   userId: userData.id,
-        // })
-        //   .then((phpSessionId) => {
-        //     res.cookie('CPODSESSID', phpSessionId, {
-        //       domain: '.chinesepod.com',
-        //       expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
-        //     });
-        //   });
+        await sails.helpers.createPhpSession.with({
+          userId: userData.id,
+        })
+          .then((phpSessionId) => {
+            res.cookie('CPODSESSID', phpSessionId, {
+              domain: '.chinesepod.com',
+              expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
+            });
+          });
 
         res.redirect('/dash')
 
