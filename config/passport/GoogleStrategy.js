@@ -16,6 +16,7 @@ var verifyHandler = function (accessToken, refreshToken, profile, cb, done) {
   return done(null, data);
 };
 
+
 passport.use(new GoogleStrategy({
   clientID: '953231851949-0q9671f603i8ra2h4626bkcmfe428a06.apps.googleusercontent.com',
   clientSecret: 'CVnFJ78VXxDcZ-ru_xFFHXMe',

@@ -165,7 +165,6 @@ will be disabled and/or hidden in the UI.
             // Otherwise, look up the logged-in user.
             var loggedInUser = null;
             try {
-              sails.log.info({session: req.session, id: req.session ? req.session.userId : 'undefined', odd: req.session && req.session.userId ? req.session.userId.data : 'undefined' });
               if (req.session.userId.data) {
                 loggedInUser = await User.findOne({
                   id: req.session.userId.data
