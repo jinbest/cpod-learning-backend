@@ -63,7 +63,7 @@ module.exports = {
           }).fetch();
 
           await UserSiteLinks.create(_.extend({
-            user_id: newUserRecord.id,
+            user_id: userData.id,
             usertype_id: 7, //Free
             expiry: new Date().toISOString()
           }, inputs.optIn ? {
@@ -149,7 +149,7 @@ module.exports = {
           }).fetch();
 
           await UserSiteLinks.create(_.extend({
-            user_id: newUserRecord.id,
+            user_id: userData.id,
             usertype_id: 7, //Free
             expiry: new Date().toISOString()
           }, inputs.optIn ? {
