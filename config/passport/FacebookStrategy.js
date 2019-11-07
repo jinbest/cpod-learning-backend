@@ -32,7 +32,7 @@ var verifyHandler = function(req, token, tokenSecret, profile, done) {
 passport.use(new FacebookStrategy({
   clientID: 1389215491247779,
   clientSecret: '5ee8495456123e50a3b56a0d65af3f7d',
-  callbackURL: 'https://staging.chinesepod.com/api/v1/auth/facebook/callback',
+  callbackURL: 'https://www.chinesepod.com/api/v1/auth/facebook/callback',
   passReqToCallback: true,
   proxy: true
 }, verifyHandler));
