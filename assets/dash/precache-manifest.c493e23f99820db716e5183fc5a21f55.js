@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/dash/fonts/nucleo-icons.2569aaea.woff"
   },
   {
-    "revision": "cb1094cb07ba52e0a3eeb8945c29d28f",
+    "revision": "f53cc341d4c74918580073d5cc3fc051",
     "url": "/dash/index.html"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = [
     "url": "/dash/js/chunk-ab7e0cd8-legacy.ff87ddb9.js"
   },
   {
-    "revision": "5011ce36968bd05e139f",
-    "url": "/dash/js/app-legacy.489cb22d.js"
+    "revision": "eb3bb256b23a7a928382",
+    "url": "/dash/js/app-legacy.d64f39e4.js"
   },
   {
     "revision": "a6b4a5b8f7ac05ce6679",
@@ -52,8 +52,8 @@ self.__precacheManifest = [
     "url": "/dash/img/preloader.92d40536.svg"
   },
   {
-    "revision": "e9c8d6429bab307155971201fd98217b",
-    "url": "/dash/fonts/icomoon.e9c8d642.ttf"
+    "revision": "eee8b9b975b37eef73cda9641feb8f6f",
+    "url": "/dash/fonts/icomoon.eee8b9b9.woff"
   },
   {
     "revision": "a6b4a5b8f7ac05ce6679",
@@ -68,12 +68,12 @@ self.__precacheManifest = [
     "url": "/dash/fonts/element-icons.2fad952a.woff"
   },
   {
-    "revision": "00d2977773069da3cd07cfca2c2482e6",
-    "url": "/dash/fonts/icomoon.00d29777.eot"
+    "revision": "e9c8d6429bab307155971201fd98217b",
+    "url": "/dash/fonts/icomoon.e9c8d642.ttf"
   },
   {
-    "revision": "eee8b9b975b37eef73cda9641feb8f6f",
-    "url": "/dash/fonts/icomoon.eee8b9b9.woff"
+    "revision": "00d2977773069da3cd07cfca2c2482e6",
+    "url": "/dash/fonts/icomoon.00d29777.eot"
   },
   {
     "revision": "c1733565b32b585676302d4233c39da8",
@@ -100,7 +100,7 @@ self.__precacheManifest = [
     "url": "/dash/img/brand-white.365fc333.svg"
   },
   {
-    "revision": "5011ce36968bd05e139f",
+    "revision": "eb3bb256b23a7a928382",
     "url": "/dash/css/app.ce7c58e4.css"
   }
 ];
