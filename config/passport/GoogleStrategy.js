@@ -20,6 +20,7 @@ var verifyHandler = function (accessToken, refreshToken, profile, cb, done) {
 passport.use(new GoogleStrategy({
   clientID: '953231851949-0q9671f603i8ra2h4626bkcmfe428a06.apps.googleusercontent.com',
   clientSecret: 'CVnFJ78VXxDcZ-ru_xFFHXMe',
-  callbackURL: sails.config.custom.baseUrl + '/api/v1/auth/google/callback',
-  passReqToCallback: true
+  callbackURL: '/api/v1/auth/google/callback',
+  passReqToCallback: true,
+  proxy: true
 }, verifyHandler));
