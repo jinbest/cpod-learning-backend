@@ -22,7 +22,8 @@ module.exports = function(req, res, proceed) {
     if(err) {
       return res.status(401).json({err: 'Invalid token'});
     }
-    req.session.userId = decoded.data;
+    //TODO revise this
+    //req.session.userId = decoded.data;
     return proceed();
   });
 };
