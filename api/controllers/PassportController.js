@@ -67,15 +67,15 @@ module.exports = {
         // (This will be persisted when the response is sent.)
         req.session.userId = userData.id;
 
-        await sails.helpers.createPhpSession.with({
-          userId: userData.id,
-        })
-          .then((phpSessionId) => {
-            res.cookie('CPODSESSID', phpSessionId, {
-              domain: '.chinesepod.com',
-              expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
-            });
-          });
+        // await sails.helpers.createPhpSession.with({
+        //   userId: userData.id,
+        // })
+        //   .then((phpSessionId) => {
+        //     res.cookie('CPODSESSID', phpSessionId, {
+        //       domain: '.chinesepod.com',
+        //       expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
+        //     });
+        //   });
 
         res.redirect('/dash')
 
@@ -139,15 +139,15 @@ module.exports = {
         // (This will be persisted when the response is sent.)
         req.session.userId = userData.id;
 
-        await sails.helpers.createPhpSession.with({
-          userId: userData.id,
-        })
-          .then((phpSessionId) => {
-            res.cookie('CPODSESSID', phpSessionId, {
-              domain: '.chinesepod.com',
-              expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
-            });
-          });
+        // await sails.helpers.createPhpSession.with({
+        //   userId: userData.id,
+        // })
+        //   .then((phpSessionId) => {
+        //     res.cookie('CPODSESSID', phpSessionId, {
+        //       domain: '.chinesepod.com',
+        //       expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
+        //     });
+        //   });
 
         res.redirect('/dash')
 
