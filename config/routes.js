@@ -42,6 +42,7 @@ module.exports.routes = {
 
   'GET /pricing':                 { action: 'onboarding/view-pricing' },
   'GET /checkout':                { action: 'view-checkout' },
+  'GET /checkout/paypal':                { action: 'purchase/paypal/view-paypal-pay' },
 
   'GET /level/:unused?':          { action: 'onboarding/view-level' },
 
@@ -101,6 +102,15 @@ module.exports.routes = {
 
   '/api/v1/account/logout':                              { action: 'account/logout' },
 
+
+  //Payments
+
+  '/api/v1/paypal/cancel':                               { action: 'purchase/paypal/paypal-cancel' },
+  '/api/v1/paypal/create':                               { action: 'purchase/paypal/paypal-create' },
+  '/api/v1/paypal/execute':                              { action: 'purchase/paypal/paypal-execute' },
+  '/api/v1/paypal/create-agreement':                     { action: 'purchase/paypal/cancel' },
+  '/api/v1/paypal/process-agreement':                    'PaypalController.cancel',
+
   //Sample Routes
   // '/api/v1/account/logout':                              { action: 'account/logout' },
   // 'PUT   /api/v1/account/update-profile':                { action: 'account/update-profile' },
@@ -114,6 +124,8 @@ module.exports.routes = {
   'PUT  /api/v1/onboarding/pricing':                     { action: 'onboarding/pricing' },
   'PUT  /api/v1/onboarding/level':                       { action: 'onboarding/level' },
   'PUT  /api/v1/purchase/checkout':                      { action: 'purchase/checkout' },
+  'POST  /api/v1/purchase/checkout/paypal/cancel':       { action: 'purchase/checkout' },
+  'POST  /api/v1/purchase/checkout/paypal/cancel':       { action: 'purchase/checkout' },
   'POST  /api/v1/purchase/check-promo':                  { action: 'purchase/check-promo' },
   'POST /api/v1/purchase/check-email':                   { action: 'purchase/check-email' },
 

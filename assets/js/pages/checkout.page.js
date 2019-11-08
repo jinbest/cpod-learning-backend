@@ -25,7 +25,11 @@ parasails.registerPage('checkout', {
     },
     // For tracking client-side validation errors in our form.
     // > Has property set to `true` for each invalid property in `formData`.
-    formErrors: { /* … */ },
+    formErrors: {
+      // emailAddress: true,
+      // fName: true,
+      // lName: true
+    },
     cardError: false,
 
     // Syncing / loading state
@@ -42,7 +46,15 @@ parasails.registerPage('checkout', {
     modal: '',
 
     // Stripe
-    stripeKey: 'pk_test_4VxncInS2mI0bVeyKWPOGSMY'
+    stripeKey: 'pk_test_4VxncInS2mI0bVeyKWPOGSMY',
+
+    paypalClient: {
+      sandbox: 'AZGCQyxdYVNlEao8bzD7tMrccqocSl4hjZmhR6nZ8bL7rCewPXRywjP-uwolycnyIodbL5oQvN8dixZE',
+      production: 'AWZiTif-WpZUU8mjN2PbrRy_fTYDj2-_VqswzgiEUepQZc7g-jFJFaB4OjnSeU00UQtsReGPMo_tQ7yu'
+    }
+  },
+
+  computed: {
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -228,6 +240,8 @@ parasails.registerPage('checkout', {
       // Clear out any pre-existing error messages.
       this.formErrors = {};
 
+      console.log({errors: this.formErrors});
+
       this.syncing = true;
 
       var argins = this.formData;
@@ -245,6 +259,9 @@ parasails.registerPage('checkout', {
       if (!argins.lName) {
         this.formErrors.lName = true;
       }
+      if (this.needsAccount && !argins.agreedToTerms) {
+        this.formErrors.agreedToTerms = true;
+      }
 
       if (document.getElementById('card-errors').textContent){
         this.formErrors.cardError = true;
@@ -254,8 +271,17 @@ parasails.registerPage('checkout', {
         this.syncing = false;
         return
       }
-
+      console.log({argins: argins});
       return argins;
+    },
+    async paypalCheckout () {
+      this.syncing = true;
+      console.log('Paypal checkout');
+      let data = this.handleParsingForm();
+      if (!data) {
+        this.syncing = false;
+        return
+      }
     }
   }
 });

@@ -436,6 +436,12 @@ module.exports = {
     baseUrl: 'https://www.chinesepod.com',
     internalEmailAddress: 'support@chinesepod.com',
 
+
+    //PAYPAL
+    paypalAccount: 'finance@chinesepod.com',
+    paypalPublishableKey: 'AWZiTif-WpZUU8mjN2PbrRy_fTYDj2-_VqswzgiEUepQZc7g-jFJFaB4OjnSeU00UQtsReGPMo_tQ7yu',
+    paypalSecret: 'EISrDXgJ7P515P2hohehA1SwroUkDWdh54qVm1VbCsgKFuKxPSfTJVzZ-rL_wm19xaSdMrf7OKS49-wC',
+
     // mailgunDomain: 'mg.example.com',
     // mailgunSecret: 'key-prod_fake_bd32301385130a0bafe030c',
     // stripeSecret: 'sk_prod__fake_Nfgh82401348jaDa3lkZ0d9Hm',
