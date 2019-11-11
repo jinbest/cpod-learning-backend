@@ -25,7 +25,7 @@ module.exports = {
 
     if (this.req.me) {
       sails.log.info(this.req.me);
-      throw {redirect: '/dash'};
+      throw {redirect: '/home'};
     }
 
     return {};

@@ -83,7 +83,7 @@ module.exports = {
             });
           });
 
-        res.redirect('/dash')
+        res.redirect('/home')
 
 
       }
@@ -161,7 +161,7 @@ module.exports = {
             });
           });
 
-        res.redirect('/dash')
+        res.redirect('/home')
 
       }
     })(req, res, next);

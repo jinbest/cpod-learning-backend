@@ -33,6 +33,8 @@ module.exports.routes = {
   // 'GET /account/password':   { action: 'account/view-edit-password' },
   // 'GET /account/profile':    { action: 'account/view-edit-profile' },
 
+  'GET /':                        { action: 'view-new-page-or-redirect' },
+
   'GET /email-signup':            { action: 'entrance/view-signup' },
   'GET /get-started':             { action: 'entrance/view-signup' },
   'GET /signup':                  { action: 'entrance/view-signup' },
@@ -46,9 +48,10 @@ module.exports.routes = {
   'GET /level/:unused?':          { action: 'onboarding/view-level' },
 
   //DASHBOARD
-  'GET /dash/:unused?':           'DashController.serve',
-  'GET /lesson/:unused?/:unused?': 'DashController.serve',
-  'GET /podcasts/:unused?': 'PodcastsController.serve',
+  'GET /dash/:unused?':            'DashController.serve',
+  'GET /home/:unused?':            'HomeController.serve',
+  'GET /lesson/:unused?/:unused?': 'HomeController.serve',
+  'GET /podcasts/:unused?':        'PodcastsController.serve',
 
   //PLACEMENT TEST
   'GET /placement/:unused?': 'PlacementController.serve',

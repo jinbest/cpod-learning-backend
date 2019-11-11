@@ -22,8 +22,6 @@ module.exports = {
   fn: async function (inputs) {
     inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
-    sails.log.info({userId: this.req.session.userId});
-
     if (!inputs.userId || typeof inputs.userId === 'undefined') {
       throw 'invalid'
     }
