@@ -28,7 +28,7 @@ module.exports = {
     const countryList = ['IN', 'PH', 'VN', 'NG', 'ID', 'ET', 'LK', 'BE', 'HK'];
 
     if (req.ip && req.ip !== '::1') {
-      const ipdata =  require('ipdata');
+      const ipdata = require('ipdata');
       ipData = await ipdata.lookup(req.ip, sails.config.custom.ipDataKey)
         .then((info) => {
           return info
@@ -39,8 +39,10 @@ module.exports = {
     }
 
     if (countryList.includes(ipData['country_code'])) {
+      sails.log.info(ipData['country_code']);
       throw {redirect: '/home'}
     } else {
+      sails.log.info(ipData['country_code']);
       throw {redirect: 'https://chinesepod.com'}
     }
   }
