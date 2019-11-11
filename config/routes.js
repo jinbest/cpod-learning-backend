@@ -105,11 +105,11 @@ module.exports.routes = {
 
   //Payments
 
-  '/api/v1/paypal/cancel':                               { action: 'purchase/paypal/paypal-cancel' },
-  '/api/v1/paypal/create':                               { action: 'purchase/paypal/paypal-create' },
-  '/api/v1/paypal/execute':                              { action: 'purchase/paypal/paypal-execute' },
-  '/api/v1/paypal/create-agreement':                     { action: 'purchase/paypal/cancel' },
-  '/api/v1/paypal/process-agreement':                    'PaypalController.cancel',
+  '/api/v1/paypal/cancel':                                    { action: 'purchase/paypal/paypal-cancel' },
+  'POST /api/v1/paypal/create':                               { action: 'purchase/paypal/paypal-create' },
+  'POST /api/v1/paypal/execute':                              { action: 'purchase/paypal/paypal-execute' },
+  'POST /api/v1/paypal/create-agreement':                     { action: 'purchase/paypal/cancel' },
+  'POST /api/v1/paypal/process-agreement':                    'PaypalController.cancel',
 
   //Sample Routes
   // '/api/v1/account/logout':                              { action: 'account/logout' },

@@ -128,6 +128,8 @@ module.exports = {
 
     let ipData = {};
 
+    let userData = {};
+
     if (!this.req.me) {
 
       // Create a new User

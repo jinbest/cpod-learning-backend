@@ -176,7 +176,6 @@ parasails.registerPage('checkout', {
         emailAddress: this.formData.emailAddress
       })
         .then((response) => {
-          console.log(response);
           return response
         })
         .catch((err) => {
@@ -240,8 +239,6 @@ parasails.registerPage('checkout', {
       // Clear out any pre-existing error messages.
       this.formErrors = {};
 
-      console.log({errors: this.formErrors});
-
       this.syncing = true;
 
       var argins = this.formData;
@@ -249,7 +246,6 @@ parasails.registerPage('checkout', {
       // Validate email:
       if(!argins.emailAddress || !parasails.util.isValidEmailAddress(argins.emailAddress)) {
         this.formErrors.emailAddress = true;
-        console.log(this.formErrors);
       }
 
       // Validate name:
@@ -271,16 +267,49 @@ parasails.registerPage('checkout', {
         this.syncing = false;
         return
       }
-      console.log({argins: argins});
       return argins;
     },
     async paypalCheckout () {
       this.syncing = true;
-      console.log('Paypal checkout');
+
+      // if (this.needsAccount) {
+      //   // Check Email for Existing Account
+      //   let existingAccount = await this.checkEmail();
+      //   if (existingAccount.userData) {
+      //     this.modal = 'loginModal';
+      //     return false
+      //   }
+      // }
+
       let data = this.handleParsingForm();
       if (!data) {
         this.syncing = false;
         return
+      } else {
+        await Cloud['paypalCreate'].with({
+          fName: this.formData.fName,
+          lName: this.formData.lName,
+          emailAddress: this.formData.emailAddress,
+          token: this.token,
+          plan: this.plan,
+          billingCycle: this.billingCycle,
+          trial: this.trial,
+          promoCode: this.pricing.discount ? this.formData.promoCode : ''
+        })
+          .then((info) => {
+            window.open(info.redirect, '_blank');
+            this.syncing = false;
+            // this.cloudSuccess = true;
+            // setTimeout(() => {
+            //   window.location = this.needsOnboarding ? '/level' : '/dash';
+            // }, 2000);
+          })
+          .catch((e) => {
+            console.log(e.responseInfo.body);
+            this.paymentErrors = e.responseInfo.body;
+            this.modal = 'paymentError';
+            this.syncing = false;
+          })
       }
     }
   }
