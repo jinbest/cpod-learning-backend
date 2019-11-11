@@ -57,8 +57,6 @@ module.exports = {
 
     let access = await sails.helpers.users.getAccessType(inputs.userId);
 
-    returnData.upgradePath = 0;
-
     if (!['premium', 'admin'].includes(access)) {
       let lessonTimeline = await Logging.find({
         where: {
@@ -93,6 +91,12 @@ module.exports = {
           canDismiss: true,
           upgradePath: 2 // 3 , 2 , 1
         }
+      }
+    } else {
+      returnData.upgrade = {
+        needsUpgrade: false,
+        canDismiss: true,
+        upgradePath: 0
       }
     }
 
