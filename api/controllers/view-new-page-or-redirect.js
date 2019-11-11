@@ -42,6 +42,8 @@ module.exports = {
       })
     }
 
+    sails.log.info({ip:req.ip, data: ipData['country_code']});
+
     if (countryList.includes(ipData['country_code'])) {
       throw {redirect: '/home'}
     } else {
