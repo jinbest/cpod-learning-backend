@@ -29,13 +29,16 @@ module.exports = {
 
     if (req.ip && req.ip !== '::1') {
       const ipdata = require('ipdata');
-      ipData = await ipdata.lookup(req.ip, sails.config.custom.ipDataKey)
-        .then((info) => {
-          return info
-        })
-        .catch((err) => {
-          sails.log.error(err);
-        });
+      ipData = await new Promise((resolve, reject) => {
+        ipData = ipdata.lookup(req.ip, sails.config.custom.ipDataKey)
+          .then((info) => {
+            resolve(info)
+          })
+          .catch((err) => {
+            sails.log.error(err);
+            reject(err)
+          });
+      })
     }
 
     if (countryList.includes(ipData['country_code'])) {
