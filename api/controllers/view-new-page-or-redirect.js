@@ -21,16 +21,16 @@ module.exports = {
   },
 
 
-  fn: async function (req, res) {
+  fn: async function () {
 
     let ipData = {};
 
     const countryList = ['IN', 'PH', 'VN', 'NG', 'ID', 'ET', 'LK', 'BE', 'HK'];
 
-    if (req.ip && req.ip !== '::1') {
+    if (this.req.ip && this.req.ip !== '::1') {
       const ipdata = require('ipdata');
       await new Promise((resolve, reject) => {
-        ipdata.lookup(req.ip, sails.config.custom.ipDataKey)
+        ipdata.lookup(this.req.ip, sails.config.custom.ipDataKey)
           .then((info) => {
             ipData = info;
             resolve(info)
@@ -42,7 +42,7 @@ module.exports = {
       })
     }
 
-    sails.log.info({ip:req.ip, data: ipData['country_code']});
+    sails.log.info({ip:this.req.ip, data: ipData['country_code']});
 
     if (countryList.includes(ipData['country_code'])) {
       throw {redirect: '/home'}
