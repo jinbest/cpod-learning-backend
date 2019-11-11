@@ -23,6 +23,7 @@ loggingQueue.process('Logging Requests', 100,async function (job, done) {
 
   if(job.data.ip && job.data.ip !== '::1' && [
     'https://www.chinesepod.com/dash',
+    'https://www.chinesepod.com/home',
     'https://www.chinesepod.com/signup',
     'https://www.chinesepod.com/checkout'].includes(job.data.urlbase)) {
     const ipdata =  require('ipdata');
@@ -33,6 +34,7 @@ loggingQueue.process('Logging Requests', 100,async function (job, done) {
 
   if ([
     'https://www.chinesepod.com/dash',
+    'https://www.chinesepod.com/home',
     'https://www.chinesepod.com/signup',
     'https://www.chinesepod.com/checkout',
     'https://www.chinesepod.com/login'

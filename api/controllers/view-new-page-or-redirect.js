@@ -29,9 +29,10 @@ module.exports = {
 
     if (req.ip && req.ip !== '::1') {
       const ipdata = require('ipdata');
-      ipData = await new Promise((resolve, reject) => {
-        ipData = ipdata.lookup(req.ip, sails.config.custom.ipDataKey)
+      await new Promise((resolve, reject) => {
+        ipdata.lookup(req.ip, sails.config.custom.ipDataKey)
           .then((info) => {
+            ipData = info;
             resolve(info)
           })
           .catch((err) => {
@@ -42,10 +43,8 @@ module.exports = {
     }
 
     if (countryList.includes(ipData['country_code'])) {
-      sails.log.info(ipData['country_code']);
       throw {redirect: '/home'}
     } else {
-      sails.log.info(ipData['country_code']);
       throw {redirect: 'https://chinesepod.com'}
     }
   }

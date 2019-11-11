@@ -19,23 +19,15 @@
     <% /* Certain scripts, normally analytics tools like Google Tag Manager and
     Google Analytics, should only be included in production: */
     if (sails.config.environment === 'production') { %>
-    <!-- Google Analytics, Google Tag Manager, etc. -->
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-WKGS49C');</script>
-    <!-- End Google Tag Manager -->
-    <!-- Global site tag (gtag.js) - Google Ads: 758600947 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-758600947"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-1176295-62"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-      gtag('config', 'AW-758600947');
-    </script>
+        gtag('config', 'UA-1176295-62');
+      </script>
     <% }
     /* Otherwise, any such scripts are excluded, and we instead inject a
     robots/noindex meta tag to help prevent any unwanted visits from search engines. */
@@ -61,12 +53,7 @@
   </head>
   <body>
     <% if (sails.config.environment === 'production') { %>
-      <!-- Google Tag Manager (noscript) -->
-      <noscript>
-        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WKGS49C"
-                        height="0" width="0" style="display:none;visibility:hidden"></iframe>
-      </noscript>
-      <!-- End Google Tag Manager (noscript) -->
+
     <% } %>
     <div id="page-wrap">
       <header id="page-header" class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between">
