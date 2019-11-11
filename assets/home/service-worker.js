@@ -15,10 +15,12 @@ importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox
 
 importScripts(
   "/home/updateSW.js",
-  "/home/precache-manifest.0a827e546a79aca1df0db990e183ca8e.js"
+  "/home/precache-manifest.0404633e112574ae9d283a2833df25c5.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "chinesepod-dashboard"});
+
+workbox.skipWaiting();
 
 /**
  * The workboxSW.precacheAndRoute() method efficiently caches and responds to

@@ -1,10 +1,10 @@
 self.__precacheManifest = [
   {
-    "revision": "2569aaea6eaaf8cd210db7f2fa016743",
-    "url": "/home/fonts/nucleo-icons.2569aaea.woff"
+    "revision": "426439788ec5ba772cdf94057f6f4659",
+    "url": "/home/fonts/nucleo-icons.42643978.woff2"
   },
   {
-    "revision": "7e67f2d425d735116ebd5e441173db1c",
+    "revision": "33fce3437e829fea27d9925ae30f0b37",
     "url": "/home/index.html"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = [
     "url": "/home/js/chunk-ab7e0cd8-legacy.ff87ddb9.js"
   },
   {
-    "revision": "ba5f37d24473cbd6723d",
-    "url": "/home/js/app-legacy.2e06ae66.js"
+    "revision": "82cc3c97ba26b0774a33",
+    "url": "/home/js/app-legacy.5270cf15.js"
   },
   {
     "revision": "a6b4a5b8f7ac05ce6679",
@@ -52,8 +52,8 @@ self.__precacheManifest = [
     "url": "/home/img/preloader.92d40536.svg"
   },
   {
-    "revision": "e9c8d6429bab307155971201fd98217b",
-    "url": "/home/fonts/icomoon.e9c8d642.ttf"
+    "revision": "eee8b9b975b37eef73cda9641feb8f6f",
+    "url": "/home/fonts/icomoon.eee8b9b9.woff"
   },
   {
     "revision": "a6b4a5b8f7ac05ce6679",
@@ -72,8 +72,8 @@ self.__precacheManifest = [
     "url": "/home/fonts/icomoon.00d29777.eot"
   },
   {
-    "revision": "eee8b9b975b37eef73cda9641feb8f6f",
-    "url": "/home/fonts/icomoon.eee8b9b9.woff"
+    "revision": "e9c8d6429bab307155971201fd98217b",
+    "url": "/home/fonts/icomoon.e9c8d642.ttf"
   },
   {
     "revision": "c1733565b32b585676302d4233c39da8",
@@ -84,8 +84,8 @@ self.__precacheManifest = [
     "url": "/home/img/icomoon.d9cfd664.svg"
   },
   {
-    "revision": "426439788ec5ba772cdf94057f6f4659",
-    "url": "/home/fonts/nucleo-icons.42643978.woff2"
+    "revision": "2569aaea6eaaf8cd210db7f2fa016743",
+    "url": "/home/fonts/nucleo-icons.2569aaea.woff"
   },
   {
     "revision": "61f77c5e336a55fb8dc944a0676c5f5b",
@@ -100,7 +100,7 @@ self.__precacheManifest = [
     "url": "/home/img/brand-white.365fc333.svg"
   },
   {
-    "revision": "ba5f37d24473cbd6723d",
+    "revision": "82cc3c97ba26b0774a33",
     "url": "/home/css/app.6ef2bdc1.css"
   }
 ];
