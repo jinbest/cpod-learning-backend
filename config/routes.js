@@ -66,9 +66,9 @@ module.exports.routes = {
   'GET /app':                     { action: 'recap/view-recap' },
 
   //LEGAL PAGES
-  'GET /terms':             { action:   'legal/view-terms' },
-  'GET /terms-and-conditions':             { action:   'legal/view-terms' },
-  'GET /privacy':           { action:   'legal/view-privacy' },
+  'GET /terms':                   '/terms-and-conditions',
+  'GET /terms-and-conditions':    { action:   'legal/view-terms' },
+  'GET /privacy':                 { action:   'legal/view-privacy' },
 
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
   //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗  ┌┼─   ║║║ ║║║║║║║║  ║ ║╠═╣ ║║╚═╗
