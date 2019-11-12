@@ -288,20 +288,20 @@ module.exports = {
       "type": "INFINITE"
     };
 
-    if (inputs.trial) {
-      billingPlanAttributes['payment_definitions'].push({
-        "amount": {
-          "currency": "USD",
-          "value": 0.00
-        },
-        "charge_models": [],
-        "cycles": "1",
-        "frequency": "WEEK",
-        "frequency_interval": 2,
-        "name": "ChinesePod Trial",
-        "type": "TRIAL"
-      })
-    }
+    // if (inputs.trial) {
+    //   billingPlanAttributes['payment_definitions'].push({
+    //     "amount": {
+    //       "currency": "USD",
+    //       "value": 0.00
+    //     },
+    //     "charge_models": [],
+    //     "cycles": "1",
+    //     "frequency": "WEEK",
+    //     "frequency_interval": 2,
+    //     "name": "ChinesePod Trial",
+    //     "type": "TRIAL"
+    //   })
+    // }
 
 //Once a billing plan is created it must be updated with the following attributes.
     let billingPlanUpdateAttributes = [
@@ -316,11 +316,10 @@ module.exports = {
 
 //Attributes for creating the billing agreement.
 //Start Date should be greater than current time and date.
-    let startDate = moment(new Date()).add(10, 'minute').format('gggg-MM-DDTHH:mm:ss')+'Z';
-    sails.log.info(startDate);
+    let startDate = moment(new Date()).add(plans[inputs.plan][inputs.billingCycle]['length'], 'months').format('gggg-MM-DDTHH:mm:ss')+'Z';
     let billingAgreementAttributes = {
       "name": "Subscription to ChinesePod LLC",
-      "description": "Description of  your payment  agreement",
+      "description": `ChinesePod ${_.capitalize(inputs.plan)} Subscription`,
       "start_date": startDate,
       "plan": {
         "id": ""

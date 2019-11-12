@@ -9,7 +9,8 @@ module.exports = {
 
   inputs: {
     token: {
-      type: 'string'
+      type: 'string',
+      required: true
     }
 
   },
@@ -18,7 +19,7 @@ module.exports = {
   exits: {
 
     redirect: {
-      description: 'Email address confirmed and requesting user logged in.  Since this looks like a browser, redirecting...',
+      description: 'Paypal payment successful, redirecting ...',
       responseType: 'redirect'
     },
 
@@ -26,13 +27,10 @@ module.exports = {
       responseType: 'expired',
       description: 'The provided token is expired, invalid, or already used up.',
     },
-
   },
 
 
   fn: async function (inputs) {
-
-    sails.log.info(inputs);
 
     let paypalData = await new Promise((resolve, reject) => {
       PaypalService.processPaymentAgreement(inputs.token, (err, result) => {
@@ -80,7 +78,7 @@ module.exports = {
       throw {redirect: '/home'}
     } else {
       throw 'invalidOrExpiredToken'
-    }F
+    }
   }
 
 
