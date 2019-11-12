@@ -265,10 +265,10 @@ module.exports = {
         "initial_fail_amount_action": "cancel",
         "max_fail_attempts": "2",
         "return_url": sails.config.custom.baseUrl + "/api/v1/paypal/success",
-        "setup_fee": {
-          "currency": "USD",
-          "value": plans[inputs.plan][inputs.billingCycle]['price'] // Testing setup fees
-        }
+        // "setup_fee": {
+        //   "currency": "USD",
+        //   "value": plans[inputs.plan][inputs.billingCycle]['price'] // Testing setup fees
+        // }
       },
       "name": "ChinesePod Subscription",
       "payment_definitions": [
@@ -316,7 +316,8 @@ module.exports = {
 
 //Attributes for creating the billing agreement.
 //Start Date should be greater than current time and date.
-    let startDate = moment(new Date()).add(plans[inputs.plan][inputs.billingCycle]['length'], 'months').format('gggg-MM-DDTHH:mm:ss')+'Z';
+//     let startDate = moment(new Date()).add(plans[inputs.plan][inputs.billingCycle]['length'], 'months').format('gggg-MM-DDTHH:mm:ss')+'Z';
+    let startDate = moment(new Date(Date.now() - 8 * 60 * 60 * 1000)).add(5, 'minutes').format('gggg-MM-DDTHH:mm:ss')+'Z';
     let billingAgreementAttributes = {
       "name": "Subscription to ChinesePod LLC",
       "description": `ChinesePod ${_.capitalize(inputs.plan)} Subscription`,

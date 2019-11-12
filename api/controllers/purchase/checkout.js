@@ -363,7 +363,7 @@ module.exports = {
         });
 
 // Update User Access on UserSiteLinks
-        const userSiteLinks = UserSiteLinks.updateOne({user_id:inputs.userId})
+        const userSiteLinks = UserSiteLinks.updateOne({user_id: inputs.userId, site_id: 2})
           .set({usertype_id: plans[inputs.plan].id});
 
 // Update User SessionInfo to Match Current Access Level

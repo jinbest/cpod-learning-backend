@@ -32,6 +32,11 @@ module.exports = {
 
   fn: async function (inputs) {
 
+    const subcriptionPlansToPlanIDs = {
+      1: 6,
+      2: 5
+    };
+
     let paypalData = await new Promise((resolve, reject) => {
       PaypalService.processPaymentAgreement(inputs.token, (err, result) => {
         if (err) {
@@ -46,6 +51,7 @@ module.exports = {
       })
       .catch((err) => {
         sails.log.error(err);
+        throw 'invalidOrExpiredToken'
       });
 
     sails.log.info({realPaypalData: paypalData});
@@ -71,7 +77,9 @@ module.exports = {
         next_billing_time: paypalData['agreement_details']['next_billing_date']
       });
 
-    sails.log.info({transaction: transaction, cpodsubscription: cpodsubscription});
+    // Update User Access on UserSiteLinks
+    const userSiteLinks = UserSiteLinks.updateOne({user_id: cpodsubscription.user_id, site_id: 2})
+      .set({usertype_id: subcriptionPlansToPlanIDs[cpodsubscription.subscription_type]});
 
     // Success;
     if (transaction && cpodsubscription) {
