@@ -14,6 +14,7 @@ module.exports.policies = {
   'recap/view-current-lesson': 'is-logged-in',
   'recap/set-lesson': 'is-logged-in',
   'dash/*': 'is-logged-in',
+  'home/*': 'is-logged-in',
   'podcasts/*': true,
 
   'dashboard/*': 'is-authenticated',

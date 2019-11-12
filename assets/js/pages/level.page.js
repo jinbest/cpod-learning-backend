@@ -40,12 +40,12 @@ parasails.registerPage('level', {
       this.syncing = true;
       this.charSet = charSet;
       this.postData();
-      window.location = '/dash';
+      window.location = '/home';
     },
     skip () {
       this.syncing = true;
       this.postData();
-      window.location = '/dash';
+      window.location = '/home';
     },
     flipPage() {
       this.nextPage = !this.nextPage;

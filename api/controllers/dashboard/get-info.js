@@ -22,8 +22,6 @@ module.exports = {
   fn: async function (inputs) {
     inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
-    sails.log.info({userId: this.req.session.userId});
-
     if (!inputs.userId || typeof inputs.userId === 'undefined') {
       throw 'invalid'
     }
@@ -59,8 +57,6 @@ module.exports = {
 
     let access = await sails.helpers.users.getAccessType(inputs.userId);
 
-    returnData.upgradePath = 0;
-
     if (!['premium', 'admin'].includes(access)) {
       let lessonTimeline = await Logging.find({
         where: {
@@ -95,6 +91,12 @@ module.exports = {
           canDismiss: true,
           upgradePath: 2 // 3 , 2 , 1
         }
+      }
+    } else {
+      returnData.upgrade = {
+        needsUpgrade: false,
+        canDismiss: true,
+        upgradePath: 0
       }
     }
 
