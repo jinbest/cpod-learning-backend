@@ -316,6 +316,7 @@ module.exports = {
 //Attributes for creating the billing agreement.
 //Start Date should be greater than current time and date.
     let startDate = moment(new Date()).add(10, 'minute').format('gggg-MM-DDTHH:mm:ss')+'Z';
+    sails.log.info(startDate);
     let billingAgreementAttributes = {
       "name": "Subscription to ChinesePod LLC",
       "description": "Description of  your payment  agreement",
