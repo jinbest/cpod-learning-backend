@@ -19,7 +19,7 @@ module.exports = {
 
   fn: async function (req, res) {
 
-    sails.log.info({paypalWebhook: req.body})
+    sails.log.info({paypalWebhook: this.req.body})
 
   }
 
