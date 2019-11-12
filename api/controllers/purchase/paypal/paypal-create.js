@@ -260,10 +260,10 @@ module.exports = {
       "description": "ChinesePod Subscription",
       "merchant_preferences": {
         "auto_bill_amount": "yes",
-        "cancel_url": "http://localhost:1337/api/v1/paypal/cancel",
+        "cancel_url": "https://staging.chinesepod.com/api/v1/paypal/cancel",
         "initial_fail_amount_action": "cancel",
         "max_fail_attempts": "1",
-        "return_url": "http://localhost:1337/api/v1/paypal/success",
+        "return_url": "https://staging.chinesepod.com/api/v1/paypal/success",
         "setup_fee": {
           "currency": "USD",
           "value": "0"
