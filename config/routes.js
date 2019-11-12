@@ -107,6 +107,8 @@ module.exports.routes = {
 
   '/api/v1/paypal/cancel':                                    { action: 'purchase/paypal/paypal-cancel' },
   'POST /api/v1/paypal/create':                               { action: 'purchase/paypal/paypal-create' },
+  'GET /api/v1/paypal/success':                              { action: 'purchase/paypal/paypal-confirm' },
+  'GET /api/v1/paypal/cancel':                              { action: 'purchase/paypal/paypal-cancel' },
   'POST /api/v1/paypal/execute':                              { action: 'purchase/paypal/paypal-execute' },
   'POST /api/v1/paypal/create-agreement':                     { action: 'purchase/paypal/cancel' },
   'POST /api/v1/paypal/process-agreement':                    'PaypalController.cancel',
@@ -124,7 +126,6 @@ module.exports.routes = {
   'PUT  /api/v1/onboarding/pricing':                     { action: 'onboarding/pricing' },
   'PUT  /api/v1/onboarding/level':                       { action: 'onboarding/level' },
   'PUT  /api/v1/purchase/checkout':                      { action: 'purchase/checkout' },
-  'POST  /api/v1/purchase/checkout/paypal/cancel':       { action: 'purchase/checkout' },
   'POST  /api/v1/purchase/checkout/paypal/cancel':       { action: 'purchase/checkout' },
   'POST  /api/v1/purchase/check-promo':                  { action: 'purchase/check-promo' },
   'POST /api/v1/purchase/check-email':                   { action: 'purchase/check-email' },

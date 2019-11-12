@@ -229,6 +229,32 @@ module.exports = {
 
     let errors = [];
 
+    let coupon = {}; let discount = 0.00;
+
+    if (inputs.promoCode) {
+      let response = await sails.helpers.promo.checkCode(inputs.promoCode, plans[inputs.plan][inputs.billingCycle].id);
+
+      if (response.success && response.data) {
+        switch (response.data.type) {
+          case 0:
+            discount = (parseFloat(response.data.value) / 100) * plans[inputs.plan][inputs.billingCycle].price;
+            coupon = '';
+            break;
+          case 1:
+            discount = parseFloat(response.data.value);
+            coupon = '';
+            break;
+          case 2:
+            coupon = '';
+            break;
+          default:
+            throw {declined: 'Invalid promotional code'}
+        }
+      } else {
+        throw {declined: 'Invalid promotional code'}
+      }
+    }
+
 //Atributes for creating the billing plan of  a user.
     let billingPlanAttributes = {
       "description": "ChinesePod Subscription",
@@ -261,7 +287,7 @@ module.exports = {
       "type": "INFINITE"
     };
 
-    if (trial) {
+    if (inputs.trial) {
       billingPlanAttributes['payment_definitions'].push({
         "amount": {
           "currency": "USD",
@@ -314,9 +340,10 @@ module.exports = {
       });
     })
       .then((data) => {
-      redirectUrl = data.approvalUrl;
-      userToken = data.token;
-    })
+        sails.log.info({paypalData: data});
+        redirectUrl = data.approvalUrl;
+        userToken = data.token;
+      })
       .catch((err) => {
         sails.log.error(err);
         throw {declined: errors.length > 0 ? errors[0] : 'Could not finalize Paypal checkout. Please try again.'};
@@ -328,19 +355,7 @@ module.exports = {
         .set({trial: new Date(Date.now()).toISOString()});
     }
 
-    // Check Subscriptions Table
-    const cpodSubscription = await Subscriptions.create({
-      user_id: inputs.userId,
-      subscription_id: userToken,
-      subscription_from: 2, // Paypal = 2
-      subscription_type: plans[inputs.plan].type, // converted 'plan'
-      product_id: plans[inputs.plan][inputs.billingCycle].id, // Product ID
-      product_length: plans[inputs.plan][inputs.billingCycle].length, // converted 'billingCycle'
-      status: 1, //  1=active, 2=cancelled, 3=past due
-      next_billing_time: new Date(subscription['current_period_end'] * 1000).toISOString(),
-      cc_num: cardData ? cardData.last4 : '9999',
-      cc_exp: cardData ? `${cardData.exp_month}/${cardData.exp_year}` : '99/99',
-    }).fetch();
+
 
     if (!ipData['country_name']) {
       const ipdata = require('ipdata');
@@ -357,8 +372,9 @@ module.exports = {
       }
     }
 
+    // Create an interim transaction
     await Transactions.create({
-      subscription_id: subscription.id,
+      subscription_id: userToken,
       user_id: inputs.userId,
       product_id: plans[inputs.plan][inputs.billingCycle].id,
       product_length: plans[inputs.plan][inputs.billingCycle].length,
@@ -366,8 +382,8 @@ module.exports = {
       discount: discount ? discount : 0.00,
       billed_amount: inputs.trial ? 0.00 : plans[inputs.plan][inputs.billingCycle].price - discount,
       promotion_code: inputs.promoCode ? inputs.promoCode : null,
-      pay_status: 2,
-      pay_method: 9,
+      pay_status: 1, // Awaiting payment
+      pay_method: 10,
       notes: 'CPOD JS PAGE',
       region: ipData['region'] ? ipData['region'] : null,
       country: ipData['country_name'] ? ipData['country_name'] : null,
@@ -377,9 +393,19 @@ module.exports = {
       modified_by: inputs.userId,
     });
 
-
-
-
+    // Create a temporary Subscription entry
+    await Subscriptions.create({
+      user_id: inputs.userId,
+      subscription_id: userToken,
+      subscription_from: 2, // Paypal = 2
+      subscription_type: plans[inputs.plan].type, // converted 'plan'
+      product_id: plans[inputs.plan][inputs.billingCycle].id, // Product ID
+      product_length: plans[inputs.plan][inputs.billingCycle].length, // converted 'billingCycle'
+      status: 3, //  1=active, 2=cancelled, 3=past due
+      next_billing_time: new Date().toISOString(),
+      cc_num: 'PPAL',
+      cc_exp: 'PPAL'
+    }).fetch();
 
 
     if (redirectUrl) {

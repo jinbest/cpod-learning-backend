@@ -272,20 +272,20 @@ parasails.registerPage('checkout', {
     async paypalCheckout () {
       this.syncing = true;
 
-      // if (this.needsAccount) {
-      //   // Check Email for Existing Account
-      //   let existingAccount = await this.checkEmail();
-      //   if (existingAccount.userData) {
-      //     this.modal = 'loginModal';
-      //     return false
-      //   }
-      // }
-
       let data = this.handleParsingForm();
       if (!data) {
         this.syncing = false;
         return
       } else {
+        if (this.needsAccount) {
+          // Check Email for Existing Account
+          let existingAccount = await this.checkEmail();
+          if (existingAccount.userData) {
+            this.modal = 'loginModal';
+            this.syncing = false;
+            return false
+          }
+        }
         await Cloud['paypalCreate'].with({
           fName: this.formData.fName,
           lName: this.formData.lName,

@@ -60,14 +60,15 @@ module.exports = {
       }
     });
   },
-  processPaymentAgreement(token) {
+  processPaymentAgreement(token, cb) {
     paypal.billingAgreement.execute(token, {}, (error, billingAgreement) => {
       if(error) {
-        console.log(error);
+        sails.log.error(error);
+        cb(error)
       } else {
-        console.log(billingAgreement);
         //Billing agreement will have all the information about the agreement.
-        sails.log.info({message:"Successfully created the agreement."})
+        sails.log.info({message:"Successfully created the agreement."});
+        cb(null, billingAgreement)
       }
     });
   }
