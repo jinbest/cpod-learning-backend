@@ -119,6 +119,7 @@ module.exports = {
 
     const moment = require('moment');
 
+
     let ipData = {};
 
     let userData = {};
@@ -257,19 +258,19 @@ module.exports = {
 
 //Atributes for creating the billing plan of  a user.
     let billingPlanAttributes = {
-      "description": "ChinesePod Subscription",
+      "description": `ChinesePod ${_.capitalize(inputs.plan)} Subscription`,
       "merchant_preferences": {
         "auto_bill_amount": "yes",
         "cancel_url": sails.config.custom.baseUrl + "/api/v1/paypal/cancel",
         "initial_fail_amount_action": "cancel",
-        "max_fail_attempts": "1",
+        "max_fail_attempts": "2",
         "return_url": sails.config.custom.baseUrl + "/api/v1/paypal/success",
         "setup_fee": {
           "currency": "USD",
-          "value": "0"
+          "value": plans[inputs.plan][inputs.billingCycle]['price'] // Testing setup fees
         }
       },
-      "name": "Paypal Agreement",
+      "name": "ChinesePod Subscription",
       "payment_definitions": [
         {
           "amount": {
