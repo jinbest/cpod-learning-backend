@@ -35,13 +35,18 @@ module.exports = {
           let ipData = {};
 
           if(ip && ip !== '::1') {
-            await ipdata.lookup(req.ip, sails.config.custom.ipDataKey)
-              .then((info) => {
-                ipData = info;
-              })
-              .catch((err) => {
-                sails.log.error(err);
-              });
+            try {
+              await ipdata.lookup(req.ip, sails.config.custom.ipDataKey)
+                .then((info) => {
+                  ipData = info;
+                })
+                .catch((err) => {
+                  sails.log.error(err);
+                });
+            } catch (e) {
+              sails.log.error(e);
+            }
+
           }
 
           user.name = user.first_name + ' ' + user.last_name
@@ -115,13 +120,18 @@ module.exports = {
           let ipData = {};
 
           if(ip && ip !== '::1') {
-            await ipdata.lookup(req.ip, sails.config.custom.ipDataKey)
-              .then((info) => {
-                ipData = info;
-              })
-              .catch((err) => {
-                sails.log.error(err);
-              });
+            try {
+              await ipdata.lookup(req.ip, sails.config.custom.ipDataKey)
+                .then((info) => {
+                  ipData = info;
+                })
+                .catch((err) => {
+                  sails.log.error(err);
+                });
+            } catch (e) {
+              sails.log.error(e);
+            }
+
           }
 
           userData = await User.create({
