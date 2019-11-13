@@ -130,7 +130,7 @@ module.exports = {
             <p>Cheers,</p>
             <p>The Friendly ChinesePod Contact Robot</p>
             `,
-        to: 'ugis@chinesepod.com',
+        to: 'followup@chinesepod.com',
         subject: 'Failed Promo Code',
         from: 'errors@chinesepod.com',
         fromName: 'ChinesePod Errors'

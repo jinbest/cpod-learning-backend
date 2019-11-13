@@ -251,7 +251,7 @@ module.exports = {
             <p>Cheers,</p>
             <p>The Friendly ChinesePod Contact Robot</p>
             `,
-            to: 'ugis@chinesepod.com',
+            to: 'followup@chinesepod.com',
             subject: 'Failed User Trial',
             from: 'errors@chinesepod.com',
             fromName: 'ChinesePod Errors'
@@ -289,7 +289,7 @@ module.exports = {
             <p>Cheers,</p>
             <p>The Friendly ChinesePod Contact Robot</p>
             `,
-        to: 'ugis@chinesepod.com',
+        to: 'followup@chinesepod.com',
         subject: 'Failed User Payment',
         from: 'errors@chinesepod.com',
         fromName: 'ChinesePod Errors'
@@ -341,7 +341,7 @@ module.exports = {
             <p>Cheers,</p>
             <p>The Friendly ChinesePod Contact Robot</p>
             `,
-              to: 'ugis@chinesepod.com',
+              to: 'followup@chinesepod.com',
               subject: 'Failed User Payment',
               from: 'errors@chinesepod.com',
               fromName: 'ChinesePod Errors'
@@ -363,7 +363,7 @@ module.exports = {
             <p>Cheers,</p>
             <p>The Friendly ChinesePod Contact Robot</p>
             `,
-          to: 'ugis@chinesepod.com',
+          to: 'followup@chinesepod.com',
           subject: 'Failed Promo Code',
           from: 'errors@chinesepod.com',
           fromName: 'ChinesePod Errors'
@@ -404,7 +404,7 @@ module.exports = {
             <p>Cheers,</p>
             <p>The Friendly ChinesePod Contact Robot</p>
             `,
-            to: 'ugis@chinesepod.com',
+            to: 'followup@chinesepod.com',
             subject: 'Failed User Purchase',
             from: 'errors@chinesepod.com',
             fromName: 'ChinesePod Errors'
@@ -503,7 +503,7 @@ module.exports = {
             <p>Cheers,</p>
             <p>The Friendly ChinesePod Contact Robot</p>
             `,
-          to: 'ugis@chinesepod.com',
+          to: 'followup@chinesepod.com',
           subject: 'Failed User Purchase',
           from: 'errors@chinesepod.com',
           fromName: 'ChinesePod Errors'
