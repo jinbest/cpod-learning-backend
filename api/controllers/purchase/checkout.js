@@ -139,14 +139,19 @@ module.exports = {
       let password = await sails.helpers.passwordGenerate();
 
       if(this.req.ip && this.req.ip !== '::1') {
-        await ipdata.lookup(this.req.ip, sails.config.custom.ipDataKey)
-          .then((info) => {
-            ipData = info;
-          })
-          .catch((err) => {
-            sails.hooks.bugsnag.notify(err);
-            sails.log.error(err);
-          });
+        try {
+          await ipdata.lookup(this.req.ip, sails.config.custom.ipDataKey)
+            .then((info) => {
+              ipData = info;
+            })
+            .catch((err) => {
+              sails.hooks.bugsnag.notify(err);
+              sails.log.error(err);
+            });
+        } catch (e) {
+          sails.log.error(e)
+        }
+
       }
 
       let name = `${inputs.fName} ${inputs.lName}`;
@@ -329,14 +334,19 @@ module.exports = {
           const ipdata = require('ipdata');
 
           if(this.req.ip && this.req.ip !== '::1') {
-            await ipdata.lookup(this.req.ip, sails.config.custom.ipDataKey)
-              .then((info) => {
-                ipData = info;
-              })
-              .catch((err) => {
-                sails.log.error(err);
-                sails.hooks.bugsnag.notify(err);
-              });
+            try {
+              await ipdata.lookup(this.req.ip, sails.config.custom.ipDataKey)
+                .then((info) => {
+                  ipData = info;
+                })
+                .catch((err) => {
+                  sails.log.error(err);
+                  sails.hooks.bugsnag.notify(err);
+                });
+            } catch (e) {
+              sails.log.error(e)
+            }
+
           }
         }
 

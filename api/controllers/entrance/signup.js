@@ -73,13 +73,18 @@ the account verification message.)`,
     let ipData = {};
 
     if(ip) {
-      await ipdata.lookup(req.ip, '67ce141658c735941e1307cf08fcf9a40cd5101a64f19ea674688fff')
-        .then((info) => {
-          ipData = info;
-        })
-        .catch((err) => {
-          sails.log.info(err);
-        });
+      try {
+        await ipdata.lookup(req.ip, '67ce141658c735941e1307cf08fcf9a40cd5101a64f19ea674688fff')
+          .then((info) => {
+            ipData = info;
+          })
+          .catch((err) => {
+            sails.log.info(err);
+          });
+      } catch (e) {
+        sails.log.error(e)
+      }
+
     }
 
     //TODO Timezone / Lattitude / Longtitude / Postal
