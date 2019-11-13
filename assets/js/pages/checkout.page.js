@@ -17,7 +17,7 @@ parasails.registerPage('checkout', {
     formData: {
       fName: '',
       lName: '',
-      emailAddress: 'ugis@chinesepod.com',
+      emailAddress: '',
       password: '',
       promoCode: '',
       agreedToTerms: false,
@@ -123,10 +123,12 @@ parasails.registerPage('checkout', {
           promoCode: this.formData.promoCode,
           plan: this.plan,
           billingCycle: this.billingCycle,
+          fName: this.formData.fName,
+          lName: this.formData.lName,
+          emailAddress: this.formData.emailAddress,
         })
           .then((info) => {
             //Valid Promo Code
-            console.log(info);
             if (info.success && this.plan === info.discount.plan && this.billingCycle === info.discount.billingCycle) {
               if (info.discount.type === 0) {
                 // Percentage Discount
@@ -164,7 +166,6 @@ parasails.registerPage('checkout', {
         emailAddress: this.formData.emailAddress
       })
         .then((response) => {
-          console.log(response);
           return response
         })
         .catch((err) => {

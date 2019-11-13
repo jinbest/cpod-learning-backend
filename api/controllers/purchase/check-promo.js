@@ -7,6 +7,18 @@ module.exports = {
   description: 'Check the validity of a ChinesePod Promo Code',
 
   inputs: {
+    emailAddress: {
+      type: 'string'
+    },
+    userId: {
+      type: 'number'
+    },
+    fName: {
+      type: 'string'
+    },
+    lName: {
+      type: 'string'
+    },
     promoCode: {
       type: 'string',
       description: 'A promo code issued by ChinesePod.',
@@ -93,7 +105,38 @@ module.exports = {
         }
       }
     } else {
+
       sails.log.info(response.data);
+
+      if (!inputs.emailAddress && this.req.me) {
+        inputs.emailAddress = this.req.me.email
+      }
+
+      if (!inputs.fName && !inputs.lName && this.req.me) {
+        inputs.name = this.req.me.name
+      }
+
+      await sails.helpers.mailgun.sendHtmlEmail.with({
+        htmlMessage: `
+            <p>Failed to Apply a Promo Code on https://www.chinesepod.com</p>
+            <br />
+            ${inputs.fName || inputs.lName ? `<p>Name: ${inputs.fName} ${inputs.lName}</p>` : inputs.name ? `<p>Name: ${inputs.name}<p/>` : ''}
+            <p>Email: ${inputs.emailAddress ? inputs.emailAddress : 'Anonymous User'}</p>
+            <br />
+            <p>Code: ${inputs.promoCode}</p>
+            <p>Product: ${inputs.plan} - ${inputs.billingCycle}</p>
+            <p>Error: ${response.error}</p>
+            <br />
+            <p>Cheers,</p>
+            <p>The Friendly ChinesePod Contact Robot</p>
+            `,
+        to: 'ugis@chinesepod.com',
+        subject: 'Failed Promo Code',
+        from: 'errors@chinesepod.com',
+        fromName: 'ChinesePod Errors'
+      });
+
+
       return {
         error: response.error,
         data: response.data ? response.data : false

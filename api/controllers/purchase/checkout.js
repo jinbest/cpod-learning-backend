@@ -9,10 +9,12 @@ module.exports = {
 
   inputs: {
     plan: {
-      type: 'string'
+      type: 'string',
+      required: true
     },
     billingCycle: {
-      type: 'string'
+      type: 'string',
+      required: true
     },
     emailAddress: {
       type: 'string'
@@ -21,10 +23,12 @@ module.exports = {
       type: 'number'
     },
     fName: {
-      type: 'string'
+      type: 'string',
+      required: true
     },
     lName: {
-      type: 'string'
+      type: 'string',
+      required: true
     },
     zip: {
       type: 'string'
@@ -234,6 +238,24 @@ module.exports = {
         let userTrial = await User.findOne({id: inputs.userId});
         sails.log.info(userTrial);
         if (userTrial.trial) {
+          await sails.helpers.mailgun.sendHtmlEmail.with({
+            htmlMessage: `
+            <p>Failed to Start a Free Trial on https://www.chinesepod.com</p>
+            <br />
+            <p>Name: ${inputs.fName} ${inputs.lName}</p>
+            <p>Email: ${inputs.emailAddress}</p>
+            <br />
+            <p>Error: Unfortunately, you can only enroll in a trial subscription once. 
+            It was already redeemed on ${new Date(userTrial.trial.toString()).toLocaleString()}</p>
+            <br />
+            <p>Cheers,</p>
+            <p>The Friendly ChinesePod Contact Robot</p>
+            `,
+            to: 'ugis@chinesepod.com',
+            subject: 'Failed User Trial',
+            from: 'errors@chinesepod.com',
+            fromName: 'ChinesePod Errors'
+          });
           throw {declined: `Unfortunately, you can only enroll in a trial subscription once. 
         It was already redeemed on ${new Date(userTrial.trial.toString()).toLocaleString()}`};
         }
@@ -255,7 +277,23 @@ module.exports = {
     if (!customerData || customerData.err) {
       //TODO STORE THIS SOMEWHERE
       sails.log.error(customerData.err);
-      sails.hooks.bugsnag.notify(customerData);
+      await sails.helpers.mailgun.sendHtmlEmail.with({
+        htmlMessage: `
+            <p>Failed User Payment on https://www.chinesepod.com</p>
+            <br />
+            <p>Name: ${inputs.fName} ${inputs.lName}</p>
+            <p>Email: ${inputs.emailAddress}</p>
+            <br />
+            <p>Error: ${customerData.err ? customerData.err : 'Could not confirm the payment method. Please try again later.'}</p>
+            <br />
+            <p>Cheers,</p>
+            <p>The Friendly ChinesePod Contact Robot</p>
+            `,
+        to: 'ugis@chinesepod.com',
+        subject: 'Failed User Payment',
+        from: 'errors@chinesepod.com',
+        fromName: 'ChinesePod Errors'
+      });
       throw {declined: customerData.err ? customerData.err : 'Could not confirm the payment method. Please try again later.'};
     }
 
@@ -289,9 +327,47 @@ module.exports = {
             });
             break;
           default:
+            await sails.helpers.mailgun.sendHtmlEmail.with({
+              htmlMessage: `
+            <p>Failed User Payment on https://www.chinesepod.com</p>
+            <br />
+            <p>Name: ${inputs.fName} ${inputs.lName}</p>
+            <p>Email: ${inputs.emailAddress}</p>
+            <br />
+            <p>Code: ${inputs.promoCode}</p>
+            <p>Product: ${inputs.plan} - ${inputs.billingCycle}</p>
+            <p>Error: Invalid promotional code</p>
+            <br />
+            <p>Cheers,</p>
+            <p>The Friendly ChinesePod Contact Robot</p>
+            `,
+              to: 'ugis@chinesepod.com',
+              subject: 'Failed User Payment',
+              from: 'errors@chinesepod.com',
+              fromName: 'ChinesePod Errors'
+            });
             throw {declined: 'Invalid promotional code'}
         }
       } else {
+        await sails.helpers.mailgun.sendHtmlEmail.with({
+          htmlMessage: `
+            <p>Failed to Apply User Promo Code on https://www.chinesepod.com</p>
+            <br />
+            <p>Name: ${inputs.fName} ${inputs.lName}</p>
+            <p>Email: ${inputs.emailAddress}</p>
+            <br />
+            <p>Code: ${inputs.promoCode}</p>
+            <p>Product: ${inputs.plan} - ${inputs.billingCycle}</p>
+            <p>Error: Invalid promotional code</p>
+            <br />
+            <p>Cheers,</p>
+            <p>The Friendly ChinesePod Contact Robot</p>
+            `,
+          to: 'ugis@chinesepod.com',
+          subject: 'Failed Promo Code',
+          from: 'errors@chinesepod.com',
+          fromName: 'ChinesePod Errors'
+        });
         throw {declined: 'Invalid promotional code'}
       }
     }
@@ -313,6 +389,27 @@ module.exports = {
           cardData = customerData.sources.data[0];
         } catch (e) {
           sails.log.error(e);
+
+          await sails.helpers.mailgun.sendHtmlEmail.with({
+            htmlMessage: `
+            <p>Failed User Purchase on https://www.chinesepod.com</p>
+            <br />
+            <p>Name: ${inputs.fName} ${inputs.lName}</p>
+            <p>Email: ${inputs.emailAddress}</p>
+            <br />
+            ${inputs.promoCode ? `<p>Code: ${inputs.promoCode}</p>` : ''}
+            <p>Product: ${inputs.plan} - ${inputs.billingCycle}</p>
+            <p>Error: ${e}</p>
+            <br />
+            <p>Cheers,</p>
+            <p>The Friendly ChinesePod Contact Robot</p>
+            `,
+            to: 'ugis@chinesepod.com',
+            subject: 'Failed User Purchase',
+            from: 'errors@chinesepod.com',
+            fromName: 'ChinesePod Errors'
+          });
+
           sails.hooks.bugsnag.notify(e);
         }
 
@@ -387,10 +484,31 @@ module.exports = {
         });
         exits.success();
       })
-      .catch((err) => {
+      .catch(async(err) => {
         //TODO STORE THIS SOMEWHERE
         sails.hooks.bugsnag.notify(err);
         sails.log.error(err);
+
+        await sails.helpers.mailgun.sendHtmlEmail.with({
+          htmlMessage: `
+            <p>Failed User Purchase on https://www.chinesepod.com</p>
+            <br />
+            <p>Name: ${inputs.fName} ${inputs.lName}</p>
+            <p>Email: ${inputs.emailAddress}</p>
+            <br />
+            ${inputs.promoCode ? `<p>Code: ${inputs.promoCode}</p>` : ''}
+            <p>Product: ${inputs.plan} - ${inputs.billingCycle}</p>
+            <p>Error: ${err}</p>
+            <br />
+            <p>Cheers,</p>
+            <p>The Friendly ChinesePod Contact Robot</p>
+            `,
+          to: 'ugis@chinesepod.com',
+          subject: 'Failed User Purchase',
+          from: 'errors@chinesepod.com',
+          fromName: 'ChinesePod Errors'
+        });
+
         errors.push(err.message);
         throw {declined: errors.length > 0 ? errors[0] : 'Could not confirm the payment method. Please try again later.'};
       })

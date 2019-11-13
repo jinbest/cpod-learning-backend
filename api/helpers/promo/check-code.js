@@ -52,7 +52,6 @@ module.exports = {
         product_id: inputs.productId
       }
     });
-    sails.log.info({promo1: promo});
     if (promo) {
       if (new Date(promo.expiry_date) > new Date() && promo.max_uses > promo.times_used) {
         sails.log.info({promoWorked: promo});
@@ -79,10 +78,9 @@ module.exports = {
       });
     }
 
-    if (promo) {
-      sails.log.info({wrongProduct: promo});
+    if (promo && promo.length > 0) {
       return {
-        error: 'Valid Code - Invalid Product',
+        error: 'Valid Code - Wrong Product',
         data: promo
       }
     } else {
