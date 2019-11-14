@@ -1,9 +1,8 @@
-parasails.registerPage('signup', {
+parasails.registerPage('free-signup', {
   //  ╦╔╗╔╦╔╦╗╦╔═╗╦    ╔═╗╔╦╗╔═╗╔╦╗╔═╗
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
-    // Form data
     formData: {
       optIn: true,
       emailAddress: '',
@@ -36,6 +35,7 @@ parasails.registerPage('signup', {
   },
   mounted: async function() {
     document.getElementById('page-footer').style = 'display: flex';
+    //…
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
@@ -94,5 +94,6 @@ parasails.registerPage('signup', {
 
       return argins;
     }
+
   }
 });

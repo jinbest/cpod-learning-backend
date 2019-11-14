@@ -38,6 +38,7 @@ module.exports.routes = {
   'GET /email-signup':            { action: 'entrance/view-signup' },
   'GET /get-started':             { action: 'entrance/view-signup' },
   'GET /signup':                  { action: 'entrance/view-signup' },
+  'GET /free-signup':             { action: 'entrance/view-free-signup' },
   'GET /login':                   { action: 'entrance/view-login' },
   'GET /email/confirm':           { action: 'entrance/confirm-email' },
   'GET /logout':                  { action: 'account/logout' },

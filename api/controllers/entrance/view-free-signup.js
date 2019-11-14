@@ -1,16 +1,16 @@
 module.exports = {
 
 
-  friendlyName: 'View signup',
+  friendlyName: 'View free signup',
 
 
-  description: 'Display "Signup" page.',
+  description: 'Display "Free signup" page.',
 
 
   exits: {
 
     success: {
-      viewTemplatePath: 'pages/entrance/signup',
+      viewTemplatePath: 'pages/entrance/free-signup'
     },
 
     redirect: {
