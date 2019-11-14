@@ -47,9 +47,13 @@ module.exports.routes = {
 
   'GET /level/:unused?':          { action: 'onboarding/view-level' },
 
+  //ONBOARDING
+  'GET /new-dashboard':           { action: 'onboarding/view-new-dash' },
+
   //DASHBOARD
   'GET /dash/:unused?':            'DashController.serve',
   'GET /home/:unused?':            'HomeController.serve',
+  'GET /feedback/:unused?':        'HomeController.serve',
   'GET /lesson/:unused?/:unused?': 'HomeController.serve',
   'GET /podcasts/:unused?':        'PodcastsController.serve',
 
@@ -147,7 +151,6 @@ module.exports.routes = {
   'GET /api/v1/dashboard/get-stats':                     { action: 'dashboard/get-stats' },
   'GET /api/v1/dashboard/get-info':                      { action: 'dashboard/get-info' },
 
-
   //Lesson Routes
   'GET /api/v1/lessons/get-lesson':                      { action: 'lessons/get-lesson' },
   'GET /api/v1/lessons/get-dialogue':                    { action: 'lessons/get-dialogue' },
@@ -171,6 +174,12 @@ module.exports.routes = {
   // Token Routes
   'GET /api/v1/token':                                   {action: 'token/check'},
   'POST /api/v1/token':                                  {action: 'token/get'},
+
+  //ADS
+  'GET /api/v1/ads/android-app':                         {action: 'ads/android-app'},
+
+  //TUTORIALS
+  'GET /api/v1/tutorials/android-intro-video':           {action: 'tutorials/android-intro-video'},
 
   //Sample Routes
   // 'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },

@@ -103,6 +103,7 @@ module.exports = {
     return {...returnData, ...{
         userId: inputs.userId,
         name: userData.name,
+        email: userData.email,
         username: userData.username,
         trial: userData.trial,
         userAvatar: userPreferences ? userPreferences['avatar_url'] : 'https://www.chinesepod.com/dash/img/brand/symbol-black-center.svg',
