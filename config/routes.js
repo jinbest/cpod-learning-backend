@@ -107,6 +107,7 @@ module.exports.routes = {
   // from the Parasails library, or by using those method names as the `action` in <ajax-form>.
 
   '/api/v1/account/logout':                              { action: 'account/logout' },
+  '/api/v1/account/opt-out-of-new-dashboard':            { action: 'account/opt-out-of-new-dashboard' },
 
   //Sample Routes
   // '/api/v1/account/logout':                              { action: 'account/logout' },
