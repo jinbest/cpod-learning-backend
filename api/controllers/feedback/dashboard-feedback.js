@@ -60,15 +60,16 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    sails.log.info(inputs);
-
     if (this.res.me && this.res.me.id) {
       inputs.userId = this.res.me.id
     }
 
-    sails.log.info(inputs);
-
-    await FeedbackForms.create(inputs);
+    try {
+      await FeedbackForms.create(inputs);
+    } catch (e) {
+      sails.log.error({inputs: inputs});
+      sails.hooks.bugsnag.notify(e)
+    }
 
   }
 
