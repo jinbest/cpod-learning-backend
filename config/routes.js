@@ -172,8 +172,8 @@ module.exports.routes = {
 
   //Feedback Routes
   'POST /api/v1/feedback/dashboard-feedback':            { action: 'feedback/dashboard-feedback' },
-  'GET /api/v1/feedback/dashboard-feedback-all':        { action: 'feedback/dashboard-feedback-all' },
-  'GET /api/v1/feedback/dashboard-feedback-web':        { action: 'feedback/dashboard-feedback-web' },
+  'GET /api/v1/feedback/dashboard-feedback-all':         { action: 'feedback/dashboard-feedback-all' },
+  'GET /api/v1/feedback/dashboard-feedback-web':         { action: 'feedback/dashboard-feedback-web' },
 
   // LOG ROUTES
   'PUT /api/v1/logs/game-logs':                          { action: 'logs/game-logs' },
