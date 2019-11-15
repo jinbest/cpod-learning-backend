@@ -170,6 +170,9 @@ module.exports.routes = {
   'GET /api/v1/exercises/results':                       { action: 'exercises/results/get' },
   'POST /api/v1/exercises/results':                      { action: 'exercises/results/post' },
 
+  //Feedback Routes
+  'POST /api/v1/feedback/dashboard-feedback':            { action: 'feedback/dashboard-feedback' },
+
   // LOG ROUTES
   'PUT /api/v1/logs/game-logs':                          { action: 'logs/game-logs' },
 
