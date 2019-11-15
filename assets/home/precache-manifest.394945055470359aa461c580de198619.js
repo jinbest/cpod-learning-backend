@@ -1,10 +1,10 @@
 self.__precacheManifest = [
   {
-    "revision": "426439788ec5ba772cdf94057f6f4659",
-    "url": "/home/fonts/nucleo-icons.42643978.woff2"
+    "revision": "2569aaea6eaaf8cd210db7f2fa016743",
+    "url": "/home/fonts/nucleo-icons.2569aaea.woff"
   },
   {
-    "revision": "638d6f940a941d6d4db6d9120330d6f3",
+    "revision": "f8bae3d2c2a6ef47c6d43c85deef2329",
     "url": "/home/index.html"
   },
   {
@@ -16,16 +16,16 @@ self.__precacheManifest = [
     "url": "/home/js/chunk-ab7e0cd8-legacy.ff87ddb9.js"
   },
   {
-    "revision": "fa4aed79c5e8f541aa20",
-    "url": "/home/js/app-legacy.078f9168.js"
+    "revision": "22cfad2d8fe1061997ad",
+    "url": "/home/js/app-legacy.b8291131.js"
   },
   {
     "revision": "068edbebd1834076fe70",
     "url": "/home/js/chunk-vendors-legacy.4a8c0651.js"
   },
   {
-    "revision": "f82ec6ba2dc4181db2af35c499462840",
-    "url": "/home/fonts/nucleo-icons.f82ec6ba.ttf"
+    "revision": "0b8a30b10cbe7708d5f3a4b007c1d665",
+    "url": "/home/img/nucleo-icons.0b8a30b1.svg"
   },
   {
     "revision": "a070ebf69a7fcaea3c17fbbc56deebac",
@@ -48,10 +48,6 @@ self.__precacheManifest = [
     "url": "/home/img/symbol.f9b78d93.svg"
   },
   {
-    "revision": "0b8a30b10cbe7708d5f3a4b007c1d665",
-    "url": "/home/img/nucleo-icons.0b8a30b1.svg"
-  },
-  {
     "revision": "92d40536b4008c9e966baf28829ce412",
     "url": "/home/img/preloader.92d40536.svg"
   },
@@ -60,47 +56,51 @@ self.__precacheManifest = [
     "url": "/home/fonts/icomoon.eee8b9b9.woff"
   },
   {
-    "revision": "2569aaea6eaaf8cd210db7f2fa016743",
-    "url": "/home/fonts/nucleo-icons.2569aaea.woff"
+    "revision": "068edbebd1834076fe70",
+    "url": "/home/css/chunk-vendors.c14f326c.css"
   },
   {
-    "revision": "365fc333c183bf39ef777a760ca718cf",
-    "url": "/home/img/brand-white.365fc333.svg"
-  },
-  {
-    "revision": "d9cfd664237d1473d68127968d0f3776",
-    "url": "/home/img/icomoon.d9cfd664.svg"
-  },
-  {
-    "revision": "61f77c5e336a55fb8dc944a0676c5f5b",
-    "url": "/home/img/brand.61f77c5e.svg"
-  },
-  {
-    "revision": "c1733565b32b585676302d4233c39da8",
-    "url": "/home/fonts/nucleo-icons.c1733565.eot"
-  },
-  {
-    "revision": "e9c8d6429bab307155971201fd98217b",
-    "url": "/home/fonts/icomoon.e9c8d642.ttf"
-  },
-  {
-    "revision": "00d2977773069da3cd07cfca2c2482e6",
-    "url": "/home/fonts/icomoon.00d29777.eot"
-  },
-  {
-    "revision": "6f0a76321d30f3c8120915e57f7bd77e",
-    "url": "/home/fonts/element-icons.6f0a7632.ttf"
+    "revision": "f82ec6ba2dc4181db2af35c499462840",
+    "url": "/home/fonts/nucleo-icons.f82ec6ba.ttf"
   },
   {
     "revision": "2fad952a20fbbcfd1bf2ebb210dccf7a",
     "url": "/home/fonts/element-icons.2fad952a.woff"
   },
   {
-    "revision": "068edbebd1834076fe70",
-    "url": "/home/css/chunk-vendors.c14f326c.css"
+    "revision": "00d2977773069da3cd07cfca2c2482e6",
+    "url": "/home/fonts/icomoon.00d29777.eot"
   },
   {
-    "revision": "fa4aed79c5e8f541aa20",
+    "revision": "e9c8d6429bab307155971201fd98217b",
+    "url": "/home/fonts/icomoon.e9c8d642.ttf"
+  },
+  {
+    "revision": "c1733565b32b585676302d4233c39da8",
+    "url": "/home/fonts/nucleo-icons.c1733565.eot"
+  },
+  {
+    "revision": "d9cfd664237d1473d68127968d0f3776",
+    "url": "/home/img/icomoon.d9cfd664.svg"
+  },
+  {
+    "revision": "426439788ec5ba772cdf94057f6f4659",
+    "url": "/home/fonts/nucleo-icons.42643978.woff2"
+  },
+  {
+    "revision": "61f77c5e336a55fb8dc944a0676c5f5b",
+    "url": "/home/img/brand.61f77c5e.svg"
+  },
+  {
+    "revision": "6f0a76321d30f3c8120915e57f7bd77e",
+    "url": "/home/fonts/element-icons.6f0a7632.ttf"
+  },
+  {
+    "revision": "365fc333c183bf39ef777a760ca718cf",
+    "url": "/home/img/brand-white.365fc333.svg"
+  },
+  {
+    "revision": "22cfad2d8fe1061997ad",
     "url": "/home/css/app.7be05671.css"
   }
 ];
