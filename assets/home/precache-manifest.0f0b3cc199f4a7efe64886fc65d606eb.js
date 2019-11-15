@@ -44,20 +44,20 @@ self.__precacheManifest = [
     "url": "/home/img/qing-wen.e4b6e6c5.jpg"
   },
   {
-    "revision": "416cd22d23f31d72f1caf6f0a716f2de",
+    "revision": "7c3dde0cf9bbe32b3ae4020a1f879289",
     "url": "/home/index.html"
   },
   {
-    "revision": "acab1a8eb4d475f0a0d2",
-    "url": "/home/js/app.b9a244ae.js"
+    "revision": "abcadf5d20797cae6bbb",
+    "url": "/home/js/app.d0824880.js"
   },
   {
     "revision": "f9b78d93af8ccff72e6e853d649a19cd",
     "url": "/home/img/symbol.f9b78d93.svg"
   },
   {
-    "revision": "2add6b402c3d7fbbaa4fb0613c6c4a38",
-    "url": "/home/img/brand/symbol-white.svg"
+    "revision": "f9b78d93af8ccff72e6e853d649a19cd",
+    "url": "/home/img/brand/symbol.svg"
   },
   {
     "revision": "c1733565b32b585676302d4233c39da8",
@@ -124,32 +124,28 @@ self.__precacheManifest = [
     "url": "/home/fonts/nucleo-icons.f82ec6ba.ttf"
   },
   {
-    "revision": "f9b78d93af8ccff72e6e853d649a19cd",
-    "url": "/home/img/brand/symbol.svg"
-  },
-  {
-    "revision": "a158e68b2ab402fc3f58861935f523ac",
-    "url": "/home/img/brand/green.png"
-  },
-  {
     "revision": "5bcf46d00bb2f8cc17d2257003803d93",
     "url": "/home/img/brand/favicon.png"
+  },
+  {
+    "revision": "2add6b402c3d7fbbaa4fb0613c6c4a38",
+    "url": "/home/img/brand/symbol-white.svg"
   },
   {
     "revision": "776e8317ed66d1e2ec7ef1853377375b",
     "url": "/home/img/brand/white.png"
   },
   {
-    "revision": "426439788ec5ba772cdf94057f6f4659",
-    "url": "/home/fonts/nucleo-icons.42643978.woff2"
-  },
-  {
-    "revision": "72758cdb9fd2b850545747fed624e7e3",
-    "url": "/home/favicon.png"
+    "revision": "a158e68b2ab402fc3f58861935f523ac",
+    "url": "/home/img/brand/green.png"
   },
   {
     "revision": "2fad952a20fbbcfd1bf2ebb210dccf7a",
     "url": "/home/fonts/element-icons.2fad952a.woff"
+  },
+  {
+    "revision": "72758cdb9fd2b850545747fed624e7e3",
+    "url": "/home/favicon.png"
   },
   {
     "revision": "00d2977773069da3cd07cfca2c2482e6",
@@ -158,6 +154,10 @@ self.__precacheManifest = [
   {
     "revision": "eee8b9b975b37eef73cda9641feb8f6f",
     "url": "/home/fonts/icomoon.eee8b9b9.woff"
+  },
+  {
+    "revision": "426439788ec5ba772cdf94057f6f4659",
+    "url": "/home/fonts/nucleo-icons.42643978.woff2"
   },
   {
     "revision": "2569aaea6eaaf8cd210db7f2fa016743",
@@ -180,7 +180,7 @@ self.__precacheManifest = [
     "url": "/home/css/chunk-vendors.86a8de80.css"
   },
   {
-    "revision": "acab1a8eb4d475f0a0d2",
+    "revision": "abcadf5d20797cae6bbb",
     "url": "/home/css/app.7be05671.css"
   },
   {
