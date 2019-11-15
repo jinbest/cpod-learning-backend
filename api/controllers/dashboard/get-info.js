@@ -57,6 +57,17 @@ module.exports = {
 
     let access = await sails.helpers.users.getAccessType(inputs.userId);
 
+
+    // PROMO PERIOD TODO Remove this once invalid
+
+    const currentTime = new Date();
+
+
+    if (currentTime > new Date('2019-11-15') && currentTime < new Date('2019-12-27') && access !== 'admin') {
+      access = 'premium'
+    }
+
+
     if (!['premium', 'admin'].includes(access)) {
       let lessonTimeline = await Logging.find({
         where: {
@@ -110,7 +121,6 @@ module.exports = {
         lastLogin: userPreferences ? userPreferences['last_login'] : '',
         level: level,
         charSet: charSet,
-        pinyin: false,
         access: access
       }};
   }
