@@ -37,7 +37,7 @@ module.exports = function unauthorized() {
       delete req.session.userId;
     }
 
-    return res.redirect('/login');
+    return res.redirect(`/login?continue=${req.url}`);
     // return res.redirect(`/accounts/signin?continue=https://www.chinesepod.com${req.path}`);
   }
 
