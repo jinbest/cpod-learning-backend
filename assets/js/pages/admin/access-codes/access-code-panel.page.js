@@ -8,7 +8,7 @@ parasails.registerPage('access-code-panel', {
     formData: {
       amount: 1,
       access_type: 'premium',
-      length: 30
+      accessLength: 30
     },
     formErrors: {},
     syncing: false,
@@ -33,11 +33,15 @@ parasails.registerPage('access-code-panel', {
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
-    createVoucherCodes() {
-      console.log(this.formData);
+    createdVoucherCodes() {
+      console.log('success');
+      location.reload();
     },
-    deleteCode(id) {
-      console.log(id);
+    async deleteCode(id) {
+      this.voucherCodes = this.voucherCodes.filter((code) => code.id !== id);
+      await Cloud['deleteAccessCodes'].with({
+        voucherId: id
+      })
     }
   }
 });

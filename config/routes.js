@@ -205,8 +205,8 @@ module.exports.routes = {
   'GET /api/v1/tutorials/android-intro-video':           { action: 'tutorials/android-intro-video'},
 
   //ACCESS CODES
-  'POST /api/v1/admin/access-codes/generate':            { action: 'admin/access-codes/generate'},
-  'POST /api/v1/admin/access-codes/delete':              { action: 'admin/access-codes/delete'}
+  'POST /api/v1/admin/access-codes/generate':            { action: 'admin/access-codes/generate-access-codes'},
+  'POST /api/v1/admin/access-codes/delete':              { action: 'admin/access-codes/delete-access-codes'}
 
   //Sample Routes
   // 'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },

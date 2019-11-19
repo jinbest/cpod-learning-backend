@@ -25,7 +25,7 @@
         <tr v-for="code in voucherCodes">
           <th scope="row">{{ code.code }}</th>
           <td>{{ code.access_type }}</td>
-          <td>{{ code.length }}</td>
+          <td>{{ code.accessLength }}</td>
           <td>{{ code.expiry ? code.expiry : 'Never' }}</td>
           <td>{{ code.status }}</td>
           <td>{{ code.redeemed_by }}</td>
@@ -44,7 +44,7 @@
       <h2 class="text-center">Create new access voucher codes</h2>
       <div class="voucher-form-container">
         <hr/>
-        <ajax-form action="createAccessVouchers" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-errors.sync="formErrors" @submitted="createVoucherCodes()">
+        <ajax-form action="generateAccessCodes" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-errors.sync="formErrors" @submitted="createdVoucherCodes()">
           <div class="form-group my-3">
             <label>How many?</label>
             <input type="number" class="form-control" placeholder="1" v-model="formData.amount">
@@ -62,7 +62,7 @@
           </div>
           <div class="form-group my-3">
             <label>Length (days)</label>
-            <input type="number" class="form-control" placeholder="30" :class="[formErrors.length ? 'is-invalid' : '']" v-model="formData.length">
+            <input type="number" class="form-control" placeholder="30" :class="[formErrors.length ? 'is-invalid' : '']" v-model="formData.accessLength">
             <div class="invalid-feedback d-block" v-if="formData.length > 365 * 2">Seems to be very long, are you sure?</div>
           </div>
           <div class="form-group my-3">
