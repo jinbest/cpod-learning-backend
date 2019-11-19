@@ -33,46 +33,56 @@ module.exports.routes = {
   // 'GET /account/password':   { action: 'account/view-edit-password' },
   // 'GET /account/profile':    { action: 'account/view-edit-profile' },
 
-  'GET /':                        { action: 'view-new-page-or-redirect' },
+  'GET /':                                               { action: 'view-new-page-or-redirect' },
 
-  'GET /email-signup':            { action: 'entrance/view-signup' },
-  'GET /get-started':             { action: 'entrance/view-signup' },
-  'GET /signup':                  { action: 'entrance/view-signup' },
-  'GET /free-signup':             { action: 'entrance/view-free-signup' },
-  'GET /login':                   { action: 'entrance/view-login' },
-  'GET /email/confirm':           { action: 'entrance/confirm-email' },
-  'GET /logout':                  { action: 'account/logout' },
+  'GET /email-signup':                                   { action: 'entrance/view-signup' },
+  'GET /get-started':                                    { action: 'entrance/view-signup' },
+  'GET /signup':                                         { action: 'entrance/view-signup' },
+  'GET /free-signup':                                    { action: 'entrance/view-free-signup' },
+  'GET /login':                                          { action: 'entrance/view-login' },
+  'GET /email/confirm':                                  { action: 'entrance/confirm-email' },
+  'GET /logout':                                         { action: 'account/logout' },
 
-  'GET /pricing':                 { action: 'onboarding/view-pricing' },
-  'GET /checkout':                { action: 'view-checkout' },
+  'GET /pricing':                                        { action: 'onboarding/view-pricing' },
+  'GET /checkout':                                       { action: 'view-checkout' },
 
-  'GET /level/:unused?':          { action: 'onboarding/view-level' },
+  'GET /level/:unused?':                                 { action: 'onboarding/view-level' },
 
   //ONBOARDING
-  'GET /new-dashboard':           { action: 'onboarding/view-new-dash' },
+  'GET /new-dashboard':                                  { action: 'onboarding/view-new-dash' },
 
   //DASHBOARD
-  'GET /dash/:unused?':            'DashController.serve',
-  'GET /home/:unused?':            'HomeController.serve',
-  'GET /feedback/:unused?':        'HomeController.serve',
-  'GET /lesson/:unused?/:unused?': 'HomeController.serve',
-  'GET /podcasts/:unused?':        'PodcastsController.serve',
+  'GET /dash/:unused?':                                  'DashController.serve',
+  'GET /home/:unused?':                                  'HomeController.serve',
+  'GET /feedback/:unused?':                              'HomeController.serve',
+  'GET /lesson/:unused?/:unused?':                       'HomeController.serve',
+  'GET /podcasts/:unused?':                              'PodcastsController.serve',
+  // 'GET /dictionary/:unused?':                            'PodcastsController.serve',
 
   //PLACEMENT TEST
   'GET /placement/:unused?': 'PlacementController.serve',
 
   //RECAP LESSON VIEWS
-  'GET /secret-page':             { action: 'recap/view-secret-page' },
-  'GET /current-lesson':          { action: 'recap/view-current-lesson' },
-  'GET /set-lesson/:unused?':     { action: 'recap/set-lesson' },
-  'GET /recap':                   { action: 'recap/view-recap' },
-  'GET /recapp':                  { action: 'recap/view-recap' },
-  'GET /app':                     { action: 'recap/view-recap' },
+  'GET /secret-page':                                    { action: 'recap/view-secret-page' },
+  'GET /current-lesson':                                 { action: 'recap/view-current-lesson' },
+  'GET /set-lesson/:unused?':                            { action: 'recap/set-lesson' },
+  'GET /recap':                                          { action: 'recap/view-recap' },
+  'GET /recapp':                                         { action: 'recap/view-recap' },
+  'GET /app':                                            { action: 'recap/view-recap' },
+
+
+  //DICTIONARY
+  'GET /dictionary/:unused?':                            {},
 
   //LEGAL PAGES
-  'GET /terms':             { action:   'legal/view-terms' },
-  'GET /terms-and-conditions':             { action:   'legal/view-terms' },
-  'GET /privacy':           { action:   'legal/view-privacy' },
+  'GET /terms':                                          { action:   'legal/view-terms' },
+  'GET /terms-and-conditions':                           { action:   'legal/view-terms' },
+  'GET /privacy':                                        { action:   'legal/view-privacy' },
+
+
+  //ADMIN PAGES
+  //ACCESS VOUCHER CODES
+  'GET /admin/access-code-panel':                        {action: 'admin/access-codes/view-access-code-panel'},
 
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
   //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗  ┌┼─   ║║║ ║║║║║║║║  ║ ║╠═╣ ║║╚═╗
@@ -81,11 +91,13 @@ module.exports.routes = {
   // '/privacy':                   '/legal/privacy',
   // '/logout':                  '/api/v1/account/logout',
 
+  '/old-dashboard':                                      '/api/v1/account/opt-out-of-new-dashboard',
 
-  'GET /api/v1/auth/facebook': {controller: 'PassportController', action: 'facebookAuth'},
-  'GET /api/v1/auth/facebook/callback': {controller: 'PassportController', action: 'facebookCallback'},
-  'GET /api/v1/auth/google':                {controller: 'PassportController', action: 'googleAuth'},
-  'GET /api/v1/auth/google/callback':       {controller: 'PassportController', action: 'googleCallback'},
+
+  'GET /api/v1/auth/facebook':                           { controller: 'PassportController', action: 'facebookAuth'},
+  'GET /api/v1/auth/facebook/callback':                  { controller: 'PassportController', action: 'facebookCallback'},
+  'GET /api/v1/auth/google':                             { controller: 'PassportController', action: 'googleAuth'},
+  'GET /api/v1/auth/google/callback':                    { controller: 'PassportController', action: 'googleCallback'},
 
   'GET /chinese/:unused?/:unused?':                      { action: 'redirect/why-choose-us'},
   'GET /sitemap' :                                       { action: 'sitemap'},
@@ -97,8 +109,8 @@ module.exports.routes = {
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝
   // …
-  'POST /api/v1/webhooks/mautic/update':                  { action: 'webhooks/mautic/update' },
-  'POST /api/v1/webhooks/stripe/failed':                  { action: 'webhooks/stripe/failed' },
+  'POST /api/v1/webhooks/mautic/update':                 { action: 'webhooks/mautic/update' },
+  'POST /api/v1/webhooks/stripe/failed':                 { action: 'webhooks/stripe/failed' },
 
 
   //  ╔═╗╔═╗╦  ╔═╗╔╗╔╔╦╗╔═╗╔═╗╦╔╗╔╔╦╗╔═╗
@@ -175,18 +187,26 @@ module.exports.routes = {
   'GET /api/v1/feedback/dashboard-feedback-all':         { action: 'feedback/dashboard-feedback-all' },
   'GET /api/v1/feedback/dashboard-feedback-web':         { action: 'feedback/dashboard-feedback-web' },
 
+  //DICTIONARY
+  'GET /api/v1/dictionary/get':                          { action: 'dictionary/get-dictionary-word'},
+  'GET /api/v1/dictionary/related':                      { action: 'dictionary/get-related-words'},
+
   // LOG ROUTES
   'PUT /api/v1/logs/game-logs':                          { action: 'logs/game-logs' },
 
   // Token Routes
-  'GET /api/v1/token':                                   {action: 'token/check'},
-  'POST /api/v1/token':                                  {action: 'token/get'},
+  'GET /api/v1/token':                                   { action: 'token/check'},
+  'POST /api/v1/token':                                  { action: 'token/get'},
 
   //ADS
-  'GET /api/v1/ads/android-app':                         {action: 'ads/android-app'},
+  'GET /api/v1/ads/android-app':                         { action: 'ads/android-app'},
 
   //TUTORIALS
-  'GET /api/v1/tutorials/android-intro-video':           {action: 'tutorials/android-intro-video'},
+  'GET /api/v1/tutorials/android-intro-video':           { action: 'tutorials/android-intro-video'},
+
+  //ACCESS CODES
+  'POST /api/v1/admin/access-codes/generate':            { action: 'admin/access-codes/generate'},
+  'POST /api/v1/admin/access-codes/delete':              { action: 'admin/access-codes/delete'}
 
   //Sample Routes
   // 'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
