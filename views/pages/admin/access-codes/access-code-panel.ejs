@@ -1,0 +1,82 @@
+<div id="access-code-panel" v-cloak>
+  <div class="container">
+    <h1 class="text-white headline font-weight-bold text-center">Access Vouchers</h1>
+    <div class="card p-2">
+      <div class="control-panel m-3">
+        <div class="float-right">
+          <button class="btn btn-primary" @click="modal = 'createVouchers'">Create Vouchers</button>
+        </div>
+      </div>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">Code</th>
+          <th scope="col">Access</th>
+          <th scope="col">Length</th>
+          <th scope="col">Expires</th>
+          <th scope="col">Status</th>
+          <th scope="col">Redeemed By</th>
+          <th scope="col">Created By</th>
+          <th scope="col">Updated</th>
+          <th scope="col" class="text-center">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="code in voucherCodes">
+          <th scope="row">{{ code.code }}</th>
+          <td>{{ code.access_type }}</td>
+          <td>{{ code.length }}</td>
+          <td>{{ code.expiry ? code.expiry : 'Never' }}</td>
+          <td>{{ code.status }}</td>
+          <td>{{ code.redeemed_by }}</td>
+          <td>{{ code.created_by }}</td>
+          <td>{{ code.updatedAt }}</td>
+          <td class="text-center"><button class="btn btn-sm btn-danger" @click="deleteCode(code.id)"><i class="fa fa-trash"></i></button></td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <modal class="createVouchers modal fade" v-if="modal==='createVouchers'" @close="modal = ''" v-cloak>
+    <div class="container">
+      <h2 class="text-center">Create new access voucher codes</h2>
+      <div class="voucher-form-container">
+        <hr/>
+        <ajax-form action="createAccessVouchers" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-errors.sync="formErrors" @submitted="createVoucherCodes()">
+          <div class="form-group my-3">
+            <label>How many?</label>
+            <input type="number" class="form-control" placeholder="1" v-model="formData.amount">
+            <div class="invalid-feedback d-block" v-if="formData.amount > 30">Seems to be an awful lot, are you sure?</div>
+          </div>
+          <div class="my-3">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="radioBasic" v-model="formData.access_type" value="basic">
+              <label class="form-check-label" for="radioBasic">Basic</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="radioPremium" v-model="formData.access_type" value="premium">
+              <label class="form-check-label" for="radioPremium">Premium</label>
+            </div>
+          </div>
+          <div class="form-group my-3">
+            <label>Length (days)</label>
+            <input type="number" class="form-control" placeholder="30" :class="[formErrors.length ? 'is-invalid' : '']" v-model="formData.length">
+            <div class="invalid-feedback d-block" v-if="formData.length > 365 * 2">Seems to be very long, are you sure?</div>
+          </div>
+          <div class="form-group my-3">
+            <label>Expiry</label>
+            <input type="date" class="form-control" v-model="formData.expiry">
+          </div>
+          <p class="text-danger" v-if="cloudError"><small>An error occurred while processing your request. Please check the form and try again.</small></p>
+          <div class="form-group">
+            <ajax-button :syncing="syncing" class="btn-primary btn-lg btn-block">Create Codes</ajax-button>
+          </div>
+        </ajax-form>
+      </div>
+    </div>
+  </modal>
+
+</div>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>
