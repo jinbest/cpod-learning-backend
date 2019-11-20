@@ -18,7 +18,13 @@ module.exports = {
 
   fn: async function () {
 
-    let voucherCodes = await AccessVoucherCodes.find().populate('redeemed_by').limit(500).skip(this.req.param('page') ? this.req.param('page') * 100 : 0).sort('createdAt DESC');
+    let voucherCodes = await AccessVoucherCodes
+      .find()
+      .limit(500)
+      .skip(this.req.param('page') ? this.req.param('page') * 100 : 0)
+      .sort('createdAt DESC');
+
+    sails.log.info(voucherCodes);
 
     // Respond with view.
     return {
