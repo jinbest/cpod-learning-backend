@@ -39,9 +39,8 @@ module.exports = {
       defaultsTo: true
     },
     expiry: {
-      type: "string",
-      columnType: "datetime",
-      allowNull: true
+      type: "ref",
+      columnType: "datetime"
     },
     status: {
       type: 'string',
