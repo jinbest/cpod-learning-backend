@@ -44,9 +44,13 @@ module.exports = {
     let dataToCreate = [];
 
     for (let step = 0; step < amount; step++) {
+      let randomString = sails.helpers.strings.random();
+
+      let code = `${randomString.slice(0,4).toUpperCase()}-${randomString.slice(4,8).toUpperCase()}`;
+
       dataToCreate.push({
-        code: '',
-        access_type: '',
+        code: code,
+        access_type: inputs.access_type,
         accessLength: inputs.accessLength,
         created_by: this.req.me ? this.req.me.email : 'me@chinesepod.com',
         expires: !!inputs.expiry,

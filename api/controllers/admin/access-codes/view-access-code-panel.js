@@ -18,7 +18,7 @@ module.exports = {
 
   fn: async function () {
 
-    let voucherCodes = await AccessVoucherCodes.find().limit(100).skip(this.req.param('page') ? this.req.param('page') * 100 : 0).sort('createdAt DESC');
+    let voucherCodes = await AccessVoucherCodes.find().populate('redeemed_by').limit(500).skip(this.req.param('page') ? this.req.param('page') * 100 : 0).sort('createdAt DESC');
 
     // Respond with view.
     return {
