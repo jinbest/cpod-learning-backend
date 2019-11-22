@@ -52,11 +52,12 @@ module.exports.routes = {
   'GET /new-dashboard':           { action: 'onboarding/view-new-dash' },
 
   //DASHBOARD
-  'GET /dash/:unused?':            'DashController.serve',
+  'GET /dash/:unused?':            'HomeController.serve',
   'GET /home/:unused?':            'HomeController.serve',
   'GET /feedback/:unused?':        'HomeController.serve',
   'GET /lesson/:unused?/:unused?': 'HomeController.serve',
   'GET /podcasts/:unused?':        'PodcastsController.serve',
+  'GET /dictionary/:unused?':      'PodcastsController.serve',
 
   //PLACEMENT TEST
   'GET /placement/:unused?': 'PlacementController.serve',
@@ -169,6 +170,12 @@ module.exports.routes = {
   'GET /api/v1/exercises/get-questions':                 { action: 'exercises/get-questions' },
   'GET /api/v1/exercises/results':                       { action: 'exercises/results/get' },
   'POST /api/v1/exercises/results':                      { action: 'exercises/results/post' },
+
+  //Dictionary
+  'GET /api/v1/dictionary/search/:word':                 { action: 'dictionary/search-word'},
+  'GET /api/v1/dictionary/define/:word':                 { action: 'dictionary/define-word'},
+  'GET /api/v1/dictionary/decompose/:word':              { action: 'dictionary/decompose-word'},
+  'GET /api/v1/dictionary/examples/:word':               { action: 'dictionary/examples-word'},
 
   //Feedback Routes
   'POST /api/v1/feedback/dashboard-feedback':            { action: 'feedback/dashboard-feedback' },
