@@ -101,6 +101,11 @@ module.exports.routes = {
   'POST /api/v1/webhooks/mautic/update':                  { action: 'webhooks/mautic/update' },
   'POST /api/v1/webhooks/stripe/failed':                  { action: 'webhooks/stripe/failed' },
 
+  //SEARCH
+  'GET /api/v1/search/reindex-lessons':                           { action: 'search/reindex-lessons' },
+  'GET /api/v1/search/search-lessons/:query':                     { action: 'search/search-lessons' },
+  'GET /api/v1/search/:word?':                                'ElasticController.search',
+
 
   //  ╔═╗╔═╗╦  ╔═╗╔╗╔╔╦╗╔═╗╔═╗╦╔╗╔╔╦╗╔═╗
   //  ╠═╣╠═╝║  ║╣ ║║║ ║║╠═╝║ ║║║║║ ║ ╚═╗
