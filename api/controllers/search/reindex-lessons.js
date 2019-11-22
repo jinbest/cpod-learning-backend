@@ -37,13 +37,15 @@ module.exports = {
       };
 
     await new Promise(async (resolve, reject) => {
-      let records = await LessonData.find({where: {
+      let records = await LessonData.find({
+        where: {
           status_published: 'publish',
           publication_timestamp: {
             '<': new Date()
           }
         }
       });
+
       let commands = [];
       let action = {
         index: {
@@ -51,8 +53,6 @@ module.exports = {
           _type: index.elasticIndex
         }
       };
-
-      sails.log.info(records);
 
       records.forEach(record => {
         let indexRecord = {};
