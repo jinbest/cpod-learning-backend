@@ -60,7 +60,7 @@
                         <div class="col-lg-4 col-sm-6 col-xl-6">
                           <label for="address1">Address<span class="required-mark">&nbsp;*</span></label>
                           <input type="text" name="address1" placeholder="Address" :class="[formErrors.address1 ? 'is-invalid' : '']" v-model.trim="formData.address1" required/>
-                          <input type="text" name="address2"  class="mt-2" :class="[formErrors.address2 ? 'is-invalid' : '']" v-model.trim="formData.address2"/>
+                          <input type="text" name="address2" placeholder="Address" class="mt-2" :class="[formErrors.address2 ? 'is-invalid' : '']" v-model.trim="formData.address2"/>
                           <label for="city">City<span class="required-mark">&nbsp;*</span></label>
                           <input type="text" name="city" placeholder="City" :class="[formErrors.city ? 'is-invalid' : '']" v-model.trim="formData.city" required/>
                         </div>
@@ -70,7 +70,7 @@
                             <option v-for="country in countries" :value="country.code">{{ country.name }}</option>
                           </select>
                           <label for="state">{{ formData.country === 'US' ? 'State' : 'Region' }}</label>
-                          <select v-if="formData.country === 'US'" v-model="formData.state" name="state" class="mt-2" :disabled="syncingStates" required>
+                          <select v-if="formData.country === 'US'" v-model="formData.state" name="state" :disabled="syncingStates" required>
                             <option value="" selected="selected" disabled>Select State</option>
                             <option v-for="(value, name) in states" :value="name">{{ value }}</option>
                           </select>
