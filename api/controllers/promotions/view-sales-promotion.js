@@ -69,7 +69,7 @@ module.exports = {
         emailAddress: this.req.me ? this.req.me.email : '',
         promoCode: promoCode,
         country: ipData['country_code'],
-        state: ipData['region_code']
+        state: ipData['country_code'] === 'US' ? ipData['region_code'] :  ipData['region']
       },
       pricing:{
         basic: {
