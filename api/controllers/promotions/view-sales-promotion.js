@@ -57,27 +57,6 @@ module.exports = {
       }
     }
 
-    // if(this.req.param('promo', false)) {
-    //   promo = true;
-    //   if (this.req.param('promo')) {
-    //     promoCode = this.req.param('promo').toLowerCase() === 'yes' ? '' : this.req.param('promo').toUpperCase();
-    //   }
-    // }
-    //
-    // if(this.req.param('trial', false) || this.req.session.trial ) {
-    //   trial = true;
-    //   promo = false;
-    //   promoCode = '';
-    // }
-    //
-    // if(this.req.param('plan', false) && ['premium', 'basic'].includes(this.req.param('plan', false).toLowerCase())) {
-    //   plan = this.req.param('plan', false).toLowerCase();
-    // }
-    //
-    // if(this.req.param('period', false) && ['annually', 'quarterly', 'monthly'].includes(this.req.param('period', false).toLowerCase())) {
-    //   period = this.req.param('period', false).toLowerCase();
-    // }
-
     // Respond with view.
     return {
       expiry: expiry,
@@ -89,8 +68,8 @@ module.exports = {
       formData: {
         emailAddress: this.req.me ? this.req.me.email : '',
         promoCode: promoCode,
-        country: ipdata['country_code'],
-        state: ipdata['region_code']
+        country: ipData['country_code'],
+        state: ipData['region_code']
       },
       pricing:{
         basic: {
