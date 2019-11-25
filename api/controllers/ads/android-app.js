@@ -33,7 +33,7 @@ module.exports = {
                         <Duration>00:03:06</Duration>
                         <MediaFiles>
                             <MediaFile id="GDFP" delivery="progressive" width="1280" height="720" type="video/mp4" bitrate="533" scalable="true" maintainAspectRatio="true">
-                                <![CDATA[http://embed.wistia.com/deliveries/ad2c327bb68922ccec498c30db33cc6c302135f4.bin/videoAD.mp4]]>
+                                <![CDATA[http://embed.wistia.com/deliveries/ad2c327bb68922ccec498c30db33cc6c302135f4.bin]]>
                             </MediaFile>
                         </MediaFiles>
                     </Linear>
