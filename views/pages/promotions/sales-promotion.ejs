@@ -56,7 +56,39 @@
                           <div class="invalid-feedback" v-if="formErrors.emailAddress">Please enter a valid email address.</div>
                         </div>
                       </div>
+                      <div class="row">
+                        <div class="col-lg-4 col-sm-6 col-xl-6">
+                          <label for="address1">Address<span class="required-mark">&nbsp;*</span></label>
+                          <input type="text" name="address1" placeholder="Address" :class="[formErrors.address1 ? 'is-invalid' : '']" v-model.trim="formData.address1" required/>
+                          <input type="text" name="address2"  class="mt-2" :class="[formErrors.address2 ? 'is-invalid' : '']" v-model.trim="formData.address2"/>
+                          <label for="city">City<span class="required-mark">&nbsp;*</span></label>
+                          <input type="text" name="city" placeholder="City" :class="[formErrors.city ? 'is-invalid' : '']" v-model.trim="formData.city" required/>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-xl-6">
+                          <label for="country">Country<span class="required-mark">&nbsp;*</span></label>
+                          <select v-model="formData.country" name="country" required>
+                            <option v-for="country in countries" :value="country.code">{{ country.name }}</option>
+                          </select>
+                          <label for="state">{{ formData.country === 'US' ? 'State' : 'Region' }}</label>
+                          <select v-if="formData.country === 'US'" v-model="formData.state" name="state" class="mt-2" :disabled="syncingStates" required>
+                            <option value="" selected="selected" disabled>Select State</option>
+                            <option v-for="(value, name) in states" :value="name">{{ value }}</option>
+                          </select>
+                          <input v-else type="text" name="state" placeholder="Region" class="mt-2" v-model.trim="formData.state"/>
+                          <input type="text" name="zip" :placeholder="formData.country === 'US' ? 'ZIP' : 'Post Code'" class="mt-2" v-model.trim="formData.zip"/>
+                          <div class="invalid-feedback" v-if="formErrors.emailAddress">Please enter a valid email address.</div>
+                        </div>
+                      </div>
 
+                    </div>
+                  </li>
+                  <li class="d-xl-none">
+                    <hr>
+                  </li>
+                  <li class="col-12 col-xl-6 payment-info">
+                    <div class="heading">
+                      <span class="number">2</span>
+                      <h3>Your payment information</h3>
                     </div>
                     <div v-if="promoShow && !promoToggle">
                       <p class="note">Do you have a Promo Code? <a @click="promoToggle = !promoToggle" class="ipc">Apply it here.</a>
@@ -80,27 +112,19 @@
                         </div>
                       </div>
                       <div class="col-lg-4 col-sm-6 mt-sm-4 col-xl-6">
-                        <a @click="applyPromoCode" class="btn apply-pc-btn ajax-button mt-2" :class="[syncing ? 'syncing' : '', pricing.discount ? ['rbtn', 'disabled'] : 'rbtn-blue']">
+                        <a @click="applyPromoCode" class="btn apply-pc-btn ajax-button mt-2" :class="[promoSyncing ? 'syncing' : '', pricing.discount ? ['rbtn', 'disabled'] : 'rbtn-blue']">
                           <span class="button-text" v-if="!syncing && !pricing.discount"><slot name="default">Apply</slot></span>
-                          <span class="button-loader clearfix" v-if="syncing">
+                          <span class="button-loader clearfix" v-if="promoSyncing">
                             <slot name="syncing-state">Applying...</slot>
                           </span>
-                          <span class="button-text" v-if="!syncing && pricing.discount"><slot name="default"><i>Applied</i></slot></span>
+                          <span class="button-text" v-if="!promoSyncing && pricing.discount"><slot name="default"><i>Applied</i></slot></span>
                         </a>
                         <a v-show="pricing.discount" @click="formData.promoCode = ''; pricing.discount = 0" class="btn rbtn-red apply-pc-btn mt-2">
                           <span class="button-text"><slot name="default">Clear</slot></span>
                         </a>
                       </div>
                     </div>
-                  </li>
-                  <li class="d-xl-none">
-                    <hr>
-                  </li>
-                  <li class="col-12 col-xl-6 payment-info">
-                    <div class="heading">
-                      <span class="number">2</span>
-                      <h3>Your payment information</h3>
-                    </div>
+
                     <p v-if="trial">Your card will not be charged for 14 days. If you cancel before then, your card won’t be charged.</br>
                       You will be charged <b>
                         <span class="price-switch total-amount">${{ pricing[plan][billingCycle] }} {{ billingCycle }}</span>

@@ -37,6 +37,26 @@ module.exports = {
 
     let trial = false; let promo = true; let plan = 'premium'; let period = 'annually'; let promoCode = 'BLACKFRIDAY';
 
+
+    let ipData = {};
+
+    const ipdata = require('ipdata');
+
+    if(this.req.ip && this.req.ip !== '::1') {
+      try {
+        await ipdata.lookup(this.req.ip, sails.config.custom.ipDataKey)
+          .then((info) => {
+            ipData = info;
+          })
+          .catch((err) => {
+            sails.log.error(err);
+            sails.hooks.bugsnag.notify(err);
+          });
+      } catch (e) {
+        sails.log.error(e)
+      }
+    }
+
     // if(this.req.param('promo', false)) {
     //   promo = true;
     //   if (this.req.param('promo')) {
@@ -68,7 +88,9 @@ module.exports = {
       promoShow: promo,
       formData: {
         emailAddress: this.req.me ? this.req.me.email : '',
-        promoCode: promoCode
+        promoCode: promoCode,
+        country: ipdata['country_code'],
+        state: ipdata['region_code']
       },
       pricing:{
         basic: {

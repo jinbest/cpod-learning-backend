@@ -30,6 +30,21 @@ module.exports = {
       type: 'string',
       required: true
     },
+    address1: {
+      type: 'string'
+    },
+    address2: {
+      type: 'string'
+    },
+    city: {
+      type: 'string'
+    },
+    country: {
+      type: 'string'
+    },
+    state: {
+      type: 'string'
+    },
     zip: {
       type: 'string'
     },
@@ -129,6 +144,8 @@ module.exports = {
     if (inputs === {}) {
       throw {invalid: 'No Data Submitted'}
     }
+
+    sails.log.info(inputs);
 
     let ipData = {};
 
@@ -413,6 +430,15 @@ module.exports = {
           sails.hooks.bugsnag.notify(e);
         }
 
+
+        const existingSubscriptions = await Subscriptions.find({
+          user_id: inputs.userId,
+          status: 1,
+          next_billing_time: {
+            '>=': new Date()
+          }
+        });
+
         // Check Subscriptions Table
         const cpodSubscription = await Subscriptions.create({
           user_id: inputs.userId,
@@ -447,7 +473,7 @@ module.exports = {
           }
         }
 
-        await Transactions.create({
+        let transaction = await Transactions.create({
           subscription_id: subscription.id,
           user_id: inputs.userId,
           product_id: plans[inputs.plan][inputs.billingCycle].id,
@@ -465,7 +491,46 @@ module.exports = {
           ip_address: this.req.ip,
           created_by: inputs.userId,
           modified_by: inputs.userId,
-        });
+        }).fetch();
+
+        if (inputs.address1 && inputs.country && inputs.city) {
+          await TransactionAddresses.create({
+            transaction_id: transaction.id,
+            city: inputs.city,
+            country: inputs.country,
+            state: inputs.state,
+            zip_code: inputs.zip,
+            full_name: `${inputs.fName} ${inputs.lName}`,
+            address1: inputs.address1,
+            address2: inputs.address2 ? inputs.address2 : '',
+          });
+        }
+
+        if (existingSubscriptions.length > 0) {
+          await sails.helpers.mailgun.sendHtmlEmail.with({
+            htmlMessage: `
+            <p>Duplicate ChinesePod Subscription Created https://www.chinesepod.com</p>
+            <br />
+            <p>Name: ${inputs.fName} ${inputs.lName}</p>
+            <p>Email: ${inputs.emailAddress}</p>
+            <br />
+            ${inputs.promoCode ? `<p>Code: ${inputs.promoCode}</p>` : ''}
+            <p>Product: ${inputs.plan} - ${inputs.billingCycle}</p>
+            <p>Existing Subscriptions:</p>
+            ${existingSubscriptions.map((subscription) => `
+              <p>Subscription ID: ${subscription.subscription_id}</p>
+            `)}
+            <br />
+            <p>Cheers,</p>
+            <p>The Friendly ChinesePod Contact Robot</p>
+            `,
+            to: 'followup@chinesepod.com',
+            subject: 'Duplicate ChinesePod Subscriptions',
+            from: 'subscriptions@chinesepod.com',
+            fromName: 'ChinesePod Subscriptions'
+          });
+        }
+
 
 // Update User Access on UserSiteLinks
         const userSiteLinks = UserSiteLinks.updateOne({user_id:inputs.userId})

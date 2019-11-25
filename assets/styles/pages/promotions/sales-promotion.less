@@ -293,8 +293,12 @@
       }
       input[type="text"],
       input[type="email"],
+      select,
       input[type="password"]{
         .checkout-input;
+      }
+      select {
+        line-height: 24px;
       }
       ul{
         list-style-type: none;
@@ -391,15 +395,15 @@
             }
           }
           .basic-info{
-            label, input{
+            label, select, input{
               width: 100%;
             }
 
-            input{
+            select, input{
               .placeholder-color(@color-blue-light);
               color: @color-grey;
             }
-            input:focus {
+            select:focus, input:focus {
               border-color: @onboard-blue;
             }
             label{
@@ -608,7 +612,7 @@
       label{
         color: @color-grey;
       }
-      input{
+      select, input{
         width: 100%;
         .placeholder-color(@color-blue-light);
       }
