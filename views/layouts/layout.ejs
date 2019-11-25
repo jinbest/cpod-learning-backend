@@ -19,15 +19,13 @@
     <% /* Certain scripts, normally analytics tools like Google Tag Manager and
     Google Analytics, should only be included in production: */
     if (sails.config.environment === 'production') { %>
-      <!-- Global site tag (gtag.js) - Google Analytics -->
-      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-1176295-62"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'UA-1176295-62');
-      </script>
+      <!-- Google Tag Manager -->
+      <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-TK3RQCH');</script>
+      <!-- End Google Tag Manager -->
     <% }
     /* Otherwise, any such scripts are excluded, and we instead inject a
     robots/noindex meta tag to help prevent any unwanted visits from search engines. */
@@ -53,7 +51,10 @@
   </head>
   <body>
     <% if (sails.config.environment === 'production') { %>
-
+      <!-- Google Tag Manager (noscript) -->
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TK3RQCH"
+                        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+      <!-- End Google Tag Manager (noscript) -->
     <% } %>
     <div id="page-wrap">
       <header id="page-header" class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between">
@@ -119,7 +120,6 @@
             <small class="list-inline-item"><a class="nav-link" href="https://chinesepod.com/resources">Resources</a></small>
             <small class="list-inline-item"><a class="nav-link" href="https://chinesepod.com/privacy">Privacy</a></small>
             <small class="list-inline-item"><a class="nav-link" href="https://chinesepod.com/terms">Terms</a></small>
-            <small class="list-inline-item"><a class="nav-link" href="https://chinesepod.com/contact">Contact</a></small>
           </div>
         </div>
         <div class="col-xs-12 col-md-3 text-center" style="padding-bottom:20px">
