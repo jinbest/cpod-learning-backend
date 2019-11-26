@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col-12 my-4">
-          <img class="img-fluid w-100" src="/images/promotions/black_friday_hero.jpg" alt="BLACK FRIDAY 50% OFF PROMOTION">
+          <img class="img-fluid w-100" src="/images/promotions/black_friday_hero_min.jpg" alt="BLACK FRIDAY 50% OFF PROMOTION">
         </div>
         <div class="col-12 my-3">
           <h1 class="text-center text-white font-weight-bold">THAT'S A FULL YEAR FOR ONLY $124.50!</h1>
@@ -69,7 +69,7 @@
                           <select v-model="formData.country" name="country" required>
                             <option v-for="country in countries" :value="country.code">{{ country.name }}</option>
                           </select>
-                          <label for="state">{{ formData.country === 'US' ? 'State' : 'Region' }}</label>
+                          <label for="state">{{ formData.country === 'US' ? 'State' : 'Region' }}<span v-show="formData.country === 'US'" class="required-mark">&nbsp;*</span></label>
                           <select v-if="formData.country === 'US'" v-model="formData.state" name="state" :disabled="syncingStates" required>
                             <option value="" selected="selected" disabled>Select State</option>
                             <option v-for="(value, name) in states" :value="name">{{ value }}</option>
@@ -97,7 +97,7 @@
                     <div v-show="promoToggle" class="row promotion-code pt-3">
                       <div class="col-lg-4 col-sm-6 col-xl-6">
                         <label for="promotion_code">Promotion Code</label>
-                        <input type="text" id="promotionCode" name="promoCode"  :class="[formErrors.promoCode ? 'is-invalid' : '']" placeholder="Promotion Code" v-model.trim="formData.promoCode">
+                        <input type="text" id="promotionCode" name="promoCode"  :class="[formErrors.promoCode ? 'is-invalid' : '']" placeholder="Promotion Code" v-model.trim="formData.promoCode" :disabled="pricing.discount > 0">
                         <div v-if="formErrors.promoCode && promoLimit < 6" class="alert alert-warning alert-dismissible fade show" role="alert">
                           <strong>Oh No!</strong>  Unfortunately this is not a valid code.
                           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -267,7 +267,7 @@
           </p>
         </div>
         <div class="col-12 my-4 img-center">
-          <img class="img-fluid w-100" src="/images/promotions/black_friday_footer.jpg" alt="BLACK FRIDAY PROMOTION">
+          <img class="img-fluid w-100" src="/images/promotions/black_friday_footer_min.jpg" alt="BLACK FRIDAY PROMOTION">
         </div>
         <div class="col-10 offset-1 col-md-4 offset-md-4 my-4">
           <img class="img-fluid" src="/images/brand/brand-white.svg">
