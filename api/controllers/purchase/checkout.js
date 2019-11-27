@@ -546,8 +546,10 @@ module.exports = {
         const ua = require('universal-analytics');
 
         let visitor = ua('UA-1176295-62', {uid: inputs.userId});
-        visitor.transaction(transaction.id, transaction.billed_amount).send();
-        visitor.item(transaction.billed_amount, 1, transaction.product_id, `${_.capitalize(inputs.plan)} Subscription ${transaction.product_length} Months`, {ti:  transaction.id}).send();
+        visitor
+          .transaction(transaction.id, transaction.billed_amount)
+          .item(transaction.billed_amount, 1, transaction.product_id, `${_.capitalize(inputs.plan)} Subscription ${transaction.product_length} Months`, {ti:  transaction.id})
+          .send();
 
         this.res.cookie('CPODSESSID', phpSession, {
           domain: '.chinesepod.com',
