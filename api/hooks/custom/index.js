@@ -116,6 +116,12 @@ will be disabled and/or hidden in the UI.
             // attach a couple of guaranteed locals.
             if (req.method === 'GET') {
 
+              // //Add Google Analytics
+              // if (req.path.slice(0, 5) !== '/api/'){
+              //   sails.log.info(req.path);
+              //   req.visitor.pageview(req.path).send();
+              // }
+
               // The  `_environment` local lets us do a little workaround to make Vue.js
               // run in "production mode" without unnecessarily involving complexities
               // with webpack et al.)
@@ -226,6 +232,7 @@ will be disabled and/or hidden in the UI.
             // > Note that we make sure a local named `me` doesn't already exist first.
             // > Also note that we strip off any properties that correspond with protected attributes.
             if (req.method === 'GET') {
+
               if (res.locals.me !== undefined) {
                 throw new Error('Cannot attach logged-in user as the view local `me`, because this view local already exists!  (Is it being attached somewhere else?)');
               }
@@ -246,13 +253,6 @@ will be disabled and/or hidden in the UI.
               }//ﬁ
 
               res.locals.me = sanitizedUser;
-
-              //Add Google Analytics
-              if (req.path.slice(0, 5) !== '/api/'){
-                const ua = require('universal-analytics');
-                let visitor = ua('UA-1176295-62', {uid: sanitizedUser.id});
-                visitor.pageview(req.path).send();
-              }
 
               // Include information on the locals as to whether billing features
               // are enabled for this app, and whether email verification is required.
