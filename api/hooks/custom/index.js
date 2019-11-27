@@ -247,6 +247,13 @@ will be disabled and/or hidden in the UI.
 
               res.locals.me = sanitizedUser;
 
+              //Add Google Analytics
+              if (req.path.slice(0, 5) !== '/api/'){
+                const ua = require('universal-analytics');
+                let visitor = ua('UA-1176295-62', {uid: sanitizedUser.id});
+                visitor.pageview(req.path).send();
+              }
+
               // Include information on the locals as to whether billing features
               // are enabled for this app, and whether email verification is required.
               res.locals.isBillingEnabled = sails.config.custom.enableBillingFeatures;

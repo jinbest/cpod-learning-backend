@@ -544,7 +544,6 @@ module.exports = {
         });
 
         const ua = require('universal-analytics');
-
         let visitor = ua('UA-1176295-62', {uid: inputs.userId});
         visitor
           .transaction(transaction.id, transaction.billed_amount)
