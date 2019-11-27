@@ -115,6 +115,7 @@ parasails.registerPage('sales-promotion', {
         displayError.style.display = "none";
       }
     });
+    await this.getGeoIP();
     if (this.promoShow && this.formData.promoCode) {
       this.promoToggle = true;
       this.applyPromoCode();
@@ -150,6 +151,16 @@ parasails.registerPage('sales-promotion', {
       //   TweenMax.to(timerEl, 1, { opacity: 0.2 });
       //   TweenMax.to(reloadBtn, 0.5, { scale: 1, opacity: 1 });
       // }, 1000);
+    },
+    getGeoIP: async function () {
+      await Cloud['ipInfo']()
+        .then((response) => {
+          this.formData.country = response.country_code;
+          if (response.country_code === 'US'){
+            this.formData.state = response.region_code
+          }
+        })
+        .catch(() => {});
     },
     twoDigits (value) {
       if (value < 0) {

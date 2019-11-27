@@ -38,24 +38,24 @@ module.exports = {
     let trial = false; let promo = true; let plan = 'premium'; let period = 'annually'; let promoCode = 'BLACKFRIDAY19';
 
 
-    let ipData = {};
-
-    const ipdata = require('ipdata');
-
-    if(this.req.ip && this.req.ip !== '::1') {
-      try {
-        await ipdata.lookup(this.req.ip, sails.config.custom.ipDataKey)
-          .then((info) => {
-            ipData = info;
-          })
-          .catch((err) => {
-            sails.log.error(err);
-            sails.hooks.bugsnag.notify(err);
-          });
-      } catch (e) {
-        sails.log.error(e)
-      }
-    }
+    // let ipData = {};
+    //
+    // const ipdata = require('ipdata');
+    //
+    // if(this.req.ip && this.req.ip !== '::1') {
+    //   try {
+    //     await ipdata.lookup(this.req.ip, sails.config.custom.ipDataKey)
+    //       .then((info) => {
+    //         ipData = info;
+    //       })
+    //       .catch((err) => {
+    //         sails.log.error(err);
+    //         sails.hooks.bugsnag.notify(err);
+    //       });
+    //   } catch (e) {
+    //     sails.log.error(e)
+    //   }
+    // }
 
     // Respond with view.
     return {
@@ -68,10 +68,10 @@ module.exports = {
       formData: {
         emailAddress: this.req.me ? this.req.me.email : '',
         promoCode: promoCode,
-        country: ipData['country_code'],
+        country: '',
+        state: '',
         city: '',
-        postal: '',
-        state: ipData['country_code'] === 'US' ? ipData['region_code'] : ''
+        postal: ''
       },
       pricing:{
         basic: {
