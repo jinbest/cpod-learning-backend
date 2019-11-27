@@ -59,6 +59,7 @@ module.exports.routes = {
   'GET /home/:unused?':                                  'HomeController.serve',
   'GET /feedback/:unused?':                              'HomeController.serve',
   'GET /lesson/:unused?/:unused?':                       'HomeController.serve',
+  'GET /course/:unused?':                                'HomeController.serve',
   'GET /podcasts/:unused?':                              'PodcastsController.serve',
   // 'GET /dictionary/:unused?':                            'PodcastsController.serve',
 
@@ -162,6 +163,7 @@ module.exports.routes = {
   //Dashboard Routes
   'GET /api/v1/dashboard/history':                       { action: 'dashboard/history' },
   'GET /api/v1/dashboard/bookmarks':                     { action: 'dashboard/bookmarks' },
+  'GET /api/v1/dashboard/get-course':                  { action: 'dashboard/get-course' },
   'GET /api/v1/dashboard/user-courses':                  { action: 'dashboard/user-courses' },
   'GET /api/v1/dashboard/more-courses':                  { action: 'dashboard/more-courses' },
   'GET /api/v1/dashboard/course-lessons':                { action: 'dashboard/course-lessons' },
