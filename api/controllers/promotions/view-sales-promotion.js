@@ -35,7 +35,7 @@ module.exports = {
       });
     }
 
-    let trial = false; let promo = true; let plan = 'premium'; let period = 'annually'; let promoCode = 'BLACKFRIDAY';
+    let trial = false; let promo = true; let plan = 'premium'; let period = 'annually'; let promoCode = 'BLACKFRIDAY19';
 
 
     let ipData = {};
