@@ -75,7 +75,7 @@ then redirect to either a special landing page (for newly-signed up users), or t
 
     //Google Analytics Update
     const ua = require('universal-analytics');
-    var visitor = ua('UA-1176295-7', {uid: user.id});
+    var visitor = ua('UA-1176295-62', {uid: user.id});
     visitor.event("confirm_account", "confirm_account").send();
 
     if (this.req.wantsJSON) {
