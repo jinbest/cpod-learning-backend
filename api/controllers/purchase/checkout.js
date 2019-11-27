@@ -544,6 +544,7 @@ module.exports = {
         });
 
         this.req.visitor
+          .event('payment', 'payment')
           .transaction(transaction.id, transaction.billed_amount)
           .item(transaction.billed_amount, 1, transaction.product_id, `${_.capitalize(inputs.plan)} Subscription ${transaction.product_length} Months`, {ti:  transaction.id})
           .send();
