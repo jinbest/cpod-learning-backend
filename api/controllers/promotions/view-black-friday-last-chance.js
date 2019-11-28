@@ -38,11 +38,11 @@ module.exports = {
 
     let ipData = {};
 
-    var geoip = require('geoip-country');
-
-    if (this.req.ip && this.req.ip !== '::1') {
-      ipData = geoip.lookup(this.req.ip);
-    }
+    // var geoip = require('geoip-country');
+    //
+    // if (this.req.ip && this.req.ip !== '::1') {
+    //   ipData = geoip.lookup(this.req.ip);
+    // }
 
     //
     // const ipdata = require('ipdata');
