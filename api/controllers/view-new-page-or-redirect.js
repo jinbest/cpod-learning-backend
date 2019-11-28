@@ -54,7 +54,7 @@ module.exports = {
       ipData = geoip.lookup(this.req.ip);
     }
 
-    if (!ipData['country'] || countryList.includes(ipData['country'])) {
+    if (ipData === null || !ipData['country'] || countryList.includes(ipData['country'])) {
       throw {redirect: '/home'}
     } else {
       throw {redirect: 'https://chinesepod.com'}
