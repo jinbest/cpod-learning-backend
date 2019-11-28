@@ -255,6 +255,7 @@ module.exports = {
         let userTrial = await User.findOne({id: inputs.userId});
         sails.log.info(userTrial);
         if (userTrial.trial) {
+          delete this.req.session.trial;
           await sails.helpers.mailgun.sendHtmlEmail.with({
             htmlMessage: `
             <p>Failed to Start a Free Trial on https://www.chinesepod.com</p>
