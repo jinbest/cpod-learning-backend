@@ -24,7 +24,11 @@ module.exports = function defineGoogleanalyticsHook(sails) {
 
           const expressApp = sails.hooks.http.app;
 
-          expressApp.use(ua.middleware("UA-1176295-62", {cookieName: '_ga'}));
+          if (sails.config.environment === 'production') {
+            expressApp.use(ua.middleware("UA-1176295-62", {cookieName: '_ga'}));
+          } else {
+            expressApp.use(ua.middleware("XX-1176295-01", {cookieName: '_ga'}));
+          }
 
       });
 

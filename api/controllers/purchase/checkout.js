@@ -507,28 +507,72 @@ module.exports = {
         }
 
         if (existingSubscriptions.length > 0) {
-          await sails.helpers.mailgun.sendHtmlEmail.with({
-            htmlMessage: `
-            <p>Duplicate ChinesePod Subscription Created https://www.chinesepod.com</p>
-            <br />
-            <p>Name: ${inputs.fName} ${inputs.lName}</p>
-            <p>Email: ${inputs.emailAddress}</p>
-            <br />
-            ${inputs.promoCode ? `<p>Code: ${inputs.promoCode}</p>` : ''}
-            <p>Product: ${inputs.plan} - ${inputs.billingCycle}</p>
-            <p>Existing Subscriptions:</p>
-            ${existingSubscriptions.map((subscription) => `
-              <p>Subscription ID: ${subscription.subscription_id}</p>
-            `)}
-            <br />
-            <p>Cheers,</p>
-            <p>The Friendly ChinesePod Contact Robot</p>
-            `,
-            to: 'followup@chinesepod.com',
-            subject: 'Duplicate ChinesePod Subscriptions',
-            from: 'subscriptions@chinesepod.com',
-            fromName: 'ChinesePod Subscriptions'
+          const asyncForEach = async (array, callback) => {
+            for (let index = 0; index < array.length; index++) {
+              await callback(array[index], index, array)
+            }
+          };
+
+          await asyncForEach(existingSubscriptions, async (subscription) => {
+            if(subscription.subscription_from === 7) {
+              await stripe.subscriptions.del(subscription.subscription_id)
+                .then( async (confirmation) => {
+                  sails.log.info('cancelling subscription');
+                  await Subscriptions.updateOne({subscription_id: subscription.subscription_id})
+                    .set({
+                      status: 2,
+                      date_cancelled: new Date()
+                    })
+                })
+                .catch(async(e) => {
+                  sails.log.info({error: e});
+                  sails.hooks.bugsnag.notify(e);
+                  await sails.helpers.mailgun.sendHtmlEmail.with({
+                    htmlMessage: `
+                        <p>Duplicate ChinesePod Stripe Subscription Created https://www.chinesepod.com</p>
+                        <br />
+                        <p>Name: ${inputs.fName} ${inputs.lName}</p>
+                        <p>Email: ${inputs.emailAddress}</p>
+                        <br />
+                        ${inputs.promoCode ? `<p>Code: ${inputs.promoCode}</p>` : ''}
+                        <p>Product: ${inputs.plan} - ${inputs.billingCycle}</p>
+                        <p>Existing Subscription:</p>
+                        <p>Subscription ID: ${subscription.subscription_id}</p>
+                        <br />
+                        <p>Cheers,</p>
+                        <p>The Friendly ChinesePod Contact Robot</p>
+                        `,
+                    to: 'followup@chinesepod.com',
+                    subject: 'Duplicate ChinesePod Subscriptions',
+                    from: 'subscriptions@chinesepod.com',
+                    fromName: 'ChinesePod Subscriptions'
+                  });
+                });
+            } else {
+              await sails.helpers.mailgun.sendHtmlEmail.with({
+                htmlMessage: `
+                        <p>Duplicate ChinesePod Subscription Created https://www.chinesepod.com</p>
+                        <br />
+                        <p>Name: ${inputs.fName} ${inputs.lName}</p>
+                        <p>Email: ${inputs.emailAddress}</p>
+                        <br />
+                        ${inputs.promoCode ? `<p>Code: ${inputs.promoCode}</p>` : ''}
+                        <p>Product: ${inputs.plan} - ${inputs.billingCycle}</p>
+                        <p>Existing Subscriptions:</p>
+                        <p>Subscription ID: ${subscription.subscription_id}</p>
+                        <br />
+                        <p>Cheers,</p>
+                        <p>The Friendly ChinesePod Contact Robot</p>
+                        `,
+                to: 'followup@chinesepod.com',
+                subject: 'Duplicate ChinesePod Subscriptions',
+                from: 'subscriptions@chinesepod.com',
+                fromName: 'ChinesePod Subscriptions'
+              });
+            }
           });
+
+
         }
 
 
