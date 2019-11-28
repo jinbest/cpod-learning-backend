@@ -126,7 +126,7 @@
                               </transition>
                               <transition name="fade">
                               <div v-if="dynamicAddress.postalcode">
-                                <label for="state">{{ dynamicAddress.postalcode.label }}</label>
+                                <label for="zip">{{ dynamicAddress.postalcode.label }}</label>
                                 <input type="text" name="zip" :placeholder="dynamicAddress.postalcode.eg ? dynamicAddress.postalcode.eg : dynamicAddress.postalcode.label" class="mt-2" v-model.trim="formData.zip"/>
                               </div>
                               </transition>
