@@ -77,6 +77,7 @@ module.exports.routes = {
 
   //PROMOTIONS
   'GET /black-friday/:code?':                            { action: 'promotions/view-sales-promotion'},
+  'GET /black-friday-last-chance/:code?':                { action: 'promotions/view-black-friday-last-chance'},
 
   //DICTIONARY
   'GET /dictionary/:unused?':                            {},
