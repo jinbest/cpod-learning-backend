@@ -22,11 +22,11 @@ module.exports = {
 
     if (this.req.session.expiry) {
       expiry = new Date(this.req.session.expiry);
-    } else if (this.req.cookies.event) {
-      expiry = new Date(this.req.cookies.event);
+    } else if (this.req.cookies.event_last) {
+      expiry = new Date(this.req.cookies.event_last);
     } else {
       this.req.session.expiry = expiry;
-      this.res.cookie('event', expiry, {
+      this.res.cookie('event_last', expiry, {
         domain: '.chinesepod.com',
         expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
       });

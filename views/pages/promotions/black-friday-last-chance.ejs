@@ -127,7 +127,7 @@
                               <transition name="fade">
                               <div v-if="dynamicAddress.postalcode">
                                 <label for="zip">{{ dynamicAddress.postalcode.label }}</label>
-                                <input type="text" name="zip" :placeholder="dynamicAddress.postalcode.eg ? dynamicAddress.postalcode.eg : dynamicAddress.postalcode.label" class="mt-2" v-model.trim="formData.zip"/>
+                                <input type="text" name="zip" :placeholder="dynamicAddress.postalcode.eg ? dynamicAddress.postalcode.eg : dynamicAddress.postalcode.label" v-model.trim="formData.zip"/>
                               </div>
                               </transition>
                             </div>
@@ -197,16 +197,16 @@
                     <div class="form-group clearfix">
                       <ul class="cards">
                         <li>
-                          <label for="payment-type-stripe"><img src="/images/cc/mastercard.svg"/></label>
+                          <label for="payment-type-stripe"><img src="/images/cc/mastercard.svg" alt="MASTERCARD"/></label>
                         </li>
                         <li>
-                          <label for="payment-type-stripe"><img src="/images/cc/ae.svg"/></label>
+                          <label for="payment-type-stripe"><img src="/images/cc/ae.svg" alt="AMEX"/></label>
                         </li>
                         <li>
-                          <label for="payment-type-stripe"><img src="/images/cc/visa.svg"/></label>
+                          <label for="payment-type-stripe"><img src="/images/cc/visa.svg" alt="VISA"/></label>
                         </li>
                         <li>
-                          <label for="payment-type-stripe"><img src="/images/cc/unionpay.svg"/></label>
+                          <label for="payment-type-stripe"><img src="/images/cc/unionpay.svg" alt="UNIONPAY"/></label>
                         </li>
                       </ul>
                     </div>
@@ -322,10 +322,10 @@
           </p>
         </div>
         <div class="col-12 my-4 img-center">
-          <img class="img-fluid w-100" src="https://s3contents.chinesepod.com/img/promos/black_friday_footer_min.jpg" alt="BLACK FRIDAY PROMOTION">
+          <img class="img-fluid w-100" src="https://s3contents.chinesepod.com/img/promos/black_friday_footer_min.jpg" alt="BLACK FRIDAY PROMOTION" loading="lazy">
         </div>
         <div class="col-10 offset-1 col-md-4 offset-md-4 my-4">
-          <img class="img-fluid" src="/images/brand/brand-white.svg">
+          <img class="img-fluid" src="/images/brand/brand-white.svg" alt="ChinesePod" loading="lazy">
         </div>
         <div class="col-12 my-3">
           <h4 class="text-center text-white font-weight-bold">CELEBRATING 15 YEARS OF SUCCESSFUL ONLINE EDUCATION</h4>
