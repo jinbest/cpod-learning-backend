@@ -20,15 +20,15 @@ module.exports = {
 
     let expiry = new Date(Date.now() + 4 * 60 * 60 * 1000);
 
-    // if (this.req.cookies.cyber) {
-    //   expiry = new Date(this.req.cookies.cyber);
-    // } else {
-    //   this.req.session.expiry = expiry;
-    //   this.res.cookie('cyber_last', expiry, {
-    //     domain: '.chinesepod.com',
-    //     expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-    //   });
-    // }
+    if (this.req.cookies.cyber_last) {
+      expiry = new Date(this.req.cookies.cyber_last);
+    } else {
+      this.req.session.expiry = expiry;
+      this.res.cookie('cyber_last', expiry, {
+        domain: '.chinesepod.com',
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+      });
+    }
 
     let trial = false; let promo = true; let plan = 'premium'; let period = 'annually'; let promoCode = 'CYBERMONDAY';
 
@@ -38,7 +38,7 @@ module.exports = {
 
     // Respond with view.
     return {
-      expiry: null,
+      expiry: expiry,
       needsAccount: !this.req.me,
       trial: trial,
       plan: plan,
