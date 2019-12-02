@@ -52,7 +52,6 @@ module.exports.routes = {
   'GET /level/:unused?':                                 { action: 'onboarding/view-level' },
 
   //ONBOARDING
-  'GET /new-dashboard':                                  { action: 'onboarding/view-new-dash' },
   'GET /choice':                                         { action: 'onboarding/view-new-dash' },
 
   //DASHBOARD
@@ -98,9 +97,8 @@ module.exports.routes = {
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
   //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗  ┌┼─   ║║║ ║║║║║║║║  ║ ║╠═╣ ║║╚═╗
   //  ╩ ╩╩╚═╝╚═╝  ╩╚═╚═╝═╩╝╩╩╚═╚═╝╚═╝ ╩ ╚═╝  └┘   ═╩╝╚═╝╚╩╝╝╚╝╩═╝╚═╝╩ ╩═╩╝╚═╝
-  // '/terms':                   '/legal/terms',
-  // '/privacy':                   '/legal/privacy',
-  // '/logout':                  '/api/v1/account/logout',
+  '/choose':                                             '/choice',
+  '/new-dashboard':                                      '/choice',
 
   '/old-dashboard':                                      '/api/v1/account/opt-out-of-new-dashboard',
 
