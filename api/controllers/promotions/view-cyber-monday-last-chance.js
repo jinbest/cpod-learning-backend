@@ -10,7 +10,7 @@ module.exports = {
   exits: {
 
     success: {
-      viewTemplatePath: 'pages/promotions/cyber-monday'
+      viewTemplatePath: 'pages/promotions/cyber-monday-last-chance'
     }
 
   },

@@ -8,6 +8,15 @@
         <div class="col-12 my-3">
           <h1 class="text-center text-white font-weight-bold">THAT'S A FULL YEAR FOR ONLY $124.50!</h1>
         </div>
+        <div v-if="expiry" class="col-12 my-3">
+          <div v-if="now < dateInMilliseconds">
+            <h2 class="text-center text-white font-weight-bold">Offer Expires in:</h2>
+            <h2 class="text-center text-danger font-weight-bold display-2">{{ twoDigits(hours) }}:{{ twoDigits(minutes) }}:{{ twoDigits(seconds) }}</h2>
+          </div>
+          <div v-else class="col-12 my-3">
+            <h2 class="text-center text-danger font-weight-bold display-2">PROMOTION HAS ENDED</h2>
+          </div>
+        </div>
         <div class="col-12 my-3">
           <a class="btn btn-block btn-lg rbtn-blue text-white" @click.prevent="focusOnForm()" style="white-space:normal !important; word-wrap: break-word; word-break: normal;">GET 50% OFF PREMIUM ANNUAL NOW!</a>
         </div>
