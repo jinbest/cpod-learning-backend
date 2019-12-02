@@ -398,6 +398,8 @@ module.exports = {
     })
       .then(async (subscription) => {
 
+        sails.log.info(subscription);
+
         // If Trial - Mark User Record as Such
         if (inputs.trial) {
           userData = await User.updateOne({id: inputs.userId})
@@ -474,8 +476,18 @@ module.exports = {
           }
         }
 
+        let stripeSubscription = {};
+
+        try {
+          stripeSubscription = await stripe.invoices.retrieve(subscription.latest_invoice);
+        } catch (e) {
+          sails.log.error(e);
+          sails.hooks.bugsnag.notify(e);
+        }
+
         let transaction = await Transactions.create({
           subscription_id: subscription.id,
+          transaction_id: stripeSubscription && stripeSubscription.charge ? stripeSubscription.charge : '',
           user_id: inputs.userId,
           product_id: plans[inputs.plan][inputs.billingCycle].id,
           product_length: plans[inputs.plan][inputs.billingCycle].length,
@@ -493,6 +505,8 @@ module.exports = {
           created_by: inputs.userId,
           modified_by: inputs.userId,
         }).fetch();
+
+        sails.log.info(transaction);
 
         if (inputs.address1 && inputs.country && inputs.city) {
           await TransactionAddresses.create({
