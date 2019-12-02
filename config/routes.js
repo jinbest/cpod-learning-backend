@@ -53,6 +53,7 @@ module.exports.routes = {
 
   //ONBOARDING
   'GET /new-dashboard':                                  { action: 'onboarding/view-new-dash' },
+  'GET /choice':                                         { action: 'onboarding/view-new-dash' },
 
   //DASHBOARD
   'GET /dash/:unused?':                                  'DashController.serve',
