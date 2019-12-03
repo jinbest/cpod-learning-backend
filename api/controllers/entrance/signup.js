@@ -147,10 +147,8 @@ the account verification message.)`,
       optIn: inputs.optIn,
       ipData: ipData
     }).catch((e) => {
-      console.log(e)
+      sails.log.error(e)
     });
-
-    console.log(mauticLead);
 
     if (sails.config.custom.verifyEmailAddresses) {
       // Send "confirm account" email

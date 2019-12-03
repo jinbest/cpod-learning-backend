@@ -33,7 +33,7 @@ module.exports.routes = {
   // 'GET /account/password':   { action: 'account/view-edit-password' },
   // 'GET /account/profile':    { action: 'account/view-edit-profile' },
 
-  'GET /':                                               { action: 'view-new-page-or-redirect' },
+  'GET /':                                               { action: 'view-homepage-or-redirect' },
 
   'GET /email-signup':                                   { action: 'entrance/view-signup' },
   'GET /get-started':                                    { action: 'entrance/view-signup' },
