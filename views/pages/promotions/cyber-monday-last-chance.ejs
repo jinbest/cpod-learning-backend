@@ -8,7 +8,7 @@
         <div class="col-12 my-3">
           <h1 class="text-center text-white font-weight-bold">THAT'S A FULL YEAR FOR ONLY $124.50!</h1>
         </div>
-        <div v-if="expiry" class="col-12 my-3">
+        <div v-if="expiry" class="col-12 my-3" v-cloak>
           <div v-if="now < dateInMilliseconds">
             <h2 class="text-center text-white font-weight-bold">Offer Expires in:</h2>
             <h2 class="text-center text-danger font-weight-bold display-2">{{ twoDigits(hours) }}:{{ twoDigits(minutes) }}:{{ twoDigits(seconds) }}</h2>
