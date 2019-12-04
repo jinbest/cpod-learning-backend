@@ -25,6 +25,13 @@ module.exports = {
 
       } else {
 
+        if (!user.email){
+          // redirect to login page
+          sails.log.error('facebook callback error: '+err);
+          sails.hooks.bugsnag.notify(err);
+          res.redirect('/login');
+        }
+
         sails.log.info('facebook credentials');
         sails.log.info(user);
 
@@ -131,6 +138,14 @@ module.exports = {
         res.redirect('/login');
 
       } else {
+
+        if (!user.email){
+          // redirect to login page
+          sails.log.error('google callback error: '+err);
+          sails.hooks.bugsnag.notify(err);
+          res.redirect('/login');
+        }
+
 
         sails.log.info('google credentials');
         sails.log.info(user);
