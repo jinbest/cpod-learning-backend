@@ -25,19 +25,22 @@ module.exports = {
 
       } else {
 
-        if (!user.email){
-          // redirect to login page
-          sails.log.error('facebook callback error: '+err);
-          sails.hooks.bugsnag.notify(err);
-          res.redirect('/login');
-        }
-
         sails.log.info('facebook credentials');
         sails.log.info(user);
+
+
+
+        if (!user.email) {
+          user.email = `fb${user.id}`;
+        }
 
         let userData = await User.findOne({email: user.email.toLowerCase()});
 
         let newAccount = false;
+
+        if (!userData) {
+          userData = await User.findOne({email: `fb${user.id}`});
+        }
 
         if (!userData) {
           newAccount = true;
@@ -56,7 +59,6 @@ module.exports = {
             } catch (e) {
               sails.log.error(e);
             }
-
           }
 
           user.name = user.first_name + ' ' + user.last_name;
@@ -89,7 +91,6 @@ module.exports = {
           } catch (e) {
             sails.hooks.bugsnag.notify(e);
           }
-
 
           await sails.helpers.mautic.createContact.with({
             email: userData.email,
