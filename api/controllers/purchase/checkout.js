@@ -274,7 +274,7 @@ module.exports = {
             from: 'errors@chinesepod.com',
             fromName: 'ChinesePod Errors'
           });
-          throw {declined: `Unfortunately, you can only enroll in a trial subscription once. 
+          throw {trialAlreadyUsed: `Unfortunately, you can only enroll in a trial subscription once. 
         It was already redeemed on ${new Date(userTrial.trial.toString()).toLocaleString()}`};
         }
       }
