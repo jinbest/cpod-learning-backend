@@ -10,7 +10,7 @@ module.exports = {
   exits: {
 
     success: {
-      viewTemplatePath: 'pages/onboarding/pricing'
+      viewTemplatePath: 'pages/onboarding/pricing-alt'
     }
 
   },
@@ -24,9 +24,7 @@ module.exports = {
       trial = true
     }
     if(this.req.me && this.req.me.trial) {
-      sails.log.info(this.req.me);
-      trial = false;
-      delete this.req.session.trial
+      trial = false
     }
     return {
       trial: trial,

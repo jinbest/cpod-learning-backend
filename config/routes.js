@@ -44,6 +44,7 @@ module.exports.routes = {
   'GET /logout':                                         { action: 'account/logout' },
 
   'GET /pricing':                                        { action: 'onboarding/view-pricing' },
+  'GET /pricing-alt':                                    { action: 'onboarding/view-pricing-alt' },
   'GET /checkout':                                       { action: 'view-checkout' },
 
   'GET /redeem':                                         { action: 'onboarding/view-redeem' },
@@ -76,10 +77,15 @@ module.exports.routes = {
 
 
   //PROMOTIONS
-  'GET /black-friday/:code?':                            { action: 'promotions/view-sales-promotion'},
-  'GET /black-friday-last-chance/:code?':                { action: 'promotions/view-black-friday-last-chance'},
-  'GET /cyber-monday/:code?':                            { action: 'promotions/view-cyber-monday'},
-  'GET /cyber-monday-last-chance/:code?':                            { action: 'promotions/view-cyber-monday-last-chance'},
+  'GET /expired-promotion':                              { action: 'promotions/view-expired-promo'},
+  // 'GET /black-friday/:code?':                            { action: 'promotions/view-sales-promotion'},
+  // 'GET /black-friday-last-chance/:code?':                { action: 'promotions/view-black-friday-last-chance'},
+  // 'GET /cyber-monday/:code?':                            { action: 'promotions/view-cyber-monday'},
+  // 'GET /cyber-monday-last-chance/:code?':                { action: 'promotions/view-cyber-monday-last-chance'},
+  'GET /black-friday/:code?':                            { action: 'promotions/view-expired-promo'},
+  'GET /black-friday-last-chance/:code?':                { action: 'promotions/view-expired-promo'},
+  'GET /cyber-monday/:code?':                            { action: 'promotions/view-expired-promo'},
+  'GET /cyber-monday-last-chance/:code?':                { action: 'promotions/view-expired-promo'},
 
   //DICTIONARY
   'GET /dictionary/:unused?':                            {},
