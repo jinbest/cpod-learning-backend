@@ -77,7 +77,12 @@ module.exports = {
           });
 
           //Google Analytics Call
-          this.req.visitor.event("sign_up", "sign_up").send();
+          try {
+            req.visitor.event("sign_up", "sign_up").send();
+          } catch (e) {
+            sails.hooks.bugsnag.notify(e);
+          }
+
 
           await sails.helpers.mautic.createContact.with({
             email: userData.email,
@@ -177,7 +182,11 @@ module.exports = {
           });
 
           //Google Analytics Call
-          this.req.visitor.event("sign_up", "sign_up").send();
+          try {
+            req.visitor.event("sign_up", "sign_up").send();
+          } catch (e) {
+            sails.hooks.bugsnag.notify(e);
+          }
 
           await sails.helpers.mautic.createContact.with({
             email: userData.email,
