@@ -97,6 +97,10 @@ module.exports.routes = {
   'GET /terms-and-conditions':                           { action:   'legal/view-terms' },
   'GET /privacy':                                        { action:   'legal/view-privacy' },
 
+  //DESIGN PAGES
+  'GET /logos':                                          { action:   'misc/view-logos' },
+  'GET /brand-guidelines':                               { action:   'misc/view-brand-guidelines' },
+
 
   //ADMIN PAGES
   //ACCESS VOUCHER CODES
