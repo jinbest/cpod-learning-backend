@@ -63,7 +63,7 @@
       <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/contact">Help</a>
       <!-- LOGGED-IN NAVIGATION -->
       <% if(me) { %>
-        <% if(!me.trial) {%>
+        <% if(me.trial) {%>
           <a class="nav-item nav-link ml-2 ml-md-0 mr-2" href="/pricing">Pricing</a>
         <% } %>
         <a class="nav-item nav-link ml-2 ml-md-0 mr-2" href="/logout">Sign out</a>
