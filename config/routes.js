@@ -54,6 +54,8 @@ module.exports.routes = {
 
   //ONBOARDING
   'GET /choice':                                         { action: 'onboarding/view-new-dash' },
+  'GET /switch-page':                                    { action: 'onboarding/view-switch-page' },
+  'GET /beta-promo':                                     { action: 'onboarding/view-beta-promo' },
 
   //DASHBOARD
   'GET /dash/:unused?':                                  'DashController.serve',
@@ -105,7 +107,9 @@ module.exports.routes = {
   //  ╩ ╩╩╚═╝╚═╝  ╩╚═╚═╝═╩╝╩╩╚═╚═╝╚═╝ ╩ ╚═╝  └┘   ═╩╝╚═╝╚╩╝╝╚╝╩═╝╚═╝╩ ╩═╩╝╚═╝
   '/choose':                                             '/choice',
   '/new-dashboard':                                      '/choice',
-
+  '/switch':                                             '/home',
+  '/switch-back':                                        '/api/v1/account/opt-out-of-new-dashboard',
+  '/switchback':                                         '/api/v1/account/opt-out-of-new-dashboard',
   '/old-dashboard':                                      '/api/v1/account/opt-out-of-new-dashboard',
 
 

@@ -1,19 +1,6 @@
 <div id="checkout" v-cloak>
   <div class="top-spacer"></div>
   <div class="container outer">
-    <div v-if="trial && plan !== 'premium'" class="banner black" id="banner">
-      <div class="container">
-        <div class="flex">
-          <div class="flex-item">
-            <a href="/checkout?plan=premium&trial=yes" class="btn blue">Free Trial</a>
-          </div>
-          <div class="flex-item">
-            <h2>The basic learner experience does not include free trial. We recommend you to try our <b class="blue">Premium Learner trial for 14 days.</b></h2>
-            <p>You can always cancel or downgrade to Basic learner at any point before trial ends on <%= new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric'}) %>.</p>
-          </div>
-        </div>
-      </div>
-    </div>
     <div v-if="trial" class="header">
       <h1>Start learning with your free trial today!</h1>
     </div>

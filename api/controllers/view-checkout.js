@@ -25,11 +25,17 @@ module.exports = {
         promoCode = this.req.param('promo').toLowerCase() === 'yes' ? '' : this.req.param('promo').toUpperCase();
       }
     }
-    if(this.req.param('trial', false) || this.req.session.trial ) {
+    if(this.req.param('trial', false) || this.req.session.trial) {
       trial = true;
       promo = false;
       promoCode = '';
+
+      // Remove Trial for users who have already used it
+      if (this.req.me && this.req.me.trial){
+        trial = false;
+      }
     }
+
     if(this.req.param('plan', false) && ['premium', 'basic'].includes(this.req.param('plan', false).toLowerCase())) {
       plan = this.req.param('plan', false).toLowerCase();
     }
