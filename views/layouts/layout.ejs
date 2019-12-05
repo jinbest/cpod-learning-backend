@@ -63,13 +63,15 @@
       <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/contact">Help</a>
       <!-- LOGGED-IN NAVIGATION -->
       <% if(me) { %>
-        <a class="nav-item nav-link ml-2 ml-md-0 mr-2" href="/pricing">Pricing</a>
+        <% if(!me.trial) {%>
+          <a class="nav-item nav-link ml-2 ml-md-0 mr-2" href="/pricing">Pricing</a>
+        <% } %>
         <a class="nav-item nav-link ml-2 ml-md-0 mr-2" href="/logout">Sign out</a>
+        <% if(!me.trial) {%>
+          <a class="btn btn-outline-success ml-2 ml-md-0 mr-2" href="/pricing?trial=yes">Free Trial</a>
+        <% } %>
         <div class="form-inline ml-2" >
           <a class="btn btn-outline-chinesepod-blue" href="/home">Dashboard</a>
-          <% if(!me.trial) {%>
-            <a class="btn btn-outline-success" href="/pricing?trial=yes">Free Trial</a>
-          <% } %>
         </div>
       <% } else { %>
         <!-- LOGGED-OUT NAVIGATION -->
@@ -189,7 +191,6 @@
 <script src="/js/utilities/open-stripe-checkout.js"></script>
 <script src="/js/pages/498.page.js"></script>
 <script src="/js/pages/admin/access-codes/access-code-panel.page.js"></script>
-<script src="/js/pages/charactercrush/list-users-and-time.page.js"></script>
 <script src="/js/pages/charactercrush/list-users.page.js"></script>
 <script src="/js/pages/checkout.page.js"></script>
 <script src="/js/pages/dashboard/welcome.page.js"></script>
@@ -212,7 +213,6 @@
 <script src="/js/pages/promotions/expired-promo.page.js"></script>
 <script src="/js/pages/promotions/sales-promotion.page.js"></script>
 <script src="/js/pages/recap/current-lesson.page.js"></script>
-<script src="/js/pages/recap/list-users-and-time.page.js"></script>
 <script src="/js/pages/recap/list-users.page.js"></script>
 <script src="/js/pages/recap/recap.page.js"></script>
 <script src="/js/pages/recap/secret-page.page.js"></script>
