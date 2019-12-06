@@ -58,11 +58,12 @@ module.exports.routes = {
   'GET /beta-promo':                                     { action: 'onboarding/view-beta-promo' },
 
   //DASHBOARD
-  'GET /dash/:unused?':                                  'DashController.serve',
+  'GET /dash/:unused?':                                  'HomeController.serve',
   'GET /home/:unused?':                                  'HomeController.serve',
   'GET /feedback/:unused?':                              'HomeController.serve',
   'GET /lesson/:unused?/:unused?':                       'HomeController.serve',
   'GET /course/:unused?':                                'HomeController.serve',
+  'GET /courses/:unused?':                               'HomeController.serve',
   'GET /podcasts/:unused?':                              'PodcastsController.serve',
   // 'GET /dictionary/:unused?':                            'PodcastsController.serve',
 
