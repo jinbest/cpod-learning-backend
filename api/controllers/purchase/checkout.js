@@ -537,7 +537,27 @@ module.exports = {
                     .set({
                       status: 2,
                       date_cancelled: new Date()
-                    })
+                    });
+                  await sails.helpers.mailgun.sendHtmlEmail.with({
+                    htmlMessage: `
+                        <p>Duplicate ChinesePod Stripe Subscription Created https://www.chinesepod.com</p>
+                        <br />
+                        <p>Name: ${inputs.fName} ${inputs.lName}</p>
+                        <p>Email: ${inputs.emailAddress}</p>
+                        <br />
+                        ${inputs.promoCode ? `<p>Code: ${inputs.promoCode}</p>` : ''}
+                        <p>Product: ${inputs.plan} - ${inputs.billingCycle}</p>
+                        <p>Existing Subscription:</p>
+                        <p>Subscription ID: ${subscription.subscription_id}</p>
+                        <br />
+                        <p>Cheers,</p>
+                        <p>The Friendly ChinesePod Contact Robot</p>
+                        `,
+                    to: 'followup@chinesepod.com',
+                    subject: 'Duplicate ChinesePod Subscriptions',
+                    from: 'subscriptions@chinesepod.com',
+                    fromName: 'ChinesePod Subscriptions'
+                  });
                 })
                 .catch(async(e) => {
                   sails.log.info({error: e});
