@@ -60,8 +60,8 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    if (this.res.me && this.res.me.id) {
-      inputs.userId = this.res.me.id
+    if (this.req.session.userId) {
+      inputs.userId = this.req.session.userId;
     }
 
     try {
