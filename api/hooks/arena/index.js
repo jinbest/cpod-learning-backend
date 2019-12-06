@@ -17,7 +17,7 @@ module.exports = function defineArenaHook(sails) {
       // Otherwise, create a compiler so that we can watch files.
       sails.after('hook:http:loaded', function () {
 
-        if (process.env.sails_environment === 'staging') { // Ignore for Dev
+        if (process.env.sails_environment === 'production') { // Ignore for Dev
 
           sails.log.info('Initializing custom hook (`arena`)');
 
@@ -91,7 +91,7 @@ module.exports = function defineArenaHook(sails) {
             // IWMIH, we've got ourselves a "super admin".
             return next();
           });
-          expressApp.use('/arena-job-queue', arenaConfig);
+          expressApp.use('/admin/arena-job-queue', arenaConfig);
         } else {
 
         }
