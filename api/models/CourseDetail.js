@@ -130,14 +130,12 @@ module.exports = {
       required: true
     },
     publish_from: {
-      type: "string",
-      columnType: "date",
-      required: true
+      type: "ref",
+      columnType: "date"
     },
     publish_to: {
-      type: "string",
-      columnType: "date",
-      required: true
+      type: "ref",
+      columnType: "date"
     }
   }
 };
