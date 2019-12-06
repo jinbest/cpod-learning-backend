@@ -80,7 +80,7 @@ module.exports = function defineArenaHook(sails) {
             });
 
           // expressApp.get('/arena-job-queue/:unused?/:unused?/:unused?', function (req, res, next) {
-          expressApp.get('/admin/arena-job-queue', function (req, res, next) {
+          expressApp.get('/arena-job-queue', function (req, res, next) {
             if (!req.session || !req.session.userId ) {
               return res.redirect('/login');
             }//•
@@ -91,7 +91,7 @@ module.exports = function defineArenaHook(sails) {
             // IWMIH, we've got ourselves a "super admin".
             return next();
           });
-          expressApp.use('/admin/arena-job-queue', arenaConfig);
+          expressApp.use('/arena-job-queue', arenaConfig);
         } else {
 
         }
