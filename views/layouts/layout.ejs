@@ -63,13 +63,8 @@
       <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/contact">Help</a>
       <!-- LOGGED-IN NAVIGATION -->
       <% if(me) { %>
-        <% if(me.trial) {%>
-          <a class="nav-item nav-link ml-2 ml-md-0 mr-2" href="/pricing">Pricing</a>
-        <% } %>
+        <a class="nav-item nav-link ml-2 ml-md-0 mr-2" href="/pricing">Pricing</a>
         <a class="nav-item nav-link ml-2 ml-md-0 mr-2" href="/logout">Sign out</a>
-        <% if(!me.trial) {%>
-          <a class="btn btn-outline-success ml-2 ml-md-0 mr-2" href="/pricing?trial=yes">Free Trial</a>
-        <% } %>
         <div class="form-inline ml-2" >
           <a class="btn btn-outline-chinesepod-blue" href="/home">Dashboard</a>
         </div>
