@@ -65,7 +65,6 @@ module.exports = {
 
     try {
 
-
       let ipCurrent = {};
       let ipSignup = {};
 

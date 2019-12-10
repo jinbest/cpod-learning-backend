@@ -72,6 +72,7 @@ module.exports.routes = {
 
   //RECAP LESSON VIEWS
   'GET /secret-page':                                    { action: 'recap/view-secret-page' },
+  'GET /super-secret-page':                              { action: 'recap/view-popular-recap-lessons' },
   'GET /current-lesson':                                 { action: 'recap/view-current-lesson' },
   'GET /set-lesson/:unused?':                            { action: 'recap/set-lesson' },
   'GET /recap':                                          { action: 'recap/view-recap' },
@@ -113,6 +114,7 @@ module.exports.routes = {
   '/choose':                                             '/choice',
   '/new-dashboard':                                      '/choice',
   '/switch':                                             '/home',
+  '/beta-program':                                       '/beta-promo',
   '/switch-back':                                        '/api/v1/account/opt-out-of-new-dashboard',
   '/switchback':                                         '/api/v1/account/opt-out-of-new-dashboard',
   '/old-dashboard':                                      '/api/v1/account/opt-out-of-new-dashboard',
@@ -122,6 +124,7 @@ module.exports.routes = {
   'GET /api/v1/auth/facebook/callback':                  { controller: 'PassportController', action: 'facebookCallback'},
   'GET /api/v1/auth/google':                             { controller: 'PassportController', action: 'googleAuth'},
   'GET /api/v1/auth/google/callback':                    { controller: 'PassportController', action: 'googleCallback'},
+  'GET /api/v1/auth/discourse':                          { action: 'auth/discourse'},
 
   'GET /chinese/:unused?/:unused?':                      { action: 'redirect/why-choose-us'},
   'GET /sitemap' :                                       { action: 'sitemap'},
@@ -168,7 +171,9 @@ module.exports.routes = {
   '/api/v1/health/time':                                 { action: 'health/time' },
 
   //Lesson Recap Routes
-  'GET /api/v1/get-popular-lessons':                     { action: 'recap/get-popular-lessons' },
+  'GET /api/v1/recap/get-popular-lessons':               { action: 'recap/get-popular-lessons' },
+  'GET /api/v1/recap/get-popular-recap-lessons':         { action: 'recap/get-popular-recap-lessons' },
+  'GET /api/v1/recap/get-all-recap-lessons':             { action: 'recap/get-all-recap-lessons' },
   'POST /api/v1/recap/get-lessons':                      { action: 'recap/get-user-lesson' },
   'POST /api/v1/recap/request-lesson':                   { action: 'recap/request-lesson' },
   'GET /api/v1/recap/users':                             { action: 'recap/users-by-current-lesson' },
