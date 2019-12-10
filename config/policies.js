@@ -21,6 +21,8 @@ module.exports.policies = {
 
   // 'admin/*': 'is-staff',
 
+  'sso/discourse': 'is-logged-in',
+
   'dashboard/*': 'is-authenticated',
   'lessons/*': 'is-authenticated',
   'exercises/*': 'is-authenticated',

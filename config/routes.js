@@ -124,7 +124,7 @@ module.exports.routes = {
   'GET /api/v1/auth/facebook/callback':                  { controller: 'PassportController', action: 'facebookCallback'},
   'GET /api/v1/auth/google':                             { controller: 'PassportController', action: 'googleAuth'},
   'GET /api/v1/auth/google/callback':                    { controller: 'PassportController', action: 'googleCallback'},
-  'GET /api/v1/auth/discourse':                          { action: 'auth/discourse'},
+  'GET /api/v1/sso/discourse':                           { action: 'sso/discourse'},
 
   'GET /chinese/:unused?/:unused?':                      { action: 'redirect/why-choose-us'},
   'GET /sitemap' :                                       { action: 'sitemap'},

@@ -8,7 +8,7 @@ module.exports = {
 
 
   inputs: {
-    payload: {
+    sso: {
       type: 'string',
       required: true
     },
@@ -33,11 +33,11 @@ module.exports = {
     const discourse_sso = require('discourse-sso');
     const sso = new discourse_sso('$od1L|2zhqiJ');
 
-    if (sso.validate(inputs.payload, inputs.sig)) {
+    if (sso.validate(inputs.sso, inputs.sig)) {
 
       let userInfo = this.req.me;
 
-      const nonce = sso.getNonce(payload);
+      const nonce = sso.getNonce(inputs.sso);
       const userparams = {
         // Required, will throw exception otherwise
         "nonce": nonce,
