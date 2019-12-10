@@ -17,6 +17,7 @@
     "bull": "^3.10.0",
     "bull-arena": "^2.6.4",
     "crypto-js": "^3.1.9-1",
+    "discourse-sso": "^1.0.3",
     "geoip-country": "^3.3.2",
     "grunt": "1.0.1",
     "grunt-contrib-sass": "^1.0.0",
