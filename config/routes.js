@@ -56,6 +56,9 @@ module.exports.routes = {
   'GET /choice':                                         { action: 'onboarding/view-new-dash' },
   'GET /switch-page':                                    { action: 'onboarding/view-switch-page' },
   'GET /beta-promo':                                     { action: 'onboarding/view-beta-promo' },
+  'GET /beta-how-it-works':                              { action: 'onboarding/view-beta-how-it-works' },
+  'GET /beta-confirm':                                   { action: 'onboarding/view-beta-confirm' },
+  'GET /beta-confirmed':                                 { action: 'onboarding/view-beta-confirmed' },
 
   //DASHBOARD
   'GET /dash/:unused?':                                  'HomeController.serve',
@@ -68,7 +71,7 @@ module.exports.routes = {
   // 'GET /dictionary/:unused?':                            'PodcastsController.serve',
 
   //PLACEMENT TEST
-  'GET /placement/:unused?': 'PlacementController.serve',
+  'GET /placement/:unused?':                             'PlacementController.serve',
 
   //RECAP LESSON VIEWS
   'GET /secret-page':                                    { action: 'recap/view-secret-page' },

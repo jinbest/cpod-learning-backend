@@ -12,6 +12,8 @@ module.exports.policies = {
   'onboarding/view-level': 'is-logged-in',
   'onboarding/view-redeem': 'is-logged-in',
   'onboarding/redeem-voucher-code': 'is-logged-in',
+  'onboarding/view-beta-confirm': 'is-logged-in',
+  'onboarding/view-beta-confirmed': 'is-logged-in',
   'placement/*': 'is-logged-in',
   'recap/view-current-lesson': 'is-logged-in',
   'recap/set-lesson': 'is-logged-in',
