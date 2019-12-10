@@ -30,15 +30,19 @@ module.exports = {
 
     let userData = await User.findOne({id: inputs.userId});
 
-    if (userData.name && userData.name.split(' ').length > 1) {
-      let firstName = userData.name.split(' ')[0];
+    try {
+      if (userData.name && userData.name.split(' ').length > 1) {
+        let firstName = userData.name.split(' ')[0];
 
-      if (firstName) {
-        firstName = _.capitalize(firstName);
-        if (firstNames.includes(firstName)) {
-          return `Hello ${firstName},`
+        if (firstName && firstName.length > 1) {
+          firstName = _.capitalize(firstName);
+          if (firstNames.includes(firstName)) {
+            return `Hello ${firstName},`
+          }
         }
       }
+    } catch (e) {
+      sails.hooks.bugsnag.notify(e);
     }
 
     return 'Nĭ hăo,'

@@ -34,15 +34,50 @@ module.exports = {
 
       let greeting = await sails.helpers.users.calculateUserGreeting(this.req.me.id);
 
-      await sails.helpers.sendTemplateEmail.with({
+
+      var path = require('path');
+      var url = require('url');
+      var util = require('util');
+
+      var layout = false;
+
+      // Determine appropriate email layout and template to use.
+      var emailTemplatePath = path.join('emails/', 'automated/email-alice-beta-welcome');
+
+      // Compile HTML template.
+      // > Note that we set the layout, provide access to core `url` package (for
+      // > building links and image srcs, etc.), and also provide access to core
+      // > `util` package (for dumping debug data in internal emails).
+      var htmlEmailContents = await sails.renderView(
+        emailTemplatePath,
+        _.extend({layout, url, util }, {greeting: greeting})
+      )
+        .intercept((err)=>{
+          err.message =
+            'Could not compile view template.\n'+
+            '(Usually, this means the provided data is invalid, or missing a piece.)\n'+
+            'Details:\n'+
+            err.message;
+          return err;
+        });
+
+      await sails.helpers.mailgun.sendHtmlEmail.with({
+        htmlMessage: htmlEmailContents,
         to: this.req.me.email,
         subject: 'Welcome to the ChinesePod Beta Program',
-        template: 'automated/email-alice-beta-welcome',
-        layout: false,
-        templateData: {
-          greeting: greeting
-        }
-      });
+        from: 'alice@chinesepod.com',
+        fromName: 'Alice Shih'
+      })
+
+      // await sails.helpers.sendTemplateEmail.with({
+      //   to: this.req.me.email,
+      //   subject: 'Welcome to the ChinesePod Beta Program',
+      //   template: 'automated/email-alice-beta-welcome',
+      //   layout: false,
+      //   templateData: {
+      //     greeting: greeting
+      //   }
+      // });
     }
 
     return {};
