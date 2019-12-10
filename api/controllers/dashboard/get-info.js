@@ -59,11 +59,35 @@ module.exports = {
 
 
     // PROMO PERIOD TODO Remove this once invalid
-
     const currentTime = new Date();
 
+    //TODO ADD GEOIP UPGRADE TO NON-US ACCOUNTS AND SIGNUP NOT FROM US
 
-    if (currentTime > new Date('2019-11-15') && currentTime < new Date('2019-12-27') && access !== 'admin') {
+    try {
+
+
+      let ipCurrent = {};
+      let ipSignup = {};
+
+      var geoip = require('geoip-country');
+
+      if (this.req.ip && this.req.ip !== '::1') {
+        ipCurrent = geoip.lookup(this.req.ip);
+      }
+
+      if (this.req.me && this.req.me.ip_address) {
+        ipSignup = geoip.lookup(this.req.me.ip_address);
+      }
+
+      if (ipCurrent.country !== 'US' && ipSignup.country !== 'US') {
+        access = 'premium'
+      }
+
+    } catch (e) {
+      sails.hooks.bugsnag.notify(e)
+    }
+
+    if (currentTime < new Date('2020-01-01') && access !== 'admin') {
       access = 'premium'
     }
 
