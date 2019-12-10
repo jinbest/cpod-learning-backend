@@ -42,7 +42,7 @@ module.exports = {
       var layout = false;
 
       // Determine appropriate email layout and template to use.
-      var emailTemplatePath = path.join('emails/', 'automated/email-alice-beta-welcome');
+      var emailTemplatePath = path.join('emails/', 'automated/email-susie-beta-welcome');
 
       // Compile HTML template.
       // > Note that we set the layout, provide access to core `url` package (for
@@ -65,8 +65,8 @@ module.exports = {
         htmlMessage: htmlEmailContents,
         to: this.req.me.email,
         subject: 'Welcome to the ChinesePod Beta Program',
-        from: 'alice@chinesepod.com',
-        fromName: 'Alice Shih'
+        from: 'susie@chinesepod.com',
+        fromName: 'Susie Lei'
       })
 
       // await sails.helpers.sendTemplateEmail.with({
