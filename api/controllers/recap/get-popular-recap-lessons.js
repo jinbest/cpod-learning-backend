@@ -113,7 +113,7 @@ module.exports = {
       select: ['id', 'accesslog_url']
     });
 
-    oldLogs.forEach((log) => log.lessonId = log.accesslog_url.split('v3_id=')[1].split('&')[0])
+    oldLogs.forEach((log) => log.lessonId = log.accesslog_url.split('v3_id=')[1].split('&')[0]);
 
     let allLogs = [...newLogs, ...oldLogs];
 
