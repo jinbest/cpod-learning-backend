@@ -30,10 +30,13 @@ module.exports = {
         query: {
           multi_match: {
             query: inputs.query,
-            fields: ['title', 'introduction', 'transcription1', 'transcription2'],
-            operator: 'and',
-            analyzer: 'snowball',
-            fuzziness: 'AUTO'
+            fields: ['title', 'introduction', 'transcription1', 'transcription2']
+          }
+        },
+        suggest: {
+          lessonsuggest: {
+            text: inputs.query,
+            term: { field: 'transcription1' }
           }
         }
       }

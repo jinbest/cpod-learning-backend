@@ -30,15 +30,108 @@ module.exports = {
           'title',
           'introduction',
           'type',
-          'publication_timestamp'
+          'publication_timestamp',
+          'level',
+          'hosts',
+          'hash_code',
+          'image',
+          'transcription1'
         ],
-        // populate: 'members',
         idColumn: 'id'
       };
 
     await new Promise(async (resolve, reject) => {
+
+      // await sails.hooks.elastic.client.indices.delete({index: index.elasticIndex}, (error, response) => {
+      //   if (error) {
+      //     sails.log.error(error);
+      //   }
+      // });
+
+      sails.log.info('Index Deleted');
+
+      // await sails.hooks.elastic.client.indices.create({
+      //   index: index.elasticIndex,
+      //   body: {
+      //     settings: {
+      //       analysis: {
+      //         analyzer: {
+      //           lesson_analyzer: {
+      //             type: 'snowball'
+      //           }
+      //         }
+      //       }
+      //     },
+      //     mapping: {
+      //       lesson: {
+      //         _all: {enabled : true, analyzer: "lesson_analyzer", search_analyzer: "lesson_analyzer"},
+      //         properties: {
+      //           id: {
+      //             type: 'number',
+      //             index: 'not_analyzed'
+      //           },
+      //           status_published: {
+      //             type: 'text',
+      //             index: 'not_analyzed'
+      //           },
+      //           slug: {
+      //             type: 'text',
+      //             index: 'not_analyzed'
+      //           },
+      //           publication_timestamp: {
+      //             type: 'text',
+      //             index: 'not_analyzed'
+      //           },
+      //           level: {
+      //             type: 'text',
+      //             index: 'not_analyzed'
+      //           },
+      //           hash_code: {
+      //             type: 'text',
+      //             index: 'not_analyzed'
+      //           },
+      //           image: {
+      //             type: 'text',
+      //             index: 'not_analyzed'
+      //           },
+      //           type: {
+      //             type: 'text',
+      //             index: 'not_analyzed'
+      //           },
+      //           title: {
+      //             type: 'string',
+      //             index: 'analyzed',
+      //             analyzer: 'lesson_analyzer',
+      //             search_analyzer: 'lesson_analyzer',
+      //           },
+      //           introduction: {
+      //             type: 'string',
+      //             index: 'analyzed',
+      //             analyzer: 'lesson_analyzer',
+      //             search_analyzer: 'lesson_analyzer',
+      //           },
+      //           hosts: {
+      //             type: 'string',
+      //             index: 'analyzed',
+      //             analyzer: 'lesson_analyzer',
+      //             search_analyzer: 'lesson_analyzer',
+      //           },
+      //           transcription1: {
+      //             type: 'text',
+      //             index: 'not_analyzed'
+      //           },
+      //         }
+      //       }
+      //     }
+      //   }
+      // }, () => {});
+
+
       let records = await LessonData.find({
         where: {
+          id: {
+            '>': 4400
+          },
           status_published: 'publish',
           publication_timestamp: {
             '<': new Date()
@@ -46,9 +139,11 @@ module.exports = {
         }
       });
 
+      sails.log.info('Records Pooled');
+
       let commands = [];
       let action = {
-        index: {
+        update: {
           _index: index.elasticIndex,
           _type: index.elasticIndex
         }
@@ -64,16 +159,29 @@ module.exports = {
         commands.push(indexRecord);
       });
 
-      sails.log.info(commands);
+      sails.log.info('Records Prepared');
+
+
+
 
       // run bulk command
-      sails.hooks.elastic.client.bulk({body: commands}, (error, response) => {
+      await sails.hooks.elastic.client.bulk({refresh: 'true', body: commands}, (error, response) => {
         if (error) {
           reject(error);
         } else {
           resolve(response);
         }
       });
+
+
+
+
+
+      // sails.hooks.elastic.client.indices.analyze({
+      //   index: index.elasticIndex,
+      //   body:
+      // })
+
     });
   }
 };
