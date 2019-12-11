@@ -42,11 +42,11 @@ module.exports = {
 
     await new Promise(async (resolve, reject) => {
 
-      // await sails.hooks.elastic.client.indices.delete({index: index.elasticIndex}, (error, response) => {
-      //   if (error) {
-      //     sails.log.error(error);
-      //   }
-      // });
+      await sails.hooks.elastic.client.indices.delete({index: index.elasticIndex}, (error, response) => {
+        if (error) {
+          sails.log.error(error);
+        }
+      });
 
       sails.log.info('Index Deleted');
 
@@ -129,9 +129,6 @@ module.exports = {
 
       let records = await LessonData.find({
         where: {
-          id: {
-            '>': 4400
-          },
           status_published: 'publish',
           publication_timestamp: {
             '<': new Date()
@@ -143,7 +140,7 @@ module.exports = {
 
       let commands = [];
       let action = {
-        update: {
+        index: {
           _index: index.elasticIndex,
           _type: index.elasticIndex
         }
@@ -161,9 +158,6 @@ module.exports = {
 
       sails.log.info('Records Prepared');
 
-
-
-
       // run bulk command
       await sails.hooks.elastic.client.bulk({refresh: 'true', body: commands}, (error, response) => {
         if (error) {
@@ -172,10 +166,6 @@ module.exports = {
           resolve(response);
         }
       });
-
-
-
-
 
       // sails.hooks.elastic.client.indices.analyze({
       //   index: index.elasticIndex,
