@@ -241,7 +241,11 @@ module.exports.routes = {
 
   //ACCESS CODES
   'POST /api/v1/admin/access-codes/generate':            { action: 'admin/access-codes/generate-access-codes'},
-  'POST /api/v1/admin/access-codes/delete':              { action: 'admin/access-codes/delete-access-codes'}
+  'POST /api/v1/admin/access-codes/delete':              { action: 'admin/access-codes/delete-access-codes'},
+
+
+  //SEARCH
+  'GET /api/v1/search/reindex-all':                      'ElasticController.reindex'
 
   //Sample Routes
   // 'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
