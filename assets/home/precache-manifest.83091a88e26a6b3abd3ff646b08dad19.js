@@ -16,16 +16,16 @@ self.__precacheManifest = [
     "url": "/home/js/chunk-ab7e0cd8.2bace71c.js"
   },
   {
-    "revision": "92d40536b4008c9e966baf28829ce412",
-    "url": "/home/img/preloader.svg"
+    "revision": "e4b6e6c5749ebe66252e0da478f72b5b",
+    "url": "/home/img/qing-wen.jpg"
   },
   {
     "revision": "919fa6b9cbc2dceeb482",
     "url": "/home/js/chunk-vendors.1129171d.js"
   },
   {
-    "revision": "e4b6e6c5749ebe66252e0da478f72b5b",
-    "url": "/home/img/qing-wen.jpg"
+    "revision": "92d40536b4008c9e966baf28829ce412",
+    "url": "/home/img/preloader.svg"
   },
   {
     "revision": "8f4558a92148e43e6a98e557961522a4",
@@ -44,20 +44,20 @@ self.__precacheManifest = [
     "url": "/home/img/qing-wen.e4b6e6c5.jpg"
   },
   {
-    "revision": "00d71205fe9bf4af2cfb83b5f6c21f03",
+    "revision": "9122543e2f52c1b38742023cfd3afae4",
     "url": "/home/index.html"
   },
   {
-    "revision": "7981039559e14a6a70f4",
-    "url": "/home/js/app.e384bb13.js"
+    "revision": "2f8369679bc978fcf612",
+    "url": "/home/js/app.bfb8d977.js"
   },
   {
     "revision": "f9b78d93af8ccff72e6e853d649a19cd",
     "url": "/home/img/symbol.f9b78d93.svg"
   },
   {
-    "revision": "2add6b402c3d7fbbaa4fb0613c6c4a38",
-    "url": "/home/img/brand/symbol-white.svg"
+    "revision": "0cb9b4ee343314f2c6ec0a014c9d2af6",
+    "url": "/home/img/brand/symbol-black.svg"
   },
   {
     "revision": "c1733565b32b585676302d4233c39da8",
@@ -112,32 +112,32 @@ self.__precacheManifest = [
     "url": "/home/img/brand/brand-black.svg"
   },
   {
-    "revision": "d7c26c3af7979c14ed3da333f9de6e59",
-    "url": "/home/img/brand/symbol-black-center.svg"
+    "revision": "776e8317ed66d1e2ec7ef1853377375b",
+    "url": "/home/img/brand/white.png"
   },
   {
-    "revision": "0cb9b4ee343314f2c6ec0a014c9d2af6",
-    "url": "/home/img/brand/symbol-black.svg"
+    "revision": "d7c26c3af7979c14ed3da333f9de6e59",
+    "url": "/home/img/brand/symbol-black-center.svg"
   },
   {
     "revision": "f82ec6ba2dc4181db2af35c499462840",
     "url": "/home/fonts/nucleo-icons.f82ec6ba.ttf"
   },
   {
+    "revision": "2add6b402c3d7fbbaa4fb0613c6c4a38",
+    "url": "/home/img/brand/symbol-white.svg"
+  },
+  {
     "revision": "f9b78d93af8ccff72e6e853d649a19cd",
     "url": "/home/img/brand/symbol.svg"
   },
   {
-    "revision": "776e8317ed66d1e2ec7ef1853377375b",
-    "url": "/home/img/brand/white.png"
+    "revision": "a158e68b2ab402fc3f58861935f523ac",
+    "url": "/home/img/brand/green.png"
   },
   {
     "revision": "5bcf46d00bb2f8cc17d2257003803d93",
     "url": "/home/img/brand/favicon.png"
-  },
-  {
-    "revision": "a158e68b2ab402fc3f58861935f523ac",
-    "url": "/home/img/brand/green.png"
   },
   {
     "revision": "2569aaea6eaaf8cd210db7f2fa016743",
@@ -152,12 +152,12 @@ self.__precacheManifest = [
     "url": "/home/fonts/element-icons.2fad952a.woff"
   },
   {
-    "revision": "e9c8d6429bab307155971201fd98217b",
-    "url": "/home/fonts/icomoon.e9c8d642.ttf"
-  },
-  {
     "revision": "00d2977773069da3cd07cfca2c2482e6",
     "url": "/home/fonts/icomoon.00d29777.eot"
+  },
+  {
+    "revision": "eee8b9b975b37eef73cda9641feb8f6f",
+    "url": "/home/fonts/icomoon.eee8b9b9.woff"
   },
   {
     "revision": "426439788ec5ba772cdf94057f6f4659",
@@ -168,8 +168,8 @@ self.__precacheManifest = [
     "url": "/home/fonts/element-icons.6f0a7632.ttf"
   },
   {
-    "revision": "eee8b9b975b37eef73cda9641feb8f6f",
-    "url": "/home/fonts/icomoon.eee8b9b9.woff"
+    "revision": "e9c8d6429bab307155971201fd98217b",
+    "url": "/home/fonts/icomoon.e9c8d642.ttf"
   },
   {
     "revision": "d7c26c3af7979c14ed3da333f9de6e59",
@@ -180,7 +180,7 @@ self.__precacheManifest = [
     "url": "/home/css/chunk-vendors.86a8de80.css"
   },
   {
-    "revision": "7981039559e14a6a70f4",
+    "revision": "2f8369679bc978fcf612",
     "url": "/home/css/app.fbee5f02.css"
   },
   {
