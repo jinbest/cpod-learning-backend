@@ -44,12 +44,12 @@ self.__precacheManifest = [
     "url": "/home/img/qing-wen.e4b6e6c5.jpg"
   },
   {
-    "revision": "402a6231ff6b4a4883251f7b83f1e481",
+    "revision": "00d71205fe9bf4af2cfb83b5f6c21f03",
     "url": "/home/index.html"
   },
   {
-    "revision": "738cd816364cf56b0130",
-    "url": "/home/js/app.a85da6b1.js"
+    "revision": "7981039559e14a6a70f4",
+    "url": "/home/js/app.e384bb13.js"
   },
   {
     "revision": "f9b78d93af8ccff72e6e853d649a19cd",
@@ -92,8 +92,8 @@ self.__precacheManifest = [
     "url": "/home/img/brand/logo.png"
   },
   {
-    "revision": "365fc333c183bf39ef777a760ca718cf",
-    "url": "/home/img/brand/brand-white.svg"
+    "revision": "61f77c5e336a55fb8dc944a0676c5f5b",
+    "url": "/home/img/brand/brand.svg"
   },
   {
     "revision": "365fc333c183bf39ef777a760ca718cf",
@@ -104,8 +104,8 @@ self.__precacheManifest = [
     "url": "/home/img/brand.61f77c5e.svg"
   },
   {
-    "revision": "61f77c5e336a55fb8dc944a0676c5f5b",
-    "url": "/home/img/brand/brand.svg"
+    "revision": "365fc333c183bf39ef777a760ca718cf",
+    "url": "/home/img/brand/brand-white.svg"
   },
   {
     "revision": "71a94f831411548a0c3e531a248e922a",
@@ -140,12 +140,20 @@ self.__precacheManifest = [
     "url": "/home/img/brand/green.png"
   },
   {
-    "revision": "2fad952a20fbbcfd1bf2ebb210dccf7a",
-    "url": "/home/fonts/element-icons.2fad952a.woff"
+    "revision": "2569aaea6eaaf8cd210db7f2fa016743",
+    "url": "/home/fonts/nucleo-icons.2569aaea.woff"
   },
   {
     "revision": "72758cdb9fd2b850545747fed624e7e3",
     "url": "/home/favicon.png"
+  },
+  {
+    "revision": "2fad952a20fbbcfd1bf2ebb210dccf7a",
+    "url": "/home/fonts/element-icons.2fad952a.woff"
+  },
+  {
+    "revision": "e9c8d6429bab307155971201fd98217b",
+    "url": "/home/fonts/icomoon.e9c8d642.ttf"
   },
   {
     "revision": "00d2977773069da3cd07cfca2c2482e6",
@@ -156,16 +164,8 @@ self.__precacheManifest = [
     "url": "/home/fonts/nucleo-icons.42643978.woff2"
   },
   {
-    "revision": "2569aaea6eaaf8cd210db7f2fa016743",
-    "url": "/home/fonts/nucleo-icons.2569aaea.woff"
-  },
-  {
     "revision": "6f0a76321d30f3c8120915e57f7bd77e",
     "url": "/home/fonts/element-icons.6f0a7632.ttf"
-  },
-  {
-    "revision": "e9c8d6429bab307155971201fd98217b",
-    "url": "/home/fonts/icomoon.e9c8d642.ttf"
   },
   {
     "revision": "eee8b9b975b37eef73cda9641feb8f6f",
@@ -180,7 +180,7 @@ self.__precacheManifest = [
     "url": "/home/css/chunk-vendors.86a8de80.css"
   },
   {
-    "revision": "738cd816364cf56b0130",
+    "revision": "7981039559e14a6a70f4",
     "url": "/home/css/app.fbee5f02.css"
   },
   {
