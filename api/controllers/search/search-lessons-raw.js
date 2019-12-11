@@ -36,18 +36,10 @@ module.exports = {
         }
       });
 
-    let relevantLessons = data['body']['hits']['hits'].map(i => i['_source']['id']);
-
-    return relevantLessons;
-
-    let lessons = await LessonData.find({
-      where: {
-        id: {
-          in: relevantLessons
-        }
-      }
-    });
-
+    return {
+      data: data['body']['hits']['hits'].map(i => i['_source']),
+      count: data['body']['hits']['total']['value']
+    }
   }
 
 

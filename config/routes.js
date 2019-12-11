@@ -243,9 +243,17 @@ module.exports.routes = {
   'POST /api/v1/admin/access-codes/generate':            { action: 'admin/access-codes/generate-access-codes'},
   'POST /api/v1/admin/access-codes/delete':              { action: 'admin/access-codes/delete-access-codes'},
 
-
   //SEARCH
-  'GET /api/v1/search/reindex-all':                      'ElasticController.reindex'
+  'GET /api/v1/search/reindex-lessons':                  { action: 'search/reindex-lessons' },
+  'GET /api/v1/search/search-lessons/:query':            { action: 'search/search-lessons' },
+  'GET /api/v1/search/search-lessons-raw/:query':            { action: 'search/search-lessons-raw' },
+  'GET /api/v1/search/:word?':                           'ElasticController.search',
+
+  //Dictionary
+  'GET /api/v1/dictionary/search/:word':                 { action: 'dictionary/search-word'},
+  'GET /api/v1/dictionary/define/:word':                 { action: 'dictionary/define-word'},
+  'GET /api/v1/dictionary/decompose/:word':              { action: 'dictionary/decompose-word'},
+  'GET /api/v1/dictionary/examples/:word':               { action: 'dictionary/examples-word'},
 
   //Sample Routes
   // 'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
