@@ -30,9 +30,9 @@ module.exports = {
         query: {
           multi_match: {
             query: inputs.query,
-            fields: ['title', 'introduction', 'transcription1', 'hosts'],
+            fields: ['title^3', 'introduction^2', 'transcription1', 'hosts'],
             operator: 'and',
-            analyzer: 'snowball',
+            analyzer: 'standard',
             fuzziness: 'AUTO'
           }
         }
