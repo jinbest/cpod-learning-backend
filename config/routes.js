@@ -55,7 +55,7 @@ module.exports.routes = {
   //ONBOARDING
   'GET /choice':                                         { action: 'onboarding/view-new-dash' },
   'GET /switch-page':                                    { action: 'onboarding/view-switch-page' },
-  'GET /beta-promo':                                     { action: 'onboarding/view-beta-promo' },
+  // 'GET /beta-promo':                                     { action: 'onboarding/view-beta-promo' },
   'GET /beta-how-it-works':                              { action: 'onboarding/view-beta-how-it-works' },
   'GET /beta-confirm':                                   { action: 'onboarding/view-beta-confirm' },
   'GET /beta-confirmed':                                 { action: 'onboarding/view-beta-confirmed' },
@@ -118,7 +118,8 @@ module.exports.routes = {
   '/choose':                                             '/choice',
   '/new-dashboard':                                      '/choice',
   '/switch':                                             '/home',
-  '/beta-program':                                       '/beta-promo',
+  '/beta-program':                                       '/beta-how-it-works',
+  '/beta-promo':                                         '/beta-how-it-works',
   '/switch-back':                                        '/api/v1/account/opt-out-of-new-dashboard',
   '/switchback':                                         '/api/v1/account/opt-out-of-new-dashboard',
   '/old-dashboard':                                      '/api/v1/account/opt-out-of-new-dashboard',
