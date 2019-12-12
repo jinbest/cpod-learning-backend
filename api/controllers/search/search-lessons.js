@@ -23,7 +23,23 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    let data = await sails.hooks.elastic.client.search({
+    let courses = await sails.hooks.elastic.client.search({
+      index: 'courses',
+      type: 'courses',
+      body: {
+        query: {
+          multi_match: {
+            query: inputs.query,
+            fields: ['course_title^2', 'course_introduction'],
+            operator: 'and',
+            analyzer: 'standard',
+            fuzziness: 'AUTO'
+          }
+        }
+      }
+    });
+
+    let lessons = await sails.hooks.elastic.client.search({
       index: 'lessons',
       type: 'lessons',
       body: {
@@ -39,17 +55,10 @@ module.exports = {
       }
     });
 
-    let relevantLessons = data['body']['hits']['hits'].map(i => i['_source']['id']);
-
-    return data['body']['hits']['hits'].map(i => i['_source']);
-
-    // let lessons = await LessonData.find({
-    //   where: {
-    //     id: {
-    //       in: relevantLessons
-    //     }
-    //   }
-    // });
+    return {
+      courses: courses['body']['hits']['hits'].map(i => i['_source']),
+      lessons: lessons['body']['hits']['hits'].map(i => i['_source'])
+    };
 
   }
 

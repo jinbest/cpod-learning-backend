@@ -20,22 +20,15 @@ module.exports = {
   fn: async function (inputs) {
 
     let index = {
-        model: 'LessonData',
-        elasticModel: 'LessonDataIndex',
-        elasticIndex: 'lessons',
+        model: 'CourseDetails',
+        elasticModel: 'CourseIndex',
+        elasticIndex: 'courses',
         elasticRecord: [
           'id',
-          'status_published',
-          'slug',
-          'title',
-          'introduction',
-          'type',
-          'publication_timestamp',
-          'level',
-          'hosts',
-          'hash_code',
-          'image',
-          'transcription1'
+          'course_title',
+          'course_introduction',
+          'channel_id',
+          'type'
         ],
         idColumn: 'id'
       };
@@ -51,12 +44,12 @@ module.exports = {
       sails.log.info('Index Deleted');
 
 
-      let records = await LessonData.find({
+      let records = await CourseDetail.find({
         where: {
-          status_published: 'publish',
-          publication_timestamp: {
+          publish_time: {
             '<': new Date()
-          }
+          },
+          is_private: 0
         }
       });
 
@@ -90,7 +83,6 @@ module.exports = {
           resolve(response);
         }
       });
-
 
     });
   }
