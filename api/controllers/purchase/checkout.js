@@ -153,7 +153,8 @@ module.exports = {
 
       // Create a new User
       const email = inputs.emailAddress.toLowerCase();
-      const ipdata =  require('ipdata');
+      const IPData =  require('ipdata').default;
+      const ipdata = new IPData(sails.config.custom.ipDataKey);
       // const axios = require('axios');
       // const ua = require('universal-analytics');
 
@@ -161,7 +162,7 @@ module.exports = {
 
       if(this.req.ip && this.req.ip !== '::1') {
         try {
-          await ipdata.lookup(this.req.ip, sails.config.custom.ipDataKey)
+          await ipdata.lookup(this.req.ip)
             .then((info) => {
               ipData = info;
             })
@@ -457,11 +458,12 @@ module.exports = {
         }).fetch();
 
         if (!ipData['country_name']) {
-          const ipdata = require('ipdata');
+          const IPData =  require('ipdata').default;
+          const ipdata = new IPData(sails.config.custom.ipDataKey);
 
           if(this.req.ip && this.req.ip !== '::1') {
             try {
-              await ipdata.lookup(this.req.ip, sails.config.custom.ipDataKey)
+              await ipdata.lookup(this.req.ip)
                 .then((info) => {
                   ipData = info;
                 })

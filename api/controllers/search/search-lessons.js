@@ -11,8 +11,10 @@ module.exports = {
     query: {
       type: 'string',
       required: true
+    },
+    full: {
+      type: 'boolean'
     }
-
   },
 
 
@@ -42,13 +44,14 @@ module.exports = {
     let lessons = await sails.hooks.elastic.client.search({
       index: 'lessons',
       type: 'lessons',
+      size: inputs.full ? 160 : 12,
       body: {
         query: {
           multi_match: {
             query: inputs.query,
-            fields: ['title^3', 'introduction^2', 'transcription1', 'hosts'],
+            fields: ['id', 'title^3', 'introduction^2', 'transcription1', 'hosts'],
             operator: 'and',
-            analyzer: 'standard',
+            analyzer: 'english',
             fuzziness: 'AUTO'
           }
         }

@@ -29,8 +29,9 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
       'https://www.chinesepod.com/home',
       'https://www.chinesepod.com/signup',
       'https://www.chinesepod.com/checkout'].includes(job.data.urlbase)) {
-      const ipdata =  require('ipdata');
-      await ipdata.lookup(job.data.ip, sails.config.custom.ipDataKey)
+      const IPData =  require('ipdata').default;
+      const ipdata = new IPData(sails.config.custom.ipDataKey);
+      await ipdata.lookup(job.data.ip)
         .then((info) => {ipData = info})
         .catch((err) => sails.log.error(err));
     }

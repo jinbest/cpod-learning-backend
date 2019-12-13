@@ -25,7 +25,7 @@
     "hanzi": "^2.1.5",
     "howler": "^2.1.2",
     "html-to-text": "^5.1.1",
-    "ipdata": "^1.1.2",
+    "ipdata": "^2.2.0",
     "jsonwebtoken": "^8.5.1",
     "machinepack-mailgun": "^0.6.0",
     "machinepack-mandrill": "^1.2.0",

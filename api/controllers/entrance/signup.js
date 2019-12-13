@@ -62,7 +62,8 @@ the account verification message.)`,
 
   fn: async function (inputs) {
     const email = inputs.emailAddress.toLowerCase();
-    const ipdata =  require('ipdata');
+    const IPData =  require('ipdata').default;
+    const ipdata = new IPData(sails.config.custom.ipDataKey);
     // const axios = require('axios');
     const ua = require('universal-analytics');
     var req = this.req;
@@ -74,7 +75,7 @@ the account verification message.)`,
 
     if(ip) {
       try {
-        await ipdata.lookup(req.ip, '67ce141658c735941e1307cf08fcf9a40cd5101a64f19ea674688fff')
+        await ipdata.lookup(req.ip)
           .then((info) => {
             ipData = info;
           })

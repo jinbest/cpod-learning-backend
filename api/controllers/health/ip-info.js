@@ -30,7 +30,8 @@ module.exports = {
   },
 
   fn: async function (inputs) {
-    const ipdata =  require('ipdata');
+    const IPData =  require('ipdata').default;
+    const ipdata = new IPData(sails.config.custom.ipDataKey);
     var req = this.req;
 
     const ip = inputs.ipAddress ? inputs.ipAddress : req.ip;
@@ -39,7 +40,7 @@ module.exports = {
 
     if(ip) {
       try {
-        await ipdata.lookup(ip, '67ce141658c735941e1307cf08fcf9a40cd5101a64f19ea674688fff')
+        await ipdata.lookup(ip)
           .then((info) => {
             ipData = info;
           })
