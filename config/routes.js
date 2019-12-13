@@ -68,7 +68,6 @@ module.exports.routes = {
   'GET /course/:unused?':                                'HomeController.serve',
   'GET /courses/:unused?':                               'HomeController.serve',
   'GET /podcasts/:unused?':                              'PodcastsController.serve',
-  // 'GET /dictionary/:unused?':                            'PodcastsController.serve',
 
   //PLACEMENT TEST
   'GET /placement/:unused?':                             'PlacementController.serve',
@@ -184,13 +183,13 @@ module.exports.routes = {
   'GET /api/v1/recap/users':                             { action: 'recap/users-by-current-lesson' },
 
   //General Info Routes
-  'GET  /api/v1/health/ip-info':                         { action: 'health/ip-info' },
+  'GET /api/v1/health/ip-info':                          { action: 'health/ip-info' },
   'GET /api/v1/health/generate-words':                   { action: 'generate-words' },
 
   //Dashboard Routes
   'GET /api/v1/dashboard/history':                       { action: 'dashboard/history' },
   'GET /api/v1/dashboard/bookmarks':                     { action: 'dashboard/bookmarks' },
-  'GET /api/v1/dashboard/get-course':                  { action: 'dashboard/get-course' },
+  'GET /api/v1/dashboard/get-course':                    { action: 'dashboard/get-course' },
   'GET /api/v1/dashboard/user-courses':                  { action: 'dashboard/user-courses' },
   'GET /api/v1/dashboard/more-courses':                  { action: 'dashboard/more-courses' },
   'GET /api/v1/dashboard/course-lessons':                { action: 'dashboard/course-lessons' },
