@@ -254,6 +254,11 @@ module.exports.routes = {
   'GET /api/v1/search/search-lessons/:query?':           { action: 'search/search-lessons' },
   'GET /api/v1/search/search-lessons-suggest/:query?':   { action: 'search/search-lessons-suggest' },
   'GET /api/v1/search/search-lessons-raw/:query?':       { action: 'search/search-lessons-raw' },
+  'GET /api/v1/search/search-lessons-raw-2/:query?':       { action: 'search/search-lessons-raw-2' },
+  'GET /api/v1/search/search-lessons-raw-3/:query?':       { action: 'search/search-lessons-raw-3' },
+  'GET /api/v1/search/search-lessons-raw-4/:query?':       { action: 'search/search-lessons-raw-4' },
+  'GET /api/v1/search/search-lessons-raw-5/:query?':       { action: 'search/search-lessons-raw-5' },
+  'GET /api/v1/search/search-lessons-raw-6/:query?':       { action: 'search/search-lessons-raw-6' },
   'GET /api/v1/search/:word?':                           'ElasticController.search',
 
   //Dictionary

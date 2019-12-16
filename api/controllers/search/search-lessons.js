@@ -34,8 +34,7 @@ module.exports = {
             query: inputs.query,
             fields: ['course_title^2', 'course_introduction'],
             operator: 'and',
-            analyzer: 'standard',
-            fuzziness: 'AUTO'
+            analyzer: 'standard'
           }
         }
       }
@@ -52,7 +51,7 @@ module.exports = {
             fields: ['id', 'title^3', 'introduction^2', 'transcription1', 'hosts'],
             operator: 'and',
             analyzer: 'english',
-            fuzziness: 'AUTO'
+            fuzziness: '2'
           }
         }
       }

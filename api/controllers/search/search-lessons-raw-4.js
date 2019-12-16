@@ -34,7 +34,7 @@ module.exports = {
             fields: ['title^3', 'introduction^2', 'transcription1', 'hosts'],
             operator: 'and',
             analyzer: 'standard',
-            fuzziness: '2'
+            fuzziness: '4'
           }
         }
       }
