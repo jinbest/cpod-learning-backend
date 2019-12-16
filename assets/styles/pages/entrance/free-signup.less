@@ -27,14 +27,17 @@
     box-shadow: none !important;
   }
   .promo-banner {
-    background: url('/img/checkout-banners/red-banner.jpg') center no-repeat;
-    background-size: cover;
-    margin: 0;
-    padding: 30px 0 0 0;
+    background: url('/images/academic-learning/Header_Frame.svg'),url('/img/checkout-banners/red-banner.jpg') center no-repeat;
+    //background: url('/images/academic-learning/Header_Frame.svg'),url('/images/onboarding-bg.svg');
+    min-height: 825px;
+    background-repeat: no-repeat, no-repeat;
+    background-position: left bottom -2px, center center;
+    background-size: 100% auto, cover;margin: 0;
+    //padding: 30px 0 0 0;
   }
   .promo-heading {
     font-family: 'Roboto Slab';
-    font-size: 50px;
+    //font-size: 50px;
     margin: 10px 0 20px;
   }
   .offer {
@@ -42,7 +45,7 @@
   }
   @media (max-width: 768px) {
     .promo-heading {
-      font-size: 25px;
+      //font-size: 25px;
     }
     .offer {
       font-size: 16px;
@@ -94,14 +97,17 @@
   }
   ul.cpod-features li span.lbl {
     font-family: 'Roboto Slab';
-    font-weight: bold;
+    //-webkit-text-stroke: 0.00000001px #ccc;
+    color: black;
+    //font-weight: bold;
+    font-weight: 700;
     font-size: 17px;
     width: ~"calc(100% - 75px)";
     padding-left: 10px;
   }
-  @media (max-width: 450px) {
+  @media (max-width: 1000px) {
     .promo-heading {
-      font-size: 20px;
+      //font-size: 20px;
     }
     ul.cpod-features li span.circle {
       width: 60px;
@@ -131,9 +137,9 @@
   //-o-background-size: cover;
   //background-size: cover;
   //min-height: 100vh;
-  padding-top: 30px;
+  //padding-top: 30px;
   //background: url(/images/onboarding-bg.svg);
-  background: #f8f9fe;
+  //background: #f8f9fe;
   position: relative;
   //height: 100%;
   overflow: hidden;
@@ -229,6 +235,1503 @@
     border-left: 0px solid !important;
     margin-bottom: 20px;
     border-radius: 7px;
+  }
+
+  .signup-form {
+    .container-sm();
+  }
+
+  .success-message {
+    .container-sm();
+    text-align: center;
+  }
+
+  //@import "../abstracts/_variables.scss";
+
+  .body-style-home {
+    background-color: @color-white !important;
+    padding-top: 60px !important;
+
+    @media (max-width: @screen-tablets) {
+      padding-top: 80px !important;
+    }
+  }
+  /*layout*/
+
+  * {
+    box-sizing: border-box;
+  }
+
+  div,
+  span,
+  p,
+  header,
+  footer,
+  article,
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+    font-weight: normal;
+  }
+
+  ul li {
+    list-style: none;
+  }
+
+  button, [type=button], [type=submit], [type=reset] {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    outline: none;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  .container {
+    margin: 0 auto;
+    height: 100%;
+    max-width: 1134px;
+    width: 95%;
+    @media (max-width: @screen-mini-desktop) {
+      width: 97%;
+    }
+    @media (max-width: @screen-tablets) {
+      width: 80%;
+    }
+  }
+
+  .alert {
+    padding: 15px;
+  }
+
+  /*about item*/
+
+  .about-item {
+    display: flex;
+    align-items: center;
+    &_right {
+      justify-content: flex-end;
+      .about-item__title, .about-item__desc, .about-item__cit {
+        text-align: right;
+        @media (max-width: @screen-tablets) {
+          text-align: left;
+        }
+      }
+      .about-item__bg {
+        @media (max-width: @screen-tablets) {
+          align-self: flex-end;
+          order: -10;
+        }
+      }
+    }
+    @media (max-width: @screen-tablets) {
+      flex-direction: column;
+    }
+  }
+
+  .about-item__bg {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    @media (max-width: @screen-tablets) {
+      align-self: flex-start;
+    }
+    @media (max-width: @screen-tablets) {
+      //width: 70%;
+    }
+  }
+
+  .about-item__text {
+    width: 40%;
+    padding-right: 20px;
+    @media (max-width: @screen-tablets) {
+      width: 100%;
+      padding-right: 0;
+      margin: 0 auto;
+      max-width: 1196px;
+      width: 80%;
+    }
+    @media (max-width: @screen-tablets) {
+      //width: 80%;
+    }
+  }
+
+  .about-item__title {
+    margin-bottom: 19px;
+    @media (max-width: @screen-tablets) {
+      font-size: 36px;
+    }
+  }
+
+  .about-item__desc {
+    font-size: 20px;
+    line-height: 20px;
+    margin-bottom: 21px;
+  }
+
+  .about-item__cit {
+    font-size: 18px;
+    line-height: 20px;
+  }
+
+  .about-item__pic {
+    display: block;
+    width: 100%;
+  }
+
+  .about-item_1 {
+    margin-bottom: 35px;
+    @media (max-width: @screen-tablets) {
+      margin-bottom: 83px;
+    }
+    @media (max-width: @screen-mini-desktop) {
+      margin-bottom: 165px;
+    }
+    .about-item__text {
+      width: 25%;
+      @media (max-width: @screen-mini-desktop) {
+        width: 42%;
+      }
+      @media (max-width: @screen-tablets) {
+        width: 77%;
+      }
+    }
+    .about-item__bg {
+      margin-right: 9.5%;
+      width: 776px;
+      height: 566px;
+      background-image: url('/images/academic-learning/Landing-Page_1_803x587.jpg');
+      @media (max-width: @screen-mini-desktop) {
+        width: 466px;
+        height: 412px;
+        background-image: url('/images/academic-learning/Landing-Page_1_564x412.jpg');
+      }
+      @media (max-width: @screen-tablets) {
+        margin-bottom: 72px;
+      }
+      @media (max-width: @screen-medium-phones) {
+        width: 320px;
+        height: 234px;
+        background-image: url('/images/academic-learning/Landing-Page_1_320x234.jpg');
+      }
+    }
+  }
+
+  .about-item_2 {
+    margin-bottom: 116px;
+    @media (max-width: @screen-tablets) {
+      margin-bottom: 112px;
+    }
+    @media (max-width: @screen-mini-desktop) {
+      margin-bottom: 170px;
+    }
+    .about-item__text {
+      margin-right: 8.3%;
+      width: 25%;
+      @media (max-width: @screen-mini-desktop) {
+        width: 42%;
+        margin-right: 2.3%;
+      }
+      @media (max-width: @screen-tablets) {
+        width: 77%;
+        margin: 0 auto;
+      }
+    }
+    .about-item__bg {
+      width: 783px;
+      height: 567px;
+      background-image: url('/images/academic-learning/Landing-Page_2_902x654px.jpg');
+      @media (max-width: @screen-mini-desktop) {
+        width: 536px;
+        height: 459px;
+        background-image: url('/images/academic-learning/Landing_Page_2_633x459px.jpg');
+      }
+      @media (max-width: @screen-tablets) {
+        margin-bottom: 80px;
+      }
+      @media (max-width: @screen-medium-phones) {
+        width: 360px;
+        height: 231px;
+        background-image: url('/images/academic-learning/Landing_Page_2_360x261px.jpg');
+      }
+    }
+  }
+
+  .about-item_3 {
+    margin-bottom: 56px;
+    .about-item__text {
+      margin-left: 9.3%;
+      width: 26%;
+      @media (max-width: @screen-mini-desktop) {
+        margin-left: 6.7%;
+        width: 44%;
+      }
+      @media (max-width: @screen-tablets) {
+        width: 77%;
+        margin: 0 auto
+      }
+    }
+    .about-item__bg {
+      width: 776px;
+      height: 519px;
+      background-image: url('/images/academic-learning/Resources-page_09.jpg');
+      @media (max-width: @screen-mini-desktop) {
+        width: 506px;
+        height: 405px;
+        background-image: url('/images/academic-learning/Resources-page_09_604x405.jpg');
+      }
+      @media (max-width: @screen-tablets) {
+        margin-bottom: 74px;
+      }
+      @media (max-width: @screen-medium-phones) {
+        width: 343px;
+        height: 231px;
+        background-image: url('/images/academic-learning/Resources-page_09_343x231.jpg');
+      }
+    }
+    @media (max-width: @screen-mini-desktop) {
+      margin-bottom: 185px;
+    }
+    @media (max-width: @screen-tablets) {
+      margin-bottom: 82px;
+    }
+  }
+
+  .about-item_4 {
+    margin-bottom: 148px;
+    .about-item__text {
+      margin-right: 7.5%;
+      padding-top: 93px;
+      width: 28%;
+      @media (max-width: @screen-mini-desktop) {
+        width: 46%;
+      }
+      @media (max-width: @screen-tablets) {
+        width: 76%;
+        margin: 0 auto;
+        padding-top: 0;
+      }
+    }
+    .about-item__bg {
+      width: 821px;
+      height: 666px;
+      background-image: url('/images/academic-learning/Resources-page_12.jpg');
+      @media (max-width: @screen-mini-desktop) {
+        width: 480px;
+        height: 468px;
+        background-image: url('/images/academic-learning/Resources-page_12_577x468.jpg');
+      }
+      @media (max-width: @screen-tablets) {
+        margin-bottom: 66px;
+      }
+      @media (max-width: @screen-medium-phones){
+        width: 327px;
+        height: 266px;
+        background-image: url('/images/academic-learning/Resources-page_12_327x266.jpg');
+      }
+    }
+    @media (max-width: @screen-mini-desktop) {
+      margin-bottom: 235px;
+    }
+    @media (max-width: @screen-tablets) {
+      margin-bottom: 68px;
+    }
+  }
+
+  .about-item_5 {
+    margin-bottom: 112px;
+    .about-item__text {
+      margin-left: 8.3%;
+      width: 26%;
+      padding-top: 60px;
+      @media (max-width: @screen-mini-desktop) {
+        width: 45%;
+      }
+      @media (max-width: @screen-tablets) {
+        width: 77%;
+        margin: 0 auto;
+      }
+    }
+    .about-item__bg {
+      width: 776px;
+      height: 617px;
+      background-image: url('/images/academic-learning/Landing_Page_5_823x654px.jpg');
+      @media (max-width: @screen-mini-desktop) {
+        width: 480px;
+        height: 459px;
+        background-image: url('/images/academic-learning/Landing_Page_5_578x459px.jpg');
+      }
+      @media (max-width: @screen-tablets) {
+        margin-bottom: 8px;
+      }
+      @media (max-width: @screen-medium-phones) {
+        width: 328px;
+        height: 261px;
+        background-image: url('/images/academic-learning/Landing_Page_5_328x261px.jpg');
+      }
+    }
+    @media (max-width: @screen-mini-desktop) {
+      margin-bottom: 192px;
+    }
+    @media (max-width: @screen-tablets) {
+      margin-bottom: 104px;
+    }
+  }
+
+  .about-item_6 {
+    margin-bottom: 125px;
+    .about-item__text {
+      width: 30%;
+      margin-right: 9%;
+      padding-top: 10px;
+      @media (max-width: @screen-mini-desktop) {
+        width: 47%;
+        margin-right: 6%;
+      }
+      @media (max-width: @screen-tablets) {
+        width: 77%;
+        margin: 0 auto;
+        padding-top: 0;
+      }
+    }
+    .about-item__bg {
+      width: 793px;
+      height: 564px;
+      background-image: url('/images/academic-learning/Resources-page_18.jpg');
+      @media (max-width: @screen-mini-desktop) {
+        width: 504px;
+        height: 428px;
+        background-image: url('/images/academic-learning/Resources-page_18_601x428.jpg');
+      }
+      @media (max-width: @screen-tablets) {
+        margin-bottom: 69px;
+      }
+      @media (max-width: @screen-medium-phones) {
+        width: 341px;
+        height: 243px;
+        background-image: url('/images/academic-learning/Resources-page_18_341x243.jpg');
+      }
+    }
+    @media (max-width: @screen-mini-desktop) {
+      margin-bottom: 240px;
+    }
+    @media (max-width: @screen-tablets) {
+      margin-bottom: 91px;
+    }
+  }
+
+  .about-item_7 {
+    margin-bottom: 267px;
+    .about-item__text {
+      width: 26%;
+      margin-left: 9%;
+      padding-top: 20px;
+      @media (max-width: @screen-mini-desktop) {
+        width: 45%;
+      }
+      @media (max-width: @screen-tablets) {
+        width: 77%;
+        margin: 0 auto 30px auto;
+        padding-top: 0;
+      }
+    }
+    .about-item__bg {
+      width: 756px;
+      height: 496px;
+      background-image: url('/images/academic-learning/Resources-page_20.jpg');
+      @media (max-width: @screen-mini-desktop) {
+        width: 477px;
+        height: 378px;
+        background-image: url('/images/academic-learning/Resources-page_20_575x378.jpg');
+      }
+      @media (max-width: @screen-tablets) {
+        margin-bottom: 47px;
+      }
+      @media (max-width: @screen-medium-phones) {
+        width: 327px;
+        height: 215px;
+        background-image: url('/images/academic-learning/Resources-page_20_327x215.jpg');
+      }
+    }
+    @media (max-width: @screen-mini-desktop) {
+      margin-bottom: 130px;
+    }
+    @media (max-width: @screen-tablets) {
+      margin-bottom: 60px;
+    }
+  }
+
+  /*content*/
+
+  .content {
+    padding-top: 113px;
+    .title_big {
+      text-align: center;
+      margin-bottom: 156px;
+      @media (max-width: @screen-tablets) {
+        margin-bottom: 110px;
+      }
+    }
+    @media (max-width: @screen-mini-desktop) {
+      padding-top: 192px;
+    }
+    @media (max-width: @screen-tablets) {
+      padding-top: 33px;
+    }
+  }
+
+  .content__resorces {
+    margin-bottom: 72px;
+    @media (max-width: @screen-mini-desktop) {
+      margin-bottom: 165px;
+    }
+    @media (max-width: @screen-tablets) {
+      margin-bottom: 129px;
+    }
+  }
+
+  /*controls*/
+
+  .controls {
+    display: flex;
+    align-items: center;
+
+    &_red {
+      .controls__item {
+        &.active {
+          background-color: @color-red;
+        }
+      }
+    }
+
+    &_white {
+      .controls__item {
+        background-color: @color-white;
+      }
+    }
+  }
+
+  .controls__item {
+    width: 16px;
+    height: 16px;
+    background-color: @color-grey-2;
+    border-radius: 50%;
+    margin-right: 9px;
+    cursor: pointer;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &.active {
+      background-color: @color-black;
+    }
+  }
+
+  /*form block*/
+
+  .form-block {
+    border: 1px solid @color-grey-1;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    border-radius: 10px;
+    background-color: @color-white;
+    @media (max-width: @screen-phones) {
+      box-shadow: none;
+      border-radius: 0;
+      border: none;
+    }
+  }
+
+  .form-block__title {
+    font-size: 18px;
+    color: @onboard-blue;
+    padding: 25px 20px;
+    text-align: center;
+    @media (max-width: @screen-tablets) {
+      padding: 22px 72px;
+      text-align: center;
+      line-height: 20px;
+    }
+  }
+
+  .form-block__header {
+    background-color: fade(@onboard-blue, 10);
+  }
+
+  .form-block__content {
+    padding: 46px 46px 39px 41px;
+    @media (max-width: @screen-tablets) {
+      padding: 37px 25px 39px 25px;
+    }
+  }
+
+  .form-block__row {
+    display: flex;
+    margin-bottom: 20px;
+    @media (max-width: @screen-tablets) {
+      flex-direction: column;
+      margin-bottom: 0;
+    }
+    //&:nth-last-child(3) {
+    //  margin-bottom: 35px;
+    //}
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .form-block__col {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin-right: 10px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+    @media (max-width: @screen-tablets) {
+      margin-bottom: 9px;
+      margin-right: 0;
+    }
+  }
+
+  .form-block__input {
+    width: 100%;
+    height: 51px;
+    border-radius: 5px;
+    border: 1px solid @color-grey-2;
+    background-color: @color-grey-1;
+    color: @color-grey;
+    padding-left: 22px;
+
+    .placeholder {
+      color: @onboard-blue;
+      opacity: 1.5;
+    }
+  }
+
+  .form-block__label {
+    color: @color-grey;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+
+  .form-block__button {
+    width: 100%;
+    background-color: @onboard-blue;
+    border-radius: 5px;
+    border: 1px solid @onboard-blue;
+    color: @color-white;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 2.1px;
+    padding: 17px 17px;
+  }
+
+  .form-block__text {
+    color: @color-grey;
+    font-size: 14px;
+    @media (max-width: @screen-tablets) {
+      margin-bottom: 42px;
+    }
+  }
+
+  .form-block__border {
+    display: none;
+    @media (max-width: @screen-tablets) {
+      display: block;
+      width: 95%;
+      height: 1px;
+      background-color: black;
+      margin: 0 auto;
+    }
+  }
+
+  .form-block__title-bold {
+    font-family: "Roboto - Bold";
+    font-weight: 700;
+  }
+
+  .form-block__checkbox {
+    display: flex;
+    padding-left: 14px;
+    padding-top: 5px;
+    input[type='checkbox'] {
+      width: 0;
+      height: 0;
+      opacity: 0;
+      &:checked + .form-block__checkbox-block {
+        background: url('/images/academic-learning/Tick.svg') center center no-repeat;
+        background-size: cover;
+      }
+    }
+  }
+
+  .form-block__checkbox-block {
+    width: 17px;
+    height: 17px;
+    border-radius: 2px;
+    border: 1px solid @onboard-blue;
+    background-color: @color-white;
+    margin-right: 10px;
+  }
+
+  .form-block__checkbox-label {
+    font-size: 14px;
+    color: @color-grey;
+  }
+
+  /*form section*/
+
+  .form-section {
+    height: 852px;
+    background: url('/images/academic-learning/form_bg.jpg') right center no-repeat;
+    // background-size: cover;
+    margin-bottom: 32px;
+    @media (max-width: @screen-mini-desktop) {
+      height: 708px;
+      background: url('/images/academic-learning/Middle_Banner_1920x995.jpg') right center no-repeat;
+    }
+    @media (max-width: @screen-medium-phones) {
+      background: none;
+      height: initial;
+      margin-bottom: 85px;
+    }
+    &_footer {
+      height: 708px;
+      margin-bottom: 0;
+      background-image: url('/images/academic-learning/Footer_Frame.svg'), url('/images/academic-learning/from__footer_bg.jpg');
+      background-repeat: no-repeat, no-repeat;
+      background-position: left bottom -2px, center center;
+      background-size: 100% auto, cover;
+      .form-section__form {
+        top: 17%;
+      }
+      @media (max-width: @screen-mini-desktop) {
+        margin-bottom: 0;
+        background: none;
+        background-image: url('/images/academic-learning/Footer_Frame.svg'), url('/images/academic-learning/from__footer_bg.jpg');
+        background-repeat: no-repeat, no-repeat;
+        background-position: left bottom, center center;
+        background-size: 100% auto, cover;
+      }
+      @media (max-width: @screen-tablets) {
+        margin-bottom: 0;
+        height: auto;
+      }
+    }
+  }
+
+  .form-section__contant {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    @media (min-width: @screen-tablet) {
+      padding-top: 100px;
+    }
+    @media (max-width: @screen-phones) {
+      width: 100vw;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
+    }
+  }
+
+  .form-section__form {
+    position: absolute;
+    left: 0;
+    top: 22.2%;
+    width: 48.6%;
+    @media (max-width: @screen-mini-desktop) {
+      top: 16.2%;
+    }
+    @media (max-width: @screen-tablets) {
+      position: static;
+      width: 100%;
+    }
+  }
+
+  /*hero*/
+
+  .hero {
+    min-height: 825px;
+    background-image: url('/images/academic-learning/Header_Frame.svg'), url('/images/academic-learning/Landingpage_Banner.jpg');
+    background-repeat: no-repeat, no-repeat;
+    background-position: left bottom -2px, center center;
+    background-size: 100% auto, cover;
+    padding-top: 7.5%;
+    margin-bottom: 82px;
+    @media (max-width: @screen-phones) {
+      padding-top: 0;
+      margin-bottom: 20px;
+    }
+    @media (min-width: @screen-laptop) {
+      margin-bottom: 0;
+    }
+  }
+
+  .hero__content {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .mobile__hero__text {
+    color: @color-white;
+    font-family: "Roboto Slab", serif;
+    font-size: 30px;
+    font-weight: 400;
+    padding: 140px 10px 50px;
+    @media(min-width: @screen-tablet) {
+      font-size: 50px;
+      padding: 40px;
+    }
+  }
+
+  .hero__text {
+    width: 50%;
+    color: @color-white;
+    font-family: "Roboto Slab", serif;
+    font-size: 60px;
+    font-weight: 400;
+    padding-top: 55px;
+    //@media (max-width: @screen-tablets) {
+    //  display: none;
+    //}
+  }
+
+  .hero__form {
+    //width: 48.8%;
+    @media (max-width: @screen-large-tablet) {
+      width: 100%;
+    }
+    @media (max-width: @screen-phones) {
+      width: 100vw;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
+      position: relative;
+    }
+  }
+
+  /*home*/
+
+  .home {
+    margin-bottom: 22px;
+    @media (max-width: @screen-tablets) {
+      margin-bottom: 73px;
+    }
+
+  }
+
+  .home__title {
+    display: none;
+    justify-content: center;
+    margin-bottom: 43px;
+    .title {
+      text-align: center;
+    }
+    @media (max-width: @screen-tablets) {
+      display: flex;
+      margin-bottom: 32px;
+    }
+  }
+
+  .home__content {
+    display: flex;
+    align-items: center;
+    @media (max-width: @screen-tablets) {
+      flex-direction: column;
+      margin-bottom: 50px;
+    }
+  }
+
+  .home__mack {
+    position: relative;
+    width: 66%;
+    margin-right: 12px;
+    @media (max-width: @screen-tablets) {
+      margin-left: 0;
+      position: static;
+    }
+    @media (min-width: @screen-laptop) {
+      margin-top: -100px;
+    }
+  }
+
+  .home__list {
+    padding-left: 14px;
+    @media (max-width: @screen-tablets) {
+      padding-left: 10px;
+    }
+  }
+
+  .home__item {
+    font-size: 33px;
+    font-weight: 700;
+    //line-height: 33px;
+    font-family: 'Roboto Slab', serif;
+    margin-bottom: 20px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    &::before {
+      content: "•";
+      display: inline-block;
+      margin-right: 9px;
+    }
+    @media (max-width: @screen-laptop) {
+      font-size: 24px;
+    }
+    @media (max-width: @screen-tablets) {
+      font-size: 24px;
+      margin-bottom: 33px;
+    }
+  }
+
+  .home__img {
+    display: block;
+    width: 100%;
+    @media (max-width: @screen-tablets) {
+      display: none;
+    }
+  }
+
+  .home__content-video {
+    position: absolute;
+    left: 12%;
+    top: 15%;
+    width: 75%;
+    height: 100%;
+    @media (max-width: @screen-tablets) {
+      position: relative;
+      width: 101vw;
+      height: initial;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
+      margin-bottom: 49px;
+    }
+    @media (max-width: @screen-medium-phones) {
+      margin-bottom: 65px;
+    }
+  }
+
+  .home__desc {
+  }
+
+  .home__content-video-container {
+    display: block;
+    width: 100%;
+  }
+
+  /*mac slider*/
+
+  .mac-slider {
+    width: 100%;
+    height: 100%;
+  }
+
+  .mac-slider__container {
+    width: 100%;
+    position: relative;
+  }
+
+  .mac-slider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mac-slider__img, .mac-slider__prev {
+    display: block;
+    width: 100%;
+  }
+
+  .mac-slider__list {
+    position: absolute;
+    left: 4%;
+    top: 5%;
+    height: 57%;
+    width: 92%;
+    background: #000;
+    overflow: hidden;
+  }
+
+  .mac-slider__item {
+    position: absolute;
+    left: -10000px;
+    opacity: 1;
+    display: block;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    transition: left 3s, opacity 2s;
+    &.active {
+      opacity: 1;
+      left: 0;
+      transition: opacity 2s;
+    }
+  }
+
+  /*nav*/
+
+  .nav {
+    position: fixed;
+    min-height: 60px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    background-color: @color-white;
+    width: 100%;
+  }
+
+  /*props*/
+
+  .props {
+    min-height: 655px;
+    background: url('/images/academic-learning/Middle_Banner.jpg') center center no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    margin-bottom: 134px;
+    @media (max-width: @screen-mini-desktop) {
+      margin-bottom: 190px;
+    }
+    @media (max-width: @screen-tablets) {
+      background: none;
+      background-color: @color-grey-2 !important;
+      padding-top: 40px;
+      padding-bottom: 40px;
+      margin-bottom: 62px;
+    }
+  }
+
+  .props__list {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    @media (max-width: @screen-tablets) {
+      flex-wrap: wrap;
+    }
+  }
+
+  .props__item {
+    border-radius: 10px;
+    background-color: @color-white;
+    padding: 48px 30px 46px 30px;
+    width: 33.3%;
+    margin-right: 104px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &:last-child {
+      margin-right: 0;
+      margin-bottom: 0;
+    }
+    @media (max-width: @screen-laptop) {
+      margin-right: 20px;
+    }
+    @media (max-width: @screen-tablets) {
+      margin-right: 0;
+      margin-bottom: 40px;
+      width: 100%;
+      padding: 48px 25px 50px 25px;
+    }
+  }
+
+  .props__img {
+    width: 146px;
+    height: 145px;
+    margin-bottom: 40px;
+  }
+
+  .props__svg {
+    display: block;
+    width: 100%;
+  }
+
+  .props__title {
+    color: @color-black;
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    @media (max-width: @screen-tablets) {
+      margin-bottom: 16px;
+    }
+  }
+
+  .props__tools-list {
+    font-size: 18px;
+    line-height: 30px;
+  }
+
+  .props__tools-item {
+    display: flex;
+    align-items: center;
+    &::before {
+      content: "•";
+      margin-right: 5px;
+    }
+  }
+
+  /*resources*/
+
+  .resorces {
+    position: relative;
+  }
+
+  .resorces__list {
+    display: flex;
+    @media (max-width: @screen-laptop) {
+      flex-direction: column;
+    }
+  }
+
+  .resorces__item {
+    display: none;
+    &.active {
+      display: flex;
+    }
+    @media (max-width: @screen-laptop) {
+      flex-direction: column;
+    }
+    @media (max-width: @screen-tablets) {
+      //width: 100vw;
+      //left: 50%;
+      //right: 50%;
+      //margin-left: -50vw;
+      //margin-right: -50vw;
+      position: relative;
+    }
+  }
+
+  .resorces__photo, .resorces__desc {
+    width: 50%;
+    max-height: 319px;
+    @media (max-width: @screen-laptop) {
+      width: 100%;
+    }
+  }
+
+  .resorces__photo {
+    overflow: hidden;
+    @media (max-width: @screen-laptop) {
+      height: 410px;
+    }
+    .phones{
+      height: 200px;
+    }
+  }
+
+  .resorces__img {
+    display: block;
+    height: 100%;
+    @media (max-width: @screen-laptop) {
+      height: initial;
+      width: 100%;
+    }
+  }
+
+  .resorces__desc {
+    border-radius: 10px;
+    background-color: @color-black;
+    color: @color-white;
+    padding: 25px 36px;
+    font-size: 18px;
+    line-height: 24px;
+    p {
+      margin-bottom: 30px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    @media (min-width: @screen-laptop) {
+      padding: 73px 55px 43px 38px;
+      border-radius: 0;
+      height: 100%;
+    }
+  }
+
+  .resorces__title {
+    font-size: 2.1875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+  }
+
+  .resorces__controls {
+    position: absolute;
+    bottom: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    @media (max-width: @screen-tablets) {
+      bottom: -6%;
+    }
+  }
+
+  /*reviews*/
+
+  .reviews {
+    position: relative;
+    min-height: 454px;
+    margin-bottom: 88px;
+    &::before {
+      content: "";
+      position: absolute;
+      display: block;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: @color-grey-1;
+      width: 100%;
+      height: 65%;
+      @media (max-width: @screen-tablet) {
+        bottom: 0;
+        top: auto;
+        transform: none;
+        height: 84%;
+      }
+    }
+    @media (max-width: @screen-mini-desktop) {
+      margin-bottom: 155px;
+    }
+    @media (max-width: @screen-laptop) {
+      min-height: 286px;
+      padding-bottom: 140px;
+    }
+    @media (max-width: @screen-phones) {
+      padding-bottom: 75px;
+      margin-bottom: 75px;
+    }
+  }
+
+  .reviews__list {
+    position: relative;
+  }
+
+  .reviews__item {
+    display: none;
+    align-items: center;
+    &.active {
+      display: flex;
+    }
+    @media (max-width: @screen-tablet) {
+      flex-direction: column;
+    }
+  }
+
+  .reviews__img-container {
+    min-width: 455px;
+    min-height: 455px;
+    width: 455px;
+    height: 455px;
+    //border: 10px solid red;
+    border-radius: 50%;
+    margin-right: 35px;
+    overflow: hidden;
+    @media (max-width: @screen-laptop) {
+      min-width: 286px;
+      min-height: 286px;
+      width: 286px;
+      height: 286px;
+    }
+    @media (max-width: @screen-tablet) {
+      margin-right: 0;
+      margin-bottom: 43px;
+    }
+  }
+
+  .reviews__img {
+    width: 100%;
+    display: block;
+  }
+
+  .reviews__text {
+    color: @color-black;
+    font-size: 26px;
+    font-style: italic;
+    @media (max-width: @screen-tablet) {
+      text-align: center;
+      line-height: 31px;
+    }
+  }
+
+  .reviews__controls {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    @media (max-width: @screen-laptop) {
+      bottom: -10%;
+    }
+  }
+
+  /*section*/
+
+  .section {
+    background-color: @color-white;
+  }
+
+  .section__resources {
+    //height: 909px;
+    position: relative;
+    background: @color-white url('/images/academic-learning/Carousell_1920x1250.jpg') center center no-repeat;
+    background-size: cover;
+    @media (max-width: @screen-laptop) {
+      //height: 1200px;
+    }
+  }
+
+  .section__resources__container {
+    display: flex;
+    padding-bottom: 42px;
+    align-items: flex-start;
+    @media (max-width: @screen-tablet) {
+      padding-bottom: 125px;
+      flex-direction: column;
+      padding-top: 5%;
+    }
+  }
+
+  .section__resources__slider {
+    flex: 0.75;
+  }
+
+  .section__resources__text {
+    margin-right: 40px;
+    flex: .7;
+    text-align: justify;
+    padding-top: 59px;
+    @media (max-width: @screen-laptop) {
+      margin-right: 0;
+      margin-bottom: 30px;
+    }
+    @media (max-width: @screen-tablet) {
+      width: 100%;
+      min-height: 340px;
+    }
+    @media (max-width: @screen-phones) {
+      min-height: 450px;
+    }
+  }
+
+  .section__resources__title {
+    font-size: 35px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+    text-align: center;
+  }
+
+  .section__resources__controls {
+    position: absolute;
+    bottom: 4%;
+    left: 50%;
+    transform: translateX(-50%);
+    @media (max-width: @screen-tablet) {
+      bottom: 2%;
+    }
+  }
+
+  //.resources_slider_text_item {
+  //  position: absolute;
+  //  left: -10000px;
+  //  top: 0;
+  //  opacity: 1;
+  //}
+
+  //.resources_slider_text_item.active {
+  //  left: 0;
+  //  opacity: 1;
+  //}
+
+  .resources_slider_text_item ul {
+    padding-top: 10px;
+  }
+
+  .resources_slider_text_item li {
+    color: @color-grey;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.625rem;
+    padding-left: 10px;
+  }
+
+  .resources_slider_text_item li::before {
+    content: "\2022";
+    margin-right: 5px;
+  }
+
+  /*title*/
+
+  .title {
+    font-size: 36px;
+    color: @color-black;
+    @media (max-width: @screen-tablets) {
+      font-size: 33px;
+      line-height: 40px;
+    }
+  }
+
+  .title_big {
+    font-size: 60px;
+    font-weight: 400;
+    line-height: 80px;
+    @media (max-width: @screen-tablets) {
+      font-size: 36px;
+      line-height: 44px;
+    }
+  }
+
+  /*addition style*/
+
+  .container {
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+
+  .resources_slider_text_list {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+  }
+  @media screen and (min-width: 960px) {
+    .resources_slider_text_list {
+      max-width: 445px;
+      width: auto;
+    }
+  }
+
+  .about-item_1 .about-item__bg,
+  .about-item_2 .about-item__bg,
+  .about-item_3 .about-item__bg,
+  .about-item_4 .about-item__bg,
+  .about-item_5 .about-item__bg,
+  .about-item_6 .about-item__bg,
+  .about-item_7 .about-item__bg {
+    background-size: 100%;
+  }
+
+  .hero__text_comp,
+  .hero__text_mobile,
+  .home__desc,
+  .about-item_1 .about-item__bg,
+  .about-item_1 .about-item__text,
+  .about-item_2 .about-item__bg,
+  .about-item_2 .about-item__text,
+  .about-item_3 .about-item__bg,
+  .about-item_3 .about-item__text,
+  .about-item_4 .about-item__bg,
+  .about-item_4 .about-item__text,
+  .about-item_5 .about-item__bg,
+  .about-item_5 .about-item__text,
+  .about-item_6 .about-item__bg,
+  .about-item_6 .about-item__text,
+  .about-item_7 .about-item__bg,
+  .about-item_7 .about-item__text,
+  .section_props_animation,
+  .section_props_animation .props__item-1,
+  .section_props_animation .props__item-2,
+  .section_props_animation .props__item-3,
+  .section__resources,
+  .section__resources__text,
+  .section__resources__slider,
+  .content__resorces,
+  .section_reviews,
+  .form-section__middle {
+    opacity: 1;
+    transition: opacity 1.5s linear;
+    -moz-transition: opacity 1.5s linear;
+    -webkit-transition: opacity 1.5s linear;
+    -ms-transition: opacity 1.5s linear;
+  }
+
+  input.form-block__input:focus {
+    border: 1px solid @color-blue;
+    outline: none;
+  }
+
+  .form-block__input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    opacity: 1.5;
+  }
+  .form-block__input::-moz-placeholder { /* Firefox 19+ */
+    opacity: 1.5;
+  }
+  .form-block__input:-ms-input-placeholder { /* IE 10+ */
+    opacity: 1.5;
+  }
+  .form-block__input:-moz-placeholder { /* Firefox 18- */
+    opacity: 1.5;
+  }
+
+  .form-block__input:focus::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: @color-grey;
+    opacity: 1;
+  }
+  .form-block__input:focus::-moz-placeholder { /* Firefox 19+ */
+    color: @color-grey;
+    opacity: 1;
+  }
+  .form-block__input:focus:-ms-input-placeholder { /* IE 10+ */
+    color: @color-grey;
+    opacity: 1;
+  }
+  .form-block__input:focus:-moz-placeholder { /* Firefox 18- */
+    color: @color-grey;
+    opacity: 1;
+  }
+
+  .form-block__button:hover,
+  .form-block__button:active {
+    background-color: @color-blue-middle;
+  }
+
+  .form__row_error .form-block__input {
+    border: 1px solid @color-red;
+    color: @color-red;
+  }
+
+  form .has-error {
+    color: @color-red;
+  }
+  .form-block__content .alert {
+    border-left: 0px solid !important;
+    margin-bottom: 20px;
+    border-radius: 7px;
+  }
+
+  @media (max-width: @screen-tablets) {
+    .container__bg {
+      background-color: @color-grey-1;
+      width: 100%;
+    }
+  }
+
+  #footer .footer-content-area{
+    background: white !important;
   }
 
 }

@@ -1,0 +1,15 @@
+<div id="switch-page" v-cloak>
+
+  <div class="container p-5">
+    <div class="jumbotron">
+      <h1 class="lead">Your Default Website is: </h1>
+      <h2 class="lead display-4 text-center">{{ defaultPage }}</h2>
+      <hr class="my-4">
+      <div class="text-center">
+        <ajax-button class="btn btn-dark" :syncing="true" disabled></ajax-button>
+      </div>
+    </div>
+  </div>
+
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

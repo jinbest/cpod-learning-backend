@@ -21,8 +21,8 @@ module.exports = {
 
     inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
-    return await UserCourses.find({user_id: inputs.userId})
-      .populate('course');
+    return await CourseDetail.find({pubstatus: 1, is_private: 0})
+      .sort('order_id DESC')
 
   }
 

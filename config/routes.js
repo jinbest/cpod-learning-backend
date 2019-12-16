@@ -33,60 +33,104 @@ module.exports.routes = {
   // 'GET /account/password':   { action: 'account/view-edit-password' },
   // 'GET /account/profile':    { action: 'account/view-edit-profile' },
 
-  'GET /':                        { action: 'view-new-page-or-redirect' },
+  'GET /':                                               { action: 'view-homepage-or-redirect' },
 
-  'GET /email-signup':            { action: 'entrance/view-signup' },
-  'GET /get-started':             { action: 'entrance/view-signup' },
-  'GET /signup':                  { action: 'entrance/view-signup' },
-  'GET /free-signup':             { action: 'entrance/view-free-signup' },
-  'GET /login':                   { action: 'entrance/view-login' },
-  'GET /email/confirm':           { action: 'entrance/confirm-email' },
-  'GET /logout':                  { action: 'account/logout' },
+  'GET /email-signup':                                   { action: 'entrance/view-signup' },
+  'GET /get-started':                                    { action: 'entrance/view-signup' },
+  'GET /signup':                                         { action: 'entrance/view-signup' },
+  'GET /free-signup':                                    { action: 'entrance/view-free-signup' },
+  'GET /login':                                          { action: 'entrance/view-login' },
+  'GET /email/confirm':                                  { action: 'entrance/confirm-email' },
+  'GET /logout':                                         { action: 'account/logout' },
 
-  'GET /pricing':                 { action: 'onboarding/view-pricing' },
-  'GET /checkout':                { action: 'view-checkout' },
+  'GET /pricing':                                        { action: 'onboarding/view-pricing' },
+  'GET /pricing-alt':                                    { action: 'onboarding/view-pricing-alt' },
+  'GET /checkout':                                       { action: 'view-checkout' },
 
-  'GET /level/:unused?':          { action: 'onboarding/view-level' },
+  'GET /redeem':                                         { action: 'onboarding/view-redeem' },
+  'GET /redeem/:code':                                   { action: 'onboarding/redeem-voucher-code' },
+
+  'GET /level/:unused?':                                 { action: 'onboarding/view-level' },
 
   //ONBOARDING
-  'GET /new-dashboard':           { action: 'onboarding/view-new-dash' },
+  'GET /choice':                                         { action: 'onboarding/view-new-dash' },
+  'GET /switch-page':                                    { action: 'onboarding/view-switch-page' },
+  // 'GET /beta-promo':                                     { action: 'onboarding/view-beta-promo' },
+  'GET /beta-how-it-works':                              { action: 'onboarding/view-beta-how-it-works' },
+  'GET /beta-confirm':                                   { action: 'onboarding/view-beta-confirm' },
+  'GET /beta-confirmed':                                 { action: 'onboarding/view-beta-confirmed' },
 
   //DASHBOARD
-  'GET /dash/:unused?':            'HomeController.serve',
-  'GET /home/:unused?':            'HomeController.serve',
-  'GET /feedback/:unused?':        'HomeController.serve',
-  'GET /lesson/:unused?/:unused?': 'HomeController.serve',
-  'GET /podcasts/:unused?':        'PodcastsController.serve',
-  'GET /dictionary/:unused?':      'PodcastsController.serve',
+  'GET /dash/:unused?':                                  'HomeController.serve',
+  'GET /home/:unused?':                                  'HomeController.serve',
+  'GET /feedback/:unused?':                              'HomeController.serve',
+  'GET /lesson/:unused?/:unused?':                       'HomeController.serve',
+  'GET /course/:unused?':                                'HomeController.serve',
+  'GET /courses/:unused?':                               'HomeController.serve',
+  'GET /podcasts/:unused?':                              'PodcastsController.serve',
+  'GET /dictionary/:unused?':                            'PodcastsController.serve',
 
   //PLACEMENT TEST
-  'GET /placement/:unused?': 'PlacementController.serve',
+  'GET /placement/:unused?':                             'PlacementController.serve',
 
   //RECAP LESSON VIEWS
-  'GET /secret-page':             { action: 'recap/view-secret-page' },
-  'GET /current-lesson':          { action: 'recap/view-current-lesson' },
-  'GET /set-lesson/:unused?':     { action: 'recap/set-lesson' },
-  'GET /recap':                   { action: 'recap/view-recap' },
-  'GET /recapp':                  { action: 'recap/view-recap' },
-  'GET /app':                     { action: 'recap/view-recap' },
+  'GET /secret-page':                                    { action: 'recap/view-secret-page' },
+  'GET /super-secret-page':                              { action: 'recap/view-popular-recap-lessons' },
+  'GET /current-lesson':                                 { action: 'recap/view-current-lesson' },
+  'GET /set-lesson/:unused?':                            { action: 'recap/set-lesson' },
+  'GET /recap':                                          { action: 'recap/view-recap' },
+  'GET /recapp':                                         { action: 'recap/view-recap' },
+  'GET /app':                                            { action: 'recap/view-recap' },
+
+
+  //PROMOTIONS
+  'GET /expired-promotion':                              { action: 'promotions/view-expired-promo'},
+  // 'GET /black-friday/:code?':                            { action: 'promotions/view-sales-promotion'},
+  // 'GET /black-friday-last-chance/:code?':                { action: 'promotions/view-black-friday-last-chance'},
+  // 'GET /cyber-monday/:code?':                            { action: 'promotions/view-cyber-monday'},
+  // 'GET /cyber-monday-last-chance/:code?':                { action: 'promotions/view-cyber-monday-last-chance'},
+  'GET /black-friday/:code?':                            { action: 'promotions/view-expired-promo'},
+  'GET /black-friday-last-chance/:code?':                { action: 'promotions/view-expired-promo'},
+  'GET /cyber-monday/:code?':                            { action: 'promotions/view-expired-promo'},
+  'GET /cyber-monday-last-chance/:code?':                { action: 'promotions/view-expired-promo'},
+  'GET /holiday-gift/:code?':                            { action: 'promotions/view-holiday-gift'},
+  'GET /holiday-offer/:code?':                           { action: 'promotions/view-holiday-offer'},
+
+  //DICTIONARY
+  'GET /dictionary/:unused?':                            {},
 
   //LEGAL PAGES
-  'GET /terms':             { action:   'legal/view-terms' },
-  'GET /terms-and-conditions':             { action:   'legal/view-terms' },
-  'GET /privacy':           { action:   'legal/view-privacy' },
+  'GET /terms':                                          { action:   'legal/view-terms' },
+  'GET /terms-and-conditions':                           { action:   'legal/view-terms' },
+  'GET /privacy':                                        { action:   'legal/view-privacy' },
+
+  //DESIGN PAGES
+  'GET /logos':                                          { action:   'misc/view-logos' },
+  'GET /brand-guidelines':                               { action:   'misc/view-brand-guidelines' },
+
+
+  //ADMIN PAGES
+  //ACCESS VOUCHER CODES
+  'GET /admin/access-code-panel':                        {action: 'admin/access-codes/view-access-code-panel'},
 
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
   //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗  ┌┼─   ║║║ ║║║║║║║║  ║ ║╠═╣ ║║╚═╗
   //  ╩ ╩╩╚═╝╚═╝  ╩╚═╚═╝═╩╝╩╩╚═╚═╝╚═╝ ╩ ╚═╝  └┘   ═╩╝╚═╝╚╩╝╝╚╝╩═╝╚═╝╩ ╩═╩╝╚═╝
-  // '/terms':                   '/legal/terms',
-  // '/privacy':                   '/legal/privacy',
-  // '/logout':                  '/api/v1/account/logout',
+  '/choose':                                             '/choice',
+  '/new-dashboard':                                      '/choice',
+  '/switch':                                             '/home',
+  '/beta-program':                                       '/beta-how-it-works',
+  '/beta-promo':                                         '/beta-how-it-works',
+  '/switch-back':                                        '/api/v1/account/opt-out-of-new-dashboard',
+  '/switchback':                                         '/api/v1/account/opt-out-of-new-dashboard',
+  '/old-dashboard':                                      '/api/v1/account/opt-out-of-new-dashboard',
 
 
-  'GET /api/v1/auth/facebook': {controller: 'PassportController', action: 'facebookAuth'},
-  'GET /api/v1/auth/facebook/callback': {controller: 'PassportController', action: 'facebookCallback'},
-  'GET /api/v1/auth/google':                {controller: 'PassportController', action: 'googleAuth'},
-  'GET /api/v1/auth/google/callback':       {controller: 'PassportController', action: 'googleCallback'},
+  'GET /api/v1/auth/facebook':                           { controller: 'PassportController', action: 'facebookAuth'},
+  'GET /api/v1/auth/facebook/callback':                  { controller: 'PassportController', action: 'facebookCallback'},
+  'GET /api/v1/auth/google':                             { controller: 'PassportController', action: 'googleAuth'},
+  'GET /api/v1/auth/google/callback':                    { controller: 'PassportController', action: 'googleCallback'},
+  'GET /api/v1/sso/discourse':                           { action: 'sso/discourse'},
 
   'GET /chinese/:unused?/:unused?':                      { action: 'redirect/why-choose-us'},
   'GET /sitemap' :                                       { action: 'sitemap'},
@@ -98,8 +142,8 @@ module.exports.routes = {
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝
   // …
-  'POST /api/v1/webhooks/mautic/update':                  { action: 'webhooks/mautic/update' },
-  'POST /api/v1/webhooks/stripe/failed':                  { action: 'webhooks/stripe/failed' },
+  'POST /api/v1/webhooks/mautic/update':                 { action: 'webhooks/mautic/update' },
+  'POST /api/v1/webhooks/stripe/failed':                 { action: 'webhooks/stripe/failed' },
 
   //SEARCH
   'GET /api/v1/search/reindex-lessons':                           { action: 'search/reindex-lessons' },
@@ -137,22 +181,26 @@ module.exports.routes = {
   '/api/v1/health/time':                                 { action: 'health/time' },
 
   //Lesson Recap Routes
-  'GET /api/v1/get-popular-lessons':                     { action: 'recap/get-popular-lessons' },
+  'GET /api/v1/recap/get-popular-lessons':               { action: 'recap/get-popular-lessons' },
+  'GET /api/v1/recap/get-popular-recap-lessons':         { action: 'recap/get-popular-recap-lessons' },
+  'GET /api/v1/recap/get-all-recap-lessons':             { action: 'recap/get-all-recap-lessons' },
   'POST /api/v1/recap/get-lessons':                      { action: 'recap/get-user-lesson' },
   'POST /api/v1/recap/request-lesson':                   { action: 'recap/request-lesson' },
   'GET /api/v1/recap/users':                             { action: 'recap/users-by-current-lesson' },
 
   //General Info Routes
-  'GET  /api/v1/health/ip-info':                         { action: 'health/ip-info' },
+  'GET /api/v1/health/ip-info':                          { action: 'health/ip-info' },
   'GET /api/v1/health/generate-words':                   { action: 'generate-words' },
 
   //Dashboard Routes
   'GET /api/v1/dashboard/history':                       { action: 'dashboard/history' },
   'GET /api/v1/dashboard/bookmarks':                     { action: 'dashboard/bookmarks' },
+  'GET /api/v1/dashboard/get-course':                    { action: 'dashboard/get-course' },
   'GET /api/v1/dashboard/user-courses':                  { action: 'dashboard/user-courses' },
   'GET /api/v1/dashboard/more-courses':                  { action: 'dashboard/more-courses' },
   'GET /api/v1/dashboard/course-lessons':                { action: 'dashboard/course-lessons' },
   'GET /api/v1/dashboard/all-lessons':                   { action: 'dashboard/all-lessons' },
+  'GET /api/v1/dashboard/all-courses':                   { action: 'dashboard/all-courses' },
   'POST /api/v1/dashboard/toggle-saved':                 { action: 'dashboard/toggle-saved' },
   'POST /api/v1/dashboard/toggle-studied':               { action: 'dashboard/toggle-studied' },
   'POST /api/v1/dashboard/toggle-course':                { action: 'dashboard/toggle-course' },
@@ -187,18 +235,26 @@ module.exports.routes = {
   'GET /api/v1/feedback/dashboard-feedback-all':         { action: 'feedback/dashboard-feedback-all' },
   'GET /api/v1/feedback/dashboard-feedback-web':         { action: 'feedback/dashboard-feedback-web' },
 
+  //DICTIONARY
+  'GET /api/v1/dictionary/get':                          { action: 'dictionary/get-dictionary-word'},
+  'GET /api/v1/dictionary/related':                      { action: 'dictionary/get-related-words'},
+
   // LOG ROUTES
   'PUT /api/v1/logs/game-logs':                          { action: 'logs/game-logs' },
 
   // Token Routes
-  'GET /api/v1/token':                                   {action: 'token/check'},
-  'POST /api/v1/token':                                  {action: 'token/get'},
+  'GET /api/v1/token':                                   { action: 'token/check'},
+  'POST /api/v1/token':                                  { action: 'token/get'},
 
   //ADS
-  'GET /api/v1/ads/android-app':                         {action: 'ads/android-app'},
+  'GET /api/v1/ads/android-app':                         { action: 'ads/android-app'},
 
   //TUTORIALS
-  'GET /api/v1/tutorials/android-intro-video':           {action: 'tutorials/android-intro-video'},
+  'GET /api/v1/tutorials/android-intro-video':           { action: 'tutorials/android-intro-video'},
+
+  //ACCESS CODES
+  'POST /api/v1/admin/access-codes/generate':            { action: 'admin/access-codes/generate-access-codes'},
+  'POST /api/v1/admin/access-codes/delete':              { action: 'admin/access-codes/delete-access-codes'}
 
   //Sample Routes
   // 'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },

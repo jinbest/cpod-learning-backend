@@ -1,111 +1,507 @@
-<div id="homepage" :class="[heroHeightSet ? '' : 'uninitialized']" v-cloak>
-  <div class="hero d-flex flex-column justify-content-center" full-page-hero>
-    <div class="container text-center">
-      <div class="hero-image">
-        <img class="sky" alt="The sky above the ocean" src="/images/hero-sky.png"/>
-        <img class="cloud cloud-1" alt="A grayish-blue cloud" src="/images/hero-cloud.png"/>
-        <img class="cloud cloud-2" alt="Another grayish-blue cloud" src="/images/hero-cloud.png"/>
-        <img class="ship" alt="A ship hovering a few feet over the surface of the water, bearing a flagpole with the Sails.js logo" src="/images/hero-ship.png"/>
-        <img class="water" alt="The shadow of the floating ship on the water" src="/images/hero-water.png"/>
+<div id="free-signup" v-cloak>
+  <div class="promo-banner row hl-white">
+    <div class="container pb-5">
+      <div class="row">
+        <div class="col-12 my-4">
+          <h1 class="text-center promo-heading font-weight-bold text-white h2">15 years leading Mandarin Chinese online learning</h1>
+        </div>
       </div>
-      <h1 class="display-4">A new <strong>Sails</strong> app.</h1>
-      <div>
-        <div class="more-info-text" @click="clickHeroButton()">
-          <div class="text">Dive in</div>
-          <div class="icon">&darr;</div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="cpod-vid-cont" v-html="video">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="hero__form mx-md-3">
+            <div class="form-block">
+              <div class="form-block__header">
+                <h3 class="form-block__title">Sign Up Today!</h3>
+              </div>
+              <div class="form-block__content">
+                <div v-if="cloudSuccess" id="form-top-msg"><div class="alert alert-success" role="alert">
+                    Great! We've just sent you an account confirmation email. Please check your inbox.
+                  </div>
+                </div>
+                <ajax-form v-if="!cloudSuccess" name="form-medium" id="form-medium" action="signup" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
+                  <div class="form-block__row">
+                    <div class="form-block__col">
+                      <label class="form-block__label">Email Address</label>
+                      <input type="email" name="email" placeholder="example@domain.com" :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress" class="form-control form-block__input" autocomplete="email">
+                      <div class="invalid-feedback" v-if="formErrors.emailAddress">Please enter a valid email address.</div>
+                    </div>
+                  </div>
+                  <div class="form-block__row">
+                    <div class="form-block__col">
+                      <label class="form-block__checkbox">
+                        <input type="checkbox" name="overlay_email" v-model="formData.optIn" checked>
+                        <div class="form-block__checkbox-block"></div>
+                        <span class="form-block__checkbox-label">I want to hear the latest news from ChinesePod.</span>
+                      </label>
+                      <p class="text-danger" v-if="cloudError==='emailAlreadyInUse'"><small>It looks like there's already an account with your email address. If you forgot your password, you can recover it <strong><a href="/accounts/resetpassword">here</a></strong>.</small></p>
+                      <p class="text-danger" v-else-if="cloudError"><small>An error occurred while processing your request. Please check your information and try again, or <strong><a href="/support">contact support</a></strong> if the error persists.</small></p>
+
+                    </div>
+                  </div>
+                  <div class="form-block__row">
+                    <div class="form-block__col">
+                      <ajax-button type="submit" id="btn-form-top-submit" :syncing="syncing" class="form-block__button">Get Started</ajax-button>
+                    </div>
+                  </div>
+                  <div class="form-block__row">
+                    <div class="form-block__col">
+                      <p><small class="text-muted">By signing up, you agree to the <a href="/privacy/" target="_blank">Privacy Policy</a> and <a href="/terms/" target="_blank">Terms of Service</a> of ChinesePod LLC.</small></p>
+                    </div>
+                  </div>
+
+
+                </ajax-form>
+
+                <hr v-if="!cloudSuccess">
+
+                <div v-if="!cloudSuccess">
+                  <div>
+                    <a class="btn btn-block btn-outline-primary" href="/api/v1/auth/google">
+                      <div class="row">
+                        <div class="col-2 my-auto">
+                          <div class="img-fluid w-50">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48">
+                              <defs><path id="a" d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 11.8 2 2 11.8 2 24s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.2-2.7-.5-4z"/></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"/></clipPath><path clip-path="url(#b)" fill="#FBBC05" d="M0 37V11l17 13z"/><path clip-path="url(#b)" fill="#EA4335" d="M0 11l17 13 7-6.1L48 14V0H0z"/><path clip-path="url(#b)" fill="#34A853" d="M0 37l30-23 7.9 1L48 0v48H0z"/><path clip-path="url(#b)" fill="#4285F4" d="M48 48L17 24l-4-3 35-10z"/>
+                            </svg>
+                          </div>
+                        </div>
+                        <div class="col-10 my-auto">
+                          <span class="">Continue with Google</span>
+                        </div>
+                      </div>
+                    </a>
+                    <a class="btn btn-block btn- btn-facebook" href="/api/v1/auth/facebook">
+                      <div class="row">
+                        <div class="col-2 my-auto">
+                          <div class="img-fluid w-50">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                              <path fill="#FFFFFF" d="M32 30a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h28a2 2 0 0 1 2 2v28z"/>
+                              <path fill="#4267b2" d="M22 32V20h4l1-5h-5v-2c0-2 1.002-3 3-3h2V5h-4c-3.675 0-6 2.881-6 7v3h-4v5h4v12h5z"/>
+                            </svg>
+                          </div>
+                        </div>
+                        <div class="col-10 my-auto">
+                          <span class="">Continue with Facebook</span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
   </div>
-  <div class="about-wrapper" role="scroll-destination">
+  <section class="section content">
+    <div class="about-item about-item_1">
+      <div class="about-item__bg">
+      </div>
+      <div class="about-item__text">
+        <h3 class="title about-item__title">Real language</h3>
+        <div class="about-item__desc">
+          We believe that students learn better from immersive experiences instead of traditional textbooks.
+        </div>
+        <div class="about-item__cit">
+          ChinesePod creates Mandarin Chinese lessons with real language that native speakers use, not stiff,
+          unnatural textbook phrases.
+        </div>
+      </div>
+    </div>
+    <div class="about-item about-item_right about-item_2 ">
+      <div class="about-item__text">
+        <h3 class="title about-item__title">Self-contained Lessons</h3>
+        <div class="about-item__desc">
+          The beauty of ChinesePod is that you don't need to study our lessons in a specific order, they are
+          self-contained.
+        </div>
+        <div class="about-item__cit">
+          Just pick your Chinese skill level, then a topic you want to study and you are good to go, browse our
+          library full of content. Human conversations don't follow the chapters of a textbook so why should your
+          learning?
+        </div>
+      </div>
+      <div class="about-item__bg">
+      </div>
+    </div>
+
+    <section class="section props section_props_animation">
+      <div class="container">
+        <ul class="props__list">
+          <li class="props__item props__item-1">
+            <div class="props__img">
+              <img src="/images/academic-learning/ChinesePod_Tools-04.svg" class="props__svg" alt="">
+            </div>
+            <h3 class="props__title">Exercises</h3>
+            <ul class="props__tools-list">
+              <li class="props__tools-item">Lesson exercises</li>
+              <li class="props__tools-item">Placement test</li>
+              <li class="props__tools-item">Personal scoring</li>
+              <li class="props__tools-item">Progress tracker</li>
+            </ul>
+          </li>
+          <li class="props__item props__item-2">
+            <div class="props__img">
+              <img src="/images/academic-learning/ChinesePod_Tools-02.svg" class="props__svg" alt="">
+            </div>
+            <h3 class="props__title">Vocabulary</h3>
+            <ul class="props__tools-list">
+              <li class="props__tools-item">Context sentences</li>
+              <li class="props__tools-item">Vocabulary decks</li>
+              <li class="props__tools-item">In-depth grammar</li>
+              <li class="props__tools-item">Extra dialogues</li>
+            </ul>
+          </li>
+          <li class="props__item props__item-3">
+            <div class="props__img">
+              <img src="/images/academic-learning/ChinesePod_Tools-03.svg" class="props__svg" alt="">
+            </div>
+            <h3 class="props__title">Pronunciation</h3>
+            <ul class="props__tools-list">
+              <li class="props__tools-item">Best learning approach</li>
+              <li class="props__tools-item">Wide range of difficulty levels</li>
+              <li class="props__tools-item">Perfecting your pronunciation</li>
+              <li class="props__tools-item">In-depth Pinyin section</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="about-item about-item_3">
+      <div class="about-item__bg">
+      </div>
+      <div class="about-item__text">
+        <h3 class="title about-item__title">Easy to use</h3>
+        <div class="about-item__desc">
+          We provide over 4000 entertaining and practical audio & video lessons that make learning the Mandarin
+          language fun.
+        </div>
+        <div class="about-item__cit">
+          Simply, download a lesson and study it anywhere, at anytime, on any device. Each lesson also comes with
+          downloadable dialogues, vocabulary, grammar and practical exercises.
+        </div>
+      </div>
+    </div>
+
+    <section class="form-section form-section__middle">
+      <div class="container">
+        <div class="form-section__contant">
+          <div class="form-block col-12 col-md-8 col-lg-6">
+            <div class="form-block__header">
+              <h3 class="form-block__title">Sign Up Today!</h3>
+            </div>
+            <div class="form-block__content">
+              <div  v-if="cloudSuccess" id="form-top-msg"><div class="alert alert-success" role="alert">
+                  Great! We've just sent you an account confirmation email. Please check your inbox.
+                </div>
+              </div>
+              <ajax-form v-if="!cloudSuccess" name="form-medium" id="form-medium" action="signup" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
+                <div class="form-block__row">
+                  <div class="form-block__col">
+                    <label class="form-block__label">Email Address</label>
+                    <input type="email" name="email" placeholder="example@domain.com" :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress" class="form-control form-block__input" autocomplete="email">
+                    <div class="invalid-feedback" v-if="formErrors.emailAddress">Please enter a valid email address.</div>
+                  </div>
+                </div>
+                <div class="form-block__row">
+                  <div class="form-block__col">
+                    <label class="form-block__checkbox">
+                      <input type="checkbox" name="overlay_email" v-model="formData.optIn" checked>
+                      <div class="form-block__checkbox-block"></div>
+                      <span class="form-block__checkbox-label">I want to hear the latest news from ChinesePod.</span>
+                    </label>
+                    <p class="text-danger" v-if="cloudError==='emailAlreadyInUse'"><small>It looks like there's already an account with your email address. If you forgot your password, you can recover it <strong><a href="/accounts/resetpassword">here</a></strong>.</small></p>
+                    <p class="text-danger" v-else-if="cloudError"><small>An error occurred while processing your request. Please check your information and try again, or <strong><a href="/support">contact support</a></strong> if the error persists.</small></p>
+
+                  </div>
+                </div>
+                <div class="form-block__row">
+                  <div class="form-block__col">
+                    <ajax-button type="submit" id="btn-form-top-submit" :syncing="syncing" class="form-block__button">Get Started</ajax-button>
+                  </div>
+                </div>
+                <div class="form-block__row">
+                  <div class="form-block__col">
+                    <p><small class="text-muted">By signing up, you agree to the <a href="/privacy/" target="_blank">Privacy Policy</a> and <a href="/terms/" target="_blank">Terms of Service</a> of ChinesePod LLC.</small></p>
+                  </div>
+                </div>
+              </ajax-form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="about-item about-item_right about-item_4 ">
+      <div class="about-item__text">
+        <h3 class="title about-item__title">Restricting courses are all over!</h3>
+        <div class="about-item__desc">
+          We all don't listen to the same music, or like the same food so
+          why should we be forced to follow a structured, monotonous
+          curriculum when it comes to learning a language?
+        </div>
+        <div class="about-item__cit">
+          With ChinesePod you have the freedom to take the Mandarin Chinese lessons that you find interesting, having
+          the ability to study at your own pace.
+        </div>
+      </div>
+      <div class="about-item__bg">
+      </div>
+    </div>
     <div class="container">
-      <div class="about text-center">
-        <h3>This is your freshly-generated project + a few extras.</h3>
-        <p>In our time <a target="_blank" href="https://sailsjs.com/about">building apps for customers</a>, we've found ourselves re-rolling some of the same key features over and over again between projects.  So we picked some of the things that kept popping up, implemented our own opinionated solutions for them, and then included it all in this free and open-source starter app.  We hope it helps you as much as it helps us!</p>
-      </div>
-      <div class="features text-center">
-        <div class="row">
-          <div class="feature mb-4 mb-sm-0 col-sm">
-            <div class="icon">
-              <i class="fa fa-envelope"></i>
+      <div class="content__resorces">
+        <div id="resourcesCarousel" data-ride="carousel" class="resorces carousel slide">
+          <div class="resorces__list carousel-inner">
+            <div class="carousel-item resorces__item row active">
+              <div class="resorces__photo col-12 col-sm-6">
+                <img src="https://img.youtube.com/vi/u8UBzEs6PuY/maxresdefault.jpg" class="w-100"/>
+              </div>
+              <div class="resorces__desc col-12 col-sm-6">
+                <p>Once you are finished with the video lesson, there is so much extra content waiting on our lesson's
+                  page, including vocabulary, sentence reviews, and expansions, where we give further examples of the
+                  lesson's grammatical structure and vocabulary in different context.</p>
+              </div>
             </div>
-            <h4>Emails</h4>
-            <p class="text-muted">Built-in support for internal emails from the <a href="/contact">contact form</a>, as well as transactional emails for users.</p>
-          </div>
-          <div class="feature pt-4 pt-sm-0 mb-4 mb-sm-0 col-sm">
-            <div class="icon">
-              <i class="fa fa-lock"></i>
+            <div class="carousel-item resorces__item row">
+              <div class="resorces__photo col-12 col-sm-6">
+                <img src="https://img.youtube.com/vi/YRHg6AEJ7yM/maxresdefault.jpg" class="w-100" />
+              </div>
+              <div class="resorces__desc col-12 col-sm-6">
+                <p>Once you are finished with the video lesson, there is so much extra content waiting on our lesson's
+                  page, including vocabulary, sentence reviews, and expansions, where we give further examples of the
+                  lesson's grammatical structure and vocabulary in different context.</p>
+              </div>
             </div>
-            <h4>Authentication</h4>
-            <p class="text-muted">Ready-to-go, customizable <a href="/signup">sign up</a>, <a href="/login">login</a>, and <a href="/password/forgot">password recovery</a> flows for your users.</p>
-          </div>
-          <div class="feature pt-4 pt-sm-0 col-sm">
-            <div class="icon">
-              <i class="fa fa-credit-card"></i>
+            <div class="carousel-item resorces__item row">
+              <div class="resorces__photo col-12 col-sm-6">
+                <img src="https://img.youtube.com/vi/FodIiHrkUjU/maxresdefault.jpg" class="w-100"/>
+              </div>
+              <div class="resorces__desc col-12 col-sm-6">
+                <p>Once you are finished with the video lesson, there is so much extra content waiting on our lesson's
+                  page, including vocabulary, sentence reviews, and expansions, where we give further examples of the
+                  lesson's grammatical structure and vocabulary in different context.</p>
+              </div>
             </div>
-            <h4>Billing</h4>
-            <p class="text-muted">Hook up to your Stripe account for managing customers and payment sources.</p>
           </div>
+          <ul class="resorces__controls carousel-indicators controls">
+            <li data-target="#resourcesCarousel" data-slide-to="0" class="controls__item controls_resource__item active"></li>
+            <li data-target="#resourcesCarousel" data-slide-to="1" class="controls__item controls_resource__item"></li>
+            <li data-target="#resourcesCarousel" data-slide-to="2" class="controls__item controls_resource__item"></li>
+          </ul>
         </div>
-        <a class="btn btn-outline-info mt-5" href="/faq">Learn more</a>
       </div>
     </div>
-  </div>
-  <div class="container">
-    <div class="setup">
-      <h3 class="text-center">How to get started:</h3>
-      <div class="step">
-        <div class="step-image">
-        <img alt="computer with email symbol on screen" src="/images/setup-email.png"/>
-        </div>
-        <h5>Set up your branding and content</h5>
-        <p>This starter app includes several different page templates (including the one you're reading right now) that you can change as much or as little as you like.  If there are any pages you won't need, just remove them.</p>
-        <p>To get started, do a global find/replace in this project for occurrences of <code>NEW_APP_NAME</code> and replace them all with the actual name of your app or platform ("Facebag").  Then do the same thing again to replace <code>NEW_APP_COMPANY_NAME</code> with the actual name of your organization ("Facebag Corporation").</p>
-        <blockquote><small>This app also includes a default <a href="/legal/terms">Terms of Use</a> and <a href="/legal/privacy">Privacy Policy</a>.  We want to make it easier for apps to be transparent about their users' rights and privacy.  But we are developers, not lawyers; and this is <em>definitely not legal advice</em>.  Before going live, be sure to replace these example documents with your own company's policies, and <a href="https://en.wikipedia.org/wiki/Counsel" target="_blank">seek counsel</a> for assistance if you need to design new terms from scratch.</small></blockquote>
+    <div class="about-item about-item_5">
+      <div class="about-item__bg">
       </div>
-      <div class="step">
-        <div class="step-image">
-        <img alt="computer with credit card icon on screen" src="/images/setup-payment.png"/>
+      <div class="about-item__text">
+        <h3 class="title about-item__title">Learn the topics you want!</h3>
+        <div class="about-item__desc">
+          With the largest library of Mandarin Chinese lessons, on and offline, you have 4000+ lessons at your
+          fingertips.
         </div>
-        <h5>Configure integrations</h5>
-        <p>In order for this app to send automated emails, you'll need to create a <a target="_blank" href="https://mailgun.com">Mailgun</a> account.  Then, in <code>config/custom.js</code>, configure the following:</p>
-        <div class="card bg-light mb-4">
-          <div class="card-body"><pre><code><span class="text-muted">// Recipient of contact form messages</span>
-internalEmailAddress: my.email@example.com,
+        <div class="about-item__cit">
+          We challenge you to find a situation or topic we haven't already covered, and our library is always growing,
+          updating on weekly basis.
+        </div>
+      </div>
+    </div>
 
-<span class="text-muted">// For outgoing emails</span>
-fromEmailAddress: 'noreply@example.com',
-fromName: 'The NEW_APP_NAME Team',
+    <section class="section reviews section_reviews" data-ride="carousel">
+      <div id="reviewsCarousel" class="container carousel slide">
+        <div class="reviews__list carousel-inner">
+          <div class="carousel-item reviews__item active">
+            <div class="reviews__img-container">
+              <img src="/images/academic-learning/home_pic_3.png" alt="" class="reviews__img">
+            </div>
+            <div class="reviews__text">
+              "ChinesePod has such a vast scope of topics and diversity in levels, which makes it extremely convenient
+              to progress, never-mind the entertaining hosts, great top-down approach and super useful additional
+              content!"
+              <br><small><strong>Niel de la Rouviere</strong> | Language blogger and web developer at Buffer</small>
+            </div>
+          </div>
+          <div class="carousel-item reviews__item">
+            <div class="reviews__img-container">
+              <img src="/images/academic-learning/home_pic_31.png" alt="" class="reviews__img">
+            </div>
+            <div class="reviews__text">
+              "When I was learning Mandarin, ChinesePod was my favourite resource by far. It was essential in getting
+              me up to basic conversational level in just a few months. I recommend it to everyone learning Chinese!"
+              <br><small><strong>Benny Lewis</strong> | "The Irish Polyglot"</small>
+            </div>
+          </div>
+          <div class="carousel-item reviews__item">
+            <div class="reviews__img-container">
+              <img src="/images/academic-learning/home_pic_33.png" alt="" class="reviews__img">
+            </div>
+            <div class="reviews__text">
+              "ChinesePod is an incredible resource for mastering spoken Chinese - a vast library of entertaining
+              lessons from a great collection of teachers, all short and friendly enough
+              to squeeze into a busy schedule."
+              <br><small><strong>Mike Love</strong> | Creator of Pleco</small>
+            </div>
+          </div>
+        </div>
+        <ul class="reviews__controls carousel-indicators controls controls_red">
+          <li data-target="#reviewsCarousel" data-slide-to="0" class="controls__item controls_reviews__item active"></li>
+          <li data-target="#reviewsCarousel" data-slide-to="1" class="controls__item controls_reviews__item"></li>
+          <li data-target="#reviewsCarousel" data-slide-to="2" class="controls__item controls_reviews__item"></li>
+        </ul>
+      </div>
+    </section>
 
-<span class="text-muted">// Mailgun settings</span>
-mailgunDomain: 'transactional-mail.example.com',
-mailgunSecret: 'key-testkeyb183848139913858e8abd9a3'</code></pre>
-          </div>
+    <div class="about-item about-item_right about-item_6">
+      <div class="about-item__text">
+        <h3 class="title about-item__title">Train your ears not your eyes</h3>
+        <div class="about-item__desc">
+          Flashback to your were a childhood and learning your mother language for the first time: you started with
+          listening, not reading.
         </div>
-        <p>To enable support for billing features, you'll need to make a <a target="_blank" href="https://stripe.com">Stripe</a> account, then include your test credentials like so:</p>
-        <div class="card bg-light mb-4">
-          <div class="card-body"><pre><code><span class="text-muted">// Stripe credentials</span>
-stripePublishableKey: 'pk_test_Zzd814nldl91104qor5911gjald',
-stripeSecret: 'sk_test_Zzd814nldl91104qor5911gjald'</code></pre>
-          </div>
+        <div class="about-item__cit">
+          We believe that our audio and video lessons mimic the natural process of language acquisition that everyone
+          goes through and are the best way to learn Chinese.
         </div>
-        <blockquote><small>If your app doesn't need payment processing, it will still work without Stripe configuration. In this case, all references to billing will just be omitted from the UI.</small></blockquote>
       </div>
-      <div class="step">
-        <div class="step-image">
-        <img alt="computer with sails logo on screen" src="/images/setup-customize.png"/>
-        </div>
-        <h5>Customize</h5>
-        <p>Once the initial configuration is done, you're ready to start building out the rest of your app.</p>
-        <p>We worked hard to make this starter app's structure consistent and its files are as bare-bones as possible, so it's easy to add new pages and business logic following the conventions we set up. If you run into trouble, have a look at <a href="/faq">your new FAQ page</a>, which covers the tools we used and how to customize.  For a deeper dive, check out the Sails <a href="https://courses.platzi.com/courses/sails-js/">walkthrough</a>, <a href="https://sailsjs.com/documentation">reference documentation</a> and <a href="https://sailsjs.com/support">support</a> pages.</p>
+      <div class="about-item__bg">
       </div>
     </div>
-    <hr/>
-    <div class="pep-talk text-center">
-      <h3>Let's get to work.</h3>
-      <p>We think this project is a pretty convenient starting point, but of course there's no one-size-fits-all solution. The good news is, this app is in your hands now, so you can jump into the files and adapt it to your needs. Change some code around. Break stuff.  Fix it. And above all: <strong>make something people want to use</strong>.</p>
-      <p><span class="text-muted">&hearts;</span> <a href="https://sailsjs.com/about">The Sails Team</a></p>
+    <div class="about-item about-item_7 ">
+      <div class="about-item__bg">
+      </div>
+      <div class="about-item__text">
+        <h3 class="title about-item__title">Native pronunciation</h3>
+        <div class="about-item__desc">
+          Access our specially designed video course "Say It Right (S.I.R)" entirely devoted towards teaching the
+          correct pronunciation of the Chinese Mandarin Language.
+        </div>
+        <div class="about-item__cit">
+          The "Say It Right (S.I.R)" video course contains 22 lessons, in which you will
+          learn all about pinyin, tones, tricky combinations, tone change rules and
+          difficult sounds. These lessons work to give you a comprehensive and
+          unprecedented education on the most daunting aspect of learning Chinese.
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
+  <section class="section section__mac">
+    <div id="sectionResourcesCarousel" data-ride="carousel" class="carousel section__resources">
+      <div class="container section__resources__container">
+        <div class="section__resources__text">
+          <div class="resources_slider_text_list">
+            <div class="carousel-item resources_slider_text_item active">
+              <h2 class="section__resources__title">Dialogue</h2>
+              <p>The Dialogue section provides an interactive transcript of the lesson. The Chinese characters are
+                provided along with the English translation and pinyin to ease with pronunciation. It’s better to
+                learn the target language in context but we provide a function to study each word separately too.
+                Scrutinize each Chinese character by mousing over it to see the literal translation. You also have the
+                option of toggling between Simplified and Traditional characters.</p>
+            </div>
+            <div class="carousel-item resources_slider_text_item">
+              <h2 class="section__resources__title">Vocabulary</h2>
+              <p>Rote memorization is boring and not the most effective method, but we suggest using the supplementary
+                vocabulary lists in conjunction with the audio or video to accelerate your rate of achieving language
+                competency.</p>
+            </div>
+            <div class="carousel-item resources_slider_text_item">
+              <h2 class="section__resources__title">Expansion</h2>
+              <p>Our expansion gives you the opportunity to learn target vocabulary taught in the lesson in other
+                meaningful situations.</p>
+            </div>
+            <div class="carousel-item resources_slider_text_item" id="greatest_carousel_item">
+              <h2 class="section__resources__title">Exercises</h2>
+              <p>Learn aurally then reinforce further with online worksheets and exercises. These include:</p>
+              <ul>
+                <li>Matching: Choose a word on the left side, then match it to the closest meaning on the right side</li>
+                <li>Sentence Reordering: sentences are in the wrong order; move them into the correct order by
+                  clicking and dragging</li>
+                <li>Dictation: Listen to the audio and type out what you hear</li>
+                <li>Multiple Choice</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div id="imageResourcesCarousel" data-ride="carousel" class="carousel section__resources__slider">
+          <div class="mac-slider carousel-inner">
+            <div class="mac-slider__container">
+              <img src="/images/academic-learning/Carousell_Vocabulary_950x860.png" alt="" class="mac-slider__img">
+              <ul class="mac-slider__list">
+                <li class="carousel-item mac-slider__item active"
+                    style="background-image: url('https://s3contents.chinesepod.com/img/corporate/carousel/dictionary.png')"></li>
+                <li class="carousel-item mac-slider__item"
+                    style="background-image: url('https://s3contents.chinesepod.com/img/corporate/carousel/vocabulary.png')"></li>
+                <li class="carousel-item mac-slider__item"
+                    style="background-image: url('https://s3contents.chinesepod.com/img/corporate/carousel/expansion.png')"></li>
+                <li class="carousel-item mac-slider__item"
+                    style="background-image: url('https://s3contents.chinesepod.com/img/corporate/carousel/exercises.png')" id="greatest_carousel_mac_item"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-indicators section__resources__controls controls controls_white">
+        <li data-target="#sectionResourcesCarousel" data-target="#imageResourcesCarousel" data-slide-to="0" class="controls__item controls_mac__item active"></li>
+        <li data-target="#sectionResourcesCarousel" data-target="#imageResourcesCarousel" data-slide-to="1" class="controls__item controls_mac__item "></li>
+        <li data-target="#sectionResourcesCarousel" data-target="#imageResourcesCarousel" data-slide-to="2" class="controls__item controls_mac__item "></li>
+        <li data-target="#sectionResourcesCarousel" data-target="#imageResourcesCarousel" data-slide-to="3" class="controls__item controls_mac__item " id="greatest_carousel_controls_item"></li>
+      </div>
+    </div>
+  </section>
+  <section class="form-section form-section_footer">
+    <div class="container">
+      <div class="form-section__contant">
+        <div class="form-block col-12 col-md-8 col-lg-6">
+          <div class="form-block__header">
+            <h3 class="form-block__title">Sign Up Today!</h3>
+          </div>
+          <div class="form-block__content">
+            <div  v-if="cloudSuccess" id="form-top-msg"><div class="alert alert-success" role="alert">
+                Great! We've just sent you an account confirmation email. Please check your inbox.
+              </div>
+            </div>
+            <ajax-form v-if="!cloudSuccess"  name="form-bottom" id="form-bottom" action="signup" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
+              <div class="form-block__row">
+                <div class="form-block__col">
+                  <label class="form-block__label">Email Address</label>
+                  <input type="email" name="email" placeholder="example@domain.com" :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress" class="form-control form-block__input" autocomplete="email">
+                  <div class="invalid-feedback" v-if="formErrors.emailAddress">Please enter a valid email address.</div>
+                </div>
+              </div>
+              <div class="form-block__row">
+                <div class="form-block__col">
+                  <label class="form-block__checkbox">
+                    <input type="checkbox" name="overlay_email" v-model="formData.optIn" checked>
+                    <div class="form-block__checkbox-block"></div>
+                    <span class="form-block__checkbox-label">I want to hear the latest news from ChinesePod.</span>
+                  </label>
+                  <p class="text-danger" v-if="cloudError==='emailAlreadyInUse'"><small>It looks like there's already an account with your email address. If you forgot your password, you can recover it <strong><a href="/accounts/resetpassword">here</a></strong>.</small></p>
+                  <p class="text-danger" v-else-if="cloudError"><small>An error occurred while processing your request. Please check your information and try again, or <strong><a href="/support">contact support</a></strong> if the error persists.</small></p>
+
+                </div>
+              </div>
+              <div class="form-block__row">
+                <div class="form-block__col">
+                  <ajax-button type="submit" id="btn-form-top-submit" :syncing="syncing" class="form-block__button">Get Started</ajax-button>
+                </div>
+              </div>
+              <div class="form-block__row">
+                <div class="form-block__col">
+                  <p><small class="text-muted">By signing up, you agree to the <a href="/privacy/" target="_blank">Privacy Policy</a> and <a href="/terms/" target="_blank">Terms of Service</a> of ChinesePod LLC.</small></p>
+                </div>
+              </div>
+            </ajax-form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
-<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>
+<script v-if="wistia" src="https://fast.wistia.com/embed/medias/fwg1oypcj5.jsonp" async></script>
+<script v-if="wistia" src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
+<%- /* Expose locals as 'window.SAILS_LOCALS' :: */ exposeLocalsToBrowser() %>

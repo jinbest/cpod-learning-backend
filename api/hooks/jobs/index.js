@@ -7,7 +7,7 @@
 
 module.exports = function defineJobsHook(sails) {
 
-  if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === 'staging') {
+  if (process.env.NODE_ENV !== 'production') {
     return {
       initialize: async function () {
         sails.log.info('Ignoring Rozkalns\' hook (`Bull Jobs`) 😎 for DEV')

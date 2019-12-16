@@ -40,7 +40,7 @@ module.exports = {
       columnType: 'tinyint'
     },
     value: {
-      type: 'number',
+      type: 'ref',
       columnType: 'char'
     },
     max_uses: {

@@ -23,6 +23,11 @@ module.exports = {
     if(this.req.param('trial', false) || this.req.session.trial ) {
       trial = true
     }
+    if(this.req.me && this.req.me.trial) {
+      sails.log.info(this.req.me);
+      trial = false;
+      delete this.req.session.trial
+    }
     return {
       trial: trial,
       conversion: false

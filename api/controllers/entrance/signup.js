@@ -139,8 +139,7 @@ the account verification message.)`,
     this.req.session.userId = newUserRecord.id;
 
     //Google Analytics Call
-    var visitor = ua('UA-1176295-7', {uid: newUserRecord.id});
-    visitor.event("sign_up", "sign_up").send();
+    this.req.visitor.event("sign_up", "sign_up").send();
 
     let mauticLead = await sails.helpers.mautic.createContact.with({
       email: email,
@@ -148,10 +147,8 @@ the account verification message.)`,
       optIn: inputs.optIn,
       ipData: ipData
     }).catch((e) => {
-      console.log(e)
+      sails.log.error(e)
     });
-
-    console.log(mauticLead);
 
     if (sails.config.custom.verifyEmailAddresses) {
       // Send "confirm account" email

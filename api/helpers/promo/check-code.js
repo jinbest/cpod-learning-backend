@@ -46,14 +46,24 @@ module.exports = {
           product_id: inputs.productId
         }
       });
-    let promo = await PromoCodes.findOne({
+    let promoCodes = await PromoCodes.find({
       where: {
         promotion_code: inputs.promoCode,
         product_id: inputs.productId
       }
     });
-    if (promo) {
-      if (new Date(promo.expiry_date) > new Date() && promo.max_uses > promo.times_used) {
+
+    if (promoCodes.length > 0) {
+      let promo = (await PromoCodes.find({
+        where: {
+          promotion_code: inputs.promoCode,
+          expiry_date: {
+            '>=': new Date()
+          }
+        }
+      }))[0];
+
+      if (promo && promo.expiry_date && new Date(promo.expiry_date) > new Date() && promo.max_uses > promo.times_used) {
         sails.log.info({promoWorked: promo});
         return {
           success: true,
@@ -67,7 +77,7 @@ module.exports = {
       }
 
     } else {
-      promo = await PromoCodes.find({
+      promoCodes = await PromoCodes.find({
         where: {
           promotion_code: inputs.promoCode,
           expiry_date: {
@@ -78,7 +88,7 @@ module.exports = {
       });
     }
 
-    if (promo && promo.length > 0) {
+    if (promoCodes && promoCodes.length > 0) {
       return {
         error: 'Valid Code - Wrong Product',
         data: promo

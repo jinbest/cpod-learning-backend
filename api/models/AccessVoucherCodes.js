@@ -22,10 +22,11 @@ module.exports = {
       columnType: 'varchar',
       defaultsTo: 'days'
     },
-    length: {
+    accessLength: {
       description: 'Length of a redeemed voucher in days',
       type: "number",
       columnType: "int",
+      columnName: 'length',
       isInteger: true,
       allowNull: true
     },
@@ -38,9 +39,8 @@ module.exports = {
       defaultsTo: true
     },
     expiry: {
-      type: "string",
-      columnType: "datetime",
-      allowNull: true
+      type: "ref",
+      columnType: "datetime"
     },
     status: {
       type: 'string',
