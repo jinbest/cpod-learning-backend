@@ -134,6 +134,18 @@ module.exports = {
           stripeId: 'Annual Plan -142',
           length: 12,
           price: 124.00,
+        },
+      },
+      holiday: {
+        id: 5,
+        type: 2,
+        description: 'Holiday Offer - $1',
+        monthly: {
+          id: 2,
+          stripeId: 'Monthly Plan -2',
+          length: 1,
+          price: 29.00,
+          setupFee: 1.00
         }
       },
       class: {
@@ -153,7 +165,8 @@ module.exports = {
 
       // Create a new User
       const email = inputs.emailAddress.toLowerCase();
-      const ipdata =  require('ipdata');
+      const IPData = require('ipdata').default;
+      const ipdata = new IPData( sails.config.custom.ipDataKey);
       // const axios = require('axios');
       // const ua = require('universal-analytics');
 
@@ -161,7 +174,7 @@ module.exports = {
 
       if(this.req.ip && this.req.ip !== '::1') {
         try {
-          await ipdata.lookup(this.req.ip, sails.config.custom.ipDataKey)
+          await ipdata.lookup(this.req.ip)
             .then((info) => {
               ipData = info;
             })
@@ -390,10 +403,31 @@ module.exports = {
       }
     }
 
+    let holidayPromo = false;
+    if (inputs.plan === 'holiday') {
+      holidayPromo = true;
+
+      await new Promise ((resolve, reject) => {
+        stripe.charges.create({
+            amount: plans[inputs.plan][inputs.billingCycle].setupFee * 100,
+            currency: 'usd',
+            customer: customerData.id,
+            description: 'ChinesePod Holiday Promotion'
+          },
+          function(err, charge) {
+          if (err) {
+            reject(err)
+          }
+          resolve(charge);
+        })
+      })
+    }
+
+    //TODO ADD HOLIDAY - 90 DAY TRIAL
     await stripe.subscriptions.create({
       customer: customerData.id,
       items: [{plan: plans[inputs.plan][inputs.billingCycle].stripeId}],
-      trial_period_days: inputs.trial ? 14 : 0, // 2 weeks or No trial
+      trial_period_days: holidayPromo ? 90 : inputs.trial ? 14 : 0, // Holiday Promo or 2 week trial or No trial
       coupon: coupon ? coupon.id : null
     })
       .then(async (subscription) => {
@@ -410,29 +444,8 @@ module.exports = {
         } catch (e) {
           sails.log.error(e);
 
-          await sails.helpers.mailgun.sendHtmlEmail.with({
-            htmlMessage: `
-            <p>Failed User Purchase on https://www.chinesepod.com</p>
-            <br />
-            <p>Name: ${inputs.fName} ${inputs.lName}</p>
-            <p>Email: ${inputs.emailAddress}</p>
-            <br />
-            ${inputs.promoCode ? `<p>Code: ${inputs.promoCode}</p>` : ''}
-            <p>Product: ${inputs.plan} - ${inputs.billingCycle}</p>
-            <p>Error: ${e}</p>
-            <br />
-            <p>Cheers,</p>
-            <p>The Friendly ChinesePod Contact Robot</p>
-            `,
-            to: 'followup@chinesepod.com',
-            subject: 'Failed User Purchase',
-            from: 'errors@chinesepod.com',
-            fromName: 'ChinesePod Errors'
-          });
-
           sails.hooks.bugsnag.notify(e);
         }
-
 
         const existingSubscriptions = await Subscriptions.find({
           user_id: inputs.userId,
@@ -457,11 +470,12 @@ module.exports = {
         }).fetch();
 
         if (!ipData['country_name']) {
-          const ipdata = require('ipdata');
+          const IPData = require('ipdata').default;
+          const ipdata = new IPData( sails.config.custom.ipDataKey);
 
           if(this.req.ip && this.req.ip !== '::1') {
             try {
-              await ipdata.lookup(this.req.ip, sails.config.custom.ipDataKey)
+              await ipdata.lookup(this.req.ip)
                 .then((info) => {
                   ipData = info;
                 })
@@ -493,7 +507,7 @@ module.exports = {
           product_length: plans[inputs.plan][inputs.billingCycle].length,
           product_price: plans[inputs.plan][inputs.billingCycle].price,
           discount: discount ? discount : 0.00,
-          billed_amount: inputs.trial ? 0.00 : plans[inputs.plan][inputs.billingCycle].price - discount,
+          billed_amount: holidayPromo ? plans[inputs.plan][inputs.billingCycle].setupFee : inputs.trial ? 0.00 : plans[inputs.plan][inputs.billingCycle].price - discount,
           promotion_code: inputs.promoCode ? inputs.promoCode : null,
           pay_status: 2,
           pay_method: 9,
@@ -560,8 +574,8 @@ module.exports = {
                   });
                 })
                 .catch(async(e) => {
-                  sails.log.info({error: e});
-                  sails.hooks.bugsnag.notify(e);
+                  sails.log.error(e);
+                  // sails.hooks.bugsnag.notify(e);
                   await sails.helpers.mailgun.sendHtmlEmail.with({
                     htmlMessage: `
                         <p>Duplicate ChinesePod Stripe Subscription Created https://www.chinesepod.com</p>
@@ -612,7 +626,7 @@ module.exports = {
 
 
 // Update User Access on UserSiteLinks
-        let userSiteLinks = UserSiteLinks.updateOne({user_id:inputs.userId, site_id: 2})
+        let userSiteLinks = await UserSiteLinks.updateOne({user_id:inputs.userId, site_id: 2})
           .set({
             usertype_id: plans[inputs.plan].id,
             expiry: new Date(subscription['current_period_end'] * 1000).toISOString()
@@ -628,7 +642,7 @@ module.exports = {
         this.req.visitor
           .event('payment', 'payment')
           .transaction(transaction.id, transaction.billed_amount)
-          .item(transaction.billed_amount, 1, transaction.product_id, `${_.capitalize(inputs.plan)} Subscription ${transaction.product_length} Months`, {ti:  transaction.id})
+          .item(transaction.billed_amount, 1, transaction.product_id, holidayPromo ? plans['holiday'].description : `${inputs.trial ? 'Trial ' : ''}${_.capitalize(inputs.plan)} Subscription ${transaction.product_length} Months`, {ti:  transaction.id})
           .send();
 
         this.res.cookie('CPODSESSID', phpSession, {
@@ -638,8 +652,6 @@ module.exports = {
         exits.success();
       })
       .catch(async(err) => {
-        //TODO STORE THIS SOMEWHERE
-        sails.hooks.bugsnag.notify(err);
         sails.log.error(err);
 
         await sails.helpers.mailgun.sendHtmlEmail.with({
