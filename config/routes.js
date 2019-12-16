@@ -254,6 +254,8 @@ module.exports.routes = {
   'GET /api/v1/search/search-lessons/:query?':           { action: 'search/search-lessons' },
   'GET /api/v1/search/search-lessons-suggest/:query?':   { action: 'search/search-lessons-suggest' },
   'GET /api/v1/search/search-lessons-raw/:query?':       { action: 'search/search-lessons-raw' },
+  'GET /api/v1/search/search-lessons-raw-0/:query?':       { action: 'search/search-lessons-raw-0' },
+  'GET /api/v1/search/search-lessons-raw-1/:query?':       { action: 'search/search-lessons-raw-1' },
   'GET /api/v1/search/search-lessons-raw-2/:query?':       { action: 'search/search-lessons-raw-2' },
   'GET /api/v1/search/search-lessons-raw-3/:query?':       { action: 'search/search-lessons-raw-3' },
   'GET /api/v1/search/search-lessons-raw-4/:query?':       { action: 'search/search-lessons-raw-4' },
