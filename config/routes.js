@@ -65,7 +65,7 @@ module.exports.routes = {
   'GET /home/:unused?':                                  'HomeController.serve',
   'GET /feedback/:unused?':                              'HomeController.serve',
   'GET /lesson/:unused?/:unused?':                       'HomeController.serve',
-  'GET /explore/:unused?':                                'HomeController.serve',
+  'GET /explore/:unused?':                               'HomeController.serve',
   'GET /course/:unused?':                                'HomeController.serve',
   'GET /courses/:unused?':                               'HomeController.serve',
   'GET /podcasts/:unused?':                              'PodcastsController.serve',
