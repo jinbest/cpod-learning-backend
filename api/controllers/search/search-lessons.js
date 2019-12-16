@@ -48,10 +48,10 @@ module.exports = {
         query: {
           multi_match: {
             query: inputs.query,
-            fields: ['id', 'title^3', 'introduction^2', 'transcription1', 'hosts'],
+            fields: ['id', 'title^3', 'introduction^2', 'transcription1^2', 'hosts'],
             operator: 'and',
-            analyzer: 'english',
-            fuzziness: '2'
+            analyzer: 'standard',
+            fuzziness: 1
           }
         }
       }
