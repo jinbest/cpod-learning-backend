@@ -62,8 +62,8 @@ the account verification message.)`,
 
   fn: async function (inputs) {
     const email = inputs.emailAddress.toLowerCase();
-    const IPData = require('ipdata').default;
-    const ipdata = new IPData( sails.config.custom.ipDataKey);
+    const IPData =  require('ipdata').default;
+    const ipdata = new IPData(sails.config.custom.ipDataKey);
     // const axios = require('axios');
     const ua = require('universal-analytics');
     var req = this.req;

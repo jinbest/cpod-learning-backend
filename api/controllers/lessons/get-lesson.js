@@ -36,8 +36,10 @@ module.exports = {
     const sanitizeHtml = require('sanitize-html');
 
     const sanitizeOptions = {
-      allowedTags: [],
-      allowedAttributes: {}
+      allowedTags: ['b', 'i', 'em', 'strong', 'a', 'p'],
+      allowedAttributes: {
+        a: [ 'href', 'name', 'target' ]
+      }
     };
 
     if (!inputs.slug && !inputs.lessonId) {

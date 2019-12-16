@@ -11,8 +11,10 @@ module.exports = {
     query: {
       type: 'string',
       required: true
+    },
+    full: {
+      type: 'boolean'
     }
-
   },
 
 
@@ -23,25 +25,43 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    return await new Promise ((resolve, reject) => {
-      sails.hooks.elastic.client.search({
-        index: 'lessons',
-        type: 'lessons',
-        body: {
-          query: {
-            match: {
-              title: inputs.query
-            }
+    let courses = await sails.hooks.elastic.client.search({
+      index: 'courses',
+      type: 'courses',
+      body: {
+        query: {
+          multi_match: {
+            query: inputs.query,
+            fields: ['course_title^2', 'course_introduction'],
+            operator: 'and',
+            analyzer: 'standard',
+            fuzziness: 'AUTO'
           }
         }
-      }, (error, {body}) => {
-        if (error) {
-          reject(error)
-        } else {
-          resolve(body)
+      }
+    });
+
+    let lessons = await sails.hooks.elastic.client.search({
+      index: 'lessons',
+      type: 'lessons',
+      size: inputs.full ? 160 : 12,
+      body: {
+        query: {
+          multi_match: {
+            query: inputs.query,
+            fields: ['id', 'title^3', 'introduction^2', 'transcription1', 'hosts'],
+            operator: 'and',
+            analyzer: 'english',
+            fuzziness: 'AUTO'
+          }
         }
-      })
-    })
+      }
+    });
+
+    return {
+      courses: courses['body']['hits']['hits'].map(i => i['_source']),
+      lessons: lessons['body']['hits']['hits'].map(i => i['_source'])
+    };
 
   }
 

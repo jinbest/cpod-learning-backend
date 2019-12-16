@@ -8,7 +8,7 @@
 var passport = require('passport');
 
 const IPData = require('ipdata').default;
-const ipdata = new IPData( sails.config.custom.ipDataKey);
+const ipdata = new IPData(sails.config.custom.ipDataKey);
 
 module.exports = {
   facebookAuth: function(req, res, next) {
