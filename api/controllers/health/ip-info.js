@@ -37,9 +37,9 @@ module.exports = {
 
     let ipData = {};
 
-    if(ip) {
+    if(ip && ip !== '::1') {
       try {
-        await ipdata.lookup(ip, '67ce141658c735941e1307cf08fcf9a40cd5101a64f19ea674688fff')
+        await ipdata.lookup(ip)
           .then((info) => {
             ipData = info;
           })

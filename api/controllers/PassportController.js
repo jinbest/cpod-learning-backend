@@ -7,7 +7,8 @@
 
 var passport = require('passport');
 
-var ipdata = require('ipdata');
+const IPData = require('ipdata').default;
+const ipdata = new IPData( sails.config.custom.ipDataKey);
 
 module.exports = {
   facebookAuth: function(req, res, next) {
@@ -49,7 +50,7 @@ module.exports = {
 
           if(ip && ip !== '::1') {
             try {
-              await ipdata.lookup(req.ip, sails.config.custom.ipDataKey)
+              await ipdata.lookup(req.ip)
                 .then((info) => {
                   ipData = info;
                 })
@@ -162,7 +163,7 @@ module.exports = {
 
           if(ip && ip !== '::1') {
             try {
-              await ipdata.lookup(req.ip, sails.config.custom.ipDataKey)
+              await ipdata.lookup(req.ip)
                 .then((info) => {
                   ipData = info;
                 })

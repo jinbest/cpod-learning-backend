@@ -118,7 +118,7 @@ and exposed as \`req.me\`.)`
     // (This will be persisted when the response is sent.)
     this.req.session.userId = userRecord.id;
 
-    sails.log.info({sessionId: this.req.session.userId});
+    sails.log.info({userId: this.req.session.userId});
 
     await sails.helpers.createPhpSession.with({
       userId: userRecord.id,
