@@ -47,8 +47,8 @@ module.exports.routes = {
   'GET /pricing-alt':                                    { action: 'onboarding/view-pricing-alt' },
   'GET /checkout':                                       { action: 'view-checkout' },
 
-  'GET /redeem':                                         { action: 'onboarding/view-redeem' },
-  'GET /redeem/:code':                                   { action: 'onboarding/redeem-voucher-code' },
+  'GET /redeem-code':                                         { action: 'onboarding/view-redeem' },
+  'GET /redeem-code/:code':                                   { action: 'onboarding/redeem-voucher-code' },
 
   'GET /level/:unused?':                                 { action: 'onboarding/view-level' },
 

@@ -19,15 +19,15 @@ module.exports = function(grunt) {
     'concat',
     'uglify',
     'cssmin',
-    'hash',//« Cache-busting
-    'copy:beforeLinkBuildProd',//« For prettier URLs after cache-busting
-    'linkAssetsBuildProd',
-    'clean:build',
-    'copy:build',
-    'clean:afterBuildProd'
-    // 'sails-linker:prodJs',
-    // 'sails-linker:prodStyles',
-    // 'sails-linker:clientSideTemplates',
+    // 'hash',//« Cache-busting
+    // 'copy:beforeLinkBuildProd',//« For prettier URLs after cache-busting
+    // 'linkAssetsBuildProd',
+    // 'clean:build',
+    // 'copy:build',
+    // 'clean:afterBuildProd'
+    'sails-linker:prodJs',
+    'sails-linker:prodStyles',
+    'sails-linker:clientSideTemplates',
   ]);
 };
 
