@@ -4,6 +4,9 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
   var Queue = require('bull');
 
   var paymentEmailQueue = new Queue('PaymentEmailQueue', sails.config.jobs.url);
+
+  var userEmailQueue = new Queue('UserEmailQueue', sails.config.jobs.url);
+
   var emailTriggerQueue = new Queue('EmailTriggerQueue', sails.config.jobs.url);
 
   emailTriggerQueue.process('SendEmails', 100, async function (job) {

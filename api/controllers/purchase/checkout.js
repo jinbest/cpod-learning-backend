@@ -145,7 +145,7 @@ module.exports = {
           stripeId: 'Monthly Plan -2',
           length: 1,
           price: 29.00,
-          setupFee: 1.00
+          setupFee: 0.99
         }
       },
       class: {
@@ -423,7 +423,6 @@ module.exports = {
       })
     }
 
-    //TODO ADD HOLIDAY - 90 DAY TRIAL
     await stripe.subscriptions.create({
       customer: customerData.id,
       items: [{plan: plans[inputs.plan][inputs.billingCycle].stripeId}],

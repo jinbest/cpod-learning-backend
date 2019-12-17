@@ -17,7 +17,7 @@ module.exports = function defineArenaHook(sails) {
       // Otherwise, create a compiler so that we can watch files.
       sails.after('hook:http:loaded', function () {
 
-        if (process.env.sails_environment === 'production') { // Ignore for Dev
+        if (process.env.NODE_ENV === 'production') { // Ignore for Dev
 
           sails.log.info('Initializing custom hook (`arena`)');
 
@@ -64,6 +64,13 @@ module.exports = function defineArenaHook(sails) {
                 },
                 {
                   "name": "PaymentEmailQueue",
+                  "port": 6379,
+                  "host": "cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com",
+                  "hostId": "CPODRedis",
+                  "db": 8
+                },
+                {
+                  "name": "UserEmailQueue",
                   "port": 6379,
                   "host": "cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com",
                   "hostId": "CPODRedis",
