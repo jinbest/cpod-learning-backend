@@ -29,12 +29,20 @@ module.exports = {
       size: '1000',
       body: {
         query: {
-          multi_match: {
-            query: inputs.query,
-            fields: ['title^3', 'introduction^2', 'transcription1', 'hosts'],
-            operator: 'and',
-            analyzer: 'standard',
-            fuzziness: 1
+          bool: {
+            must: {
+              multi_match: {
+                query: inputs.query,
+                fields: ['title^4', 'introduction^2', 'transcription1^2', 'hosts'],
+                operator: 'and',
+                analyzer: 'standard',
+                fuzziness: 1,
+              }
+            },
+            // filter: [
+            //   // {term: {level: 'newbie'}},
+            //   {terms: {level: ['newbie', 'elementary', 'intermediate']}}
+            // ]
           }
         }
       }

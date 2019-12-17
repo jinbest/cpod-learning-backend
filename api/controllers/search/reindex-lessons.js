@@ -57,7 +57,8 @@ module.exports = {
           publication_timestamp: {
             '<': new Date()
           }
-        }
+        },
+        sort: 'publication_timestamp DESC'
       });
 
       sails.log.info('Records Pooled');

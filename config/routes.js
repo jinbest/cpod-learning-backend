@@ -251,7 +251,7 @@ module.exports.routes = {
   //SEARCH
   'GET /api/v1/search/reindex-lessons':                  { action: 'search/reindex-lessons' },
   'GET /api/v1/search/reindex-courses':                  { action: 'search/reindex-courses' },
-  'GET /api/v1/search/search-lessons/:query?':           { action: 'search/search-lessons' },
+  'POST /api/v1/search/search-lessons/:query?':          { action: 'search/search-lessons' },
   'GET /api/v1/search/search-lessons-suggest/:query?':   { action: 'search/search-lessons-suggest' },
   'GET /api/v1/search/search-lessons-raw/:query?':       { action: 'search/search-lessons-raw' },
   'GET /api/v1/search/search-lessons-raw-0/:query?':       { action: 'search/search-lessons-raw-0' },
