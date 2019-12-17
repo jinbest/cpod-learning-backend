@@ -83,7 +83,7 @@ module.exports = {
             <br />
             <p>How User Studies: ${inputs.howToStudy}</p>           
             <br />
-            <p>Primary Device: ${inputs.primaryDevice === 'other' ? inputs.primaryDevice : inputs.other}</p>
+            <p>Primary Device: ${inputs.primaryDevice === 'other' ? inputs.other : inputs.primaryDevice}</p>
             <br />
             <p>Cheers,</p>
             <p>The Friendly ChinesePod Contact Robot</p>
