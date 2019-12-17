@@ -9,8 +9,7 @@ module.exports = {
 
   inputs: {
     query: {
-      type: 'string',
-      required: true
+      type: 'string'
     },
     full: {
       type: 'boolean'
@@ -47,7 +46,39 @@ module.exports = {
 
     let lessons = [];
 
-    if (inputs.filters && inputs.filters.length > 0) {
+    if (!inputs.query && inputs.filters && inputs.filters.length > 0) {
+      lessons = await sails.hooks.elastic.client.search({
+        index: 'lessons',
+        type: 'lessons',
+        size: inputs.full ? 160 : 12,
+        body: {
+          query: {
+            bool: {
+              filter: [
+                {terms: {level: inputs.filters}}
+              ]
+            }
+          },
+          sort: {
+            publication_timestamp: {order: 'DESC'}
+          }
+        }
+      });
+
+    } else if (!inputs.query) {
+
+      lessons = await sails.hooks.elastic.client.search({
+        index: 'lessons',
+        type: 'lessons',
+        size: inputs.full ? 160 : 12,
+        body: {
+          sort: {
+            publication_timestamp: {order: 'DESC'}
+          }
+        }
+      });
+
+    } else if (inputs.filters && inputs.filters.length > 0) {
 
       lessons = await sails.hooks.elastic.client.search({
         index: 'lessons',

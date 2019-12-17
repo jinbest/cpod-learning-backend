@@ -54,6 +54,7 @@ module.exports = {
       let records = await LessonData.find({
         where: {
           status_published: 'publish',
+          is_private: 0,
           publication_timestamp: {
             '<': new Date()
           }
