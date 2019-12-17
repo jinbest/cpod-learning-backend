@@ -283,10 +283,8 @@ parasails.registerPage('holiday-offer', {
         zip: this.formData.zip,
       })
         .then((info) => {
-          this.cloudSuccess = true;
-          setTimeout(() => {
-            window.location = this.needsOnboarding ? '/level' : '/home';
-          }, 5000);
+          window.location.href = '/holiday-offer-success';
+
         })
         .catch((e) => {
           this.paymentErrors = e.responseInfo.body;

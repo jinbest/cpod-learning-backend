@@ -65,9 +65,11 @@ module.exports.routes = {
   'GET /home/:unused?':                                  'HomeController.serve',
   'GET /feedback/:unused?':                              'HomeController.serve',
   'GET /lesson/:unused?/:unused?':                       'HomeController.serve',
+  'GET /explore/:unused?':                               'HomeController.serve',
   'GET /course/:unused?':                                'HomeController.serve',
   'GET /courses/:unused?':                               'HomeController.serve',
   'GET /podcasts/:unused?':                              'PodcastsController.serve',
+  // 'GET /dictionary/:unused?':                            'PodcastsController.serve',
 
   //PLACEMENT TEST
   'GET /placement/:unused?':                             'PlacementController.serve',
@@ -94,6 +96,7 @@ module.exports.routes = {
   'GET /cyber-monday-last-chance/:code?':                { action: 'promotions/view-expired-promo'},
   'GET /holiday-gift/:code?':                            { action: 'promotions/view-holiday-gift'},
   'GET /holiday-offer/:code?':                           { action: 'promotions/view-holiday-offer'},
+  'GET /holiday-offer-success/:code?':                   { action: 'promotions/view-holiday-offer-success'},
 
   //DICTIONARY
   'GET /dictionary/:unused?':                            {},
@@ -243,7 +246,34 @@ module.exports.routes = {
 
   //ACCESS CODES
   'POST /api/v1/admin/access-codes/generate':            { action: 'admin/access-codes/generate-access-codes'},
-  'POST /api/v1/admin/access-codes/delete':              { action: 'admin/access-codes/delete-access-codes'}
+  'POST /api/v1/admin/access-codes/delete':              { action: 'admin/access-codes/delete-access-codes'},
+
+  //SEARCH
+  'GET /api/v1/search/reindex-lessons':                  { action: 'search/reindex-lessons' },
+  'GET /api/v1/search/reindex-courses':                  { action: 'search/reindex-courses' },
+  'POST /api/v1/search/search-lessons/:query?':          { action: 'search/search-lessons' },
+  'GET /api/v1/search/search-lessons-suggest/:query?':   { action: 'search/search-lessons-suggest' },
+  'GET /api/v1/search/search-lessons-raw/:query?':       { action: 'search/search-lessons-raw' },
+  'GET /api/v1/search/search-lessons-raw-0/:query?':       { action: 'search/search-lessons-raw-0' },
+  'GET /api/v1/search/search-lessons-raw-0-snowball/:query?':       { action: 'search/search-lessons-raw-0-snowball' },
+  'GET /api/v1/search/search-lessons-raw-0-cjk/:query?':       { action: 'search/search-lessons-raw-0-cjk' },
+  'GET /api/v1/search/search-lessons-raw-0-english/:query?':       { action: 'search/search-lessons-raw-0-english' },
+  'GET /api/v1/search/search-lessons-raw-1/:query?':       { action: 'search/search-lessons-raw-1' },
+  'GET /api/v1/search/search-lessons-raw-1-snowball/:query?':       { action: 'search/search-lessons-raw-1-snowball' },
+  'GET /api/v1/search/search-lessons-raw-1-cjk/:query?':       { action: 'search/search-lessons-raw-1-cjk' },
+  'GET /api/v1/search/search-lessons-raw-1-english/:query?':       { action: 'search/search-lessons-raw-1-english' },
+  'GET /api/v1/search/search-lessons-raw-2/:query?':       { action: 'search/search-lessons-raw-2' },
+  'GET /api/v1/search/search-lessons-raw-3/:query?':       { action: 'search/search-lessons-raw-3' },
+  'GET /api/v1/search/search-lessons-raw-4/:query?':       { action: 'search/search-lessons-raw-4' },
+  'GET /api/v1/search/search-lessons-raw-5/:query?':       { action: 'search/search-lessons-raw-5' },
+  'GET /api/v1/search/search-lessons-raw-6/:query?':       { action: 'search/search-lessons-raw-6' },
+  'GET /api/v1/search/:word?':                           'ElasticController.search',
+
+  //Dictionary
+  'GET /api/v1/dictionary/search/:word':                 { action: 'dictionary/search-word'},
+  'GET /api/v1/dictionary/define/:word':                 { action: 'dictionary/define-word'},
+  'GET /api/v1/dictionary/decompose/:word':              { action: 'dictionary/decompose-word'},
+  'GET /api/v1/dictionary/examples/:word':               { action: 'dictionary/examples-word'},
 
   //Sample Routes
   // 'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
