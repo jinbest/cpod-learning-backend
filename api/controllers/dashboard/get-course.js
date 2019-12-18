@@ -39,7 +39,7 @@ module.exports = {
     });
 
     courseLessons.forEach((lesson) => {
-      const savedLesson = userLessons.filter((item) => item.lesson === lesson.lesson.id)
+      const savedLesson = userLessons.filter((item) => lesson.lesson && item.lesson === lesson.lesson.id);
       if (savedLesson.length > 0) {
         lesson.lesson = {...lesson.lesson, ...{saved: savedLesson[0].saved, studied: savedLesson[0].studied}}
       }
