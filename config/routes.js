@@ -96,6 +96,8 @@ module.exports.routes = {
   'GET /cyber-monday-last-chance/:code?':                { action: 'promotions/view-expired-promo'},
   'GET /holiday-gift/:code?':                            { action: 'promotions/view-holiday-gift'},
   'GET /holiday-offer/:code?':                           { action: 'promotions/view-holiday-offer'},
+  'GET /holiday-offer-card/:code?':                      { action: 'promotions/view-holiday-offer-card'},
+  'GET /holiday-offer-alt/:code?':                       { action: 'promotions/view-holiday-offer-alt'},
   'GET /holiday-offer-success/:code?':                   { action: 'promotions/view-holiday-offer-success'},
 
   //DICTIONARY

@@ -23,10 +23,12 @@ module.exports = {
 
     let geo = {};
 
-    try {
-      geo = geoip.lookup(this.req.ip);
-    } catch (e) {
-      sails.log.error(e)
+    if (process.env.NODE_ENV === 'production') {
+      try {
+        geo = geoip.lookup(this.req.ip);
+      } catch (e) {
+        sails.log.error(e)
+      }
     }
 
     if (geo['country'] === 'US') {
