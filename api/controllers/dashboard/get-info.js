@@ -68,7 +68,7 @@ module.exports = {
       let ipCurrent = {};
       let ipSignup = {};
 
-      var geoip = require('geoip-country');
+      const geoip = require('geoip-country');
 
       if (this.req.ip && this.req.ip !== '::1') {
         ipCurrent = geoip.lookup(this.req.ip);
@@ -78,7 +78,11 @@ module.exports = {
         ipSignup = geoip.lookup(this.req.me.ip_address);
       }
 
-      if (ipCurrent.country !== 'US' && ipSignup.country !== 'US') {
+      if (ipSignup && ipSignup.country !== 'US') {
+        access = 'premium'
+      }
+
+      if (ipCurrent && ipCurrent.country !== 'US') {
         access = 'premium'
       }
 
