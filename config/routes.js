@@ -252,24 +252,10 @@ module.exports.routes = {
 
   //SEARCH
   'GET /api/v1/search/reindex-lessons':                  { action: 'search/reindex-lessons' },
+  'GET /api/v1/search/reindex-lessons-data':             { action: 'search/reindex-lessons-data' },
   'GET /api/v1/search/reindex-courses':                  { action: 'search/reindex-courses' },
   'POST /api/v1/search/search-lessons/:query?':          { action: 'search/search-lessons' },
-  'GET /api/v1/search/search-lessons-suggest/:query?':   { action: 'search/search-lessons-suggest' },
-  'GET /api/v1/search/search-lessons-raw/:query?':       { action: 'search/search-lessons-raw' },
-  'GET /api/v1/search/search-lessons-raw-0/:query?':       { action: 'search/search-lessons-raw-0' },
-  'GET /api/v1/search/search-lessons-raw-0-snowball/:query?':       { action: 'search/search-lessons-raw-0-snowball' },
-  'GET /api/v1/search/search-lessons-raw-0-cjk/:query?':       { action: 'search/search-lessons-raw-0-cjk' },
-  'GET /api/v1/search/search-lessons-raw-0-english/:query?':       { action: 'search/search-lessons-raw-0-english' },
-  'GET /api/v1/search/search-lessons-raw-1/:query?':       { action: 'search/search-lessons-raw-1' },
-  'GET /api/v1/search/search-lessons-raw-1-snowball/:query?':       { action: 'search/search-lessons-raw-1-snowball' },
-  'GET /api/v1/search/search-lessons-raw-1-cjk/:query?':       { action: 'search/search-lessons-raw-1-cjk' },
-  'GET /api/v1/search/search-lessons-raw-1-english/:query?':       { action: 'search/search-lessons-raw-1-english' },
-  'GET /api/v1/search/search-lessons-raw-2/:query?':       { action: 'search/search-lessons-raw-2' },
-  'GET /api/v1/search/search-lessons-raw-3/:query?':       { action: 'search/search-lessons-raw-3' },
-  'GET /api/v1/search/search-lessons-raw-4/:query?':       { action: 'search/search-lessons-raw-4' },
-  'GET /api/v1/search/search-lessons-raw-5/:query?':       { action: 'search/search-lessons-raw-5' },
-  'GET /api/v1/search/search-lessons-raw-6/:query?':       { action: 'search/search-lessons-raw-6' },
-  'GET /api/v1/search/:word?':                           'ElasticController.search',
+  'GET /api/v1/search/search-lessons-example/:query?':   { action: 'search/search-lessons-example' },
 
   //Dictionary
   'GET /api/v1/dictionary/search/:word':                 { action: 'dictionary/search-word'},

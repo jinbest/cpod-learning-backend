@@ -31,6 +31,10 @@ module.exports.policies = {
   'search/*': 'is-authenticated',
   'token/check': 'is-authenticated',
 
+  'search/reindex-lessons': 'is-super-admin',
+  'search/reindex-lessons-data': 'is-super-admin',
+
+
   // // Bypass the `is-logged-in` policy for:
   // 'entrance/*': true,
   // 'account/logout': true,
