@@ -91,7 +91,10 @@ module.exports = {
     }
 
 
-    if (!['premium', 'admin'].includes(access)) {
+    //TODO Killing upgrade based on low-activity
+
+    // if (!['premium', 'admin'].includes(access)) {
+    if (false) {
       let lessonTimeline = await Logging.find({
         where: {
           id: userData.email,
