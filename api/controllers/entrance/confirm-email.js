@@ -82,7 +82,9 @@ then redirect to either a special landing page (for newly-signed up users), or t
       // throw { redirect: '/email/confirmed' };
 
       //Enable Trial options for all newly confirmed accounts
-      this.req.session.trial = true;
+      if (!user.trial) {
+        this.req.session.trial = true;
+      }
 
       //Create PHP Website Session & Cookie
       await sails.helpers.createPhpSession.with({
@@ -94,12 +96,15 @@ then redirect to either a special landing page (for newly-signed up users), or t
             domain: '.chinesepod.com',
             expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
           });
-          return this.res.view('pages/onboarding/pricing', {
-            locals: {
-              conversion: true
-            },
-            conversion: true
-          });
+
+          return this.res.redirect('/level');
+
+          // return this.res.view('pages/onboarding/pricing', {
+          //   locals: {
+          //     conversion: true
+          //   },
+          //   conversion: true
+          // });
         });
     }
 
