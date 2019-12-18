@@ -97,15 +97,18 @@ then redirect to either a special landing page (for newly-signed up users), or t
             expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
           });
 
-          return this.res.redirect('/level');
-
-          // return this.res.view('pages/onboarding/pricing', {
-          //   locals: {
-          //     conversion: true
-          //   },
-          //   conversion: true
-          // });
         });
+
+      return this.res.redirect('/level');
+
+      //TODO Reenable Push to Trial
+
+      // return this.res.view('pages/onboarding/pricing', {
+      //   locals: {
+      //     conversion: true
+      //   },
+      //   conversion: true
+      // });
     }
 
 
