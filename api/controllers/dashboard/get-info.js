@@ -74,15 +74,7 @@ module.exports = {
         ipCurrent = geoip.lookup(this.req.ip);
       }
 
-      if (this.req.me && this.req.me.ip_address) {
-        ipSignup = geoip.lookup(this.req.me.ip_address);
-      }
-
-      if (ipSignup && ipSignup.country !== 'US') {
-        access = 'premium'
-      }
-
-      if (ipCurrent && ipCurrent.country !== 'US') {
+      if (ipCurrent && ipCurrent.country !== 'US' && this.req.me.ip_country.toUpperCase() !== 'UNITED STATES') {
         access = 'premium'
       }
 
