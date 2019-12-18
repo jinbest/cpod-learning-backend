@@ -6,6 +6,11 @@ module.exports = {
 
   description: 'Display "Holiday offer" page.',
 
+  layout: 'layouts/layout-promo',
+
+  local: {
+    layout: 'layouts/layout-promo',
+  },
 
   exits: {
 
@@ -28,6 +33,7 @@ module.exports = {
 
     // Respond with view.
     return {
+      layout: 'layouts/layout-promo',
       expiry: null,
       needsAccount: !this.req.me,
       trial: trial,

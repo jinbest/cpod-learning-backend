@@ -19,7 +19,9 @@ module.exports = {
   fn: async function () {
 
     // Respond with view.
-    return {};
+    return {
+      layout: 'layouts/layout-promo',
+    };
 
   }
 

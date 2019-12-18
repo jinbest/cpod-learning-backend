@@ -34,7 +34,9 @@ module.exports = {
     if (geo['country'] === 'US') {
       return this.res.redirect('/');
     } else {
-      return {};
+      return {
+        layout: 'layouts/layout-promo',
+      };
     }
 
 
