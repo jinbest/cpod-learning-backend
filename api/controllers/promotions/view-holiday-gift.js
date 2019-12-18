@@ -21,16 +21,20 @@ module.exports = {
     // Respond with view.
     const geoip = require('geoip-country');
 
+    let geo = {};
+
     try {
-      let geo = geoip.lookup(this.req.ip);
-      if (geo['country'] === 'US') {
-        return this.res.redirect('/')
-      }
+      geo = geoip.lookup(this.req.ip);
     } catch (e) {
       sails.log.error(e)
     }
 
-    return {};
+    if (geo['country'] === 'US') {
+      return this.res.redirect('/');
+    } else {
+      return {};
+    }
+
 
   }
 
