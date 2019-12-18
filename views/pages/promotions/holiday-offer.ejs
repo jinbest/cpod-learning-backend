@@ -1,13 +1,17 @@
 <div id="holiday-offer" class="holiday-promo-background" v-cloak>
   <div class="col-12">
     <h1 class="headline font-weight-bold text-center py-3 pb-3">
-      GET A 3 MONTH PREMIUM SUBSCRIPTION FOR $0.99
+      90 DAYS FOR $0.99!
     </h1>
   </div>
   <div class="holiday-promo py-4">
     <div class="">
       <div class="card p-3 mb-4 col-lg-10 offset-lg-1 holiday-card">
         <div class="container outer" id="checkout-form">
+          <div class="col-12 col-md-8 offset-md-2 pt-3 text-center">
+            <p class="h4">Happy Holidays! 祝您节日快乐  zhù nín jiérì kuàilè！</p>
+            <p>This year, our gift to you is a 90 day Premium Account for just $.99!</p>
+          </div>
           <div class="body">
             <ajax-form v-if="!cloudSuccess" name="ccForm" id="cc_form" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-submitting="handleSubmitting" :handle-parsing="handleParsingForm">
               <ul class="row">
@@ -21,7 +25,7 @@
                     <div class="row">
                       <div class="col-lg-4 col-sm-6 col-xl-6">
                         <label for="first-name">First Name<span class="required-mark">&nbsp;*</span></label>
-                        <input type="text" name="first_name" id="first-name" placeholder="First Name" v-model="formData.fName" required/>
+                        <input type="text" name="first_name" id="first-name" placeholder="First Name" v-model="formData.fName" required />
                       </div>
                       <div class="col-lg-4 col-sm-6 col-xl-6">
                         <label for="last-name">Last Name<span class="required-mark">&nbsp;*</span></label>
@@ -182,9 +186,9 @@
                 <li class="col-12">
                   <hr>
                 </li>
-                <li class="col-12 join-cp">
+                <li class="col-12 col-md-6 offset-md-3 pt-lg-4">
                   <div id="error"></div>
-                  <ajax-button id="cc-submit-button" :syncing="syncing" class="btn btn-lg rbtn-blue payment-content-stripe col-12 col-md-6">Get Deal Now!</ajax-button>
+                  <ajax-button id="cc-submit-button" :syncing="syncing" class="btn btn-lg btn-block btn-chinesepod-blue font-weight-bold payment-content-stripe">Get Deal Now!</ajax-button>
                   <p><small class="text-muted">By subscribing, you agree to the <a href="/privacy/" target="_blank">Privacy Policy</a> and <a href="/terms/" target="_blank">Terms of Service</a> of ChinesePod LLC.</small></p>
                 </li>
               </ul>
