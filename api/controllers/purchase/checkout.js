@@ -619,10 +619,7 @@ module.exports = {
               });
             }
           });
-
-
         }
-
 
 // Update User Access on UserSiteLinks
         let userSiteLinks = await UserSiteLinks.updateOne({user_id:inputs.userId, site_id: 2})

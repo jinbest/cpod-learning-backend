@@ -56,6 +56,7 @@ module.exports.routes = {
   'GET /choice':                                         { action: 'onboarding/view-new-dash' },
   'GET /switch-page':                                    { action: 'onboarding/view-switch-page' },
   // 'GET /beta-promo':                                     { action: 'onboarding/view-beta-promo' },
+  'GET /beta':                                           { action: 'onboarding/view-beta' },
   'GET /beta-how-it-works':                              { action: 'onboarding/view-beta-how-it-works' },
   'GET /beta-confirm':                                   { action: 'onboarding/view-beta-confirm' },
   'GET /beta-confirmed':                                 { action: 'onboarding/view-beta-confirmed' },
