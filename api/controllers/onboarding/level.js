@@ -55,27 +55,46 @@ module.exports = {
     let returnData = {};
 
     let levelValue = 1;
+    let levelText = 'newbie';
     if (inputs.level) {
       let level = inputs.level.toLowerCase();
       switch (level) {
         case 'newbie':
           levelValue = 1;
+          levelText = 'newbie';
           break;
         case 'elementary':
           levelValue = 2;
+          levelText = 'elementary';
           break;
           // Due to an old mistake PreInt === 6
         case 'preint':
           levelValue = 6;
+          levelText = 'preint';
+          break;
+        case 'pre intermediate':
+          levelValue = 6;
+          levelText = 'preint';
+          break;
+        case 'pre-intermediate':
+          levelValue = 6;
+          levelText = 'preint';
           break;
         case 'intermediate':
           levelValue = 3;
+          levelText = 'intermediate';
           break;
         case 'upperint':
           levelValue = 4;
+          levelText = 'upperint';
+          break;
+        case 'upper intermediate':
+          levelValue = 4;
+          levelText = 'upperint';
           break;
         case 'advanced':
           levelValue = 5;
+          levelText = 'advanced';
           break;
       }
       returnData.level = await sails.helpers.users.setOption.with({
@@ -86,7 +105,7 @@ module.exports = {
       returnData.levels = await sails.helpers.users.setOption.with({
         userId: inputs.userId,
         type: 'levels',
-        value: level.toLowerCase()
+        value: levelText
       });
       returnData.finished = true;
     }
