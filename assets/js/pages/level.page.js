@@ -4,7 +4,7 @@ parasails.registerPage('level', {
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
     level: '',
-    charSet: '',
+    charSet: 'simplified',
     nextPage: false,
     // Syncing / loading state
     syncing: false,
@@ -31,20 +31,26 @@ parasails.registerPage('level', {
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
-    setLevel (level) {
+    async setLevel (level) {
       this.level = level;
       this.flipPage();
-      this.postData();
+      await Cloud[this.pageName].with({
+        level: this.level
+      })
     },
-    setCharSet (charSet) {
+    async setCharSet (charSet) {
       this.syncing = true;
       this.charSet = charSet;
-      this.postData();
+      await Cloud[this.pageName].with({
+        charSet: this.charSet
+      });
       window.location = '/home';
     },
-    skip () {
+    async skip () {
       this.syncing = true;
-      this.postData();
+      await Cloud[this.pageName].with({
+        charSet: this.charSet
+      });
       window.location = '/home';
     },
     flipPage() {
@@ -52,16 +58,18 @@ parasails.registerPage('level', {
       window.scrollTo(0,0);
     },
     postData: async function () {
-      if (!this.level) {
-        this.level = 'Newbie'
-      }
-      if (!this.charSet) {
-        this.charSet = 'simplified'
-      }
-      await Cloud[this.pageName].with({
-        level: this.level,
-        charSet: this.charSet
-      })
+      // if (this.level && this.charSet) {
+      //   await Cloud[this.pageName].with({
+      //     level: this.level,
+      //     charSet: this.charSet
+      //   })
+      // } else if (this.charSet) {
+      //
+      // } else if (this.level) {
+      //   await Cloud[this.pageName].with({
+      //     level: this.level
+      //   })
+      // }
     },
     placementTest() {
       window.location = '/placement';

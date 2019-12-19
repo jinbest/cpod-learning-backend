@@ -12,7 +12,7 @@
           <h3>Newbie</h3>
           <div class="body">
             <p>You're just learning some survival Chinese, or looking to start a lifelong relationship with Mandarin Chinese.</p>
-            <button v-on:click="setLevel('Newbie')" class="btn continue">Continue</button>
+            <ajax-button :syncing="syncing" v-bind:style="{ backgroundColor: syncing ?  '#ccc' : '' }" v-on:click="setLevel('Newbie')" class="btn continue">Continue</ajax-button>
           </div>
         </div>
 
@@ -20,7 +20,7 @@
           <h3>Intermediate</h3>
           <div class="body">
             <p>You're are able to have simple conversations in Chinese, and want to explore more variety of topics and use richer language.</p>
-            <button v-on:click="setLevel('Intermediate')" class="btn continue">Continue</button>
+            <ajax-button :syncing="syncing" v-bind:style="{ backgroundColor: syncing ?  '#ccc' : '' }" class="btn continue">Continue</ajax-button>
           </div>
         </div>
 
@@ -28,7 +28,7 @@
           <h3>Advanced</h3>
           <div class="body">
             <p>You can easily use concrete language. You want to expand into describing abstract concepts and discuss cultural issues that go deeper than the surface.</p>
-            <button v-on:click="setLevel('Advanced')" class="btn continue" >Continue</button>
+            <ajax-button :syncing="syncing" v-bind:style="{ backgroundColor: syncing ?  '#ccc' : '' }" class="btn continue" >Continue</ajax-button>
           </div>
         </div>
 
@@ -51,7 +51,7 @@
               These are standardized Chinese characters prescribed in Table of General Standard Chinese Characters for
               use in <b>Mainland China</b>.<br><br>(简化字; jiǎnhuàzì)
             </p>
-            <button v-on:click="setCharSet('simplified')" class="btn choose-type">Choose</button>
+            <ajax-button :syncing="syncing" v-bind:style="{ backgroundColor: syncing ?  '#ccc' : '' }"  v-on:click="setCharSet('simplified')" class="btn choose-type">Choose</ajax-button>
           </div>
         </div>
         <div class="level language">
@@ -64,7 +64,7 @@
               They are commonly used in <b>Taiwan</b>, of <b>Hong Kong</b> and <b>Macau</b>, and in <b>Kangxi Dictionary</b>.
               <br><br>
             </p>
-            <button v-on:click="setCharSet('traditional')" class="btn choose-type" data-type="2">Choose</button>
+            <ajax-button :syncing="syncing" v-bind:style="{ backgroundColor: syncing ?  '#ccc' : '' }" v-on:click="setCharSet('traditional')" class="btn choose-type" data-type="2">Choose</ajax-button>
           </div>
         </div>
         <div class="level language skip">
@@ -73,7 +73,7 @@
             <p>
               By skipping this, we will select the most popular settings for your account. This can be modified.
             </p>
-            <button v-on:click="skip()" class="btn">Skip</button>
+            <ajax-button :syncing="syncing" v-bind:style="{ backgroundColor: syncing ?  '#ccc' : '' }" v-on:click="setCharSet('simplified')"  v-on:click="skip()" class="btn">Skip</ajax-button>
           </div>
         </div>
       </div>
