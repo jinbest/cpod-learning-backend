@@ -39,7 +39,13 @@ module.exports = {
 
     let userSiteLink = await UserSiteLinks.findOne({ user_id: userId, site_id: 2});
 
-    let groupId = userSiteLink.usertype_id;
+
+    let groupId = 7;
+
+    if (userSiteLink) {
+      groupId = userSiteLink.usertype_id;
+    }
+
     let groupName = 'free';
     switch (groupId) {
       case 1:
