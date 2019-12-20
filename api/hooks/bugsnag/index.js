@@ -23,7 +23,8 @@ module.exports = function defineBugsnagHook(sails) {
 
   return {
 
-    bugsnagClient,
+    notify: bugsnagClient.notify,
+    metaData: bugsnagClient.metaData,
     /**
      * Runs when this Sails app loads/lifts.
      */
