@@ -29,13 +29,11 @@ module.exports = {
         sails.log.info('facebook credentials');
         sails.log.info(user);
 
-        sails.hooks.bugsnag.metaData = user;
-        sails.hooks.bugsnag.notify('New User');
+        sails.hooks.bugsnag.notify('New User' + JSON.stringify(user));
 
 
         if (!user.email) {
-          sails.hooks.bugsnag.metaData = user;
-          sails.hooks.bugsnag.notify('New User');
+          sails.hooks.bugsnag.notify('New User' + JSON.stringify(user));
           user.email = `fb${user.id}`;
         }
 
