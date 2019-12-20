@@ -7445,6 +7445,18 @@ button.bg-dark:focus {
   max-height: 100% !important;
 }
 
+.vw-100 {
+  width: 100vw !important;
+}
+
+.vh-100 {
+  height: 100vh !important;
+}
+
+.min-vh-100 {
+  min-height: 100vh !important;
+}
+
 .m-0 {
   margin: 0 !important;
 }
