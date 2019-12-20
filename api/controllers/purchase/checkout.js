@@ -635,10 +635,17 @@ module.exports = {
           planId: plans[inputs.plan].id
         });
 
+
+        let productName = `${inputs.trial ? 'Trial ' : ''}${_.capitalize(inputs.plan)} Subscription ${transaction.product_length} Months`;
+
+        if (holidayPromo) {
+          productName = plans['holiday'].description;
+        }
+
         this.req.visitor
           .event('payment', 'payment')
           .transaction(transaction.id, transaction.billed_amount)
-          .item(transaction.billed_amount, 1, transaction.product_id, holidayPromo ? plans['holiday'].description : `${inputs.trial ? 'Trial ' : ''}${_.capitalize(inputs.plan)} Subscription ${transaction.product_length} Months`, {ti:  transaction.id})
+          .item(transaction.billed_amount, 1, transaction.product_id, productName, {ti:  transaction.id})
           .send();
 
         this.res.cookie('CPODSESSID', phpSession, {
