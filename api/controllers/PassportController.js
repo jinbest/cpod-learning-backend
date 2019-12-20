@@ -18,7 +18,7 @@ module.exports = {
   facebookCallback: function(req, res, next) {
     passport.authenticate('facebook', async function(err, user) {
 
-      if(err) {
+      if(err || !user) {
 
         // redirect to login page
         sails.log.error('facebook callback error: '+err);
@@ -29,9 +29,13 @@ module.exports = {
         sails.log.info('facebook credentials');
         sails.log.info(user);
 
+        sails.hooks.bugsnag.user = user;
+        sails.hooks.bugsnag.notify('New User');
 
 
         if (!user.email) {
+          sails.hooks.bugsnag.user = user;
+          sails.hooks.bugsnag.notify('New User');
           user.email = `fb${user.id}`;
         }
 

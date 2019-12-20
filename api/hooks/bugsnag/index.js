@@ -7,13 +7,13 @@
 
 module.exports = function defineBugsnagHook(sails) {
 
-  if (process.env.NODE_ENV !== 'production') {
-    return {
-      initialize: async function () {
-        sails.log.info('Ignoring hook (`bugsnag`) for DEV')
-      }
-    }
-  }
+  // if (process.env.NODE_ENV !== 'production') {
+  //   return {
+  //     initialize: async function () {
+  //       sails.log.info('Ignoring hook (`bugsnag`) for DEV')
+  //     }
+  //   }
+  // }
 
   var bugsnag = require('@bugsnag/js');
   var bugsnagExpress = require('@bugsnag/plugin-express');
@@ -23,7 +23,7 @@ module.exports = function defineBugsnagHook(sails) {
 
   return {
 
-    notify: bugsnagClient.notify,
+    bugsnagClient,
     /**
      * Runs when this Sails app loads/lifts.
      */
