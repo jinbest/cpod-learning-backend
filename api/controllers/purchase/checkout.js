@@ -645,7 +645,7 @@ module.exports = {
         this.req.visitor
           .event('payment', 'payment')
           .transaction(transaction.id, transaction.billed_amount)
-          .item(transaction.billed_amount, 1, transaction.product_id, productName, {ti:  transaction.id})
+          .item(transaction.billed_amount, 1, transaction.product_id, productName)
           .send();
 
         this.res.cookie('CPODSESSID', phpSession, {
