@@ -117,6 +117,7 @@ module.exports.routes = {
   //ADMIN PAGES
   //ACCESS VOUCHER CODES
   'GET /admin/access-code-panel':                        {action: 'admin/access-codes/view-access-code-panel'},
+  'GET /admin/comments':                                 {action: 'admin/comments/view-list-all-comments'},
 
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
   //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗  ┌┼─   ║║║ ║║║║║║║║  ║ ║╠═╣ ║║╚═╗

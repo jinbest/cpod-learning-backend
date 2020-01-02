@@ -1,0 +1,33 @@
+<div id="list-all-comments" class="bg-gray-lighter py-3" v-cloak>
+
+  <div class="container">
+    <h1>Lesson Comments</h1>
+    <div v-for="comment in comments" :key="comment.id">
+      <div class="card p-4 m-2">
+        <div class="card-title">
+          {{ comment.user.username }} - <a :href="`/lesson/${comment.parent_id.slug}#comments`">{{ comment.parent_id.title }}</a>
+          <div class="text-sm small"><js-timestamp :at="comment.createdAt"></js-timestamp></div>
+        </div>
+        <div class="card-body p-0" v-html="comment.content"></div>
+      </div>
+    </div>
+    <nav aria-label="Pages">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" :class="[page === 1 ? 'disabled' : '']">
+          <a class="page-link" :href="`/admin/comments?page=${page - 1}`" tabindex="-1">Previous</a>
+        </li>
+        <li v-show="page !== 1" class="page-item"><a class="page-link" :href="`/admin/comments?page=${page - 1}`"> {{ page - 1 }} </a></li>
+        <li class="page-item active">
+          <a class="page-link" href="#">{{ page }} <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="page-item"><a class="page-link" :href="`/admin/comments?page=${page + 1}`"> {{ page + 1 }} </a></li>
+        <li class="page-item" :class="[page === totalPages ? 'disabled' : '']">
+          <a class="page-link" :href="`/admin/comments?page=${page + 1}`">Next</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
