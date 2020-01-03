@@ -265,6 +265,11 @@ module.exports.routes = {
   'GET /api/v1/dictionary/decompose/:word':              { action: 'dictionary/decompose-word'},
   'GET /api/v1/dictionary/examples/:word':               { action: 'dictionary/examples-word'},
 
+
+  //LABELS
+  'GET /api/v1/labels/gift-packages':                    { action: 'labels/gift-package/get-gift-package-labels'},
+  'POST /api/v1/labels/gift-packages':                   { action: 'labels/gift-package/post-gift-package-labels'},
+
   //Sample Routes
   // 'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
   // 'POST  /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },
