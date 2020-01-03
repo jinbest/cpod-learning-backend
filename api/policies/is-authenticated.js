@@ -23,6 +23,9 @@ module.exports = function(req, res, proceed) {
   jwToken.verify(token, function(err, decoded) {
     if(err) {
       if (testingTokens.includes(token)) {
+
+        req.session.userId = 1043693;
+
         return proceed();
       }
       return res.status(401).json({err: 'Invalid token'});
