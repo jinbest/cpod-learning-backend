@@ -125,7 +125,6 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
           break;
       }
     }
-    //TODO IMPLEMENT USER CHAR SETS
     let userSettings = null;
 
     try {
@@ -247,6 +246,7 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
         }
       }
     } else {
+
       let mauticData = {
         subscription: subscription,
         userid: userData.id,
@@ -266,17 +266,18 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
       if (userData.name) {
         mauticData.fullname = userData.name;
         if (userData.name.split(' ').length > 1) {
-          mauticData.firstname = userData.name.split(' ')[0]
+          mauticData.firstname = _.capitalize(userData.name.split(' ')[0].toLowerCase())
         }
       }
-      updatedUser = await mauticConnector.contacts.editContact('PATCH', mauticData, userData.member_id)
-        .catch(async (err) => {
-          await MauticErrorLogs.create({
-            userId: userData.id,
-            error: JSON.stringify({mauticData: mauticData, err: `${err}`})
-          });
-          done({mauticData: mauticData, err: err})
-        });
+
+      try {
+        updatedUser = await MauticContacts.updateOne({id: userData.member_id})
+          .set(mauticData);
+      } catch (e) {
+        sails.hooks.bugsnag.notify(e);
+        done(e)
+      }
+
     }
 
     if (updatedUser) {
@@ -329,8 +330,6 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
     subscriptionsToUpdate.map(function (el) {
       userList.push(el.user_id)
     });
-
-    sails.log.info({count: userList.length});
 
     if (userList.length < 400) {
       Array.from(new Set(userList)).forEach(function (user) {
