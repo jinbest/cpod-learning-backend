@@ -30,7 +30,7 @@ module.exports = {
 
     const startDate = new Date ('2019-12-20');
 
-    let sentPackages = (await GiftTracking.find().select(['transaction_id'])).map((item) => {return item.user_id});
+    let sentPackages = (await GiftTracking.find().select(['id'])).map((item) => {return item.id});
 
     let relevantTransactions = await Transactions.find({
       where: {
