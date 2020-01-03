@@ -32,7 +32,8 @@ module.exports = {
 
     const validApps = {
       dashboard: ['0r6jo0purpo86683joyeq6tpw8n61tyzcw53yrw9'],
-      recap: ['fsl5rctm7rmw4s1byz4hqocwwz2t04b3u36b4dxt']
+      recap: ['fsl5rctm7rmw4s1byz4hqocwwz2t04b3u36b4dxt'],
+      testing: ['aaaa1111bbbb2222cccc3333'],
     };
 
     sails.log.info(inputs);
