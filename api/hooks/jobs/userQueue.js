@@ -230,7 +230,7 @@ if (process.env.NODE_ENV !== 'production' || sails.config.environment === 'stagi
         if (userData.name) {
           mauticData.fullname = userData.name;
         }
-        sails.log.info(mauticData);
+
         updatedUser = await mauticConnector.contacts.createContact(mauticData)
           .catch(async (err) => {
             await MauticErrorLogs.create({
