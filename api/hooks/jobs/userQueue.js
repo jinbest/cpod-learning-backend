@@ -13,7 +13,7 @@ if (process.env.NODE_ENV !== 'production' || sails.config.environment === 'stagi
     sails.log.info('userInfoQueue ready!');
   });
   userInfoQueue.on('failed', (job, e) => {
-    sails.log.info('userInfoQueue failed:', job.id, e);
+    sails.log.error('userInfoQueue failed:', job.id, e);
   });
   userInfoQueue.on('completed', (job, result) => {
     sails.log.info('userInfoQueue job finished:', job.data.id ? job.data.id : job.data.email, result);
@@ -163,16 +163,22 @@ if (process.env.NODE_ENV !== 'production' || sails.config.environment === 'stagi
     //No Mautic ID in UserData
     if (!userData.member_id) {
 
-      //Make an API call and check if user exists on Mautic
-      let mauticUser = await mauticConnector.contacts.listContacts({
-        search: `email:${userData.email}`
-      });
+      // //Make an API call and check if user exists on Mautic
+      // let mauticUser = await mauticConnector.contacts.listContacts({
+      //   search: `email:${userData.email}`
+      // });
+      //
+      //Make Mautic Lookup
+
+      let mauticUser = await MauticContacts.findOne({email: userData.email});
+
 
       //If User exists - Add Mautic ID to user record
-      if (mauticUser.total == 1) {
+      if (mauticUser) {
         userData = await User.updateOne({id: userData.id})
-          .set({member_id: Object.keys(mauticUser.contacts)[0]})
+          .set({member_id: mauticUser.id})
           .catch((err) => {
+            sails.hooks.bugsnag.notify(err);
             done(new Error(err))
           });
         //Push Updated Data to Mautic
@@ -195,21 +201,13 @@ if (process.env.NODE_ENV !== 'production' || sails.config.environment === 'stagi
         if (userData.name) {
           mauticData.fullname = userData.name;
         }
-        updatedUser = await mauticConnector.contacts.editContact('PATCH', mauticData, userData.member_id)
-          .catch(async (err) => {
-            await MauticErrorLogs.create({
-              userId: userData.id,
-              error: JSON.stringify({mauticData: mauticData, err: `${err}`})
-            });
-            done({mauticData: mauticData, err: err})
-          });
 
-        //If User Email is not unique - throw error - THIS SHOULD NEVER HAPPEN
-      } else if (mauticUser.total > 1) {
-        done(new Error('Email was not unique on Mautic'));
+        updatedUser = await MauticContacts.updateOne({id: userData.member_id})
+          .set(mauticData);
+
+      } else {
 
         //If User Does not Exist on Mautic - Create a new User record
-      } else if (mauticUser.total == 0) {
         let mauticData = {
           email: userData.email,
           subscription: subscription,
@@ -245,7 +243,10 @@ if (process.env.NODE_ENV !== 'production' || sails.config.environment === 'stagi
             .set({member_id: updatedUser.contact.id});
         }
       }
+
     } else {
+
+      //If User Already has a Mautic ID
 
       let mauticData = {
         subscription: subscription,
@@ -283,7 +284,7 @@ if (process.env.NODE_ENV !== 'production' || sails.config.environment === 'stagi
     if (updatedUser) {
       done(null, 'Updated on Mautic');
     } else {
-      done(new Error('User Data could not be pushed to Mautic'))
+      done(new Error(`User Data ${job.data.userId ? job.data.userId : ''} ${job.data.email ? job.data.email : ''} could not be pushed to Mautic`))
     }
   });
 
