@@ -283,5 +283,21 @@ module.exports = {
       type: "ref",
       columnType: "date"
     },
+    confirmlink: {
+      type: 'string',
+      allowNull: true
+    },
+    charset: {
+      type: 'string',
+      allowNull: true
+    },
+    confirmed: {
+      type: 'number',
+      allowNull: true
+    },
+    lessoncount: {
+      type: 'number',
+      allowNull: true
+    }
   }
 };
