@@ -231,10 +231,6 @@ module.exports.routes = {
   'GET /api/v1/feedback/dashboard-feedback-all':         { action: 'feedback/dashboard-feedback-all' },
   'GET /api/v1/feedback/dashboard-feedback-web':         { action: 'feedback/dashboard-feedback-web' },
 
-  //DICTIONARY
-  'GET /api/v1/dictionary/get':                          { action: 'dictionary/get-dictionary-word'},
-  'GET /api/v1/dictionary/related':                      { action: 'dictionary/get-related-words'},
-
   // LOG ROUTES
   'PUT /api/v1/logs/game-logs':                          { action: 'logs/game-logs' },
 
@@ -256,10 +252,14 @@ module.exports.routes = {
   'GET /api/v1/search/reindex-lessons':                  { action: 'search/reindex-lessons' },
   'GET /api/v1/search/reindex-lessons-data':             { action: 'search/reindex-lessons-data' },
   'GET /api/v1/search/reindex-courses':                  { action: 'search/reindex-courses' },
+  'GET /api/v1/search/reindex-vocab':                    { action: 'search/reindex-vocab' },
+  'GET /api/v1/search/reindex-sentences':                { action: 'search/reindex-sentences' },
   'POST /api/v1/search/search-lessons/:query?':          { action: 'search/search-lessons' },
   'GET /api/v1/search/search-lessons-example/:query?':   { action: 'search/search-lessons-example' },
 
-  //Dictionary
+  //DICTIONARY
+  'GET /api/v1/dictionary/get':                          { action: 'dictionary/get-dictionary-word'},
+  'GET /api/v1/dictionary/related':                      { action: 'dictionary/get-related-words'},
   'GET /api/v1/dictionary/search/:word':                 { action: 'dictionary/search-word'},
   'GET /api/v1/dictionary/define/:word':                 { action: 'dictionary/define-word'},
   'GET /api/v1/dictionary/decompose/:word':              { action: 'dictionary/decompose-word'},

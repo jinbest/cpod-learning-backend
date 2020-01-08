@@ -29,10 +29,13 @@ module.exports = {
       elasticIndex: 'vocabulary',
       elasticRecord: [
         'id',
-        'course_title',
-        'course_introduction',
-        'channel_id',
-        'type'
+        'vocabulary_class',
+        'column_1', // Simplified
+        'column_2', // Pinyin
+        'column_3', // English
+        'column_4', // Traditional
+        'audio',
+        'v3_id'
       ],
       idColumn: 'id'
     };
@@ -47,14 +50,28 @@ module.exports = {
 
       sails.log.info('Index Deleted');
 
-      let records = await Vocabulary.find({
+      const groupBy = key => array =>
+        array.reduce((objectsByKeyValue, obj) => {
+          const value = obj[key];
+          objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
+          return objectsByKeyValue;
+        }, {});
+
+      let vocabulary = await Vocabulary.find({
         where: {
-          publish_time: {
-            '<': new Date()
-          },
-          is_private: 0
+          vocabulary_class: {
+            in: ['Key Vocabulary', 'Supplementary', 'Expansion']
+          }
         }
       });
+
+      const groupBySimpChinese = groupBy('column_1');
+
+      let groupedVocab = groupBySimpChinese(vocabulary);
+
+
+
+      let records = [];
 
       sails.log.info('Records Pooled');
 

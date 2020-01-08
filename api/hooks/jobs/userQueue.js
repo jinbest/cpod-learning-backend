@@ -37,7 +37,7 @@ if (process.env.NODE_ENV !== 'production' || sails.config.environment === 'stagi
   userInfoQueue.process('Update Data to Mautic', 5, async function (job, done) {
 
     if (!job.data) {
-      done(null, 'No job data')
+      done('No job data')
     }
 
     let userData = null;
