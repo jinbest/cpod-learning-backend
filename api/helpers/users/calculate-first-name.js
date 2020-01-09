@@ -9,8 +9,7 @@ module.exports = {
 
   inputs: {
     fullName: {
-      type: 'string',
-      isInteger: true
+      type: 'string'
     }
 
   },
