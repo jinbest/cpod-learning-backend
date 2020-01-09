@@ -266,9 +266,7 @@ if (process.env.NODE_ENV !== 'production' || sails.config.environment === 'stagi
       }
       if (userData.name) {
         mauticData.fullname = userData.name;
-        if (userData.name.split(' ').length > 1) {
-          mauticData.firstname = _.capitalize(userData.name.split(' ')[0].toLowerCase())
-        }
+        mauticData.firstname = await sails.helpers.users.calculateFirstName(userData.name);
       }
 
       try {
