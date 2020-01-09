@@ -54,57 +54,57 @@ module.exports = {
       sails.log.info('Index Deleted');
 
 
-    let dialogues = await ContentDialogues.find().sort('id DESC').populate('v3_id');
+      let dialogues = await ContentDialogues.find().sort('id DESC').populate('v3_id');
 
-    let expansions = await ContentExpansions.find().sort('id DESC').populate('v3_id');
+      let expansions = await ContentExpansions.find().sort('id DESC').populate('v3_id');
 
-    let records = [];
+      let records = [];
 
-    dialogues.concat(expansions).forEach((dialogue) => {
-      try {
+      dialogues.concat(expansions).forEach((dialogue) => {
+        try {
 
 
-      dialogue.vocabulary = [];
-      dialogue.sentence = [];
-      dialogue.pinyin = [];
-      dialogue.simplified = [];
-      dialogue.traditional = [];
-      dialogue['row_1'].replace(/\(event,\'(.*?)\',\'(.*?)\',\'(.*?)\',\'(.*?)\'.*?\>(.*?)\<\/span\>([^\<]+)?/g, function(a, b, c, d, e, f, g, h) {
-        dialogue.sentence.push({
-          s: decodeURI(d),
-          t: decodeURI(e),
-          p: decodeURI(c),
-          en: decodeURI(b)
-        });
-        if (g) {
-          dialogue.sentence.push(decodeURI(g))
+          dialogue.vocabulary = [];
+          dialogue.sentence = [];
+          dialogue.pinyin = [];
+          dialogue.simplified = [];
+          dialogue.traditional = [];
+          dialogue['row_1'].replace(/\(event,\'(.*?)\',\'(.*?)\',\'(.*?)\',\'(.*?)\'.*?\>(.*?)\<\/span\>([^\<]+)?/g, function(a, b, c, d, e, f, g, h) {
+            dialogue.sentence.push({
+              s: decodeURI(d),
+              t: decodeURI(e),
+              p: decodeURI(c),
+              en: decodeURI(b)
+            });
+            if (g) {
+              dialogue.sentence.push(decodeURI(g))
+            }
+            dialogue.vocabulary.push({
+              s: d,
+              t: e,
+              p: c,
+              en: b
+            })
+          });
+          dialogue.simplified = (dialogue.sentence.map(item => item.s ? item.s : item)).join('');
+          dialogue.traditional = dialogue.sentence.map(item => item.t ? item.t : item).join('');
+          dialogue.pinyin = dialogue.sentence.map(item => item.p ? item.p : item).join(' ');
+          dialogue.english = dialogue.row_2;
+          dialogue.lessonId = dialogue.v3_id ? dialogue.v3_id.id : '';
+          dialogue.title = dialogue.v3_id ? dialogue.v3_id.title : '';
+          dialogue.level = dialogue.v3_id ? dialogue.v3_id.level : '';
+          dialogue.image = !dialogue.v3_id ? '' : dialogue.v3_id.type === 'lesson'
+            ? `https://s3contents.chinesepod.com/${dialogue.v3_id.id}/${dialogue.v3_id.hash_code}/${dialogue.v3_id.image}`
+            : `https://s3contents.chinesepod.com/extra/${dialogue.v3_id.id}/${dialogue.v3_id.hash_code}/${dialogue.v3_id.image}`;
+          dialogue.audio = dialogue.audio.slice(0,4) === 'http' ? dialogue.audio : !dialogue.v3_id ? '' : dialogue.v3_id.type === 'lesson'
+            ? `https://s3contents.chinesepod.com/${dialogue.v3_id.id}/${dialogue.v3_id.hash_code}/${dialogue.audio}`
+            : `https://s3contents.chinesepod.com/extra/${dialogue.v3_id.id}/${dialogue.v3_id.hash_code}/${dialogue.audio}`;
+          dialogue.slug = dialogue.v3_id ? dialogue.v3_id.slug : '';
+          records.push(_.pick(dialogue, ['id', 'simplified', 'traditional', 'pinyin', 'english', 'audio', 'lessonId', 'title', 'image', 'slug' , 'level', 'sentence']))
+        } catch (e) {
+          sails.log.info(e);
         }
-        dialogue.vocabulary.push({
-          s: d,
-          t: e,
-          p: c,
-          en: b
-        })
       });
-      dialogue.simplified = (dialogue.sentence.map(item => item.s ? item.s : item)).join('');
-      dialogue.traditional = dialogue.sentence.map(item => item.t ? item.t : item).join('');
-      dialogue.pinyin = dialogue.sentence.map(item => item.p ? item.p : item).join(' ');
-      dialogue.english = dialogue.row_2;
-      dialogue.lessonId = dialogue.v3_id ? dialogue.v3_id.id : '';
-      dialogue.title = dialogue.v3_id ? dialogue.v3_id.title : '';
-      dialogue.level = dialogue.v3_id ? dialogue.v3_id.level : '';
-      dialogue.image = !dialogue.v3_id ? '' : dialogue.v3_id.type === 'lesson'
-        ? `https://s3contents.chinesepod.com/${dialogue.v3_id.id}/${dialogue.v3_id.hash_code}/${dialogue.v3_id.image}`
-        : `https://s3contents.chinesepod.com/extra/${dialogue.v3_id.id}/${dialogue.v3_id.hash_code}/${dialogue.v3_id.image}`;
-      dialogue.audio = dialogue.audio.slice(0,4) === 'http' ? dialogue.audio : !dialogue.v3_id ? '' : dialogue.v3_id.type === 'lesson'
-        ? `https://s3contents.chinesepod.com/${dialogue.v3_id.id}/${dialogue.v3_id.hash_code}/${dialogue.audio}`
-        : `https://s3contents.chinesepod.com/extra/${dialogue.v3_id.id}/${dialogue.v3_id.hash_code}/${dialogue.audio}`;
-      dialogue.slug = dialogue.v3_id ? dialogue.v3_id.slug : '';
-      records.push(_.pick(dialogue, ['id', 'simplified', 'traditional', 'pinyin', 'english', 'audio', 'lessonId', 'title', 'image', 'slug' , 'level', 'sentence']))
-      } catch (e) {
-        sails.log.info(e);
-      }
-    });
 
       sails.log.info('Records Pooled');
 
