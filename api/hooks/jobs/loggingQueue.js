@@ -19,7 +19,12 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
     let userData = {};
 
     if (job.data.userId) {
-      userData = await User.findOne({id: job.data.userId});
+      try {
+        userData = await sails.models['user'].findOne({id: job.data.userId});
+      } catch (e) {
+        sails.log.error(e);
+        done(e)
+      }
     }
 
     let ipData = {};
