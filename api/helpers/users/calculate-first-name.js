@@ -29,7 +29,7 @@ module.exports = {
 
     try {
       if (inputs.fullName) {
-        let firstName = inputs.fullName.name.split(' ')[0];
+        let firstName = inputs.fullName.split(' ')[0];
 
         if (firstName && firstName.length > 1) {
           firstName = _.capitalize(firstName.toLowerCase());
