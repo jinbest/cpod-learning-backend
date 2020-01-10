@@ -36,6 +36,7 @@
     "passport-facebook": "^3.0.0",
     "passport-google": "^0.3.0",
     "passport-google-oauth20": "^2.0.0",
+    "pinyin-tone-converter": "^1.0.0",
     "sails": "^1.2.2",
     "sails-hook-apianalytics": "^2.0.3",
     "sails-hook-deep-orm": "^1.0.2",

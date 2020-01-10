@@ -1,0 +1,136 @@
+<div id="dictionary" class="bg-gray-lighter min-vh-100" v-cloak>
+
+  <div class="container py-3">
+
+    <h1 class="py-2">Chinese-English Dictionary</h1>
+
+    <div v-if="definition">
+      <div v-if="!multiDefinition" class="col-xl-10 offset-xl-1">
+        <div class="row">
+          <div v-for="(character, index) in definition[0][charSet].split('')" :id="`character-${index}`" :style="calculateWidth" @click="animate(index)"></div>
+        </div>
+      </div>
+      <h2>Definitions:</h2>
+      <div v-if="!multiDefinition">
+        <div  v-for="version in definition">
+        {{ version[charSet] }} - {{ version.pinyin }}
+        <ul>
+          <li v-for="example in version.definition.split('/')">
+            {{ example }}
+          </li>
+        </ul>
+        </div>
+      </div>
+      <div v-else>
+        <div v-for="phrase in definition">
+        <div v-for="version in phrase">
+          <a :href="`/dictionary-testing/${version[charSet]}`">{{ version[charSet] }}</a> - {{ version.pinyin }}
+          <ul>
+            <li v-for="example in version.definition.split('/')">
+              {{ example }}
+            </li>
+          </ul>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-none" id="audioContainer">
+      <audio id="player" controls>
+      </audio>
+    </div>
+
+    <div class="accordion" id="accordion">
+
+      <div v-if="sentences.length > 0" class="card">
+        <div class="card-header" id="headingLessons" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          <h2 class="mb-0">
+            <button class="btn btn-link" type="button">
+              <h4>Lesson Examples</h4>
+            </button>
+          </h2>
+        </div>
+
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+          <div class="card-body bg-light">
+            <div id="collapseOne" aria-labelledby="headingOne" data-parent="#accordion" class="collapse show">
+              <div  v-for="sentence in sentences" class="card mb-3 rounded shadow border-0 m-2">
+                <div class="row no-gutters">
+                  <div class="col-md-3">
+                    <a :href="`/lesson/${sentence.slug}`">
+                      <img :src="sentence.image" class="card-img" :alt="`Image: ${sentence.title}`">
+                    </a>
+                  </div>
+                  <div class="col-md-9">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-12">
+                          <a :href="`/lesson/${sentence.slug}`"><div class="h5 text-wrap">Lesson: {{ sentence.title }} ({{ sentence.level }})</div></a>
+                        </div>
+                        <div class="col-10">
+                          <p class="card-text">{{ sentence[charSet] }}</p>
+                          <p class="card-text">{{ sentence.pinyin }}</p>
+                          <p class="card-text">{{ sentence.pinyin_tones }}</p>
+                          <p class="card-text">{{ sentence.definition }}</p>
+                          <p class="card-text">{{ sentence.english }}</p>
+                        </div>
+                        <div class="col-2">
+                          <button class="btn btn-block btn-primary" @click="playAudio(sentence)" :disabled="playing"><i class="fa fa-play"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div v-if="examples.length > 0" class="card">
+        <div class="card-header" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+          <h5 class="mb-0">
+            <button class="btn btn-link" type="button" >
+              <h4>Examples</h4>
+            </button>
+          </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+          <div class="card-body">
+            <div v-for="(type, index) in examples">
+              <div v-for="item in type" v-show="definition[0][charSet] !== item[charSet]">
+                <a :href="`/dictionary-testing/${item[charSet]}`">{{ item[charSet] }}</a> - {{ item.pinyin }} - {{ item.definition }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div v-if="dictionary.length > 0" class="card">
+        <div class="card-header" id="headingThree" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+          <h5 class="mb-0">
+            <button class="btn btn-link" type="button" >
+              <h4>Related Phrases</h4>
+            </button>
+          </h5>
+        </div>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+          <div class="card-body">
+            <div v-for="(type, index) in dictionary">
+              <p v-for="item in type.slice(0,5)">
+                <a :href="`/dictionary-testing/${item[charSet]}`">{{ item[charSet] }}</a> - {{ item.pinyin }} - {{ item.definition }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/hanzi-writer@2.1/dist/hanzi-writer.min.js"></script>
+<script src="https://cdn.plyr.io/3.5.6/plyr.js"></script>
+<link rel="stylesheet" href="https://cdn.plyr.io/3.5.6/plyr.css" />
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

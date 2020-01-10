@@ -8780,6 +8780,9 @@ button.bg-dark:focus {
 .text-nowrap {
   white-space: nowrap !important;
 }
+.text-wrap {
+  white-space:normal !important
+}
 
 .text-truncate {
   overflow: hidden;

@@ -85,10 +85,10 @@
         Your updated email address needs verification. Until you click the link sent to <strong><%= me.emailChangeCandidate %></strong>, you'll still need to sign in as <strong><%= me.emailAddress %></strong>.
       </div>
     </div>
-  <% } else if(me&&me.emailStatus === 'unconfirmed') { %>
+  <% } else if(me&&!me.confirm_status) { %>
     <div class="container-fluid">
       <div class="alert alert-secondary mt-2" role="alert">
-        Your email address still needs verification. Your account access may be limited until you click the link sent to <strong><%= me.emailChangeCandidate ? me.emailChangeCandidate : me.emailAddress%></strong>.
+        Your email address still needs verification. Your account access may be limited until you click the link sent to <strong><%= me.email ? me.email : 'your email address'%></strong>.
       </div>
     </div>
   <% } %>

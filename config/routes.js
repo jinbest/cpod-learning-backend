@@ -102,7 +102,7 @@ module.exports.routes = {
   'GET /holiday-offer-success/:code?':                   { action: 'promotions/view-holiday-offer-success'},
 
   //DICTIONARY
-  'GET /dictionary/:unused?':                            {},
+  'GET /dictionary-testing/:query?':                             { action: 'view-dictionary' },
 
   //LEGAL PAGES
   'GET /terms':                                          { action:   'legal/view-terms' },
@@ -255,7 +255,7 @@ module.exports.routes = {
   'GET /api/v1/search/reindex-vocab':                    { action: 'search/reindex-vocab' },
   'GET /api/v1/search/reindex-sentences':                { action: 'search/reindex-sentences' },
   'POST /api/v1/search/search-lessons/:query?':          { action: 'search/search-lessons' },
-  'GET /api/v1/search/search-lessons-example/:query?':   { action: 'search/search-lessons-example' },
+  'GET /api/v1/search/search-dictionary/:query?':          { action: 'search/search-dictionary' },
 
   //DICTIONARY
   'GET /api/v1/dictionary/get':                          { action: 'dictionary/get-dictionary-word'},
