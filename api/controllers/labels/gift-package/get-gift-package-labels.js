@@ -28,20 +28,17 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    const startDate = new Date ('2019-12-20');
+    const startDate = new Date ('2019-11-04');
 
     let sentPackages = (await GiftTracking.find().select(['id'])).map((item) => {return item.id});
 
     let oldTransactions = require('../../../../lib/oldTransactions.json');
 
-    // ', '', ' let oldTransactions = (await sails.sendNativeQuery(`
-    // ', '', '   SELECT distinct t.user_id FROM chinesepod_production.transactions t WHERE t.pay_status=2 AND t.date_created < '2019-12-20'
-    // ', '', ' `))['rows'];
-
+    // let oldTransactions = (await sails.sendNativeQuery(`SELECT distinct t.user_id FROM chinesepod_production.transactions t WHERE t.pay_status=2 AND t.date_created < '2019-11-04'`))['rows'];
     // const fs = require('fs');
-    //
     // oldTransactions = oldTransactions.map(transaction => {return transaction.user_id});
-    // fs.writeFileSync('oldTransactions.json', JSON.stringify(oldTransactions));
+    // sails.log.info(oldTransactions.slice(0, 5));
+    // fs.writeFileSync('lib/oldTransactions.json', JSON.stringify(oldTransactions));
 
     let relevantTransactions = await Transactions.find({
       where: {
