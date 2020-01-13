@@ -24,85 +24,100 @@ module.exports = {
   fn: async function (inputs) {
 
     let index = {
-      model: 'Vocabulary',
-      elasticModel: 'VocabularyIndex',
+      model: 'vocabulary',
+      elasticModel: 'vocabulary',
       elasticIndex: 'vocabulary',
       elasticRecord: [
         'id',
-        'vocabulary_class',
-        'column_1', // Simplified
-        'column_2', // Pinyin
-        'column_3', // English
-        'column_4', // Traditional
-        'audio',
-        'v3_id'
+        'simplified', // Simplified
+        'pronunciation', // Pinyin
+        'pronunciation_tones',
+        'definitions', // English
+        'traditional' // Traditional
       ],
       idColumn: 'id'
     };
+
+    let errors = [];
+
+    const convert = require('pinyin-tone-converter');
 
     await new Promise(async (resolve, reject) => {
 
       await sails.hooks.elastic.client.indices.delete({index: index.elasticIndex}, (error, response) => {
         if (error) {
-          sails.log.error(error);
+          // sails.log.error(error);
         }
       });
 
       sails.log.info('Index Deleted');
 
-      const groupBy = key => array =>
-        array.reduce((objectsByKeyValue, obj) => {
-          const value = obj[key];
-          objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
-          return objectsByKeyValue;
-        }, {});
+      let vocabulary = require('../../../lib/cedict.json');
 
-      let vocabulary = await Vocabulary.find({
-        where: {
-          vocabulary_class: {
-            in: ['Key Vocabulary', 'Supplementary', 'Expansion']
-          }
-        }
-      });
+      sails.log.info(vocabulary.length);
 
-      const groupBySimpChinese = groupBy('column_1');
+      let total = vocabulary.length;
 
-      let groupedVocab = groupBySimpChinese(vocabulary);
+      // let total = 10000;
 
+      let batch = 100;
 
+      let bulkCount = Math.ceil(total / batch);
 
-      let records = [];
+      sails.log.info(`Records Fetched in ${bulkCount} Batches`);
 
-      sails.log.info('Records Pooled');
+      for (let i = 0; i < bulkCount; i++) {
 
-      let commands = [];
-      let action = {
-        index: {
-          _index: index.elasticIndex,
-          _type: index.elasticIndex
-        }
-      };
+        await setTimeout(async () => {
+          let records = vocabulary.slice(i * batch, (i + 1) * batch);
 
-      records.forEach(record => {
-        let indexRecord = {};
-        index.elasticRecord.forEach(key => {
-          indexRecord[key] = record[key];
-        });
+          sails.log.info(`Records Pooled Batch: ${i + 1}`);
 
-        commands.push(action);
-        commands.push(indexRecord);
-      });
+          let commands = [];
+          let action = {
+            index: {
+              _index: index.elasticIndex,
+              _type: index.elasticIndex
+            }
+          };
 
-      sails.log.info('Records Prepared');
+          records.forEach(record => {
+            let indexRecord = {};
 
-      // run bulk command
-      await sails.hooks.elastic.client.bulk({refresh: 'true', body: commands}, (error, response) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(response);
-        }
-      });
+            record.id = `${i}-${record.simplified}`;
+            record.pronunciation_tones = convert.convertPinyinTones(record.pronunciation);
+
+            index.elasticRecord.forEach(key => {
+              indexRecord[key] = record[key];
+            });
+            commands.push(action);
+            commands.push(indexRecord);
+          });
+
+          sails.log.info('Records Prepared');
+
+          await new Promise(async (resolve, reject) => {
+            // run bulk command
+            await sails.hooks.elastic.client.bulk({body: commands}, (error, response) => {
+              if (error) {
+                sails.log.error(error);
+                errors.push(error);
+                reject(error);
+              } else {
+                sails.log.info(`Records Processed Batch: ${i + 1}`);
+                resolve(response)
+              }
+            });
+          });
+        }, i * 500)
+
+      }
+
+      if (errors.length > 0) {
+        reject(errors[0])
+      } else {
+        resolve('done')
+      }
 
     });
   }

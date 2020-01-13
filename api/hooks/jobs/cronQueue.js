@@ -19,5 +19,6 @@ if (process.env.NODE_ENV !== 'production' || sails.config.environment === 'stagi
   });
 
   triggerQueue.removeRepeatable('ReindexSentences', {repeat: {cron: '0 12 * * *'}});
-  triggerQueue.add('ReindexSentences', {data: 'Reindex Lessons Once a Day'}, {repeat: {cron: '0 12 * * *'}});
+  triggerQueue.removeRepeatable('ReindexSentences', {repeat: {cron: '0 1 * * *'}});
+  triggerQueue.add('ReindexSentences', {data: 'Reindex Lessons Once a Day'}, {repeat: {cron: '0 1 * * *'}});
 }
