@@ -49,7 +49,6 @@ module.exports = {
     },
     updatedAt: {
       type: "ref",
-      columnType: "timestamp",
       columnName: 'date_modified',
       autoUpdatedAt: true
     },
