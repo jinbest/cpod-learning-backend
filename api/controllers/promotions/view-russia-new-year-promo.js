@@ -38,6 +38,7 @@ module.exports = {
 
     // Respond with view.
     return {
+      layout: 'layouts/layout-promo',
       expiry: null,
       needsAccount: !this.req.me,
       trial: trial,

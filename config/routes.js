@@ -95,11 +95,12 @@ module.exports.routes = {
   'GET /black-friday-last-chance/:code?':                { action: 'promotions/view-expired-promo'},
   'GET /cyber-monday/:code?':                            { action: 'promotions/view-expired-promo'},
   'GET /cyber-monday-last-chance/:code?':                { action: 'promotions/view-expired-promo'},
-  'GET /holiday-gift/:code?':                            { action: 'promotions/view-holiday-gift'},
-  'GET /holiday-offer/:code?':                           { action: 'promotions/view-holiday-offer'},
-  'GET /holiday-offer-card/:code?':                      { action: 'promotions/view-holiday-offer-card'},
-  'GET /holiday-offer-alt/:code?':                       { action: 'promotions/view-holiday-offer-alt'},
-  'GET /holiday-offer-success/:code?':                   { action: 'promotions/view-holiday-offer-success'},
+  'GET /holiday-gift/:code?':                            { action: 'promotions/view-expired-promo'},
+  'GET /holiday-offer/:code?':                           { action: 'promotions/view-expired-promo'},
+  'GET /holiday-offer-card/:code?':                      { action: 'promotions/view-expired-promo'},
+  'GET /holiday-offer-alt/:code?':                       { action: 'promotions/view-expired-promo'},
+  'GET /holiday-offer-success/:code?':                   { action: 'promotions/view-expired-promo'},
+  'GET /russia-new-year-promo/:code?':                   { action: 'promotions/view-russia-new-year-promo'},
 
   //DICTIONARY
   'GET /dictionary-testing/:query?':                             { action: 'view-dictionary' },
@@ -249,11 +250,11 @@ module.exports.routes = {
   'POST /api/v1/admin/access-codes/delete':              { action: 'admin/access-codes/delete-access-codes'},
 
   //SEARCH
-  'GET /api/v1/search/reindex-lessons':                  { action: 'search/reindex-lessons' },
-  'GET /api/v1/search/reindex-lessons-data':             { action: 'search/reindex-lessons-data' },
-  'GET /api/v1/search/reindex-courses':                  { action: 'search/reindex-courses' },
-  'GET /api/v1/search/reindex-vocab':                    { action: 'search/reindex-vocab' },
-  'GET /api/v1/search/reindex-sentences':                { action: 'search/reindex-sentences' },
+  // 'GET /api/v1/search/reindex-lessons':                  { action: 'search/reindex-lessons' },
+  // 'GET /api/v1/search/reindex-lessons-data':             { action: 'search/reindex-lessons-data' },
+  // 'GET /api/v1/search/reindex-courses':                  { action: 'search/reindex-courses' },
+  // 'GET /api/v1/search/reindex-vocab':                    { action: 'search/reindex-vocab' },
+  // 'GET /api/v1/search/reindex-sentences':                { action: 'search/reindex-sentences' },
   'POST /api/v1/search/search-lessons/:query?':          { action: 'search/search-lessons' },
   'GET /api/v1/search/search-dictionary/:query?':          { action: 'search/search-dictionary' },
 
