@@ -100,7 +100,7 @@ module.exports.routes = {
   'GET /holiday-offer-card/:code?':                      { action: 'promotions/view-expired-promo'},
   'GET /holiday-offer-alt/:code?':                       { action: 'promotions/view-expired-promo'},
   'GET /holiday-offer-success/:code?':                   { action: 'promotions/view-expired-promo'},
-  'GET /russia-new-year-promo/:code?':                   { action: 'promotions/view-russia-new-year-promo'},
+  'GET /cheers/:code?':                                  { action: 'promotions/view-cheers-promo'},
 
   //DICTIONARY
   'GET /dictionary-testing/:query?':                             { action: 'view-dictionary' },
