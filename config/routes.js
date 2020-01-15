@@ -221,6 +221,8 @@ module.exports.routes = {
   'POST /api/v1/lessons/comments':                       { action: 'lessons/comments/create' },
   'PATCH /api/v1/lessons/comments':                      { action: 'lessons/comments/update' },
   'DELETE /api/v1/lessons/comments':                     { action: 'lessons/comments/delete' },
+  'GET /api/v1/lessons/progress':                        { action: 'lessons/progress/get-lesson-progress' },
+  'POST /api/v1/lessons/progress':                       { action: 'lessons/progress/post-lesson-progress' },
 
   //Exercise Routes
   'GET /api/v1/exercises/get-questions':                 { action: 'exercises/get-questions' },
