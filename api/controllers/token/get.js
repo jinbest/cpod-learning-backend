@@ -39,7 +39,7 @@ module.exports = {
     sails.log.info(inputs);
 
     if (inputs.userId && validApps[inputs.type] && validApps[inputs.type].includes(inputs.key)) {
-      return {userId: inputs.userId, token: jwToken.sign(inputs.userId)}
+      return {userId: inputs.userId, token: jwToken.sign({userId: inputs.userId})}
     } else {
       throw 'invalid'
     }

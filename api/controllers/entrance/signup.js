@@ -98,8 +98,15 @@ the account verification message.)`,
         pattern: 'w'
       });
       userName += Math.floor(Math.random() * Math.floor(50))
+    } else {
+
+      userName += Math.floor(Math.random() * Math.floor(50))
+
     }
     // Create new User record
+
+    sails.log.info(userName);
+
     let newUserRecord = await User.create(_.extend({
       email: email,
       password: await sails.helpers.passwordHash.with({
