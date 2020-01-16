@@ -30,7 +30,7 @@ module.exports = {
     //   });
     // }
 
-    let trial = false; let promo = true; let plan = 'premium'; let period = 'annually'; let promoCode = 'CHEERS2020';
+    let trial = false; let promo = true; let plan = 'premium'; let period = 'annually'; let promoCode = 'AUSTRALIA2020';
 
     const addressfield = require('../../../lib/addressfield.json');
 
