@@ -78,13 +78,13 @@ module.exports = {
     const asiaAddresses = ['HK', 'CN', 'TW'];
 
     addresses.forEach(address => {
-      let ship_from = `ChinesePod LLC | 246 West Broadway | New York NY 10013`;
+      let ship_from = `ChinesePod LLC  |  246 West Broadway  |  New York NY 10013`;
       if (europeanAddresses.includes(address.country.toUpperCase())) {
-        ship_from = `ChinesePod | P.O. Box 92002 | NL-1090 AA Amsterdam`;
+        ship_from = `ChinesePod  |  P.O. Box 92002  |  NL-1090 AA Amsterdam`;
       } else if (asiaAddresses.includes(address.country.toUpperCase())) {
-        ship_from = `ChinesePod Limited | General Post Office Box 7347 | Hong Kong S.A.R.`;
+        ship_from = `ChinesePod Limited  |  General Post Office Box 7347  |  Hong Kong S.A.R.`;
       } else if ('PH' === address.country.toUpperCase()) {
-        ship_from = `Lapu-Lapu City Post Office Box 16 | 6015 Lapu-Lapu City | Philippines`;
+        ship_from = `Lapu-Lapu City Post Office Box 16  |  6015 Lapu-Lapu City  |  Philippines`;
       }
 
       address.ship_from = ship_from;
