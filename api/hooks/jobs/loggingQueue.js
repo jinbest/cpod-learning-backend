@@ -34,11 +34,15 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
       'https://www.chinesepod.com/home',
       'https://www.chinesepod.com/signup',
       'https://www.chinesepod.com/checkout'].includes(job.data.urlbase)) {
-      const IPData =  require('ipdata').default;
-      const ipdata = new IPData(sails.config.custom.ipDataKey);
-      await ipdata.lookup(job.data.ip)
-        .then((info) => {ipData = info})
-        .catch((err) => sails.log.error(err));
+      // const IPData =  require('ipdata').default;
+      // const ipdata = new IPData(sails.config.custom.ipDataKey);
+      // await ipdata.lookup(job.data.ip)
+      //   .then((info) => {ipData = info})
+      //   .catch((err) => sails.log.error(err));
+
+      const geoip = require('geoip-country');
+      ipData = geoip.lookup(job.data.ip)
+
     }
 
     if ([
@@ -54,7 +58,7 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
         accesslog_url: job.data.url,
         accesslog_sessionid: job.data.sessionId,
         accesslog_urlbase: job.data.urlbase,
-        accesslog_country: ipData['country_name'] ? ipData['country_name'] : null,
+        accesslog_country: ipData && ipData['country'] ? ipData['country'] : null,
         referer: job.data.referer
       });
       done(null, userData.email ? `Logged Request for User: ${userData.email}` : `Logged Request for Unknown User`)
