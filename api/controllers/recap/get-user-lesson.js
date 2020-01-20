@@ -40,6 +40,8 @@ module.exports = {
 
   fn: async function (inputs) {
 
+    const minTimer = 15; //minutes
+
     let testers = ['mg@chinesepod.com', 'ugis@chinesepod.com', 'mick@chinesepod.com'];
 
     let session = await sails.helpers.phpApi.checkSession(inputs.sessionId);
@@ -115,42 +117,11 @@ module.exports = {
           sails.log.error(e)
         }
 
-        if (json && new Date(json['timestamp']) > new Date(Date.now() - 15 * 60 * 60 * 1000)) {
-          sails.log.info({
-            response: response,
-            json: JSON.parse(response),
-            jsontime: JSON.parse(response)['timestamp'],
-            jsonvalid: JSON.parse(response)['timestamp'] > new Date(Date.now() - 15 * 60 * 60 * 1000)
-          });
+        if (json && new Date(json['timestamp']) > new Date(Date.now() - minTimer * 60 * 60 * 1000)) {
           return JSON.parse(response)
         }
       }
 
-      // let latestLesson = await Logging.find({
-      //   where: {
-      //     id: user.email,
-      //     accesslog_urlbase: {
-      //       'in': [
-      //         'https://chinesepod.com/lessons/api',
-      //         'https://ws.chinesepod.com:444/1.0.0/instances/prod/lessons/get-lesson-detail',
-      //         'https://server4.chinesepod.com:444/1.0.0/instances/prod/lessons/get-lesson-detail',
-      //         'https://server4.chinesepod.com:444/1.0.0/instances/prod/lessons/get-dialogue'
-      //       ]}
-      //   },
-      //   select: ['accesslog_url', 'createdAt'],
-      //   sort: 'createdAt DESC',
-      //   limit: 1
-      // });
-      //
-      // let latestJSLesson = await Logging.find({
-      //   where: {
-      //     id: user.email,
-      //     accesslog_urlbase: 'https://www.chinesepod.com/api/v1/lessons/get-dialogue'
-      //   },
-      //   select: ['accesslog_url', 'createdAt'],
-      //   sort: 'createdAt DESC',
-      //   limit: 1
-      // });
 
       let latestLesson = (await sails.sendNativeQuery(`
       SELECT accesslog_url, accesslog_time 
@@ -179,8 +150,6 @@ module.exports = {
       }
 
       let latestStudiedLesson = [];
-
-      // sails.log.info({php:latestLesson, js: latestJSLesson, jsTime: new Date(latestJSLesson[0]['createdAt']), phpTime: new Date(latestLesson[0]['createdAt']),time: new Date(latestJSLesson[0]['createdAt']) > new Date(latestLesson[0]['createdAt'])});
 
       try {
         if (latestJSLesson && latestJSLesson[0] && latestJSLesson[0]['createdAt'] && latestLesson && latestLesson[0] && latestLesson[0]['createdAt']) {
