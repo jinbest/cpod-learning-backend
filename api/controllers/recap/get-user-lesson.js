@@ -104,6 +104,8 @@ module.exports = {
 
       let response = client.get(user.email);
 
+      sails.log.info({response: response, json: JSON.parse(response)});
+
       if (response && JSON.parse(response) && JSON.parse(response)['timestamp'] > new Date(Date.now() - 15 * 60 * 60 * 1000)) {
         sails.log.info({response: response, json: JSON.parse(response), jsontime: JSON.parse(response)['timestamp'] , jsonvalid: JSON.parse(response)['timestamp'] > new Date(Date.now() - 15 * 60 * 60 * 1000)})
         return JSON.parse(response)
