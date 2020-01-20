@@ -118,7 +118,11 @@ module.exports = {
       try {
         if (latestJSLesson && latestJSLesson[0] && latestJSLesson[0]['createdAt'] && latestLesson && latestLesson[0] && latestLesson[0]['createdAt']) {
 
-          if (new Date(latestJSLesson[0]['createdAt']) > new Date(latestLesson[0]['createdAt'])) {
+          sails.log.info({coded: new Date(latestLesson[0]['createdAt'] + ' EST'), js: new Date(latestJSLesson[0]['createdAt']), php: new Date(latestLesson[0]['createdAt']), hk: new Date()});
+
+          sails.log.info({php: latestLesson, js: latestJSLesson});
+
+          if (new Date(latestJSLesson[0]['createdAt']) > new Date(latestLesson[0]['createdAt'] + ' EST')) {
 
             latestStudiedLesson = latestJSLesson[0]['accesslog_url'].split('lessonId=')[1]
 
