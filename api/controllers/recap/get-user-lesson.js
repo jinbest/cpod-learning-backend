@@ -51,6 +51,9 @@ module.exports = {
     const redis = require("redis"),
       client = redis.createClient('redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/3');
 
+    const {promisify} = require('util');
+    const getAsync = promisify(client.get).bind(client);
+
     //TODO REMOVE THIS DUMMY API CALL PROCESS
     if (testers.includes(session.email)) {
       let currentHour = new Date(new Date() - 4 * 60 * 60 * 1000).getHours(); //NY Time
@@ -102,7 +105,7 @@ module.exports = {
       //Connect Sails Session to PHP API Session
       this.req.session.userId = user.id;
 
-      let response = client.get(user.email);
+      let response = await getAsync(user.email);
 
       sails.log.info({response: response, json: JSON.parse(response)});
 
@@ -260,6 +263,8 @@ module.exports = {
       };
 
       client.set(user.email, JSON.stringify(returnData));
+
+      client.end(true);
 
       return returnData
 
