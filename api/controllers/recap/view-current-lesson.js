@@ -88,22 +88,55 @@ module.exports = {
               'https://server4.chinesepod.com:444/1.0.0/instances/prod/lessons/get-dialogue'
             ]}
         },
-        select: ['accesslog_url'],
+        select: ['accesslog_url', 'createdAt'],
         sort: 'createdAt DESC',
         limit: 1
       });
 
-      if (!latestLesson){
+      let latestJSLesson = await Logging.find({
+        where: {
+          id: user.email,
+          accesslog_urlbase: 'https://www.chinesepod.com/api/v1/lessons/get-dialogue'
+        },
+        select: ['accesslog_url', 'createdAt'],
+        sort: 'createdAt DESC',
+        limit: 1
+      });
+
+      if (!latestLesson && !latestJSLesson){
         return {
-          syncing: false,
-          error: 'No Lesson Available. Please try again Later.'
+          message: 'No Lesson Available',
+          lessonId: `0000`,
+          emailAddress: session.email,
         }
       }
 
       let latestStudiedLesson = [];
 
+      // sails.log.info({php:latestLesson, js: latestJSLesson, jsTime: new Date(latestJSLesson[0]['createdAt']), phpTime: new Date(latestLesson[0]['createdAt']),time: new Date(latestJSLesson[0]['createdAt']) > new Date(latestLesson[0]['createdAt'])});
+
       try {
-        latestStudiedLesson = latestLesson[0]['accesslog_url'].split('v3_id=')[1].split('&')[0];
+        if (latestJSLesson && latestJSLesson[0] && latestJSLesson[0]['createdAt'] && latestLesson && latestLesson[0] && latestLesson[0]['createdAt']) {
+
+          if (new Date(latestJSLesson[0]['createdAt']) > new Date(latestLesson[0]['createdAt'])) {
+
+            latestStudiedLesson = latestJSLesson[0]['accesslog_url'].split('lessonId=')[1]
+
+          } else {
+
+            latestStudiedLesson = latestLesson[0]['accesslog_url'].split('v3_id=')[1].split('&')[0];
+
+          }
+
+        } else if (latestJSLesson && latestJSLesson[0] && latestJSLesson[0]['accesslog_url']) {
+
+          latestStudiedLesson = latestJSLesson[0]['accesslog_url'].split('lessonId=')[1]
+
+        } else if (latestLesson && latestLesson[0] && latestLesson[0]['accesslog_url']) {
+
+          latestStudiedLesson = latestLesson[0]['accesslog_url'].split('v3_id=')[1].split('&')[0]; // Switching to latest Log
+
+        }
       } catch (e) {
         sails.log.error(e);
         return {

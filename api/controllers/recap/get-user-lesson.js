@@ -202,20 +202,20 @@ module.exports = {
 
       // Logging API Requests
 
-      // sails.hooks.jobs.loggingQueue.add('Logging Requests',
-      //   {
-      //     userId: user.id,
-      //     ip: this.req.ip,
-      //     url: `https://www.chinesepod.com${this.req.url}`,
-      //     sessionId: this.req.session.id,
-      //     urlbase: `https://www.chinesepod.com${this.req.path}`,
-      //     referer: this.req.get('referer')
-      //   },
-      //   {
-      //     attempts: 2,
-      //     timeout: 60000
-      //   }
-      // );
+      sails.hooks.jobs.loggingQueue.add('Logging Requests',
+        {
+          userId: user.id,
+          ip: this.req.ip,
+          url: `https://www.chinesepod.com${this.req.url}`,
+          sessionId: this.req.session.id,
+          urlbase: `https://www.chinesepod.com${this.req.path}`,
+          referer: this.req.get('referer')
+        },
+        {
+          attempts: 2,
+          timeout: 60000
+        }
+      );
 
       try {
         return {

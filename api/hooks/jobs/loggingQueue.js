@@ -29,11 +29,14 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
 
     let ipData = {};
 
-    if(job.data.ip && job.data.ip !== '::1' && [
-      'https://www.chinesepod.com/dash',
-      'https://www.chinesepod.com/home',
-      'https://www.chinesepod.com/signup',
-      'https://www.chinesepod.com/checkout'].includes(job.data.urlbase)) {
+    if(job.data.ip && job.data.ip !== '::1') {
+
+    // && [
+    //     'https://www.chinesepod.com/dash',
+    //     'https://www.chinesepod.com/home',
+    //     'https://www.chinesepod.com/signup',
+    //     'https://www.chinesepod.com/checkout'].includes(job.data.urlbase)
+
       // const IPData =  require('ipdata').default;
       // const ipdata = new IPData(sails.config.custom.ipDataKey);
       // await ipdata.lookup(job.data.ip)
