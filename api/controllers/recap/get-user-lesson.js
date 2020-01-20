@@ -117,9 +117,9 @@ module.exports = {
           sails.log.error(e)
         }
 
-        if (json && new Date(json['timestamp']) > new Date(Date.now() - minTimer * 60 * 60 * 1000)) {
+        if (json && new Date(json['timestamp']) > new Date(Date.now() - minTimer * 60 * 1000)) {
 
-          sails.log.info({result: new Date(json['timestamp']) > new Date(Date.now() - minTimer * 60 * 60 * 1000), killdate: new Date(Date.now() - minTimer * 60 * 1000), redisdate: new Date(json['timestamp'])});
+          sails.log.info({result: new Date(json['timestamp']) > new Date(Date.now() - minTimer * 60 * 1000), killdate: new Date(Date.now() - minTimer * 60 * 1000), redisdate: new Date(json['timestamp'])});
 
           return JSON.parse(response)
         }
