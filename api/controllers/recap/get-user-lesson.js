@@ -48,6 +48,9 @@ module.exports = {
       throw 'invalid'
     }
 
+    const redis = require("redis"),
+      client = redis.createClient('redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/3');
+
     //TODO REMOVE THIS DUMMY API CALL PROCESS
     if (testers.includes(session.email)) {
       let currentHour = new Date(new Date() - 4 * 60 * 60 * 1000).getHours(); //NY Time
@@ -98,6 +101,13 @@ module.exports = {
       }
       //Connect Sails Session to PHP API Session
       this.req.session.userId = user.id;
+
+      let response = client.get(user.email);
+
+      if (response && JSON.parse(response) && JSON.parse(response)['timestamp'] > new Date(Date.now() - 15 * 60 * 60 * 1000)) {
+        sails.log.info({response: response, json: JSON.parse(response), jsontime: JSON.parse(response)['timestamp'] , jsonvalid: JSON.parse(response)['timestamp'] > new Date(Date.now() - 15 * 60 * 60 * 1000)})
+        return JSON.parse(response)
+      }
 
       // let latestLesson = await Logging.find({
       //   where: {
@@ -220,38 +230,37 @@ module.exports = {
 
       // Logging API Requests
 
-      sails.hooks.jobs.loggingQueue.add('Logging Requests',
-        {
-          userId: user.id,
-          ip: this.req.ip,
-          url: `https://www.chinesepod.com${this.req.url}`,
-          sessionId: this.req.session.id,
-          urlbase: `https://www.chinesepod.com${this.req.path}`,
-          referer: this.req.get('referer')
-        },
-        {
-          attempts: 2,
-          timeout: 60000
-        }
-      );
+      // sails.hooks.jobs.loggingQueue.add('Logging Requests',
+      //   {
+      //     userId: user.id,
+      //     ip: this.req.ip,
+      //     url: `https://www.chinesepod.com${this.req.url}`,
+      //     sessionId: this.req.session.id,
+      //     urlbase: `https://www.chinesepod.com${this.req.path}`,
+      //     referer: this.req.get('referer')
+      //   },
+      //   {
+      //     attempts: 2,
+      //     timeout: 60000
+      //   }
+      // );
 
-      try {
-        return {
-          lessonTitle: content ? content.title : 'ChinesePod Lesson',
-          lessonId: latestStudiedLesson,
-          lessonImg: lessonImg,
-          emailAddress: session.email,
-          charSet: charSet,
-          subscription: await sails.helpers.users.getAccessType(user.id),
-        };
-      } catch (e) {
-        sails.log.error(e);
-        return {
-          lessonId: latestStudiedLesson,
-          charSet: charSet,
-          subscription: await sails.helpers.users.getAccessType(user.id),
-        };
-      }
+      let access = await sails.helpers.users.getAccessType(user.id);
+
+      let returnData = {
+        lessonTitle: content ? content.title : 'ChinesePod Lesson',
+        lessonId: latestStudiedLesson,
+        lessonImg: lessonImg,
+        emailAddress: session.email,
+        charSet: charSet,
+        subscription: access ? access : 'Free',
+        timestamp: new Date()
+      };
+
+      client.set(user.email, returnData);
+
+      return returnData
+
     }
   }
 };
