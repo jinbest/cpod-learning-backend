@@ -107,11 +107,23 @@ module.exports = {
 
       let response = await getAsync(user.email);
 
-      sails.log.info({response: response, json: JSON.parse(response)});
+      if (response) {
+        let json = false;
+        try {
+          json = JSON.parse(response);
+        } catch (e) {
+          sails.log.error(e)
+        }
 
-      if (response && JSON.parse(response) && JSON.parse(response)['timestamp'] > new Date(Date.now() - 15 * 60 * 60 * 1000)) {
-        sails.log.info({response: response, json: JSON.parse(response), jsontime: JSON.parse(response)['timestamp'] , jsonvalid: JSON.parse(response)['timestamp'] > new Date(Date.now() - 15 * 60 * 60 * 1000)})
-        return JSON.parse(response)
+        if (json && new Date(json['timestamp']) > new Date(Date.now() - 15 * 60 * 60 * 1000)) {
+          sails.log.info({
+            response: response,
+            json: JSON.parse(response),
+            jsontime: JSON.parse(response)['timestamp'],
+            jsonvalid: JSON.parse(response)['timestamp'] > new Date(Date.now() - 15 * 60 * 60 * 1000)
+          });
+          return JSON.parse(response)
+        }
       }
 
       // let latestLesson = await Logging.find({
