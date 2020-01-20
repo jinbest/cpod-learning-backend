@@ -69,7 +69,7 @@ module.exports = Object.assign({}, PRODUCTION_CONFIG, {
   }),
 
   log: {
-    level: 'info'
+    level: 'silly'
   },
 
   http: {
