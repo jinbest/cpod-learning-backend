@@ -257,7 +257,7 @@ module.exports = {
         timestamp: new Date()
       };
 
-      client.set(user.email, returnData);
+      client.set(user.email, JSON.stringify(returnData));
 
       return returnData
 
