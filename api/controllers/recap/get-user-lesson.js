@@ -125,7 +125,7 @@ module.exports = {
         limit: 1
       });
 
-      if (!latestLesson){
+      if (!latestLesson && !latestJSLesson){
         return {
           message: 'No Lesson Available',
           lessonId: `0000`,

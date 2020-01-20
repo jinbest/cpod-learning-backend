@@ -17,7 +17,7 @@ module.exports = {
 
   fn: async function () {
 
-    const userId = sails.config.environment === 'development' ? 1027014 : this.req.session.userId; //1016995
+    const userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId; //1016995
 
     if(!userId) {
       this.res.redirect('https://www.chinesepod.com/login')
