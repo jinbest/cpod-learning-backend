@@ -84,6 +84,11 @@ module.exports = {
 
     },
 
+    backuplogging: {
+      adapter: require('sails-mysql'),
+      url: 'mysql://cpoddba:fr0t3ll@@cpoddbbak.cx6o0r5nidjs.us-east-1.rds.amazonaws.com:3306/chinesepod_logging'
+    },
+
   },
 
 
