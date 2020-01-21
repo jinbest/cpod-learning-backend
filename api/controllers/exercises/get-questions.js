@@ -36,6 +36,9 @@ module.exports = {
       question.options = convert.xml2js(question.options, {compact: true, ignoreAttributes: true});
       question.options_2 = convert.xml2js(question.options_2, {compact: true, ignoreAttributes: true});
       question.options_3 = convert.xml2js(question.options_3, {compact: true, ignoreAttributes: true});
+
+      sails.log.info(question);
+
       switch (question.type_id) {
         case 4:
           question.question = {
@@ -87,6 +90,9 @@ module.exports = {
             p: question.options_3.type_e.data.sentence_translation['_text'],
             e: question.options.type_e.data.sentence_english['_text']
           };
+
+          sails.log.info(question.options.type_e.data);
+
           question.options.type_e.data.options.forEach((choice, index) => {
             question.question.choices.push({
               id: parseInt(choice.tag['_text']),
