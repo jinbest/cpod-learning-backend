@@ -7,7 +7,7 @@ module.exports.apianalytics = {
 
     let userId = null;
 
-    if (req.session.userId) {
+    if (req.session && req.session.userId) {
       if (req.session.userId.data) {
         userId = req.session.userId.data
       } else {
@@ -21,7 +21,7 @@ module.exports.apianalytics = {
           userId: userId,
           ip: req.ip,
           url: `https://www.chinesepod.com${req.url}`,
-          sessionId: req.session.id,
+          sessionId: req.session ? req.session.id : '',
           urlbase: `https://www.chinesepod.com${req.path}`,
           referer: req.get('referer')
         },

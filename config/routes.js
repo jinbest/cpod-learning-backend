@@ -39,6 +39,7 @@ module.exports.routes = {
   'GET /get-started':                                    { action: 'entrance/view-signup' },
   'GET /signup':                                         { action: 'entrance/view-signup' },
   'GET /free-signup':                                    { action: 'entrance/view-free-signup' },
+  'GET /signup-free':                                    { action: 'view-homepage-or-redirect' },
   'GET /login':                                          { action: 'entrance/view-login' },
   'GET /email/confirm':                                  { action: 'entrance/confirm-email' },
   'GET /logout':                                         { action: 'account/logout' },
@@ -102,6 +103,7 @@ module.exports.routes = {
   'GET /holiday-offer-success/:code?':                   { action: 'promotions/view-expired-promo'},
   'GET /cheers/:code?':                                  { action: 'promotions/view-expired-promo'},
   'GET /australia-day/:code?':                           { action: 'promotions/view-cheers-promo'},
+  'GET /CNY-2020/:code?':                                { action: 'promotions/view-cny-promo'},
 
   //DICTIONARY
   'GET /dictionary-testing/:query?':                             { action: 'view-dictionary' },
