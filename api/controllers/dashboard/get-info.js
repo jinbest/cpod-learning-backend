@@ -57,39 +57,28 @@ module.exports = {
 
     let access = await sails.helpers.users.getAccessType(inputs.userId);
 
+    if (access !== 'premium') {
+      try {
 
-    // PROMO PERIOD TODO Remove this once invalid
-    const currentTime = new Date();
+        let ipCurrent = {};
+        let ipSignup = {};
 
-    //TODO ADD GEOIP UPGRADE TO NON-US ACCOUNTS AND SIGNUP NOT FROM US
+        const CoreCountries = ['AE','AT','AU','CA','BE','CH','DE','DK','FI','FR','HK','JP','NL','NO','QA','SE','SG','UK','US'];
 
-    try {
+        const geoip = require('geoip-country');
 
-      let ipCurrent = {};
-      let ipSignup = {};
+        if (this.req.ip && this.req.ip !== '::1') {
+          ipCurrent = geoip.lookup(this.req.ip);
+        }
 
-      const geoip = require('geoip-country');
+        if (ipCurrent && !CoreCountries.includes(ipCurrent.country)) {
+          access = 'premium'
+        }
 
-      if (this.req.ip && this.req.ip !== '::1') {
-        ipCurrent = geoip.lookup(this.req.ip);
+      } catch (e) {
+        sails.hooks.bugsnag.notify(e)
       }
-
-      if (this.req.me && this.req.me.ip_country && this.req.me.ip_country.toUpperCase() !== 'UNITED STATES') {
-        access = 'premium'
-      }
-
-      if (ipCurrent && ipCurrent.country !== 'US') {
-        access = 'premium'
-      }
-
-    } catch (e) {
-      sails.hooks.bugsnag.notify(e)
     }
-
-    if (currentTime < new Date('2020-01-01') && access !== 'admin') {
-      access = 'premium'
-    }
-
 
     //TODO Killing upgrade based on low-activity
 
