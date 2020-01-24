@@ -233,32 +233,35 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
 
         if (job.data.group === 'asia' && (geo && asiaCountries.includes(geo.country)) || (asiaCountries.includes(user.country))) {
 
+          sails.hooks.bugsnag.notify(`Asia Branch ${user.email}`);
 
-          let log = await EmailLogs.find({user_id: job.data.userId, email_id: {in: ['email-susie-inactive-user-europe', 'email-alice-inactive-user-asia']}});
-
-          if (!log) {
-            sails.hooks.bugsnag.notify('Send Email to Asia');
-
-            userEmailQueue.add('SendEmail', {userId: user.id, email: user.email, user: user, emailType: 'email-alice-inactive-user-asia', country: geo.country})
-
-          }
+          // let log = await EmailLogs.find({user_id: job.data.userId, email_id: {in: ['email-susie-inactive-user-europe', 'email-alice-inactive-user-asia']}});
+          //
+          // if (!log) {
+          //   sails.hooks.bugsnag.notify('Send Email to Asia');
+          //
+          //   userEmailQueue.add('SendEmail', {userId: user.id, email: user.email, user: user, emailType: 'email-alice-inactive-user-asia', country: geo.country})
+          //
+          // }
 
         } else if (job.data.group === 'europe' && (geo && europeanCountries.includes(geo.country) || europeanCountries.includes(user.country))){
 
+          sails.hooks.bugsnag.notify(`Europe Branch ${user.email}`);
 
-          let log = await EmailLogs.find({user_id: job.data.userId, email_id: {in: ['email-susie-inactive-user-europe', 'email-alice-inactive-user-asia']}});
 
-          if (!log) {
-            sails.hooks.bugsnag.notify('Send Email to Europe');
-
-            userEmailQueue.add('SendEmail', {userId: user.id, email: user.email, user: user, emailType: 'email-susie-inactive-user-europe', country: geo.country})
-
-          }
+          // let log = await EmailLogs.find({user_id: job.data.userId, email_id: {in: ['email-susie-inactive-user-europe', 'email-alice-inactive-user-asia']}});
+          //
+          // if (!log) {
+          //   sails.hooks.bugsnag.notify('Send Email to Europe');
+          //
+          //   userEmailQueue.add('SendEmail', {userId: user.id, email: user.email, user: user, emailType: 'email-susie-inactive-user-europe', country: geo.country})
+          //
+          // }
 
 
         } else if (job.data.group === 'testing') {
 
-          console.log(JSON.stringify({...user, ...job.data}));
+          sails.hooks.bugsnag.notify(`Testing Branch ${user.email}`);
 
         }
 
