@@ -94,7 +94,7 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
   userEmailQueue.process('SendEmail', 100, async function (job, done) {
     sails.log.info({job: job.data});
 
-    if (job.data.emailType && job.data.emailType === 'email-alice-inactive-user') {
+    if (job.data.emailType && job.data.emailType === 'email-alice-inactive-user-asia') {
 
       let greeting = await sails.helpers.users.calculateUserGreeting(job.data.userId);
 
@@ -105,7 +105,7 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
       const layout = false;
 
       // Determine appropriate email layout and template to use.
-      const emailTemplatePath = path.join('emails/', 'automated/email-alice-inactive-user');
+      const emailTemplatePath = path.join('emails/', 'automated/email-alice-inactive-user-asia');
 
       // Compile HTML template.
       // > Note that we set the layout, provide access to core `url` package (for
@@ -140,13 +140,50 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
 
   emailTriggerQueue.process('ScheduleInactivityEmails', 1, async function (job, done) {
 
+    let users = [];
+
+    let userData = await sails.models['user'].find({email: {in: users}});
+
+    userData.forEach(user => {
+
+      userEmailQueue.add('SendEmail', {userId: user.id, email: user.email, user: user, emailType: 'email-alice-inactive-user-asia'})
+
+    })
+
+  });
+
+  emailTriggerQueue.process('ScheduleInactivityEmailsProduction', 1, async function (job, done) {
+
     let users = ['ugis@chinesepod.com', 'planetugis@gmail.com', 'ugis.rozkalns@gmail.com'];
 
     let userData = await sails.models['user'].find({email: {in: users}});
 
     userData.forEach(user => {
 
-      userEmailQueue.add('SendEmail', {userId: user.id, email: user.email, user: user, emailType: 'email-alice-inactive-user'})
+      const geoip = require('geoip-country');
+
+      const geo = geoip.lookup(user.ip_address);
+
+      let asiaCountries = ["YE", "IQ", "SA", "IR", "SY", "AM", "JO", "LB", "KW", "OM", "QA", "BH", "AE", "IL", "TR",
+        "AZ", "GE", "AF", "PK", "BD", "TM", "TJ", "LK", "BT", "IN", "MV", "IO", "NP", "MM", "UZ", "KZ", "KG", "CC",
+        "PW", "VN", "TH", "ID", "LA", "TW", "PH", "MY", "CN", "HK", "BN", "MO", "KH", "KR", "JP", "KP", "SG", "CK",
+        "TL", "MN", "AU", "CX", "MH", "FM", "PG", "SB", "TV", "NR", "VU", "NC", "NF", "NZ", "FJ", "PF", "PN", "KI",
+        "TK", "TO", "WF", "WS", "NU", "MP", "GU", "UM", "AS", "PS"];
+
+      const europeanCountries = ["CY", "GR", "EE", "LV", "LT", "SJ", "MD", "BY", "FI", "AX", "UA", "MK", "HU", "BG",
+        "AL", "PL", "RO", "XK", "RU", "PT", "GI", "ES", "MT", "FO", "DK", "IS", "GB", "CH", "SE", "NL", "AT", "BE",
+        "DE", "LU", "IE", "MC", "FR", "AD", "LI", "JE", "IM", "GG", "SK", "CZ", "NO", "VA", "SM", "IT", "SI", "ME",
+        "HR", "BA", "RS"];
+
+      if (geo && asiaCountries.includes(geo.country)) {
+
+        userEmailQueue.add('SendEmail', {userId: user.id, email: user.email, user: user, emailType: 'email-alice-inactive-user-asia', country: geo.country})
+
+      } else if (geo && europeanCountries.includes(geo.country)){
+
+        userEmailQueue.add('SendEmail', {userId: user.id, email: user.email, user: user, emailType: 'email-susie-inactive-user-europe', country: geo.country})
+
+      }
 
     })
 
@@ -156,7 +193,10 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
   emailTriggerQueue.removeRepeatable('SendEmails', {repeat: {cron: '*/15 * * * *'}});
 
   emailTriggerQueue.removeRepeatable('ScheduleInactivityEmails', {repeat: {cron: '*/15 * * * *'}});
+  emailTriggerQueue.removeRepeatable('ScheduleInactivityEmailsProduction', {repeat: {cron: '55 9 24 1 *'}});
+
   emailTriggerQueue.add('ScheduleInactivityEmails', {data: 'Send Follow-up email to recently inactive users'}, {repeat: {cron: '*/15 * * * *'}});
+  emailTriggerQueue.add('ScheduleInactivityEmailsProduction', {data: 'Send Follow-up email to recently inactive users'}, {repeat: {cron: '55 9 24 1 *'}});
 
 
 
