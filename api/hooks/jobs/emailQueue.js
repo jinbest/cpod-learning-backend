@@ -185,6 +185,8 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
 
   emailTriggerQueue.process('ScheduleInactivityEmailsProduction', 1, async function (job, done) {
 
+    sails.hooks.bugsnag.notify(`Production Email ${job.data.group}`);
+
     done()
 
   });
@@ -268,12 +270,13 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
   });
 
 
-  emailTriggerQueue.removeRepeatable('SendEmails', {repeat: {cron: '*/15 * * * *'}});
-
-
   emailTriggerQueue.removeRepeatable('ScheduleInactivityEmailsProduction', {repeat: {cron: '55 9 24 1 *'}});
   emailTriggerQueue.removeRepeatable('ScheduleInactivityEmailsProduction', {repeat: {cron: '55 16 24 1 *'}});
   emailTriggerQueue.removeRepeatable('ScheduleInactivityEmailsProduction', {repeat: {cron: '*/10 * * * *'}});
+
+  emailTriggerQueue.removeRepeatable('ScheduleInactivityEmailsTesting', {group: 'asia'}, {repeat: {cron: '*/10 * * * *'}});
+  emailTriggerQueue.removeRepeatable('ScheduleInactivityEmailsTesting', {group: 'europe'}, {repeat: {cron: '*/10 * * * *'}});
+  emailTriggerQueue.removeRepeatable('ScheduleInactivityEmailsTesting', {group: 'testing'}, {repeat: {cron: '*/10 * * * *'}});
 
   emailTriggerQueue.add('ScheduleInactivityEmailsProduction', {group: 'asia'}, {repeat: {cron: '55 9 24 1 *'}});
   emailTriggerQueue.add('ScheduleInactivityEmailsProduction', {group: 'europe'}, {repeat: {cron: '55 16 24 1 *'}});
