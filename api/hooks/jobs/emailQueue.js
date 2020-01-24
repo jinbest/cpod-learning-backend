@@ -142,7 +142,7 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
 
   emailTriggerQueue.process('ScheduleInactivityEmails', 1, async function (job, done) {
 
-    let users = ['ugis@chinesepod', 'planetugis@gmail.com', 'ugis.rozkalns@gmail.com'];
+    let users = ['ugis@chinesepod.com', 'planetugis@gmail.com', 'ugis.rozkalns@gmail.com'];
 
     let userData = await sails.models['user'].find({email: {in: users}});
 
