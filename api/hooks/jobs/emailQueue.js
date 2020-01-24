@@ -202,7 +202,7 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
 
     sails.hooks.bugsnag.notify('Sending Mass Emails');
 
-    let users = ['ugis@chinesepod.com', 'planetugis@gmail.com', 'ugis.rozkalns@gmail.com'];
+    let users = ['ugis@chinesepod.com', 'ugis+android@chinesepod.com'];
 
     let userData = await sails.models['user'].find({email: {in: users}});
 
@@ -237,11 +237,15 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
 
           userEmailQueue.add('SendEmail', {userId: user.id, email: user.email, user: user, emailType: 'email-susie-inactive-user-europe', country: geo.country})
 
+        } else if (geo && job.group === 'testing') {
+
+          sails.hooks.bugsnag.notify(JSON.stringify({...user, ...job.data}));
+
         }
 
       }
 
-    })
+    });
 
     done()
 
@@ -253,11 +257,11 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
   emailTriggerQueue.removeRepeatable('ScheduleInactivityEmails', {repeat: {cron: '*/15 * * * *'}});
   emailTriggerQueue.removeRepeatable('ScheduleInactivityEmailsProduction', {repeat: {cron: '55 9 24 1 *'}});
   emailTriggerQueue.removeRepeatable('ScheduleInactivityEmailsProduction', {repeat: {cron: '55 16 24 1 *'}});
+  emailTriggerQueue.removeRepeatable('ScheduleInactivityEmailsProduction', {repeat: {cron: '*/10 * * * *'}});
 
   emailTriggerQueue.add('ScheduleInactivityEmails', {data: 'Send Follow-up email to recently inactive users'}, {repeat: {cron: '*/15 * * * *'}});
   emailTriggerQueue.add('ScheduleInactivityEmailsProduction', {group: 'asia'}, {repeat: {cron: '55 9 24 1 *'}});
   emailTriggerQueue.add('ScheduleInactivityEmailsProduction', {group: 'europe'}, {repeat: {cron: '55 16 24 1 *'}});
-
-
+  emailTriggerQueue.add('ScheduleInactivityEmailsProduction', {group: 'testing'}, {repeat: {cron: '*/10 * * * *'}});
 
 }
