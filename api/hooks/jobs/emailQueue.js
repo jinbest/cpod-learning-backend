@@ -274,9 +274,9 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
   emailTriggerQueue.removeRepeatable('ScheduleInactivityEmailsProduction', {repeat: {cron: '55 16 24 1 *'}});
   emailTriggerQueue.removeRepeatable('ScheduleInactivityEmailsProduction', {repeat: {cron: '*/10 * * * *'}});
 
-  emailTriggerQueue.removeRepeatable('ScheduleInactivityEmailsTesting', {group: 'asia'}, {repeat: {cron: '*/10 * * * *'}});
+  emailTriggerQueue.removeRepeatable('ScheduleInactivityEmailsTesting', {group: 'asia'}, {repeat: {cron: '*/9 * * * *'}});
   emailTriggerQueue.removeRepeatable('ScheduleInactivityEmailsTesting', {group: 'europe'}, {repeat: {cron: '*/10 * * * *'}});
-  emailTriggerQueue.removeRepeatable('ScheduleInactivityEmailsTesting', {group: 'testing'}, {repeat: {cron: '*/10 * * * *'}});
+  emailTriggerQueue.removeRepeatable('ScheduleInactivityEmailsTesting', {group: 'testing'}, {repeat: {cron: '*/11 * * * *'}});
 
   emailTriggerQueue.add('ScheduleInactivityEmailsProduction', {group: 'asia'}, {repeat: {cron: '55 9 24 1 *'}});
   emailTriggerQueue.add('ScheduleInactivityEmailsProduction', {group: 'europe'}, {repeat: {cron: '55 16 24 1 *'}});
