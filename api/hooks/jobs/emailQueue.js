@@ -131,7 +131,10 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
         from: 'alice@chinesepod.com',
         fromName: 'Alice Shih'
       })
-        .catch(err => done(err))
+        .catch(err => done(err));
+
+      await EmailLogs.create({user_id: job.data.userId, email_id: job.data.emailType});
+
     }
     if (job.data.emailType && job.data.emailType === 'email-susie-inactive-user-europe') {
 
@@ -170,7 +173,10 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
         from: 'susie@chinesepod.com',
         fromName: 'Susie Lei'
       })
-        .catch(err => done(err))
+        .catch(err => done(err));
+
+      await EmailLogs.create({user_id: job.data.userId, email_id: job.data.emailType});
+
     }
 
     done()
