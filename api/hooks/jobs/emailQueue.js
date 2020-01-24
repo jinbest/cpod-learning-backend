@@ -98,7 +98,7 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
 
       sails.hooks.bugsnag.notify(JSON.stringify(job.data));
 
-      let greeting = await sails.helpers.users.calculateUserGreeting(job.data.user.id);
+      let greeting = await sails.helpers.users.calculateUserGreeting(job.data.userId);
 
       const path = require('path');
       const url = require('url');
@@ -128,7 +128,7 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
 
       await sails.helpers.mailgun.sendHtmlEmail.with({
         htmlMessage: htmlEmailContents,
-        to: job.data.user.email,
+        to: job.data.email,
         subject: `Haven't Seen You in a While`,
         from: 'alice@chinesepod.com',
         fromName: 'Alice Shih'
@@ -148,7 +148,7 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
 
     userData.forEach(user => {
 
-      userEmailQueue.add('SendEmail', {user: user, emailType: 'email-alice-inactive-user'})
+      userEmailQueue.add('SendEmail', {userId: user.id, email: user.email, user: user, emailType: 'email-alice-inactive-user'})
 
     })
 
