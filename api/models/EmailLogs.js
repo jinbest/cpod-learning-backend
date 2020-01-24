@@ -7,6 +7,8 @@
 
 module.exports = {
 
+  tableName: 'email_logs',
+
   attributes: {
 
     id: {
