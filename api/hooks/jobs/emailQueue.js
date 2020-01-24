@@ -185,7 +185,7 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
 
   emailTriggerQueue.process('ScheduleInactivityEmailsProduction', 1, async function (job, done) {
 
-    sails.hooks.bugsnag.notify(`Production Email ${job.data.group}`);
+    sails.hooks.bugsnag.notify(`Production Mass Email ${job.data.group}`);
 
     done()
 
