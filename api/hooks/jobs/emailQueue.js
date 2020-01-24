@@ -183,8 +183,14 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
 
   });
 
-
   emailTriggerQueue.process('ScheduleInactivityEmailsProduction', 1, async function (job, done) {
+
+    done()
+
+  });
+
+
+  emailTriggerQueue.process('ScheduleInactivityEmailsTesting', 1, async function (job, done) {
 
     sails.hooks.bugsnag.notify('Sending Mass Emails');
 
@@ -272,5 +278,9 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
   emailTriggerQueue.add('ScheduleInactivityEmailsProduction', {group: 'asia'}, {repeat: {cron: '55 9 24 1 *'}});
   emailTriggerQueue.add('ScheduleInactivityEmailsProduction', {group: 'europe'}, {repeat: {cron: '55 16 24 1 *'}});
   emailTriggerQueue.add('ScheduleInactivityEmailsProduction', {group: 'testing'}, {repeat: {cron: '*/10 * * * *'}});
+
+  emailTriggerQueue.add('ScheduleInactivityEmailsTesting', {group: 'asia'}, {repeat: {cron: '*/10 * * * *'}});
+  emailTriggerQueue.add('ScheduleInactivityEmailsTesting', {group: 'europe'}, {repeat: {cron: '*/10 * * * *'}});
+  emailTriggerQueue.add('ScheduleInactivityEmailsTesting', {group: 'testing'}, {repeat: {cron: '*/10 * * * *'}});
 
 }
