@@ -1,7 +1,7 @@
 {
   "name": "ChinesePod",
   "private": true,
-  "version": "0.4.20",
+  "version": "0.4.21",
   "description": "ChinesePod Javascript Stack",
   "keywords": [],
   "dependencies": {
