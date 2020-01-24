@@ -247,7 +247,7 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
 
         } else if (job.data.group === 'testing') {
 
-          sails.log.info(JSON.stringify({...user, ...job.data}));
+          console.log(JSON.stringify({...user, ...job.data}));
 
         }
 
