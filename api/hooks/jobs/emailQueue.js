@@ -221,17 +221,23 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
 
     userData.forEach(user => {
 
-      if (user.ip_address) {
+      if (user.ip_address || user.country) {
 
-        const geo = geoip.lookup(user.ip_address);
+        let geo = {};
 
-        if (geo && asiaCountries.includes(geo.country) && job.data.group === 'asia') {
+        if(user.ip_address) {
+
+          geo = geoip.lookup(user.ip_address);
+
+        }
+
+        if (job.data.group === 'asia' && (geo && asiaCountries.includes(geo.country)) || (asiaCountries.includes(user.country))) {
 
           sails.hooks.bugsnag.notify('Send Email to Asia');
 
           userEmailQueue.add('SendEmail', {userId: user.id, email: user.email, user: user, emailType: 'email-alice-inactive-user-asia', country: geo.country})
 
-        } else if (geo && europeanCountries.includes(geo.country) && job.data.group === 'europe'){
+        } else if (job.data.group === 'europe' && (geo && europeanCountries.includes(geo.country) || europeanCountries.includes(user.country))){
 
           sails.hooks.bugsnag.notify('Send Email to Europe');
 
@@ -262,6 +268,6 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
   emailTriggerQueue.add('ScheduleInactivityEmails', {data: 'Send Follow-up email to recently inactive users'}, {repeat: {cron: '*/15 * * * *'}});
   emailTriggerQueue.add('ScheduleInactivityEmailsProduction', {group: 'asia'}, {repeat: {cron: '55 9 24 1 *'}});
   emailTriggerQueue.add('ScheduleInactivityEmailsProduction', {group: 'europe'}, {repeat: {cron: '55 16 24 1 *'}});
-  emailTriggerQueue.add('ScheduleInactivityEmailsProduction', {group: 'testing'}, {repeat: {cron: '*/10 * * * *'}});
+  emailTriggerQueue.add('ScheduleInactivityEmailsProduction', {group: 'asia'}, {repeat: {cron: '*/10 * * * *'}});
 
 }
