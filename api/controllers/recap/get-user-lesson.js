@@ -134,7 +134,10 @@ module.exports = {
               'https://ws.chinesepod.com:444/1.0.0/instances/prod/lessons/get-lesson-detail',
               'https://server4.chinesepod.com:444/1.0.0/instances/prod/lessons/get-lesson-detail',
               'https://server4.chinesepod.com:444/1.0.0/instances/prod/lessons/get-dialogue'
-            ]}
+            ]},
+          createdAt: {
+            '>': new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+          }
         },
         select: ['accesslog_url', 'createdAt'],
         sort: 'createdAt DESC',
@@ -144,7 +147,10 @@ module.exports = {
       let latestJSLesson = await BackupLogging.find({
         where: {
           id: user.email,
-          accesslog_urlbase: 'https://www.chinesepod.com/api/v1/lessons/get-dialogue'
+          accesslog_urlbase: 'https://www.chinesepod.com/api/v1/lessons/get-dialogue',
+          createdAt: {
+            '>': new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+          }
         },
         select: ['accesslog_url', 'createdAt'],
         sort: 'createdAt DESC',
