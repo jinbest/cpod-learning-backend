@@ -206,38 +206,38 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
 
     let userData = await sails.models['user'].find({email: {in: users}});
 
+    let asiaCountries = ["YE", "IQ", "SA", "IR", "SY", "AM", "JO", "LB", "KW", "OM", "QA", "BH", "AE", "IL", "TR",
+      "AZ", "GE", "AF", "PK", "BD", "TM", "TJ", "LK", "BT", "IN", "MV", "IO", "NP", "MM", "UZ", "KZ", "KG", "CC",
+      "PW", "VN", "TH", "ID", "LA", "TW", "PH", "MY", "CN", "HK", "BN", "MO", "KH", "KR", "JP", "KP", "SG", "CK",
+      "TL", "MN", "AU", "CX", "MH", "FM", "PG", "SB", "TV", "NR", "VU", "NC", "NF", "NZ", "FJ", "PF", "PN", "KI",
+      "TK", "TO", "WF", "WS", "NU", "MP", "GU", "UM", "AS", "PS"];
+
+    const europeanCountries = ["CY", "GR", "EE", "LV", "LT", "SJ", "MD", "BY", "FI", "AX", "UA", "MK", "HU", "BG",
+      "AL", "PL", "RO", "XK", "RU", "PT", "GI", "ES", "MT", "FO", "DK", "IS", "GB", "CH", "SE", "NL", "AT", "BE",
+      "DE", "LU", "IE", "MC", "FR", "AD", "LI", "JE", "IM", "GG", "SK", "CZ", "NO", "VA", "SM", "IT", "SI", "ME",
+      "HR", "BA", "RS"];
+
+    const geoip = require('geoip-country');
+
     userData.forEach(user => {
 
       if (user.ip_address) {
 
-        const geoip = require('geoip-country');
-
         const geo = geoip.lookup(user.ip_address);
 
-        let asiaCountries = ["YE", "IQ", "SA", "IR", "SY", "AM", "JO", "LB", "KW", "OM", "QA", "BH", "AE", "IL", "TR",
-          "AZ", "GE", "AF", "PK", "BD", "TM", "TJ", "LK", "BT", "IN", "MV", "IO", "NP", "MM", "UZ", "KZ", "KG", "CC",
-          "PW", "VN", "TH", "ID", "LA", "TW", "PH", "MY", "CN", "HK", "BN", "MO", "KH", "KR", "JP", "KP", "SG", "CK",
-          "TL", "MN", "AU", "CX", "MH", "FM", "PG", "SB", "TV", "NR", "VU", "NC", "NF", "NZ", "FJ", "PF", "PN", "KI",
-          "TK", "TO", "WF", "WS", "NU", "MP", "GU", "UM", "AS", "PS"];
-
-        const europeanCountries = ["CY", "GR", "EE", "LV", "LT", "SJ", "MD", "BY", "FI", "AX", "UA", "MK", "HU", "BG",
-          "AL", "PL", "RO", "XK", "RU", "PT", "GI", "ES", "MT", "FO", "DK", "IS", "GB", "CH", "SE", "NL", "AT", "BE",
-          "DE", "LU", "IE", "MC", "FR", "AD", "LI", "JE", "IM", "GG", "SK", "CZ", "NO", "VA", "SM", "IT", "SI", "ME",
-          "HR", "BA", "RS"];
-
-        if (geo && asiaCountries.includes(geo.country) && job.group === 'asia') {
+        if (geo && asiaCountries.includes(geo.country) && job.data.group === 'asia') {
 
           sails.hooks.bugsnag.notify('Send Email to Asia');
 
           userEmailQueue.add('SendEmail', {userId: user.id, email: user.email, user: user, emailType: 'email-alice-inactive-user-asia', country: geo.country})
 
-        } else if (geo && europeanCountries.includes(geo.country) && job.group === 'europe'){
+        } else if (geo && europeanCountries.includes(geo.country) && job.data.group === 'europe'){
 
           sails.hooks.bugsnag.notify('Send Email to Europe');
 
           userEmailQueue.add('SendEmail', {userId: user.id, email: user.email, user: user, emailType: 'email-susie-inactive-user-europe', country: geo.country})
 
-        } else if (geo && job.group === 'testing') {
+        } else if (geo && job.data.group === 'testing') {
 
           sails.hooks.bugsnag.notify(JSON.stringify({...user, ...job.data}));
 
