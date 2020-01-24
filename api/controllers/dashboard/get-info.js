@@ -59,7 +59,7 @@ module.exports = {
 
     let currentDate = new Date();
 
-    if (access !== 'premium' && currentDate < new Date('2020-04-02')) {
+    if (access !== 'premium' && currentDate < new Date('2020-04-01')) {
       try {
 
         let ipCurrent = {};
