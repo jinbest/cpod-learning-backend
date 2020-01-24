@@ -31,7 +31,7 @@ module.exports = {
     let userData = await User.findOne({id: inputs.userId});
 
     try {
-      if (userData.name && userData.name.split(' ').length > 1) {
+      if (userData.name) {
         let firstName = userData.name.split(' ')[0];
 
         if (firstName && firstName.length > 1) {
@@ -42,7 +42,9 @@ module.exports = {
         }
       }
     } catch (e) {
+
       sails.hooks.bugsnag.notify(e);
+
     }
 
     return 'Nĭ hăo,'
