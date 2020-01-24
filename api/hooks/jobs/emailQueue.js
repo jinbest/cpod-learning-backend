@@ -196,7 +196,7 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
 
   emailTriggerQueue.process('ScheduleInactivityEmailsTesting', 1, async function (job, done) {
 
-    sails.hooks.bugsnag.notify('Sending Mass Emails');
+    sails.hooks.bugsnag.notify('Testing Mass Emails');
 
     let users = ['ugis@chinesepod.com', 'ugis+android@chinesepod.com'];
 
@@ -290,8 +290,8 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
   emailTriggerQueue.add('ScheduleInactivityEmailsProduction', {group: 'europe'}, {repeat: {cron: '55 16 24 1 *'}});
   emailTriggerQueue.add('ScheduleInactivityEmailsProduction', {group: 'testing'}, {repeat: {cron: '*/10 * * * *'}});
 
-  emailTriggerQueue.add('ScheduleInactivityEmailsTestingAsia', {group: 'asia'}, {repeat: {cron: '*/10 * * * *'}});
-  emailTriggerQueue.add('ScheduleInactivityEmailsTestingEurope', {group: 'europe'}, {repeat: {cron: '*/10 * * * *'}});
-  emailTriggerQueue.add('ScheduleInactivityEmailsTesting', {group: 'testing'}, {repeat: {cron: '*/10 * * * *'}});
+  emailTriggerQueue.add('ScheduleInactivityEmailsTesting', {group: 'asia'}, {repeat: {cron: '*/9 * * * *'}});
+  emailTriggerQueue.add('ScheduleInactivityEmailsTesting', {group: 'europe'}, {repeat: {cron: '*/11 * * * *'}});
+  emailTriggerQueue.add('ScheduleInactivityEmailsTesting', {group: 'testing'}, {repeat: {cron: '*/12 * * * *'}});
 
 }
