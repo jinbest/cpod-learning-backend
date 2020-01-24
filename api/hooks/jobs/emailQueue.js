@@ -38,8 +38,6 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
     });
   });
 
-  emailTriggerQueue.removeRepeatable('SendEmails', {repeat: {cron: '*/15 * * * *'}});
-
   paymentEmailQueue.process('SendEmail', 100, async function (job, done) {
 
     sails.log.info({job: job.data});
@@ -92,5 +90,74 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
 
     done();
   });
+
+  userEmailQueue.process('SendEmail', 100, async function (job, done) {
+    sails.log.info({job: job.data});
+
+    if (job.data.emailType && job.data.emailType === 'email-alice-inactive-user') {
+
+      let greeting = await sails.helpers.users.calculateUserGreeting(job.data.user.id);
+
+      const path = require('path');
+      const url = require('url');
+      const util = require('util');
+
+      const layout = false;
+
+      // Determine appropriate email layout and template to use.
+      const emailTemplatePath = path.join('emails/', 'automated/email-alice-inactive-user');
+
+      // Compile HTML template.
+      // > Note that we set the layout, provide access to core `url` package (for
+      // > building links and image srcs, etc.), and also provide access to core
+      // > `util` package (for dumping debug data in internal emails).
+      const htmlEmailContents = await sails.renderView(
+        emailTemplatePath,
+        _.extend({layout, url, util }, {greeting: greeting})
+      )
+        .intercept((err)=>{
+          err.message =
+            'Could not compile view template.\n'+
+            '(Usually, this means the provided data is invalid, or missing a piece.)\n'+
+            'Details:\n'+
+            err.message;
+          done(err);
+        });
+
+      await sails.helpers.mailgun.sendHtmlEmail.with({
+        htmlMessage: htmlEmailContents,
+        to: job.data.user.email,
+        subject: `Haven't Seen You in a While`,
+        from: 'alice@chinesepod.com',
+        fromName: 'Alice Shih'
+      })
+        .catch(err => done(err))
+    }
+
+    done()
+
+  });
+
+  emailTriggerQueue.process('ScheduleInactivityEmails', 1, async function (job, done) {
+
+    let users = ['ugis@chinesepod', 'planetugis@gmail.com', 'ugis.rozkalns@gmail.com'];
+
+    let userData = await sails.models['user'].find({email: {in: users}});
+
+    userData.forEach(user => {
+
+      userEmailQueue.add('SendEmail', {user: user, emailType: 'email-alice-inactive-user'})
+
+    })
+
+  });
+
+
+  emailTriggerQueue.removeRepeatable('SendEmails', {repeat: {cron: '*/15 * * * *'}});
+
+  emailTriggerQueue.removeRepeatable('ScheduleInactivityEmails', {repeat: {cron: '*/15 * * * *'}});
+  emailTriggerQueue.add('ScheduleInactivityEmails', {data: 'Send Follow-up email to recently inactive users'}, {repeat: {cron: '*/15 * * * *'}});
+
+
 
 }
