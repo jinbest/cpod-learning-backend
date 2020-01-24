@@ -96,8 +96,6 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
 
     if (job.data.emailType && job.data.emailType === 'email-alice-inactive-user') {
 
-      sails.hooks.bugsnag.notify(JSON.stringify(job.data));
-
       let greeting = await sails.helpers.users.calculateUserGreeting(job.data.userId);
 
       const path = require('path');
