@@ -57,7 +57,9 @@ module.exports = {
 
     let access = await sails.helpers.users.getAccessType(inputs.userId);
 
-    if (access !== 'premium') {
+    let currentDate = new Date();
+
+    if (access !== 'premium' && currentDate < new Date('2020-04-02')) {
       try {
 
         let ipCurrent = {};
