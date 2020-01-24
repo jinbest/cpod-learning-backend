@@ -133,6 +133,45 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
       })
         .catch(err => done(err))
     }
+    if (job.data.emailType && job.data.emailType === 'email-susie-inactive-user-europe') {
+
+      let greeting = await sails.helpers.users.calculateUserGreeting(job.data.userId);
+
+      const path = require('path');
+      const url = require('url');
+      const util = require('util');
+
+      const layout = false;
+
+      // Determine appropriate email layout and template to use.
+      const emailTemplatePath = path.join('emails/', 'automated/email-susie-inactive-user-europe');
+
+      // Compile HTML template.
+      // > Note that we set the layout, provide access to core `url` package (for
+      // > building links and image srcs, etc.), and also provide access to core
+      // > `util` package (for dumping debug data in internal emails).
+      const htmlEmailContents = await sails.renderView(
+        emailTemplatePath,
+        _.extend({layout, url, util }, {greeting: greeting})
+      )
+        .intercept((err)=>{
+          err.message =
+            'Could not compile view template.\n'+
+            '(Usually, this means the provided data is invalid, or missing a piece.)\n'+
+            'Details:\n'+
+            err.message;
+          done(err);
+        });
+
+      await sails.helpers.mailgun.sendHtmlEmail.with({
+        htmlMessage: htmlEmailContents,
+        to: job.data.email,
+        subject: `Haven't Seen You in a While`,
+        from: 'susie@chinesepod.com',
+        fromName: 'Susie Lei'
+      })
+        .catch(err => done(err))
+    }
 
     done()
 
@@ -140,13 +179,14 @@ if (process.env.NODE_ENV !== 'production' || process.env.sails_environment === '
 
   emailTriggerQueue.process('ScheduleInactivityEmails', 1, async function (job, done) {
 
-    let users = [];
+    let users = ['ugis@chinesepod.com', 'planetugis@gmail.com', 'ugis.rozkalns@gmail.com'];
 
     let userData = await sails.models['user'].find({email: {in: users}});
 
     userData.forEach(user => {
 
-      userEmailQueue.add('SendEmail', {userId: user.id, email: user.email, user: user, emailType: 'email-alice-inactive-user-asia'})
+      userEmailQueue.add('SendEmail', {userId: user.id, email: user.email, user: user, emailType: 'email-alice-inactive-user-asia'});
+      userEmailQueue.add('SendEmail', {userId: user.id, email: user.email, user: user, emailType: 'email-susie-inactive-user-europe'});
 
     })
 
