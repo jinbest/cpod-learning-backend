@@ -11,9 +11,10 @@ module.exports = {
 
     id: {
       type: 'number',
+      columnType: 'int',
       isInteger: true,
-      autoIncrement: true,
-      required: true
+      unique: true,
+      autoIncrement: true
     },
     user_id: {
       model: 'User'
