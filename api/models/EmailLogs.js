@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-
+  datastore: 'logging',
   tableName: 'email_logs',
 
   attributes: {
