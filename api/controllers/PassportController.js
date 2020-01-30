@@ -31,10 +31,12 @@ module.exports = {
 
         sails.hooks.bugsnag.notify('FB User: ' + JSON.stringify(user));
 
+        let hasEmail = true;
 
         if (!user.email) {
           sails.hooks.bugsnag.notify('No User Email: ' + JSON.stringify(user));
           user.email = `fb${user.id}`;
+          hasEmail = false;
         }
 
         let userData = await User.findOne({email: user.email.toLowerCase()});
@@ -80,7 +82,7 @@ module.exports = {
             city: ipData['city'] ? ipData['city'] : null,
             http_referer: req.headers.referer ? req.headers.referer : '',
             code: user.id,
-            confirm_status: 1
+            confirm_status: hasEmail
           }).fetch();
 
           await UserSiteLinks.create({
