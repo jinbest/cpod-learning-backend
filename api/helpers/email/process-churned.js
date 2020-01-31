@@ -97,7 +97,7 @@ module.exports = {
 
     let total = userData.length;
 
-    let batch = 5;
+    let batch = 2;
 
     let bulkCount = Math.ceil(total / batch);
 
