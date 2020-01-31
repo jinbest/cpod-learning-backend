@@ -161,6 +161,9 @@ module.exports = {
                           sails.log.info('contact added');
                         })
                         .catch(err => {sails.log.error(err.statusCode)})
+                    } else {
+                      sails.hooks.bugsnag.notify(err);
+                      sails.log.error(err.statusCode)
                     }});
               }, i * 2000)
 
