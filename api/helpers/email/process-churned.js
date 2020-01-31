@@ -49,12 +49,10 @@ module.exports = {
 
     sails.log.info(churnedUsers.length);
 
-    //
-    // let userData = await sails.models['user'].find({email: {in: liveUsers}, id: {nin: emailList}});
-    // let userData = await sails.models['user'].find({email: {in: testUsers}});
-    //
-    // sails.log.info(`Clean List - ${userData.length}`);
-    //
+    let userData = await User.find({id: {in: churnedUsers.map(user => user.user_id)}, confirm_status: 1});
+
+    sails.log.info(userData.length);
+
     let asianCountries = ["YE", "IQ", "SA", "IR", "SY", "AM", "JO", "LB", "KW", "OM", "QA", "BH", "AE", "IL", "TR",
       "AZ", "GE", "AF", "PK", "BD", "TM", "TJ", "LK", "BT", "IN", "MV", "IO", "NP", "MM", "UZ", "KZ", "KG", "CC",
       "PW", "VN", "TH", "ID", "LA", "TW", "PH", "MY", "CN", "HK", "BN", "MO", "KH", "KR", "JP", "KP", "SG", "CK",
@@ -75,107 +73,106 @@ module.exports = {
       "BS", "BM", "AI", "TT", "KN", "DM", "AG", "LC", "TC", "AW", "VG", "VC", "MS", "MF", "BL", "GP", "GD", "KY",
       "BZ", "SV", "GT", "HN", "NI", "CR", "VE", "EC", "CO", "PA", "HT", "AR", "CL", "BO", "PE", "MX", "PR", "VI",
       "CA", "US", "SX", "CW", "BQ"];
-    //
-    // const geoip = require('geoip-country');
-    //
-    // const eo = require('email-octopus');
-    // const apiKey = '1ce2c0f8-a142-11e9-9307-06b4694bee2a';
-    // // const username = 'ugis@chinesepod.com';
-    // // const password = 'SN6oP1aeF2l8BY70PbOx';
-    //
-    // const emailOctopus = new eo.EmailOctopus(apiKey);
-    //
-    // const MD5 = require('crypto-js/md5');
-    //
-    // const asyncForEach = async (array, callback) => {
-    //   for (let index = 0; index < array.length; index++) {
-    //     await callback(array[index], index, array)
-    //   }
-    // };
-    //
-    // let total = userData.length;
-    //
-    // let batch = 5;
-    //
-    // let bulkCount = Math.ceil(total / batch);
-    //
-    // sails.log.info(`Records Fetched in ${bulkCount} Batches`);
-    //
-    // for (let i = 0; i < bulkCount; i++) {
-    //   await asyncForEach(userData.slice(i * batch, (i + 1) * batch), async (user) => {
-    //
-    //     if (user.ip_address || user.country) {
-    //
-    //       let geo = {};
-    //
-    //       if (user.ip_address) {
-    //
-    //         geo = geoip.lookup(user.ip_address);
-    //
-    //       }
-    //
-    //       if ((!geo || !geo.country) && user.country) {
-    //         geo = {country: user.country};
-    //       }
-    //
-    //       if (geo && geo.country) {
-    //
-    //         let listId = '';
-    //         const options = {
-    //           email_address: user.email
-    //         };
-    //
-    //         let firstName = await sails.helpers.users.calculateFirstName(user.name);
-    //
-    //         if (firstName) {
-    //           options.first_name = firstName;
-    //         }
-    //
-    //         // sails.log.info(options);
-    //
-    //         if (asianCountries.includes(geo.country)) {
-    //
-    //           listId = '9b451d69-431d-11ea-be00-06b4694bee2a'
-    //
-    //         } else if (europeanCountries.includes(geo.country) || africanCountries.includes(geo.country)) {
-    //
-    //           listId = 'a387ee7f-431d-11ea-be00-06b4694bee2a';
-    //
-    //         } else if (americanCountries.includes(geo.country)) {
-    //
-    //           listId = 'a991b310-431d-11ea-be00-06b4694bee2a'
-    //
-    //         }
-    //
-    //         if (listId) {
-    //
-    //           await setTimeout(async () => {
-    //             emailOctopus.lists.contacts.get(listId, MD5(user.email.toLowerCase()).toString())
-    //               .then(function () {
-    //                 sails.log.info('Contact updated')
-    //               })
-    //               .catch(function (err) {
-    //                 if (err.statusCode === 404) {
-    //                   emailOctopus.lists.contacts.create(listId, options)
-    //                     .then(function() {
-    //                       sails.log.info('contact added');
-    //                     })
-    //                     .catch(err => {sails.log.error(err.statusCode)})
-    //                 }});
-    //           }, i * 2000)
-    //
-    //         } else {
-    //
-    //           sails.hooks.bugsnag.notify(`Could not add User ${user.email} to Octopus with Country ${geo.country}`)
-    //
-    //         }
-    //
-    //       }
-    //
-    //     }
-    //
-    //   });
-    // }
+
+    const geoip = require('geoip-country');
+
+    const eo = require('email-octopus');
+    const apiKey = '1ce2c0f8-a142-11e9-9307-06b4694bee2a';
+    // const username = 'ugis@chinesepod.com';
+    // const password = 'SN6oP1aeF2l8BY70PbOx';
+
+    const emailOctopus = new eo.EmailOctopus(apiKey);
+
+    const MD5 = require('crypto-js/md5');
+
+    const asyncForEach = async (array, callback) => {
+      for (let index = 0; index < array.length; index++) {
+        await callback(array[index], index, array)
+      }
+    };
+
+    let total = userData.length;
+
+    let batch = 5;
+
+    let bulkCount = Math.ceil(total / batch);
+
+    sails.log.info(`Records Fetched in ${bulkCount} Batches`);
+
+    for (let i = 0; i < bulkCount; i++) {
+      await asyncForEach(userData.slice(i * batch, (i + 1) * batch), async (user) => {
+
+        if (user.ip_address || user.country) {
+
+          let geo = {};
+
+          if (user.ip_address) {
+
+            geo = geoip.lookup(user.ip_address);
+
+          }
+
+          if ((!geo || !geo.country) && user.country) {
+            geo = {country: user.country};
+          }
+
+          if (geo && geo.country) {
+
+            let listId = '';
+            const options = {
+              email_address: user.email
+            };
+
+            let firstName = await sails.helpers.users.calculateFirstName(user.name);
+
+            if (firstName) {
+              options.first_name = firstName;
+            }
+
+            if (asianCountries.includes(geo.country)) {
+
+              listId = 'da68d513-43cd-11ea-be00-06b4694bee2a'
+
+            } else if (europeanCountries.includes(geo.country) || africanCountries.includes(geo.country)) {
+
+              listId = 'd1280e1d-43cd-11ea-be00-06b4694bee2a';
+
+            } else if (americanCountries.includes(geo.country)) {
+
+              listId = 'd68726be-43cd-11ea-be00-06b4694bee2a'
+
+            }
+
+            if (listId) {
+
+              await setTimeout(async () => {
+                emailOctopus.lists.contacts.get(listId, MD5(user.email.toLowerCase()).toString())
+                  .then(function () {
+                    sails.log.info('Contact updated')
+                  })
+                  .catch(function (err) {
+                    if (err.statusCode === 404) {
+                      emailOctopus.lists.contacts.create(listId, options)
+                        .then(function() {
+                          sails.log.info('contact added');
+                        })
+                        .catch(err => {sails.log.error(err.statusCode)})
+                    }});
+              }, i * 2000)
+
+            } else {
+
+              // sails.hooks.bugsnag.notify(`Could not add User ${user.email} to Octopus with Country ${geo.country}`);
+              sails.log.info(`Could not add User ${user.email} to Octopus with Country ${geo.country}`);
+
+            }
+
+          }
+
+        }
+
+      });
+    }
 
   }
 
