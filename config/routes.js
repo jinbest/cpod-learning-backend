@@ -255,7 +255,7 @@ module.exports.routes = {
   'POST /api/v1/admin/access-codes/delete':              { action: 'admin/access-codes/delete-access-codes'},
 
   //SEARCH
-  // 'GET /api/v1/search/reindex-lessons':                  { action: 'search/reindex-lessons' },
+  'GET /api/v1/search/reindex-lessons':                  { action: 'search/reindex-lessons' },
   // 'GET /api/v1/search/reindex-lessons-data':             { action: 'search/reindex-lessons-data' },
   // 'GET /api/v1/search/reindex-courses':                  { action: 'search/reindex-courses' },
   // 'GET /api/v1/search/reindex-vocab':                    { action: 'search/reindex-vocab' },
@@ -280,4 +280,8 @@ module.exports.routes = {
   // 'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
   // 'POST  /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },
   // 'POST  /api/v1/deliver-contact-form-message':          { action: 'deliver-contact-form-message' },
+
+  'GET /api/v1/email/process-inactive':                                    { action: 'email/process-inactive' },
+  'GET /api/v1/email/process-bounced':                                    { action: 'email/process-bounced' },
+  'GET /api/v1/email/process-churned':                                    { action: 'email/process-churned' },
 };
