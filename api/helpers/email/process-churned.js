@@ -26,18 +26,8 @@ module.exports = {
     let testUsers = ["ugis@chinesepod.com"];
 
     let currentDate = new Date();
-    let previousDate = new Date(new Date().setMonth(currentDate.getMonth() - 1));
 
-    // let firstDay = new Date(new Date(new Date().setMonth(currentDate.getMonth() - 1)).setDate(1));
-    // let lastDay = new Date(new Date().setDate(0));
-    let firstDay = new Date(2018,2,1);
-    let lastDay = new Date(2018,3,0);
-
-    let currentYear = 2018, currentMonth = 3, currentDay = 12;
-
-    let lastYear = new Date(firstDay.getFullYear() - 1, firstDay.getMonth() - 1, 1);
-
-    sails.log.info({first: firstDay, last: lastDay,current: currentDate, previous: previousDate, lastYear: lastYear});
+    let currentYear = currentDate.getFullYear(), currentMonth = currentDate.getMonth(), currentDay = currentDate.getDate();
 
     // select count(distinct user_id) from transactions where pay_status=2 and DATE(DATE_ADD(date_created,INTERVAL product_length MONTH))>='2018-02-01'
     // and date_created BETWEEN '2017-02-01 00:00:00' AND '2018-02-28 23:59:59' AND user_id NOT IN
@@ -45,7 +35,7 @@ module.exports = {
     // and date_created BETWEEN '2017-03-01 00:00:00' AND '2018-03-31 23:59:59');
 
     let sql = `
-    select count(distinct user_id)
+    select user_id
     FROM transactions
     WHERE pay_status=2 AND DATE(DATE_ADD(date_created,INTERVAL product_length MONTH))>='${new Date(currentYear, currentMonth - 2, 1).toISOString().slice(0,10)}'
     AND date_created BETWEEN '${new Date(currentYear - 1, currentMonth - 2, 1).toISOString().slice(0,10)}' AND '${new Date(currentYear, currentMonth - 1, 1).toISOString().slice(0,10)}'
@@ -55,34 +45,36 @@ module.exports = {
 
     sails.log.info(sql);
 
-    sails.log.info(await sails.sendNativeQuery(sql));
+    let churnedUsers = (await sails.sendNativeQuery(sql))['rows'];
+
+    sails.log.info(churnedUsers.length);
 
     //
     // let userData = await sails.models['user'].find({email: {in: liveUsers}, id: {nin: emailList}});
-    // // let userData = await sails.models['user'].find({email: {in: testUsers}});
+    // let userData = await sails.models['user'].find({email: {in: testUsers}});
     //
     // sails.log.info(`Clean List - ${userData.length}`);
     //
-    // let asianCountries = ["YE", "IQ", "SA", "IR", "SY", "AM", "JO", "LB", "KW", "OM", "QA", "BH", "AE", "IL", "TR",
-    //   "AZ", "GE", "AF", "PK", "BD", "TM", "TJ", "LK", "BT", "IN", "MV", "IO", "NP", "MM", "UZ", "KZ", "KG", "CC",
-    //   "PW", "VN", "TH", "ID", "LA", "TW", "PH", "MY", "CN", "HK", "BN", "MO", "KH", "KR", "JP", "KP", "SG", "CK",
-    //   "TL", "MN", "AU", "CX", "MH", "FM", "PG", "SB", "TV", "NR", "VU", "NC", "NF", "NZ", "FJ", "PF", "PN", "KI",
-    //   "TK", "TO", "WF", "WS", "NU", "MP", "GU", "UM", "AS", "PS"];
-    //
-    // const europeanCountries = ["CY", "GR", "EE", "LV", "LT", "SJ", "MD", "BY", "FI", "AX", "UA", "MK", "HU", "BG",
-    //   "AL", "PL", "RO", "XK", "RU", "PT", "GI", "ES", "MT", "FO", "DK", "IS", "GB", "CH", "SE", "NL", "AT", "BE",
-    //   "DE", "LU", "IE", "MC", "FR", "AD", "LI", "JE", "IM", "GG", "SK", "CZ", "NO", "VA", "SM", "IT", "SI", "ME",
-    //   "HR", "BA", "RS"];
-    //
-    // const africanCountries = ["RW", "SO", "TZ", "KE", "CD", "DJ", "UG", "CF", "SC", "ET", "ER", "EG", "SD", "BI",
-    //   "ZW", "ZM", "KM", "MW", "LS", "BW", "MU", "SZ", "RE", "ZA", "YT", "MZ", "MG", "LY", "CM", "SN", "CG", "LR",
-    //   "CI", "GH", "GQ", "NG", "BF", "TG", "GW", "MR", "BJ", "GA", "SL", "ST", "GM", "GN", "TD", "NE", "ML", "EH",
-    //   "TN", "MA", "DZ", "AO", "NA", "SH", "CV", "SS"];
-    //
-    // const americanCountries = ["BB", "GY", "GF", "SR", "PM", "GL", "PY", "UY", "BR", "FK", "JM", "DO", "CU", "MQ",
-    //   "BS", "BM", "AI", "TT", "KN", "DM", "AG", "LC", "TC", "AW", "VG", "VC", "MS", "MF", "BL", "GP", "GD", "KY",
-    //   "BZ", "SV", "GT", "HN", "NI", "CR", "VE", "EC", "CO", "PA", "HT", "AR", "CL", "BO", "PE", "MX", "PR", "VI",
-    //   "CA", "US", "SX", "CW", "BQ"];
+    let asianCountries = ["YE", "IQ", "SA", "IR", "SY", "AM", "JO", "LB", "KW", "OM", "QA", "BH", "AE", "IL", "TR",
+      "AZ", "GE", "AF", "PK", "BD", "TM", "TJ", "LK", "BT", "IN", "MV", "IO", "NP", "MM", "UZ", "KZ", "KG", "CC",
+      "PW", "VN", "TH", "ID", "LA", "TW", "PH", "MY", "CN", "HK", "BN", "MO", "KH", "KR", "JP", "KP", "SG", "CK",
+      "TL", "MN", "AU", "CX", "MH", "FM", "PG", "SB", "TV", "NR", "VU", "NC", "NF", "NZ", "FJ", "PF", "PN", "KI",
+      "TK", "TO", "WF", "WS", "NU", "MP", "GU", "UM", "AS", "PS"];
+
+    const europeanCountries = ["CY", "GR", "EE", "LV", "LT", "SJ", "MD", "BY", "FI", "AX", "UA", "MK", "HU", "BG",
+      "AL", "PL", "RO", "XK", "RU", "PT", "GI", "ES", "MT", "FO", "DK", "IS", "GB", "CH", "SE", "NL", "AT", "BE",
+      "DE", "LU", "IE", "MC", "FR", "AD", "LI", "JE", "IM", "GG", "SK", "CZ", "NO", "VA", "SM", "IT", "SI", "ME",
+      "HR", "BA", "RS"];
+
+    const africanCountries = ["RW", "SO", "TZ", "KE", "CD", "DJ", "UG", "CF", "SC", "ET", "ER", "EG", "SD", "BI",
+      "ZW", "ZM", "KM", "MW", "LS", "BW", "MU", "SZ", "RE", "ZA", "YT", "MZ", "MG", "LY", "CM", "SN", "CG", "LR",
+      "CI", "GH", "GQ", "NG", "BF", "TG", "GW", "MR", "BJ", "GA", "SL", "ST", "GM", "GN", "TD", "NE", "ML", "EH",
+      "TN", "MA", "DZ", "AO", "NA", "SH", "CV", "SS"];
+
+    const americanCountries = ["BB", "GY", "GF", "SR", "PM", "GL", "PY", "UY", "BR", "FK", "JM", "DO", "CU", "MQ",
+      "BS", "BM", "AI", "TT", "KN", "DM", "AG", "LC", "TC", "AW", "VG", "VC", "MS", "MF", "BL", "GP", "GD", "KY",
+      "BZ", "SV", "GT", "HN", "NI", "CR", "VE", "EC", "CO", "PA", "HT", "AR", "CL", "BO", "PE", "MX", "PR", "VI",
+      "CA", "US", "SX", "CW", "BQ"];
     //
     // const geoip = require('geoip-country');
     //
