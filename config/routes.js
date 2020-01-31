@@ -281,7 +281,7 @@ module.exports.routes = {
   // 'POST  /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },
   // 'POST  /api/v1/deliver-contact-form-message':          { action: 'deliver-contact-form-message' },
 
-  'GET /api/v1/email/process-inactive':                                    { action: 'email/process-inactive' },
-  'GET /api/v1/email/process-bounced':                                    { action: 'email/process-bounced' },
-  'GET /api/v1/email/process-churned':                                    { action: 'email/process-churned' },
+  'GET /api/v1/octopus/process-inactive':                { action: 'octopus/process-inactive' },
+  'GET /api/v1/octopus/process-bounced':                 { action: 'octopus/process-bounced' },
+  'GET /api/v1/octopus/process-churned':                 { action: 'octopus/process-churned' },
 };

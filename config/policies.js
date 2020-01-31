@@ -34,6 +34,8 @@ module.exports.policies = {
   'search/reindex-lessons': 'is-super-admin',
   'search/reindex-lessons-data': 'is-super-admin',
 
+  'octopus/*': 'is-super-admin',
+
 
   // // Bypass the `is-logged-in` policy for:
   // 'entrance/*': true,
