@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2020. Ugis Rozkalns
+ */
+
 module.exports = {
 
 
