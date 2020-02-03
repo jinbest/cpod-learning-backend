@@ -18,7 +18,7 @@ module.exports = async function (req, res, proceed) {
   }//•
 
   // Then check that this user is a "super admin".
-  if (!req.me.email === 'ugis@chinesepod.com') {
+  if (req.session.userId !== 1016995) {
     return res.forbidden();
   }//•
 
