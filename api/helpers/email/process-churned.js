@@ -82,10 +82,10 @@ module.exports = {
 
     const eo = require('email-octopus');
     const apiKey = '1ce2c0f8-a142-11e9-9307-06b4694bee2a';
-    // const username = 'ugis@chinesepod.com';
-    // const password = 'SN6oP1aeF2l8BY70PbOx';
+    const username = 'ugis@chinesepod.com';
+    const password = 'SN6oP1aeF2l8BY70PbOx';
 
-    const emailOctopus = new eo.EmailOctopus(apiKey);
+    const emailOctopus = new eo.EmailOctopus(apiKey, username, password);
 
     const MD5 = require('crypto-js/md5');
 
@@ -102,6 +102,33 @@ module.exports = {
     let bulkCount = Math.ceil(total / batch);
 
     sails.log.info(`Records Fetched in ${bulkCount} Batches`);
+
+    let groups = [{name: 'Asia'}, {name: 'Europe'}, {name: 'Americas'}];
+
+    await asyncForEach(groups, async function (target) {
+      target.campaignName = `Churned Users - ${target.name} - ${currentDate.toLocaleString('default', { month: 'long' })}`
+
+      target.campaignInfo = await emailOctopus.lists.find({name: target.campaignName});
+
+      if (!target.campaignInfo) {
+
+        target.campaignInfo = await emailOctopus.lists.create({name: target.campaignName})
+
+      }
+
+      try {
+
+        target.campaignId = target.campaignInfo.id
+
+      } catch (e) {
+
+        sails.log.error(e);
+
+      }
+
+    });
+
+    sails.log.info(groups);
 
     for (let i = 0; i < bulkCount; i++) {
       await asyncForEach(userData.slice(i * batch, (i + 1) * batch), async (user) => {
@@ -135,15 +162,15 @@ module.exports = {
 
             if (asianCountries.includes(geo.country)) {
 
-              listId = 'da68d513-43cd-11ea-be00-06b4694bee2a'
+              listId = groups['Asia']['campaignId'];
 
             } else if (europeanCountries.includes(geo.country) || africanCountries.includes(geo.country)) {
 
-              listId = 'd1280e1d-43cd-11ea-be00-06b4694bee2a';
+              listId = groups['Europe']['campaignId'];
 
             } else if (americanCountries.includes(geo.country)) {
 
-              listId = 'd68726be-43cd-11ea-be00-06b4694bee2a'
+              listId = groups['Americas']['campaignId'];
 
             }
 
