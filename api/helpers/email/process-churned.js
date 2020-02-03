@@ -157,7 +157,7 @@ module.exports = {
             let firstName = await sails.helpers.users.calculateFirstName(user.name);
 
             if (firstName) {
-              options.first_name = firstName;
+              options.FirstName = firstName;
             }
 
             if (asianCountries.includes(geo.country)) {
