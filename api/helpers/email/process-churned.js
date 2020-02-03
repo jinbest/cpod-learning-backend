@@ -87,6 +87,8 @@ module.exports = {
 
     const emailOctopus = new eo.EmailOctopus(apiKey, username, password);
 
+    const axios = require('axios');
+
     const MD5 = require('crypto-js/md5');
 
     const asyncForEach = async (array, callback) => {
@@ -156,10 +158,6 @@ module.exports = {
 
             let firstName = await sails.helpers.users.calculateFirstName(user.name);
 
-            if (firstName) {
-              options.FirstName = firstName;
-            }
-
             if (asianCountries.includes(geo.country)) {
 
               listId = groups.filter(target => target.name === 'Asia')[0]['campaignId'];
@@ -177,21 +175,51 @@ module.exports = {
             if (listId) {
 
               await setTimeout(async () => {
-                emailOctopus.lists.contacts.get(listId, MD5(user.email.toLowerCase()).toString())
-                  .then(function () {
-                    sails.log.info('Contact updated')
-                  })
-                  .catch(function (err) {
-                    if (err.statusCode === 404) {
-                      emailOctopus.lists.contacts.create(listId, options)
-                        .then(function() {
-                          sails.log.info('contact added');
-                        })
-                        .catch(err => {sails.log.error(err.statusCode)})
+
+                try {
+
+                  let userOctopus = (await axios.get(`https://emailoctopus.com/api/1.5/lists/${listId}/contacts/${MD5(user.email.toLowerCase())}?api_key=${apiKey}`))['data'];
+
+                  sails.log.info({octopusData: userOctopus});
+
+                  if (!userOctopus || !userOctopus.id) {
+
+                    await axios.post(`https://emailoctopus.com/api/1.5/lists/${listId}/contacts`, {
+                      api_key: apiKey,
+                      email_address: user.email.toLowerCase(),
+                      fields: {
+                        FirstName: firstName
+                      }
+                    });
+
+                    sails.log.info(`Added ${firstName ? firstName + ' ' : ''}${options.email_address}`);
+
+                  } else {
+
+                    if (userOctopus.id && userOctopus.fields && userOctopus.fields.FirstName !== firstName) {
+
+                      await axios.put(`https://emailoctopus.com/api/1.5/lists/${listId}/contacts/${userOctopus.id}`, {
+                        api_key: apiKey,
+                        fields: {
+                          FirstName: firstName
+                        }
+                      });
+
+                      sails.log.info(`Updated ${firstName ? firstName + ' ' : ''}${options.email_address}`);
+
                     } else {
-                      sails.hooks.bugsnag.notify(err);
-                      sails.log.error(err.statusCode)
-                    }});
+
+                      sails.log.info(`Skipped ${firstName ? firstName + ' ' : ''}${options.email_address}`);
+
+                    }
+
+                  }
+                } catch (e) {
+
+                  sails.log.error(e)
+
+                }
+
               }, i * 2000)
 
             } else {
