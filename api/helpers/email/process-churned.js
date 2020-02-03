@@ -178,7 +178,11 @@ module.exports = {
 
                 try {
 
-                  let userOctopus = (await axios.get(`https://emailoctopus.com/api/1.5/lists/${listId}/contacts/${MD5(user.email.toLowerCase())}?api_key=${apiKey}`))['data'];
+                  let userOctopus = '';
+
+                  userOctopus = await axios.get(`https://emailoctopus.com/api/1.5/lists/${listId}/contacts/${MD5(user.email.toLowerCase())}?api_key=${apiKey}`)
+                    .then(({data}) => {return data})
+                    .catch(err => {});
 
                   sails.log.info({octopusData: userOctopus});
 
