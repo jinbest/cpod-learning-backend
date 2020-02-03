@@ -39,7 +39,7 @@ module.exports = {
     // and date_created BETWEEN '2017-03-01 00:00:00' AND '2018-03-31 23:59:59');
 
     let sql = `
-    select user_id
+    select distinct user_id
     FROM transactions
     WHERE pay_status=2 AND DATE(DATE_ADD(date_created,INTERVAL product_length MONTH))>='${new Date(currentYear, currentMonth - 2, 1).toISOString().slice(0,10)}'
     AND date_created BETWEEN '${new Date(currentYear - 1, currentMonth - 2, 1).toISOString().slice(0,10)}' AND '${new Date(currentYear, currentMonth - 1, 1).toISOString().slice(0,10)}'
