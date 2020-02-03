@@ -106,7 +106,7 @@ module.exports = {
     let groups = [{name: 'Asia'}, {name: 'Europe'}, {name: 'Americas'}];
 
     await asyncForEach(groups, async function (target) {
-      target.campaignName = `Churned Users - ${target.name} - ${currentDate.toLocaleString('default', { month: 'long' })}`
+      target.campaignName = `Churned Users - ${target.name} - ${currentDate.toLocaleString('default', { month: 'long' })}`;
 
       target.campaignInfo = await emailOctopus.lists.find({name: target.campaignName});
 
@@ -162,15 +162,15 @@ module.exports = {
 
             if (asianCountries.includes(geo.country)) {
 
-              listId = groups['Asia']['campaignId'];
+              listId = groups.filter(target => target.name === 'Asia')[0]['campaignId'];
 
             } else if (europeanCountries.includes(geo.country) || africanCountries.includes(geo.country)) {
 
-              listId = groups['Europe']['campaignId'];
+              listId = groups.filter(target => target.name === 'Europe')[0]['campaignId'];
 
             } else if (americanCountries.includes(geo.country)) {
 
-              listId = groups['Americas']['campaignId'];
+              listId = groups.filter(target => target.name === 'Americas')[0]['campaignId'];
 
             }
 
