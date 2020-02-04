@@ -53,7 +53,7 @@ module.exports = {
       returnData.charSetUnset = true;
     }
 
-    let userPreferences = (await UserPreferences.find(inputs.userId).limit(1))[0];
+    let userPreferences = (await UserPreferences.find(inputs.userId).sort('updatedAt DESC').limit(1))[0];
 
     let access = await sails.helpers.users.getAccessType(inputs.userId);
 
