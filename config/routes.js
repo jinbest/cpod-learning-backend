@@ -180,7 +180,7 @@ module.exports.routes = {
   'POST  /api/v1/entrance/login':                        { action: 'entrance/login' },
   'PUT  /api/v1/onboarding/pricing':                     { action: 'onboarding/pricing' },
   'PUT  /api/v1/onboarding/level':                       { action: 'onboarding/level' },
-  'PUT  /api/v1/onboarding/redeem':                      { action: 'onboarding/redeem-voucher-code' },
+  'PUT  /api/v1/onboarding/redeem':                      { action: 'redeem/redeem-voucher' },
   'PUT  /api/v1/purchase/checkout':                      { action: 'purchase/checkout' },
   'POST  /api/v1/purchase/check-promo':                  { action: 'purchase/check-promo' },
   'POST /api/v1/purchase/check-email':                   { action: 'purchase/check-email' },
