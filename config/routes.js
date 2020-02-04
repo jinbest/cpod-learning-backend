@@ -48,8 +48,11 @@ module.exports.routes = {
   'GET /pricing-alt':                                    { action: 'onboarding/view-pricing-alt' },
   'GET /checkout':                                       { action: 'view-checkout' },
 
-  'GET /redeem-code':                                         { action: 'onboarding/view-redeem' },
-  'GET /redeem-code/:code':                                   { action: 'onboarding/redeem-voucher-code' },
+  'GET /redeem':                                         { action: 'redeem/view-redeem-voucher' },
+  'GET /redeem/:code':                                   { action: 'redeem/redeem-voucher' },
+  'GET /redeem-token':                                   { action: 'redeem/view-redeem-access-token' },
+  'GET /redeem-token/:code':                             { action: 'redeem/redeem-access-token' },
+  'GET /redeem-success':                                 { action: 'redeem/view-redeem-success' },
 
   'GET /level/:unused?':                                 { action: 'onboarding/view-level' },
 

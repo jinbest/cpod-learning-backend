@@ -1,4 +1,4 @@
-<div id="redeem" v-cloak>
+<div id="redeem-access-token" v-cloak>
 
   <div class="container">
 
@@ -11,9 +11,9 @@
       <hr/>
 
       <ajax-form action="redeemVoucherCode" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-rules="formRules" :form-errors.sync="formErrors" @submitted="submittedForm()">
-        <h1 class="h1"><span>Redeem Voucher</span></h1>
+        <h1 class="h1"><span>Redeem Access Token</span></h1>
 
-        <p>Please enter your voucher code below to activate your subscription.</p>
+        <p>Please enter your access token below to activate your subscription.</p>
 
         <div class="form-group col-12 p-3">
           <input class="form-control mx-auto"
@@ -29,10 +29,10 @@
           >
           <div class="invalid-feedback d-block" v-if="formErrors.code">Please check your code and try again.</div>
         </div>
-        <p class="text-danger" v-if="cloudError==='invalid'"><small>The voucher code you entered is invalid or has expired. Please check your information and try again.</small></p>
-        <p class="text-danger" v-else-if="cloudError"><small>An error occurred while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</small></p>
+        <p class="text-danger" v-if="cloudError==='invalid'"><small>The access token you entered is invalid or has expired. Please check your information and try again.</small></p>
+        <p class="text-danger" v-else-if="cloudError"><small>An error occurred while processing your request. Please check your information and try again, or <a href="mailto:support@chinesepod.com">contact support</a> if the error persists.</small></p>
         <div class="form-group">
-          <ajax-button :syncing="syncing" class="btn btn-lg btn-primary btn-block">Redeem Voucher Code</ajax-button>
+          <ajax-button :syncing="syncing" class="btn btn-lg btn-primary btn-block">Redeem Access Token</ajax-button>
         </div>
       </ajax-form>
     </div>

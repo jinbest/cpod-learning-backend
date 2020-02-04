@@ -1,3 +1,7 @@
+/*
+ * Copyright © 2020. Ugis Rozkalns. All Rights Reserved.
+ */
+
 module.exports = {
 
 
@@ -10,7 +14,7 @@ module.exports = {
   exits: {
 
     success: {
-      viewTemplatePath: 'pages/onboarding/redeem'
+      viewTemplatePath: 'pages/redeem/redeem-access-token'
     }
 
   },

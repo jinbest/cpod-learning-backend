@@ -1,0 +1,44 @@
+<div id="redeem-voucher" v-cloak>
+
+  <div class="container">
+
+
+
+    <div class="redeem-form-container">
+      <div class="text-center p-5">
+        <img class="img-fluid" src="/images/logo-horizontal.svg" alt="ChinesePod Logo">
+      </div>
+      <hr/>
+
+      <ajax-form action="redeemVoucherCode" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-rules="formRules" :form-errors.sync="formErrors" @submitted="submittedForm()">
+        <h1 class="h1"><span>Redeem Voucher</span></h1>
+
+        <p>Please enter your voucher code below to activate your subscription.</p>
+
+        <div class="form-group col-12 p-3">
+          <input class="form-control mx-auto"
+                 id="code"
+                 name="code"
+                 type="text"
+                 style="width:300px; height:55px; font-size:39px;"
+                 :class="[formErrors.code ? 'is-invalid' : '']"
+                 v-model.trim="formData.code"
+                 placeholder="ABCDEFGH12"
+                 autofocus
+                 focus-first
+                 maxlength="10"
+          >
+          <div class="invalid-feedback d-block" v-if="formErrors.code">Please check your code and try again.</div>
+          <div class="text-danger" v-if="cloudError==='invalid'"><small>The voucher code you entered is invalid or has expired. Please check your information and try again.</small></div>
+          <div class="text-danger" v-else-if="cloudError"><small>An error occurred while processing your request. Please check your information and try again, or <a href="mailto:support@chinesepod.com">contact support</a> if the error persists.</small></div>
+        </div>
+        <div class="form-group">
+          <ajax-button :syncing="syncing" class="btn btn-lg btn-primary btn-block">Redeem Voucher Code</ajax-button>
+        </div>
+      </ajax-form>
+    </div>
+
+  </div>
+
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

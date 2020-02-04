@@ -21,6 +21,8 @@ module.exports.policies = {
   'home/*': 'is-logged-in',
   'podcasts/*': true,
 
+  'redeem/*': 'is-logged-in',
+
   // 'admin/*': 'is-staff',
 
   'sso/discourse': 'is-logged-in',
