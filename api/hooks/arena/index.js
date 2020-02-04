@@ -92,7 +92,7 @@ module.exports = function defineArenaHook(sails) {
               return res.redirect('/login');
             }//•
             // Then check that this user is a "super admin".
-            if (!req.session || !req.session.userId || !req.session.userId === 1016995) {  // Hardcode for personal access
+            if (!req.session || !req.session.userId || req.session.userId !== 1016995) {  // Hardcode for personal access
               return res.status(403).send('Forbidden')
             }//•
             // IWMIH, we've got ourselves a "super admin".
