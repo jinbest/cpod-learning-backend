@@ -32,7 +32,8 @@ module.exports = function(req, res, proceed) {
     }
     //TODO revise this
 
-    // req.session.userId = decoded.data.userId;
+    sails.log.info({decodedUserId: decoded.data.userId});
+    req.session.userId = decoded.data.userId;
 
     return proceed();
   });

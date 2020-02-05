@@ -36,6 +36,10 @@ module.exports = {
       }
       dialogue.vocabulary = [];
       dialogue.sentence = [];
+      dialogue.en = dialogue.row_2;
+      dialogue.p = '';
+      dialogue.s = '';
+      dialogue.t = '';
       dialogue['row_1'].replace(/\(event,\'(.*?)\',\'(.*?)\',\'(.*?)\',\'(.*?)\'.*?\>(.*?)\<\/span\>([^\<]+)?/g, function(A, B, C, D, E, F, G, H) {
 
         let d = ''; let e = ''; let c = ''; let b = ''; let g = '';
@@ -64,12 +68,19 @@ module.exports = {
           en: b
         });
 
+        dialogue.p += c + ' ';
+        dialogue.s += d;
+        dialogue.t += e;
+
         if (G) {
           try {g = decodeURI(G)} catch (err) {
             g = G;
             sails.log.error(err)
           }
-          dialogue.sentence.push(g)
+          dialogue.sentence.push(g);
+          dialogue.p += g;
+          dialogue.s += g;
+          dialogue.t += g;
         }
 
         dialogue.vocabulary.push({
@@ -79,8 +90,10 @@ module.exports = {
           en: b ? b : ''
         })
       });
-      dialogueData.push(_.pick(dialogue, ['display_order', 'speaker', 'row_2', 'audio', 'v3_id', 'vocabulary', 'sentence']))
+      dialogueData.push(_.pick(dialogue, ['display_order', 'speaker', 'row_2', 'audio', 'v3_id', 'vocabulary', 'sentence', 'en', 'p', 't', 's']))
     });
+
+    dialogueData.e = dialogueData.row_2;
 
     return {
       speakers: speakers,
