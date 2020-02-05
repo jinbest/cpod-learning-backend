@@ -29,7 +29,7 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    sails.log.info({session: this.req.session.userId, me: this.req.me});
+    sails.log.info({sessionRaw: this.req.session, sessionId: this.req.session.userId, me: this.req.me, reqRaw: this.req});
 
     inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.me.id;
 
