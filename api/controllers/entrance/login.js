@@ -131,9 +131,7 @@ and exposed as \`req.me\`.)`
         });
       });
 
-    if (this.req.wantsJSON) {
-      return {token: jwToken.sign({userId: userRecord.id})}
-    }
+    return {token: jwToken.sign({userId: userRecord.id})};
 
   }
 };
