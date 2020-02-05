@@ -28,7 +28,10 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.me.id;
+
+    sails.log.info({session: this.req.session.userId, me: this.req.me});
+
+    inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.me.id;
 
     const validApps = {
       dashboard: ['0r6jo0purpo86683joyeq6tpw8n61tyzcw53yrw9', '7X9w@A!AQJ8$4$4#2eNszv*ecY9s09n3c!Py$b8I'], // 7X9w... added on Feb 05
@@ -43,8 +46,5 @@ module.exports = {
     } else {
       throw 'invalid'
     }
-
   }
-
-
 };
