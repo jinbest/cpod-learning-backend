@@ -270,7 +270,8 @@ module.exports.routes = {
   // 'GET /api/v1/search/reindex-courses':                  { action: 'search/reindex-courses' },
   // 'GET /api/v1/search/reindex-vocab':                    { action: 'search/reindex-vocab' },
   // 'GET /api/v1/search/reindex-sentences':                { action: 'search/reindex-sentences' },
-  'POST /api/v1/search/search-lessons/:query?':          { action: 'search/search-lessons' },
+  'POST /api/v1/search/search-lessons/:query?':            { action: 'search/search-lessons' },
+  'POST /api/v1/search/search-all-lessons/:query?':        { action: 'search/search-all-lessons' },
   'GET /api/v1/search/search-dictionary/:query?':          { action: 'search/search-dictionary' },
 
   //DICTIONARY
