@@ -32,8 +32,15 @@ module.exports = function(req, res, proceed) {
     }
     //TODO revise this
 
-    sails.log.info({decodedUserId: decoded.data.userId});
-    req.session.userId = decoded.data.userId;
+    if (decoded.data.userId) {
+
+      req.session.userId = decoded.data.userId;
+
+    } else {
+
+      sails.hooks.bugsnag.notify(`Missing UserId - ${JSON.stringify(req.session)}`)
+
+    }
 
     return proceed();
   });
