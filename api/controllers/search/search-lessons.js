@@ -58,6 +58,31 @@ module.exports = {
       inputs.full = true
     }
 
+    if (inputs.levelFilters && inputs.levelFilters.length > 0) {
+      inputs.levelFilterIds = [];
+
+      const levelIds = {
+        newbie: 1,
+        elementary: 2,
+        'pre intermediate': 3,
+        intermediate: 4,
+        'upper intermediate': 5,
+        advanced: 6,
+        media: 7,
+        any: 0
+      };
+
+      inputs.levelFilters.forEach(filter => {
+
+        let cleanFilter = filter.toLowerCase();
+
+        if (levelIds[cleanFilter]) {
+          inputs.levelFilterIds.push(levelIds[cleanFilter])
+        }
+
+      })
+    }
+
     //Check for Actual Queries
     if (!inputs.query) {
 
@@ -73,7 +98,7 @@ module.exports = {
             query: {
               bool: {
                 filter: [
-                  {terms: {level: inputs.levelFilters}}
+                  {terms: {levelId: inputs.levelFilterIds}}
                 ]
               }
             },
@@ -123,7 +148,7 @@ module.exports = {
                   }
                 },
                 filter: [
-                  {terms: {level: inputs.levelFilters}}
+                  {terms: {levelId: inputs.levelFilterIds}}
                 ]
               }
             }
