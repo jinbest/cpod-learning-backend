@@ -1,3 +1,7 @@
+/*
+ * Copyright © 2020. Ugis Rozkalns. All Rights Reserved.
+ */
+
 module.exports = {
 
 
@@ -28,6 +32,13 @@ module.exports = {
   fn: async function (inputs) {
     inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
+    let count = await LessonData.count({
+        publication_timestamp: {
+          '<=': new Date()
+        },
+        status_published: 'publish'
+      });
+
     let rawData = await LessonData.find({
       where: {
         publication_timestamp: {
@@ -54,7 +65,7 @@ module.exports = {
         cleanData.push(lesson)
       }
     });
-    return cleanData
+    return {count: count, lessons: cleanData}
   }
 
-};
+  };

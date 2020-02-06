@@ -11,6 +11,10 @@ module.exports = {
     limit: {
       type: 'number',
       isInteger: true
+    },
+    skip: {
+      type: 'number',
+      isInteger: true
     }
 
   },
@@ -32,6 +36,7 @@ module.exports = {
         status_published: 'publish'
       },
       sort: 'publication_timestamp DESC',
+      skip: inputs.skip ? inputs.skip : 0,
       limit: inputs.limit ? inputs.limit : 10
     }).populate('userContents', {
       where: {user_id: inputs.userId, lesson_type: 0}

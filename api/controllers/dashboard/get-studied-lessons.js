@@ -15,8 +15,11 @@ module.exports = {
     limit: {
       type: 'number',
       isInteger: true
+    },
+    skip: {
+      type: 'number',
+      isInteger: true
     }
-
   },
 
 
@@ -49,6 +52,7 @@ module.exports = {
       },
       select: ['lesson', 'saved', 'studied', 'updatedAt'],  //  'title', 'slug', 'image', 'hash_code', 'publication_timestamp'
       sort: 'updatedAt DESC',
+      skip: inputs.skip ? inputs.skip : 0,
       limit: inputs.limit ? inputs.limit : 10,
     })
       // .sort('updatedAt DESC')
@@ -62,7 +66,7 @@ module.exports = {
     });
 
     return {count: count, lessons: returnData}
-    
+
   }
 
 };

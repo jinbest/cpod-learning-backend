@@ -1,3 +1,7 @@
+/*
+ * Copyright © 2020. Ugis Rozkalns. All Rights Reserved.
+ */
+
 module.exports = {
 
 
@@ -11,8 +15,11 @@ module.exports = {
     limit: {
       type: 'number',
       isInteger: true
+    },
+    skip: {
+      type: 'number',
+      isInteger: true
     }
-
   },
 
   exits: {
@@ -30,6 +37,12 @@ module.exports = {
   fn: async function (inputs) {
     inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
+    let count = await UserContents.count({
+        user_id: inputs.userId,
+        saved: 1,
+        lesson_type: 0
+      });
+
     let userLessons = await UserContents.find({
       where: {
         user_id: inputs.userId,
@@ -38,6 +51,7 @@ module.exports = {
       },
       select: ['lesson', 'saved', 'studied', 'updatedAt'],  //  'title', 'slug', 'image', 'hash_code', 'publication_timestamp'
       sort: 'updatedAt DESC',
+      skip: inputs.skip ? inputs.skip : 0,
       limit: inputs.limit ? inputs.limit : 10,
     })
       .populate('lesson');
@@ -48,7 +62,7 @@ module.exports = {
       item.lesson.studied =  item.studied;
       returnData.push(item.lesson);
     });
-    return returnData
+    return {count: count, lessons: returnData}
 
   }
 

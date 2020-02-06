@@ -6,7 +6,7 @@
 module.exports = {
   tableName: 'grammar_sentence',
   customToJSON: function() {
-    return _.pick(this, ['target', 'audio', 'sentence', 'vocabulary'])
+    return _.pick(this, ['target', 'audio', 'sentence', 'vocabulary', 'en', 'p', 's', 't'])
   },
   attributes: {
     id: {

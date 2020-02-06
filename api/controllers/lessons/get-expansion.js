@@ -37,6 +37,11 @@ module.exports = {
 
     rawExpansions.forEach((expansion) => {
       expansion.sentence = [];
+      expansion['target'] = expansion['row_2'];
+      expansion['en'] = expansion['row_2'];
+      expansion.p = '';
+      expansion.s = '';
+      expansion.t = '';
       expansion['row_1'].replace(/\(event,\'(.*?)\',\'(.*?)\',\'(.*?)\',\'(.*?)\'.*?\>(.*?)\<\/span\>([^\<]+)?/g, function (A, B, C, D, E, F, G, H) {
 
         let d = ''; let e = ''; let c = ''; let b = ''; let g = '';
@@ -64,15 +69,23 @@ module.exports = {
           p: c,
           en: b
         });
+
+        expansion.p += c + ' ';
+        expansion.s += d;
+        expansion.t += e;
+
         if (G) {
           try {g = decodeURI(G)} catch (err) {
             g = G;
             sails.log.error(err)
           }
-          expansion.sentence.push(g)
+          expansion.sentence.push(g);
+          expansion.p += g;
+          expansion.s += g;
+          expansion.t += g;
         }
       });
-      expansion['target'] = expansion['row_2'];
+
       delete expansion['row_1'];
       delete expansion['row_2'];
     });

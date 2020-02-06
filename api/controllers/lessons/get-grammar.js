@@ -40,6 +40,13 @@ module.exports = {
       grammarBlocks.forEach((block) => {
         block['examples'].forEach((example) => {
           example.sentence = [];
+
+          example['en'] = example['target'];
+
+          example.p = '';
+          example.s = '';
+          example.t = '';
+
           example['source_annotate'].replace(/\(event,\'(.*?)\',\'(.*?)\',\'(.*?)\',\'(.*?)\'.*?\>(.*?)\<\/span\>([^\<]+)?/g, function (A, B, C, D, E, F, G, H) {
 
             let d = ''; let e = ''; let c = ''; let b = ''; let g = '';
@@ -67,12 +74,20 @@ module.exports = {
               p: c,
               en: b
             });
+
+            example.p += c + ' ';
+            example.s += d;
+            example.t += e;
+
             if (G) {
               try {g = decodeURI(G)} catch (err) {
                 g = G;
                 sails.log.error(err)
               }
-              example.sentence.push(g)
+              example.sentence.push(g);
+              example.p += g;
+              example.s += g;
+              example.t += g;
             }
           });
         })
