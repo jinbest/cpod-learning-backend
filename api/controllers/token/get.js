@@ -30,9 +30,9 @@ module.exports = {
   fn: async function (inputs) {
 
     try {
-      sails.log.info({sessionRaw: this.req.session, sessionId: this.req.session.userId, me: this.req.me});
 
-      inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.me.id;
+      inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
+
     } catch (e) {
 
     }
@@ -45,7 +45,7 @@ module.exports = {
     const validApps = {
       dashboard: ['0r6jo0purpo86683joyeq6tpw8n61tyzcw53yrw9', '7X9w@A!AQJ8$4$4#2eNszv*ecY9s09n3c!Py$b8I'], // 7X9w... added on Feb 05
       recap: ['fsl5rctm7rmw4s1byz4hqocwwz2t04b3u36b4dxt'],
-      testing: ['aaaa1111bbbb2222cccc3333'],
+      testing: ['aaaa1111bbbb2222cccc3333']
     };
 
     sails.log.info(inputs);

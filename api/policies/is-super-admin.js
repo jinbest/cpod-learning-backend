@@ -19,6 +19,7 @@ module.exports = async function (req, res, proceed) {
 
   // Then check that this user is a "super admin".
   if (req.session.userId !== 1016995) {
+    sails.hooks.bugsnag.notify(`Access atempt to Admin page from ${JSON.stringify(req.session)}`);
     return res.forbidden();
   }//•
 

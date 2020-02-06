@@ -38,7 +38,7 @@ module.exports = function(req, res, proceed) {
 
     } else {
 
-      sails.hooks.bugsnag.notify(`Missing UserId - ${JSON.stringify(req.session)}`)
+      sails.hooks.bugsnag.notify(`Missing UserId - ${decoded.data} - ${JSON.stringify(req.session)}`)
 
     }
 
