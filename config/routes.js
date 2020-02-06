@@ -68,6 +68,10 @@ module.exports.routes = {
   //DASHBOARD
   'GET /dash/:unused?':                                  'HomeController.serve',
   'GET /home/:unused?':                                  'HomeController.serve',
+  'GET /latest/:unused?':                                'HomeController.serve',
+  'GET /history/:unused?':                               'HomeController.serve',
+  'GET /bookmarks/:unused?':                             'HomeController.serve',
+  'GET /levels/:unused?':                                'HomeController.serve',
   'GET /feedback/:unused?':                              'HomeController.serve',
   'GET /lesson/:unused?/:unused?':                       'HomeController.serve',
   'GET /explore/:unused?':                               'HomeController.serve',
@@ -109,7 +113,7 @@ module.exports.routes = {
   'GET /CNY-2020/:code?':                                { action: 'promotions/view-cny-promo'},
 
   //DICTIONARY
-  'GET /dictionary-testing/:query?':                             { action: 'view-dictionary' },
+  'GET /dictionary-testing/:query?':                     { action: 'view-dictionary' },
 
   //LEGAL PAGES
   'GET /terms':                                          { action:   'legal/view-terms' },
