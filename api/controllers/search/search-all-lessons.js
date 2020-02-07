@@ -67,7 +67,7 @@ module.exports = {
 
     let lessonCount = 0;
 
-    let searchFilters = {};
+    let searchFilters = [];
 
     let studied = undefined;
 
@@ -99,7 +99,7 @@ module.exports = {
 
       });
 
-      searchFilters['levelId'] = inputs.levelFilterIds;
+      searchFilters.push({terms: {levelId: inputs.levelFilterIds}})
 
     }
 
@@ -151,6 +151,32 @@ module.exports = {
           select: ['lesson', 'saved', 'studied']
         });
 
+      } else if (!studied && typeof saved === "undefined") {
+
+        let cleanList = await UserContents.find({
+          where: {
+            user_id: inputs.userId,
+            studied: 1,
+            lesson_type: 0
+          },
+          select: ['lesson', 'saved', 'studied']
+        });
+
+        userLessons = await LessonData.find({
+          where: {
+            id: {
+              nin: cleanList.map(lesson => lesson.lesson)
+            },
+            publication_timestamp: {
+              '<=': new Date()
+            },
+            status_published: 'publish'
+          },
+          select: ['id']
+        });
+
+        userLessons = userLessons.map(lesson => {return {lesson: lesson.id, saved: lesson.saved, studied: lesson.studied}});
+
       } else if (studied && !saved) {
 
         userLessons = await UserContents.find({
@@ -178,7 +204,7 @@ module.exports = {
 
       } else if (!saved && typeof studied === "undefined") {
 
-        userLessons = await UserContents.find({
+        let cleanList = await UserContents.find({
           where: {
             user_id: inputs.userId,
             saved: 1,
@@ -187,10 +213,26 @@ module.exports = {
           select: ['lesson', 'saved', 'studied']
         });
 
+        sails.log.info(cleanList);
+
+        userLessons = await LessonData.find({
+          where: {
+            id: {
+              nin: cleanList.map(lesson => lesson.lesson)
+            },
+            publication_timestamp: {
+              '<=': new Date()
+            },
+            status_published: 'publish'
+          },
+          select: ['id']
+        });
+
+        userLessons = userLessons.map(lesson => {return {lesson: lesson.id, saved: lesson.saved, studied: lesson.studied}});
+
+        sails.log.info(userLessons);
+
       } else if (saved && !studied) {
-
-
-        //TODO FIX filter
 
         userLessons = await UserContents.find({
           where: {
@@ -206,32 +248,56 @@ module.exports = {
 
       } else if (!saved && !studied) {
 
-        let checkLessons = await UserContents.find({
+        let cleanList = await UserContents.find({
           where: {
             user_id: inputs.userId,
+            studied: 1,
             lesson_type: 0
           },
           select: ['lesson', 'saved', 'studied']
         });
 
-        userLessons.concat(checkLessons.filter(lesson => lesson.saved));
-        userLessons.concat(checkLessons.filter(lesson => lesson.studied));
+        cleanList.concat((
+          await UserContents.find({
+            where: {
+              user_id: inputs.userId,
+              saved: 1,
+              lesson_type: 0
+            },
+            select: ['lesson', 'saved', 'studied']
+          })));
+
+        userLessons = await LessonData.find({
+          where: {
+            id: {
+              nin: cleanList.map(lesson => lesson.lesson)
+            },
+            publication_timestamp: {
+              '<=': new Date()
+            },
+            status_published: 'publish'
+          },
+          select: ['id']
+        });
+
+        userLessons = userLessons.map(lesson => {return {lesson: lesson.id, saved: lesson.saved, studied: lesson.studied}});
 
       }
 
+      searchFilters.push({terms: {id: userLessons.map(lesson => lesson.lesson)}});
 
-      searchFilters['id'] = userLessons.map(lesson => lesson.lesson);
-
-      sails.log.info(searchFilters['id'])
+      sails.log.info(searchFilters)
 
     }
 
     //Check for Actual Queries
     if (!inputs.query) {
 
-      if (Object.keys(searchFilters).length > 0) {
+      if (searchFilters.length > 0) {
 
         sails.log.info('No Query & Has Filters');
+
+        sails.log.info(searchFilters);
 
         lessons = await sails.hooks.elastic.client.search({
           index: 'lessons',
@@ -241,9 +307,7 @@ module.exports = {
           body: {
             query: {
               bool: {
-                filter: [
-                  {terms: searchFilters}
-                ]
+                filter: searchFilters
               }
             },
             sort: {
@@ -272,7 +336,7 @@ module.exports = {
 
     } else {
 
-      if (Object.keys(searchFilters).length > 0) {
+      if (searchFilters.length > 0) {
 
         sails.log.info('Has Query & Has Filters');
 
@@ -293,9 +357,7 @@ module.exports = {
                     fuzziness: 1,
                   }
                 },
-                filter: [
-                  {terms: searchFilters}
-                ]
+                filter: searchFilters
               }
             }
           }
@@ -331,19 +393,27 @@ module.exports = {
 
     lessonData = lessons['body']['hits']['hits'].map(i => i['_source']);
 
-    if (userLessons > 0) {
 
-      sails.log.info('lesson cleanup');
+    //Add Studied / Saved Statuses
+    let rawLessons = await UserContents.find({
+      where: {
+        user_id: inputs.userId,
+        lesson_type: 0,
+        lesson: {
+          in: lessonData.map(lesson => lesson.id)
+        }
+      },
+      select: ['lesson', 'saved', 'studied']
+    });
 
-      lessonData.forEach(lesson => {
-        let history = userLessons.filter(item => item.lesson.id === lesson.id);
-
+    lessonData.forEach(lesson => {
+      let history = rawLessons.filter(item => item.lesson === lesson.id)[0];
+      if (history) {
         lesson.saved = history['saved'] ? history['saved'] : 0;
         lesson.studied = history['studied'] ? history['studied'] : 0;
+      }
 
-      })
-
-    }
+    });
 
 
     return {
