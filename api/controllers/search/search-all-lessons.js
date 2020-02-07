@@ -63,9 +63,9 @@ module.exports = {
 
     let lessons = [];
 
-    let lessonData = [];
+    let lessonData;
 
-    let lessonCount = 0;
+    let lessonCount;
 
     let searchFilters = [];
 
