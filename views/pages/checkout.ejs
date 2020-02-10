@@ -14,14 +14,14 @@
             </div>
             <ul class="buttons">
               <li>
-                <a @click="switchBilling('monthly')" class="rbtn-blue bill-time" :class="[billingCycle === 'monthly' ? 'active' : '']">Monthly - ${{ pricing[plan].monthly }}</a>
+                <a @click="switchBilling('monthly')" class="btn rbtn-blue bill-time" :class="[billingCycle === 'monthly' ? 'active' : '']">Monthly - ${{ pricing[plan].monthly }}</a>
               </li>
               <li>
-                <a @click="switchBilling('quarterly')" class="rbtn-blue bill-time" :class="[billingCycle === 'quarterly' ? 'active' : '']">Quarterly - ${{ pricing[plan].quarterly }}
+                <a @click="switchBilling('quarterly')" class="btn rbtn-blue bill-time" :class="[billingCycle === 'quarterly' ? 'active' : '']">Quarterly - ${{ pricing[plan].quarterly }}
                   <span>{{ pricing[plan].savingQ }}</span></a>
               </li>
               <li>
-                <a @click="switchBilling('annually')" class="rbtn-blue bill-time" :class="[billingCycle === 'annually' ? 'active' : '']">
+                <a @click="switchBilling('annually')" class="btn rbtn-blue bill-time" :class="[billingCycle === 'annually' ? 'active' : '']">
                   Annually - ${{ pricing[plan].annually }}
                   <span>{{ pricing[plan].savingA }}</span>
                 </a>
@@ -46,11 +46,13 @@
               <div class="row">
                 <div class="col-lg-4 col-sm-4">
                   <label for="first-name">First Name<span class="required-mark">&nbsp;*</span></label>
-                  <input type="text" name="first_name" placeholder="First Name" v-model="formData.fName" required/>
+                  <input type="text" name="first_name" placeholder="First Name" :class="[formErrors.fName ? 'is-invalid' : '']" v-model="formData.fName" required/>
+                  <div class="invalid-feedback d-block" v-if="formErrors.fName">Please enter your first name.</div>
                 </div>
                 <div class="col-lg-4 col-sm-4">
                   <label for="last-name">Last Name<span class="required-mark">&nbsp;*</span></label>
-                  <input type="text" name="last_name" placeholder="Last Name" v-model="formData.lName" required/>
+                  <input type="text" name="last_name" placeholder="Last Name" :class="[formErrors.lName ? 'is-invalid' : '']" v-model="formData.lName" required/>
+                  <div class="invalid-feedback d-block" v-if="formErrors.lName">Please enter your last name.</div>
                 </div>
               </div>
 
@@ -59,7 +61,7 @@
                 <div class="col-lg-4 col-sm-4">
                   <label for="email">Email Address<span class="required-mark">&nbsp;*</span></label>
                   <input type="email" name="email" placeholder="email@domain.com" :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress"  :required="needsAccount" :disabled="!needsAccount"/>
-                  <div class="invalid-feedback" v-if="formErrors.emailAddress">Please enter a valid email address.</div>
+                  <div class="invalid-feedback d-block" v-if="formErrors.emailAddress">Please enter a valid email address.</div>
                 </div>
               </div>
 
@@ -74,9 +76,10 @@
               <h3>Your privacy</h3>
             </div>
             <p class="note">
-              <input type="checkbox" name="tos" id="termsofservice" :required="needsAccount"/>
+              <input type="checkbox" name="tos" id="termsofservice" v-model="formData.agreedToTerms" :required="needsAccount"/>
               <label for="termsofservice">&nbsp;&nbsp; I have read and agree to the <a href="/privacy/" target="_blank">Privacy Policy</a> and <a href="/terms/" target="_blank">Terms of Service</a> of ChinesePod LLC.</label><span
                 class="required-mark">&nbsp;*</span></p>
+            <div class="invalid-feedback d-block" v-if="formErrors.agreedToTerms">You need to accept the terms and policies of ChinesePod to create and account.</div>
           </li>
           <li>
             <hr>
@@ -134,6 +137,29 @@
               </div>
             </div>
 
+            <div class="payment-content-paypal">
+              <div class="col-12 col-md-4">
+                <button class="btn btn-lg btn-block btn-warning" :disabled="syncing"  @click.prevent="paypalCheckout()">
+                  <div class="col-12">
+                    <img class="img-fluid mx-auto d-block" src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_100x26.png" alt="PayPal Logo">
+                  </div>
+                </button>
+              </div>
+              <div class="col-12 my-2 py-2">
+                <div class="row">
+                  <div class="col-5">
+                    <hr/>
+                  </div>
+                  <div class="col-2 text-center font-weight-bold">
+                    or
+                  </div>
+                  <div class="col-5">
+                    <hr/>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div class="form-group clearfix">
               <ul class="cards">
                 <li>
@@ -152,6 +178,7 @@
             </div>
 
             <!-- Used to display form errors. -->
+
             <div v-show="false" id="card-errors" class="alert alert-danger" role="alert"></div>
             <div class="payment-content-stripe">
               <div class="form-group clearfix pl-0">
@@ -175,17 +202,15 @@
                 </div>
               </div>
             </div>
-            <div class="payment-content-paypal d-none">
-              <span>When you click "<b>Join ChinesePod</b>" below we'll take you to PayPal's site to set up your billing information.</span>
-              </br></br>
-            </div>
           </li>
           <li>
             <hr>
           </li>
           <li class="join-cp">
             <div id="error"></div>
-            <ajax-button id="cc-submit-button" :syncing="syncing" class="rbtn-blue payment-content-stripe">Join ChinesePod</ajax-button>
+            <div class="col-12 col-md-4">
+              <ajax-button id="cc-submit-button" :syncing="syncing" class="btn-block rbtn-blue payment-content-stripe">Join ChinesePod</ajax-button>
+            </div>
             </br>
           </li>
         </ul>

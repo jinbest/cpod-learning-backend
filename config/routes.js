@@ -47,6 +47,7 @@ module.exports.routes = {
   'GET /pricing':                                        { action: 'onboarding/view-pricing' },
   'GET /pricing-alt':                                    { action: 'onboarding/view-pricing-alt' },
   'GET /checkout':                                       { action: 'view-checkout' },
+  'GET /checkout/paypal':                                { action: 'purchase/paypal/view-paypal-pay' },
 
   'GET /redeem':                                         { action: 'redeem/view-redeem-voucher' },
   'GET /redeem/:code':                                   { action: 'redeem/redeem-voucher' },
@@ -161,6 +162,9 @@ module.exports.routes = {
   // …
   'POST /api/v1/webhooks/mautic/update':                 { action: 'webhooks/mautic/update' },
   'POST /api/v1/webhooks/stripe/failed':                 { action: 'webhooks/stripe/failed' },
+  'POST /api/v1/webhooks/mautic/update':                  { action: 'webhooks/mautic/update' },
+  'POST /api/v1/webhooks/stripe/failed':                  { action: 'webhooks/stripe/failed' },
+  'POST /api/v1/webhooks/paypal':                  { action: 'webhooks/paypal' },
 
 
   //  ╔═╗╔═╗╦  ╔═╗╔╗╔╔╦╗╔═╗╔═╗╦╔╗╔╔╦╗╔═╗
@@ -171,6 +175,17 @@ module.exports.routes = {
 
   '/api/v1/account/logout':                              { action: 'account/logout' },
   '/api/v1/account/opt-out-of-new-dashboard':            { action: 'account/opt-out-of-new-dashboard' },
+
+
+  //Payments
+
+  '/api/v1/paypal/cancel':                                    { action: 'purchase/paypal/paypal-cancel' },
+  'POST /api/v1/paypal/create':                               { action: 'purchase/paypal/paypal-create' },
+  'GET /api/v1/paypal/success':                              { action: 'purchase/paypal/paypal-confirm' },
+  'GET /api/v1/paypal/cancel':                              { action: 'purchase/paypal/paypal-cancel' },
+  'POST /api/v1/paypal/execute':                              { action: 'purchase/paypal/paypal-execute' },
+  'POST /api/v1/paypal/create-agreement':                     { action: 'purchase/paypal/cancel' },
+  'POST /api/v1/paypal/process-agreement':                    'PaypalController.cancel',
 
   //Sample Routes
   // '/api/v1/account/logout':                              { action: 'account/logout' },
@@ -186,6 +201,7 @@ module.exports.routes = {
   'PUT  /api/v1/onboarding/level':                       { action: 'onboarding/level' },
   'PUT  /api/v1/onboarding/redeem':                      { action: 'redeem/redeem-voucher' },
   'PUT  /api/v1/purchase/checkout':                      { action: 'purchase/checkout' },
+  'POST  /api/v1/purchase/checkout/paypal/cancel':       { action: 'purchase/checkout' },
   'POST  /api/v1/purchase/check-promo':                  { action: 'purchase/check-promo' },
   'POST /api/v1/purchase/check-email':                   { action: 'purchase/check-email' },
 
