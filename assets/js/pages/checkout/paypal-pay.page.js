@@ -8,6 +8,7 @@ parasails.registerPage('paypal-pay', {
 
     // Form data
     formData: {
+      currency: 'USD'
     },
 
     // For tracking client-side validation errors in our form.
@@ -45,7 +46,7 @@ parasails.registerPage('paypal-pay', {
         payment: {
           transactions: [
             {
-              amount: { total: this.formData.amount, currency: 'USD' }
+              amount: { total: this.formData.amount, currency: this.formData.currency }
             }
           ]
         }
@@ -54,10 +55,14 @@ parasails.registerPage('paypal-pay', {
 
     let onAuthorize = (data) => {
       this.syncing = true;
+
+      console.log(data);
+
       var data = {
         paymentID: data.paymentID,
         payerID: data.payerID,
-        amount: this.formData.amount
+        amount: this.formData.amount,
+        currency: this.formData.currency
       };
       this.sendDataPaypal({data:data}).then(() => {
 
@@ -102,9 +107,9 @@ parasails.registerPage('paypal-pay', {
           if (res.success) {
             this.syncing = false;
             this.success = true;
-            setTimeout(() => {
-              window.location.href = '/dash'
-            }, 10000)
+            // setTimeout(() => {
+            //   window.location.href = '/checkout/paypal-success'
+            // }, 10000)
           } else {
             this.syncing = false;
             this.error = true

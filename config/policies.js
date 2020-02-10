@@ -23,6 +23,8 @@ module.exports.policies = {
 
   // 'admin/*': 'is-staff',
 
+  'purchase/paypal/view-paypal-pay': 'is-logged-in',
+
   'sso/discourse': 'is-logged-in',
 
   'dashboard/*': 'is-authenticated',

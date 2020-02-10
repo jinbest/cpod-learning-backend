@@ -48,6 +48,7 @@ module.exports.routes = {
   'GET /pricing-alt':                                    { action: 'onboarding/view-pricing-alt' },
   'GET /checkout':                                       { action: 'view-checkout' },
   'GET /checkout/paypal':                                { action: 'purchase/paypal/view-paypal-pay' },
+  'GET /checkout/paypal-success':                                { action: 'purchase/paypal/view-paypal-success' },
 
   'GET /redeem':                                         { action: 'redeem/view-redeem-voucher' },
   'GET /redeem/:code':                                   { action: 'redeem/redeem-voucher' },
@@ -111,6 +112,7 @@ module.exports.routes = {
   'GET /holiday-offer-success/:code?':                   { action: 'promotions/view-expired-promo'},
   'GET /cheers/:code?':                                  { action: 'promotions/view-expired-promo'},
   'GET /australia-day/:code?':                           { action: 'promotions/view-cheers-promo'},
+  'GET /valentines-day/:code?':                          { action: 'promotions/view-valentines-day-promo'},
   'GET /CNY-2020/:code?':                                { action: 'promotions/view-cny-promo'},
 
   //DICTIONARY
@@ -162,9 +164,9 @@ module.exports.routes = {
   // …
   'POST /api/v1/webhooks/mautic/update':                 { action: 'webhooks/mautic/update' },
   'POST /api/v1/webhooks/stripe/failed':                 { action: 'webhooks/stripe/failed' },
-  'POST /api/v1/webhooks/mautic/update':                  { action: 'webhooks/mautic/update' },
-  'POST /api/v1/webhooks/stripe/failed':                  { action: 'webhooks/stripe/failed' },
-  'POST /api/v1/webhooks/paypal':                  { action: 'webhooks/paypal' },
+  'POST /api/v1/webhooks/mautic/update':                 { action: 'webhooks/mautic/update' },
+  'POST /api/v1/webhooks/stripe/failed':                 { action: 'webhooks/stripe/failed' },
+  'POST /api/v1/webhooks/paypal':                        { action: 'webhooks/paypal' },
 
 
   //  ╔═╗╔═╗╦  ╔═╗╔╗╔╔╦╗╔═╗╔═╗╦╔╗╔╔╦╗╔═╗
@@ -179,13 +181,13 @@ module.exports.routes = {
 
   //Payments
 
-  '/api/v1/paypal/cancel':                                    { action: 'purchase/paypal/paypal-cancel' },
-  'POST /api/v1/paypal/create':                               { action: 'purchase/paypal/paypal-create' },
-  'GET /api/v1/paypal/success':                              { action: 'purchase/paypal/paypal-confirm' },
-  'GET /api/v1/paypal/cancel':                              { action: 'purchase/paypal/paypal-cancel' },
-  'POST /api/v1/paypal/execute':                              { action: 'purchase/paypal/paypal-execute' },
-  'POST /api/v1/paypal/create-agreement':                     { action: 'purchase/paypal/cancel' },
-  'POST /api/v1/paypal/process-agreement':                    'PaypalController.cancel',
+  '/api/v1/paypal/cancel':                               { action: 'purchase/paypal/paypal-cancel' },
+  'POST /api/v1/paypal/create':                          { action: 'purchase/paypal/paypal-create' },
+  'GET /api/v1/paypal/success':                          { action: 'purchase/paypal/paypal-confirm' },
+  'GET /api/v1/paypal/cancel':                           { action: 'purchase/paypal/paypal-cancel' },
+  'POST /api/v1/paypal/execute':                         { action: 'purchase/paypal/paypal-execute' },
+  // 'POST /api/v1/paypal/create-agreement':                { action: 'purchase/paypal/cancel' },
+  // 'POST /api/v1/paypal/process-agreement':               'PaypalController.cancel',
 
   //Sample Routes
   // '/api/v1/account/logout':                              { action: 'account/logout' },

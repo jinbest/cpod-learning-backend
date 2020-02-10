@@ -14,10 +14,14 @@ module.exports = {
       }
       else{
 
+        // sails.log.info(JSON.stringify(paymentLog));
+
         //the logic after  successful payment  here just save the payment in a database
         payment.email = paymentLog.payer.payer_info.email;
         payment.first_name = paymentLog.payer.payer_info.first_name;
         payment.last_name = paymentLog.payer.payer_info.last_name;
+        payment.transactionId = paymentLog.transactions[0]['related_resources'][0]['sale']['id'];
+        payment.shipping_address = paymentLog.payer.payer_info.shipping_address;
         cb(null, payment)
       }
     })
