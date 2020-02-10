@@ -30,15 +30,19 @@ module.exports = function(req, res, proceed) {
       }
       return res.status(401).json({err: 'Invalid token'});
     }
-    //TODO revise this
 
+    //TODO revise this
     if (decoded.data.userId) {
 
       req.session.userId = decoded.data.userId;
 
+    } else if (Number.isInteger(parseInt(decoded.data))) {
+
+      req.session.userId = parseInt(decoded.data)
+
     } else {
 
-      sails.hooks.bugsnag.notify(`Missing UserId - ${decoded.data} - ${JSON.stringify(req.session)}`)
+      sails.hooks.bugsnag.notify(`Missing UserId - ${JSON.stringify(decoded)} - ${JSON.stringify(req.session)}`)
 
     }
 
