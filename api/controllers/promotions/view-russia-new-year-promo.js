@@ -1,7 +1,7 @@
 module.exports = {
 
 
-  friendlyName: 'View Russia New YEr Promo',
+  friendlyName: 'View Russia New Year Promo',
 
 
   description: 'Display "Russia New YEr Promo" page.',
