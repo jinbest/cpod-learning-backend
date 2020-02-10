@@ -186,6 +186,7 @@ module.exports.routes = {
   'GET /api/v1/paypal/success':                          { action: 'purchase/paypal/paypal-confirm' },
   'GET /api/v1/paypal/cancel':                           { action: 'purchase/paypal/paypal-cancel' },
   'POST /api/v1/paypal/execute':                         { action: 'purchase/paypal/paypal-execute' },
+  'POST /api/v1/paypal/execute-checkout':                { action: 'purchase/paypal/paypal-execute-checkout' },
   // 'POST /api/v1/paypal/create-agreement':                { action: 'purchase/paypal/cancel' },
   // 'POST /api/v1/paypal/process-agreement':               'PaypalController.cancel',
 

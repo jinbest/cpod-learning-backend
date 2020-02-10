@@ -161,8 +161,6 @@ module.exports = {
 
     let ipData = {};
 
-    let userData = {};
-
     if (!this.req.me) {
 
       // Create a new User
@@ -437,7 +435,7 @@ module.exports = {
 
         // If Trial - Mark User Record as Such
         if (inputs.trial) {
-          userData = await User.updateOne({id: inputs.userId})
+          await User.updateOne({id: inputs.userId})
             .set({trial: new Date(Date.now()).toISOString()});
         }
         try {

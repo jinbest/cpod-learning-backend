@@ -105,11 +105,9 @@ parasails.registerPage('paypal-pay', {
       await Cloud['paypalExecute'].with(data)
         .then(res => {
           if (res.success) {
-            this.syncing = false;
-            this.success = true;
-            // setTimeout(() => {
-            //   window.location.href = '/checkout/paypal-success'
-            // }, 10000)
+            window.location.href = '/checkout/paypal-success'
+            // this.syncing = false;
+            // this.success = true;
           } else {
             this.syncing = false;
             this.error = true
