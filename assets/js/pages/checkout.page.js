@@ -25,7 +25,11 @@ parasails.registerPage('checkout', {
     },
     // For tracking client-side validation errors in our form.
     // > Has property set to `true` for each invalid property in `formData`.
-    formErrors: { /* … */ },
+    formErrors: {
+      // emailAddress: true,
+      // fName: true,
+      // lName: true
+    },
     cardError: false,
 
     // Syncing / loading state
@@ -42,7 +46,15 @@ parasails.registerPage('checkout', {
     modal: '',
 
     // Stripe
-    stripeKey: 'pk_test_4VxncInS2mI0bVeyKWPOGSMY'
+    stripeKey: 'pk_test_4VxncInS2mI0bVeyKWPOGSMY',
+
+    paypalClient: {
+      sandbox: 'AZGCQyxdYVNlEao8bzD7tMrccqocSl4hjZmhR6nZ8bL7rCewPXRywjP-uwolycnyIodbL5oQvN8dixZE',
+      production: 'AWZiTif-WpZUU8mjN2PbrRy_fTYDj2-_VqswzgiEUepQZc7g-jFJFaB4OjnSeU00UQtsReGPMo_tQ7yu'
+    }
+  },
+
+  computed: {
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -236,7 +248,6 @@ parasails.registerPage('checkout', {
       // Validate email:
       if(!argins.emailAddress || !parasails.util.isValidEmailAddress(argins.emailAddress)) {
         this.formErrors.emailAddress = true;
-        console.log(this.formErrors);
       }
 
       // Validate name:
@@ -245,6 +256,9 @@ parasails.registerPage('checkout', {
       }
       if (!argins.lName) {
         this.formErrors.lName = true;
+      }
+      if (this.needsAccount && !argins.agreedToTerms) {
+        this.formErrors.agreedToTerms = true;
       }
 
       if (document.getElementById('card-errors').textContent){
@@ -255,8 +269,50 @@ parasails.registerPage('checkout', {
         this.syncing = false;
         return
       }
-
       return argins;
+    },
+    async paypalCheckout () {
+      this.syncing = true;
+
+      let data = this.handleParsingForm();
+      if (!data) {
+        this.syncing = false;
+        return
+      } else {
+        if (this.needsAccount) {
+          // Check Email for Existing Account
+          let existingAccount = await this.checkEmail();
+          if (existingAccount.userData) {
+            this.modal = 'loginModal';
+            this.syncing = false;
+            return false
+          }
+        }
+        await Cloud['paypalCreate'].with({
+          fName: this.formData.fName,
+          lName: this.formData.lName,
+          emailAddress: this.formData.emailAddress,
+          token: this.token,
+          plan: this.plan,
+          billingCycle: this.billingCycle,
+          trial: this.trial,
+          promoCode: this.pricing.discount ? this.formData.promoCode : ''
+        })
+          .then((info) => {
+            window.open(info.redirect, '_blank');
+            this.syncing = false;
+            // this.cloudSuccess = true;
+            // setTimeout(() => {
+            //   window.location = this.needsOnboarding ? '/level' : '/dash';
+            // }, 2000);
+          })
+          .catch((e) => {
+            console.log(e.responseInfo.body);
+            this.paymentErrors = e.responseInfo.body;
+            this.modal = 'paymentError';
+            this.syncing = false;
+          })
+      }
     }
   }
 });

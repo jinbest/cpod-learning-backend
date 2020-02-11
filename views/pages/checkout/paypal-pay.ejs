@@ -1,0 +1,35 @@
+<div id="paypal-pay" v-cloak>
+  <div class="container">
+    <h1 class="text-white headline font-weight-bold text-center">Pay with Paypal</h1>
+    <div class="paypal-form-container card p-5 mt-4">
+      <div v-show="syncing" class="col-12 text-center">
+        <i style="font-size: 100px !important;"class="fa fa-spinner fa-spin"></i>
+      </div>
+      <div v-show="!syncing && !success">
+        <p>Process small one-off payments with PayPal.</p>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">$</span>
+          </div>
+          <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" :class="[formErrors.amount ? 'is-invalid' : '']" v-model.trim="formData.amount" required autofocus>
+          <div class="invalid-feedback" v-if="formErrors.amount">Not a valid amount.</div>
+          <div class="input-group-append">
+            <span class="input-group-text">.00</span>
+          </div>
+        </div>
+        <div class="form-group mt-3">
+          <div class="btn btn-lg btn-block" id="paypal-button-container"></div>
+        </div>
+      </div>
+      <div v-show="!syncing && success">
+        <div class="alert alert-success" role="alert">
+          Great! Your payment has been processed.
+        </div>
+        <p class="mt-2">Make sure to notify Customer Support at <a href="mailto:support@chinesepod.com">support@chinesepod.com</a>. We'll redirect you shortly.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<link href="https://fonts.googleapis.com/css?family=EB+Garamond:400,700|Roboto:700&display=swap" rel="stylesheet">
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

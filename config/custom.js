@@ -84,6 +84,11 @@ module.exports.custom = {
   **************************************************************************/
   stripePublishableKey: 'pk_test_4VxncInS2mI0bVeyKWPOGSMY',
   stripeSecret: 'sk_test_hDZHzh7nC3vW9IgXsAGAtyKN',
+
+  //PAYPAL
+  paypalAccount: 'sb-f3top532686@business.example.com',
+  paypalPublishableKey: 'AZGCQyxdYVNlEao8bzD7tMrccqocSl4hjZmhR6nZ8bL7rCewPXRywjP-uwolycnyIodbL5oQvN8dixZE',
+  paypalSecret: 'ECwA9M9Bc4osxlGadeDSSGCgoS8t9wKAeyHOzq1Up6EUb4jKtUTuJxqX9RxonKD6hALICz83jb61SssA',
   //--------------------------------------------------------------------------
   // /\  Configure these to enable support for billing features.
   // ||  (Or if you don't need billing, feel free to remove them.)

@@ -1,0 +1,203 @@
+<div id="valentines-day" v-cloak>
+  <div class="valentines-promo">
+    <div class="container wrapper p-md-4">
+      <div class="row pb-md-4 px-md-4">
+        <div class="col-12 my-3 text-center text-white">
+          <h5 class="tagline-1">
+            Don’t settle for just the basics.<br/>
+            Learn more Chinese, for the sake of LOVE!
+          </h5>
+          <h5 class="tagline-1 font-weight-bold">
+            Give yourself and your valentine a special gift with a special discount:
+          </h5>
+          <h2 class="promo-code-line">
+            $50 off with promo code <span class="promo-code">VAL20</span>
+          </h2>
+        </div>
+        <div class="col-12 col-lg-10 offset-lg-1 col-xl-12 offset-xl-0 mb-0">
+          <div class="container outer" id="checkout-form">
+            <div class="body">
+              <form v-if="!cloudSuccess" name="ccForm" id="cc_form">
+                <ul class="row">
+                  <li class="col-12 col-xl-6">
+                    <div class="heading">
+                      <span class="number">1</span>
+                      <h3>Your information</h3>
+                    </div>
+
+                    <div class="basic-info">
+                      <div class="row">
+                        <div class="col-lg-4 col-sm-6 col-xl-6">
+                          <label for="first-name">First Name<span class="required-mark">&nbsp;*</span></label>
+                          <input type="text" name="first_name" id="first-name" placeholder="First Name" v-model="formData.fName" required/>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-xl-6">
+                          <label for="last-name">Last Name<span class="required-mark">&nbsp;*</span></label>
+                          <input type="text" name="last_name" placeholder="Last Name" v-model="formData.lName" required/>
+                        </div>
+                      </div>
+
+                      <!-- TODO ONLY FOR TEMPORARY ACCOUNTS-->
+                      <div v-if="needsAccount" class="row">
+                        <div class="col-lg-4 col-sm-6 col-xl-6">
+                          <label for="email">Email Address<span class="required-mark">&nbsp;*</span></label>
+                          <input type="email" name="email" placeholder="email@domain.com" :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress"  :required="needsAccount" :disabled="!needsAccount"/>
+                          <div class="invalid-feedback" v-if="formErrors.emailAddress">Please enter a valid email address.</div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </li>
+                  <li class="d-xl-none">
+                    <hr>
+                  </li>
+                  <li class="col-12 col-xl-6 payment-info">
+                    <div class="heading">
+                      <span class="number">2</span>
+                      <h3>Your payment information</h3>
+                    </div>
+                    <div v-if="promoShow && !promoToggle">
+                      <p class="note">Do you have a Promo Code? <a @click="promoToggle = !promoToggle" class="ipc">Apply it here.</a>
+                    </div>
+
+                    <div v-show="promoToggle" class="row promotion-code pt-3">
+                      <div class="col-lg-4 col-sm-6 col-xl-6">
+                        <label for="promotion_code">Promotion Code</label>
+                        <input type="text" id="promotionCode" name="promoCode"  :class="[formErrors.promoCode ? 'is-invalid' : '']" placeholder="Promotion Code" v-model.trim="formData.promoCode" :disabled="pricing.discount > 0">
+                        <div v-if="formErrors.promoCode && promoLimit < 6" class="alert alert-warning alert-dismissible fade show" role="alert">
+                          <strong>Oh No!</strong>  Unfortunately this is not a valid code.
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div v-if="promoLimit > 5" class="alert alert-danger alert-dismissible fade show" role="alert">
+                          <strong>Oh No!</strong>  Unfortunately you've tried too many Promo Codes. Please check your code and try again later.
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="col-lg-4 col-sm-6 mt-sm-4 col-xl-6">
+                        <a @click="applyPromoCode" class="btn apply-pc-btn ajax-button mt-2" :class="[promoSyncing ? 'syncing' : '', pricing.discount ? ['rbtn', 'disabled'] : 'rbtn-blue']">
+                          <span class="button-text" v-if="!syncing && !pricing.discount"><slot name="default">Apply</slot></span>
+                          <span class="button-loader clearfix" v-if="promoSyncing">
+                                      <slot name="syncing-state">Applying...</slot>
+                                    </span>
+                          <span class="button-text" v-if="!promoSyncing && pricing.discount"><slot name="default"><i>Applied</i></slot></span>
+                        </a>
+                        <a v-show="pricing.discount" @click="formData.promoCode = ''; pricing.discount = 0" class="btn rbtn-red apply-pc-btn mt-2">
+                          <span class="button-text"><slot name="default">Clear</slot></span>
+                        </a>
+                      </div>
+                    </div>
+
+<!--                    <p v-if="trial">Your card will not be charged for 14 days. If you cancel before then, your card won’t be charged.</br>-->
+<!--                      You will be charged <b>-->
+<!--                        <span class="price-switch total-amount">${{ pricing[plan][billingCycle] }} {{ billingCycle }}</span>-->
+<!--                      </b> when your trial ends.</p>-->
+
+                    <p v-if="!trial && !pricing.discount">
+                      You will be charged <b>
+                        <span class="price-switch total-amount">${{ (Math.round((pricing[plan][billingCycle] - pricing.discount) * 100) / 100).toFixed(2)  }}</span>
+                      </b> today.</p>
+                    <p v-if="!trial && pricing.discount">
+                      You will be charged <span class="price-switch total-amount font-weight-bold">${{ (Math.round((pricing[plan][billingCycle] - pricing.discount) * 100) / 100).toFixed(2) }} today</span></p>
+
+                    <div class="payment-content-paypal pt-2">
+                      <span>When you click "<b>Join ChinesePod</b>" below we'll take you to PayPal's site to set up your billing information.</span>
+                    </div>
+                  </li>
+                  <li class="col-12">
+                    <hr>
+                  </li>
+                  <li class="col-12 join-cp">
+                    <div id="error"></div>
+                    <div class="btn btn-lg btn-block" id="paypal-button-container"></div>
+                    <p><small class="text-muted">By subscribing, you agree to the <a href="/privacy/" target="_blank">Privacy Policy</a> and <a href="/terms/" target="_blank">Terms of Service</a> of ChinesePod LLC.</small></p>
+                  </li>
+                </ul>
+              </form>
+              <div v-show="cloudSuccess">
+                <div class="jumbotron text-xs-center bg-transparent">
+                  <h1 class="display-3">Thank You!</h1>
+                  <p class="lead">You have successfully confirmed a subscription and will be redirected to the <span class="font-weight-bold">ChinesePod Dashboard</span> shortly.</p>
+                  <hr>
+                  <a class="btn btn-lg rbtn-blue mb-3 col-12 col-md-3" :href="needsOnboarding ? '/level' : '/home'" role="button">Get Started</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="cvvpopOver" class="d-none">
+          <p>
+            The Card Verification Number/Code anti-fraud system was created so that if someone gets possession of your credit card numbers they also need to have possession of your physical card in order to use the card.
+            American Express calls it the CID (Card Identification Number). For MasterCard, it is the CVC2 (Card Validation Code). Visa calls this number the CVV2 (Card Verification Value).
+          </p>
+          <p>
+            <strong>Visa and Mastercard</strong><br/>
+            <img alt="Cv_vmccard" src="/images/cv_vmccard.gif" class="float-left">The verification number is a 3-digit number printed on the back of your card. It appears after and to the right of your card number.<br/>
+          </p>
+          <hr/>
+          <p>
+            <strong>American Express</strong><br/>
+            <img alt="Cv_amexccard" src="/images/cv_amex_card.gif" class="float-left">The American Express verification number is a 4-digit number printed on the front of your card. It appears after and to the right of
+            your card number.
+          </p>
+        </div>
+        <!--        <div class="col-12 mt-0 mb-4 img-center">-->
+        <!--          <img class="img-fluid w-100" src="/images/promotions/cheers_promo_footer_min.jpg" alt="CHEERS 2020 PROMOTION" loading="lazy">-->
+        <!--        </div>-->
+        <div class="col-10 offset-1 col-md-4 offset-md-4 my-4">
+          <img class="img-fluid" src="/images/brand/brand-white.svg" alt="ChinesePod" loading="lazy">
+        </div>
+
+        <modal class="paymentError modal fade" v-if="modal==='paymentError'" @close="modal = ''" v-cloak>
+          <div class="modal-header">
+            <h2 class="modal-title">Error During Checkout</h2>
+            <hr/>
+            <button type="button" class="modal-close-button" data-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div v-if="needsAccount">
+              <h5>We created a new account for you and sent a confirmation email. However, we encountered the following payment error:</h5>
+              <br/>
+            </div>
+            <h5>{{ paymentErrors ? 'Unfortunately the subscription was not successful. This is the potential issue: ' + paymentErrors : 'An unknown error occurred during checkout. Please check your information and try again later' }}</h5>
+          </div>
+          <div class="modal-footer flex-row-reverse justify-content-between">
+            <button type="button" data-dismiss="modal" class="btn btn-info">Close</button>
+          </div>
+        </modal>
+
+        <modal class="loginModal modal fade" v-if="modal==='loginModal'" @close="modal = ''" v-cloak>
+          <div class="container">
+            <h2 class="text-center">Seems you already have account with us. Please sign in below.</h2>
+            <div class="login-form-container">
+              <hr/>
+              <ajax-form action="login" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-errors.sync="formErrors" @submitted="loginForm()">
+                <div class="form-group">
+                  <input type="email" class="form-control" placeholder="Email address" :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress" autocomplete="email" focus-first>
+                  <div class="invalid-feedback" v-if="formErrors.emailAddress">Please provide a valid email address.</div>
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control" placeholder="Password" :class="[formErrors.password ? 'is-invalid' : '']" v-model.trim="formData.password" autocomplete="current-password">
+                  <div class="invalid-feedback" v-if="formErrors.password">Please enter your password.</div>
+                </div>
+                <p class="text-danger" v-if="cloudError==='badCombo'"><small>The credentials you entered are not associated with an account. Please check your email and/or password and try again.</small></p>
+                <p class="text-danger" v-else-if="cloudError"><small>An error occurred while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</small></p>
+                <div class="form-group">
+                  <ajax-button :syncing="syncing" class="btn-dark btn-lg btn-block">Sign in</ajax-button>
+                </div>
+              </ajax-form>
+              <p class="text-center"><a href="/accounts/resetpassword" target="_blank">Forgot your password?</a></p>
+            </div>
+          </div>
+        </modal>
+
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

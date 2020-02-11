@@ -435,7 +435,7 @@ module.exports = {
 
         // If Trial - Mark User Record as Such
         if (inputs.trial) {
-          userData = await User.updateOne({id: inputs.userId})
+          await User.updateOne({id: inputs.userId})
             .set({trial: new Date(Date.now()).toISOString()});
         }
         try {
