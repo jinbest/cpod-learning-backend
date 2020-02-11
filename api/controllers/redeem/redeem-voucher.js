@@ -133,7 +133,7 @@ module.exports = {
           redeemed_by: inputs.userId
         });
 
-      return this.res.view('/redeem-success');
+      return this.res.redirect('/redeem-success');
 
     } catch (e) {
 
