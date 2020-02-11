@@ -113,6 +113,11 @@ module.exports.routes = {
   'GET /cheers/:code?':                                  { action: 'promotions/view-expired-promo'},
   'GET /australia-day/:code?':                           { action: 'promotions/view-cheers-promo'},
   'GET /valentines-day/:code?':                          { action: 'promotions/view-valentines-day-promo'},
+  'GET /valentines-day-gift/:code?':                     { action: 'promotions/valentines/view-valentines-day-gift'},
+  'GET /valentines-day-gift-success/:code?':             { action: 'promotions/valentines/view-valentines-day-gift-success'},
+  'GET /valentines-day-gift-redeem/:code?':              { action: 'promotions/valentines/view-valentines-day-gift-redeem'},
+  'GET /valentines-day-gift-redeem-confirm/:code?':      { action: 'promotions/valentines/view-valentines-day-gift-redeem-confirm'},
+  'GET /valentines-day-gift-redeem-success/:code?':      { action: 'promotions/valentines/view-valentines-day-gift-redeem-success'},
   'GET /CNY-2020/:code?':                                { action: 'promotions/view-cny-promo'},
 
   //DICTIONARY
@@ -187,6 +192,7 @@ module.exports.routes = {
   'GET /api/v1/paypal/cancel':                           { action: 'purchase/paypal/paypal-cancel' },
   'POST /api/v1/paypal/execute':                         { action: 'purchase/paypal/paypal-execute' },
   'POST /api/v1/paypal/execute-checkout':                { action: 'purchase/paypal/paypal-execute-checkout' },
+  'POST /api/v1/purchase/paypal/execute-gift-checkout': { action: 'purchase/paypal/paypal-execute-gift-checkout' },
   // 'POST /api/v1/paypal/create-agreement':                { action: 'purchase/paypal/cancel' },
   // 'POST /api/v1/paypal/process-agreement':               'PaypalController.cancel',
 

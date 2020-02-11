@@ -101,11 +101,10 @@ module.exports = {
       }
     };
 
-    const ipdata =  require('ipdata');
+    //TODO Revise this
+    let discount = false;
 
     let ipData = {};
-
-    //TODO REVISE ACCOUNT FINDING OR CREATION
 
     if (!this.req.me) {
 

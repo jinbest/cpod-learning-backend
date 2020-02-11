@@ -13,8 +13,8 @@ module.exports = {
     id: {
       columnName: 'voucher_id',
       type: 'number',
-      autoIncrement: true,
-      required: true
+      isInteger: true,
+      autoIncrement: true
     },
     product_id: {
       type: 'number',
@@ -59,11 +59,11 @@ module.exports = {
     },
     created_by: {
       type: 'number',
-      required: true
+      defaultsTo: 0
     },
     modified_by: {
       type: 'number',
-      required: true
+      defaultsTo: 0
     },
     assigned_to: {
       type: 'number',
