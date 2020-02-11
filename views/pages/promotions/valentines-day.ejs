@@ -17,7 +17,7 @@
         <div class="col-12 col-lg-10 offset-lg-1 col-xl-12 offset-xl-0 mb-0">
           <div class="container outer" id="checkout-form">
             <div class="body">
-              <ajax-form v-if="!cloudSuccess" name="ccForm" id="cc_form" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-submitting="handleSubmitting" :handle-parsing="handleParsingForm">
+              <form v-if="!cloudSuccess" name="ccForm" id="cc_form">
                 <ul class="row">
                   <li class="col-12 col-xl-6">
                     <div class="heading">
@@ -116,7 +116,7 @@
                     <p><small class="text-muted">By subscribing, you agree to the <a href="/privacy/" target="_blank">Privacy Policy</a> and <a href="/terms/" target="_blank">Terms of Service</a> of ChinesePod LLC.</small></p>
                   </li>
                 </ul>
-              </ajax-form>
+              </form>
               <div v-show="cloudSuccess">
                 <div class="jumbotron text-xs-center bg-transparent">
                   <h1 class="display-3">Thank You!</h1>
