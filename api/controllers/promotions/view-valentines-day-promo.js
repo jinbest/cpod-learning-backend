@@ -18,7 +18,7 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    let trial = false; let promo = true; let plan = 'premium'; let period = 'annually'; let promoCode = 'CNY2020';
+    let trial = false; let promo = true; let plan = 'premium'; let period = 'annually'; let promoCode = 'VAL20';
 
     const addressfield = require('../../../lib/addressfield.json');
 
@@ -28,6 +28,10 @@ module.exports = {
       sandbox: 'AZGCQyxdYVNlEao8bzD7tMrccqocSl4hjZmhR6nZ8bL7rCewPXRywjP-uwolycnyIodbL5oQvN8dixZE',
       production: 'AWZiTif-WpZUU8mjN2PbrRy_fTYDj2-_VqswzgiEUepQZc7g-jFJFaB4OjnSeU00UQtsReGPMo_tQ7yu'
     };
+
+    if (sails.config.environment === 'production') {
+      delete client['sandbox']
+    }
 
     // Respond with view.
     return {

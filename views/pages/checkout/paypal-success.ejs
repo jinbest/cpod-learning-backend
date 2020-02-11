@@ -1,14 +1,16 @@
-<div id="paypal-pay" v-cloak>
+<div id="paypal-pay" class="min-vh-100" v-cloak>
   <div class="container">
     <h1 class="text-white headline font-weight-bold text-center">Payment Successful</h1>
     <div class=" card p-3 mt-3 p-lg-5 mt-lg-5">
       <div class="jumbotron text-xs-center bg-transparent">
-        <h1 class="display-3">Thank You!</h1>
-        <p class="lead">You have successfully confirmed a subscription and will be redirected to the <span class="font-weight-bold">ChinesePod Dashboard</span> shortly.</p>
+        <h1 class="h2">Great! Your payment has been processed.</h1>
+        <p class="lead">We have received your payment and will contact you shortly.
+          If you have any questions, let us know: <a href="mailto:support@chinesepod.com">support@chinesepod.com</a>.
+        </p>
         <hr>
-        <a class="btn btn-lg btn-chinesepod-blue" href="/level" role="button">Get Started</a>
+        <a class="btn btn-lg btn-chinesepod-blue" href="/home" role="button">To Dashboard</a>
       </div>
     </div>
   </div>
-</div>\
+</div>
 <%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

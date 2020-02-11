@@ -220,7 +220,7 @@ parasails.registerPage('valentines-day', {
       await Cloud['paypalExecuteCheckout'].with(data)
         .then(res => {
           if (res.success) {
-            window.location.href = '/checkout/paypal-success'
+            window.location.href = '/home'
           } else {
             this.syncing = false;
             this.error = true
@@ -294,7 +294,7 @@ parasails.registerPage('valentines-day', {
       };
 
       paypal.Button.render({
-        env: 'sandbox', // sandbox | production
+        env: Object.keys(this.client)[0], // sandbox | production
         commit: true,
         style: {
           size: 'responsive',
