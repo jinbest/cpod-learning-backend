@@ -1,7 +1,7 @@
 {
   "name": "ChinesePod",
   "private": true,
-  "version": "0.4.38",
+  "version": "0.4.39",
   "description": "ChinesePod Javascript Stack",
   "keywords": [],
   "dependencies": {
@@ -38,9 +38,9 @@
     "passport-facebook": "^3.0.0",
     "passport-google": "^0.3.0",
     "passport-google-oauth20": "^2.0.0",
+    "paypal-rest-sdk": "^1.8.1",
     "pinyin-tone-converter": "^1.0.0",
     "redis": "^2.8.0",
-    "paypal-rest-sdk": "^1.8.1",
     "sails": "^1.2.2",
     "sails-hook-apianalytics": "^2.0.3",
     "sails-hook-deep-orm": "^1.0.2",
