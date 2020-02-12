@@ -4,14 +4,20 @@
     <h1 class="headline font-weight-bold text-center py-4">
       ChinesePod Live Stream
     </h1>
-    <div class="jumbotron-fluid jumbotron col-12 col-md-8 offset-md-2  col-lg-6 offset-lg-3 bg-white">
-      <h2 class="headline  text-center">
-        Countdown until next stream:
-      </h2>
-      <h1 class="font-weight-bold text-center py-2">
-        {{ twoDigits(days) }} : {{ twoDigits(hours) }} : {{ twoDigits(minutes) }} : {{ twoDigits(seconds) }}
-      </h1>
+    <div class="card bg-dark">
+      <img class="card-img d-none d-md-block" src="https://i.ytimg.com/vi/HORpmT47ldo/maxresdefault_live.jpg" alt="ChinesePod YouTube">
+      <div class="card-img-overlay">
+        <div class="card p-3 col-12 col-md-8 offset-md-2  col-lg-6 offset-lg-3">
+          <h2 class="headline  text-center">
+            Countdown until next stream:
+          </h2>
+          <h1 class="font-weight-bold text-center py-2">
+            {{ twoDigits(days) }} : {{ twoDigits(hours) }} : {{ twoDigits(minutes) }} : {{ twoDigits(seconds) }}
+          </h1>
+        </div>
+      </div>
     </div>
+
   </div>
 
 </div>
