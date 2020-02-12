@@ -326,7 +326,7 @@ module.exports = {
      * (the "max-age" to include in the "Cache-Control" response header)        *
      *                                                                          *
      ***************************************************************************/
-    cache: 60 * 60 * 1000, // One hour
+    cache: 5 * 60 * 1000, // 5 Min
 
     middleware: {
 
