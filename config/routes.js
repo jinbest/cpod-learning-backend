@@ -101,6 +101,7 @@ module.exports.routes = {
   // 'GET /black-friday-last-chance/:code?':                { action: 'promotions/view-black-friday-last-chance'},
   // 'GET /cyber-monday/:code?':                            { action: 'promotions/view-cyber-monday'},
   // 'GET /cyber-monday-last-chance/:code?':                { action: 'promotions/view-cyber-monday-last-chance'},
+  'GET /live':                                           { action: 'promotions/view-live-stream' },
   'GET /black-friday/:code?':                            { action: 'promotions/view-expired-promo'},
   'GET /black-friday-last-chance/:code?':                { action: 'promotions/view-expired-promo'},
   'GET /cyber-monday/:code?':                            { action: 'promotions/view-expired-promo'},
