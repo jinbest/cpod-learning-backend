@@ -57,6 +57,7 @@ module.exports = {
       let promo = (await PromoCodes.find({
         where: {
           promotion_code: inputs.promoCode,
+          product_id: inputs.productId,
           expiry_date: {
             '>=': new Date()
           }
