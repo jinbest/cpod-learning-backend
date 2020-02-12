@@ -91,7 +91,7 @@ module.exports = {
     sails.log.info(inputs.data);
 
     let moment = require('moment');
-    let expiry = moment(new Date()).add(plans[inputs.data.plan][inputs.data.billingCycle].length, 'months').toDate();
+    let expiry = moment(new Date()).add(12, 'months').toDate();
 
     let voucher = await Vouchers.create({
       voucher_code: await sails.helpers.strings.random('url-friendly').slice(0,10).toUpperCase(),
@@ -164,23 +164,42 @@ module.exports = {
       .item(transaction.billed_amount, 1, transaction.product_id, productName)
       .send();
 
-    await sails.helpers.mailgun.sendHtmlEmail.with({
-      htmlMessage: `
-                        <p>Gift Subscription</p>
-                        <br />
-                        <p>Name: ${inputs.data.fName} ${inputs.data.lName}</p>
-                        <p>Email: ${inputs.data.emailAddress}</p>
-                        <br />
-                        <p>Product: ${productName}</p>
-                        <p>Voucher Link: <a href="https://www.chinesepod.com/redeem-gift/${voucher.voucher_code}"</a></p>
-                        <br />
-                        <p>Cheers,</p>
-                        <p>The ChinesePod Team</p>
-                        `,
-      to: inputs.data.emailAddress,
-      subject: `${inputs.data.senderName} has just sent you a gift of language, receive the gift now!`,
-      from: 'team@chinesepod.com',
-      fromName: 'The ChinesePod Team'
+    let userData = await User.findOne({email: inputs.data.emailAddress});
+
+    if (!userData) {
+
+      let user = {};
+
+      user.name = inputs.data.fName + ' ' + inputs.data.lName ;
+
+      userData = await User.create({
+        email: inputs.data.emailAddress,
+        password: await sails.helpers.passwordGenerate(),
+        username: user.name.split(' ').join('') + Math.ceil(Math.random() * 100),
+        name: user.name,
+        ip_address: null,
+        ip_country: null,
+        ip_region: null,
+        ip_city: null,
+        country: null,
+        city: null,
+        http_referer: '',
+        code: await sails.helpers.strings.random('url-friendly'),
+        confirm_status: 0
+      }).fetch();
+
+    }
+
+    //TODO DESIGN GIFT VOUCHER EMAIL
+    await sails.helpers.sendTemplateEmail.with({
+      to: userData.email, //'recap-request@chinesepod.com',
+      subject: `${inputs.data.senderName ? inputs.data.senderName : 'Someone'} has just sent you a gift of language, receive the gift now!`,
+      template: 'automated/email-valentines-day-gift',
+      layout: false,
+      templateData: {
+        firstName: inputs.data.fName,
+        claimLink: `https://www.chinesepod.com/valentines-day-gift/redeem/${voucher.voucher_code}/${userData.code}`
+      }
     });
 
     return {

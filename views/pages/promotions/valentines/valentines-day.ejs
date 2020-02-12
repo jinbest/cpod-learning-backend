@@ -1,5 +1,5 @@
 <div id="valentines-day" v-cloak>
-  <div class="valentines-promo">
+  <div v-show="!syncing" class="valentines-promo">
     <div class="container wrapper p-md-4">
       <div class="row pb-md-4 px-md-4">
         <div class="col-12 my-3 text-center text-white">
@@ -11,7 +11,7 @@
             Give yourself and your valentine a special gift with a special discount:
           </h5>
           <h2 class="promo-code-line">
-            $50 off with promo code <span class="promo-code">VAL20</span>
+            $50 off with promo code <span class="promo-code">VALENTINE</span>
           </h2>
         </div>
         <div class="col-12 col-lg-10 offset-lg-1 col-xl-12 offset-xl-0 mb-0">
@@ -28,21 +28,23 @@
                     <div class="basic-info">
                       <div class="row">
                         <div class="col-lg-4 col-sm-6 col-xl-6">
-                          <label for="first-name">First Name<span class="required-mark">&nbsp;*</span></label>
+                          <label for="first-name" :class="[formErrors.fName ? 'text-danger' : '']">First Name<span class="required-mark">&nbsp;*</span></label>
                           <input type="text" name="first_name" id="first-name" placeholder="First Name" v-model="formData.fName" required/>
+                          <div class="invalid-feedback d-block" v-if="formErrors.fName">Please enter a first name.</div>
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xl-6">
-                          <label for="last-name">Last Name<span class="required-mark">&nbsp;*</span></label>
+                          <label for="last-name" :class="[formErrors.lName ? 'text-danger' : '']">Last Name<span class="required-mark">&nbsp;*</span></label>
                           <input type="text" name="last_name" placeholder="Last Name" v-model="formData.lName" required/>
+                          <div class="invalid-feedback d-block" v-if="formErrors.lName">Please enter a last name.</div>
                         </div>
                       </div>
 
                       <!-- TODO ONLY FOR TEMPORARY ACCOUNTS-->
-                      <div v-if="needsAccount" class="row">
+                      <div class="row">
                         <div class="col-lg-4 col-sm-6 col-xl-6">
-                          <label for="email">Email Address<span class="required-mark">&nbsp;*</span></label>
+                          <label for="email" :class="[formErrors.emailAddress ? 'text-danger' : '']">Email Address<span class="required-mark">&nbsp;*</span></label>
                           <input type="email" name="email" placeholder="email@domain.com" :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress"  :required="needsAccount" :disabled="!needsAccount"/>
-                          <div class="invalid-feedback" v-if="formErrors.emailAddress">Please enter a valid email address.</div>
+                          <div class="invalid-feedback d-block" v-if="formErrors.emailAddress">Please enter a valid email address.</div>
                         </div>
                       </div>
 
@@ -91,10 +93,10 @@
                       </div>
                     </div>
 
-<!--                    <p v-if="trial">Your card will not be charged for 14 days. If you cancel before then, your card won’t be charged.</br>-->
-<!--                      You will be charged <b>-->
-<!--                        <span class="price-switch total-amount">${{ pricing[plan][billingCycle] }} {{ billingCycle }}</span>-->
-<!--                      </b> when your trial ends.</p>-->
+                    <!--                    <p v-if="trial">Your card will not be charged for 14 days. If you cancel before then, your card won’t be charged.</br>-->
+                    <!--                      You will be charged <b>-->
+                    <!--                        <span class="price-switch total-amount">${{ pricing[plan][billingCycle] }} {{ billingCycle }}</span>-->
+                    <!--                      </b> when your trial ends.</p>-->
 
                     <p v-if="!trial && !pricing.discount">
                       You will be charged <b>
@@ -197,6 +199,9 @@
 
       </div>
     </div>
+  </div>
+  <div v-show="syncing" id="overlay">
+    <div class="loader"></div>
   </div>
 </div>
 <script src="https://www.paypalobjects.com/api/checkout.js"></script>

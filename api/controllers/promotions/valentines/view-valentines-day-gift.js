@@ -44,7 +44,7 @@ module.exports = {
       client: client,
       ppMode: isProduction ? 'production' : 'sandbox', // sandbox | production
       formData: {
-        emailAddress: this.req.me ? this.req.me.email : '',
+        emailAddress: '',
         country: ipData['country'] ? ipData['country'] : 'US',
         state: '',
         city: '',

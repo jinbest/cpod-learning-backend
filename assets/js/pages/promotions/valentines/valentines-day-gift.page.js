@@ -156,7 +156,7 @@ parasails.registerPage('valentines-day-gift', {
       await Cloud['paypalExecuteGiftCheckout'].with(data)
         .then(res => {
           if (res.success) {
-            window.location.href = '/valentines-day-gift-success'
+            window.location.href = '/valentines-day-gift/success'
           } else {
             console.log(res);
             this.modal = 'paymentError';

@@ -10,7 +10,7 @@ module.exports = {
   exits: {
 
     success: {
-      viewTemplatePath: 'pages/promotions/valentines-day'
+      viewTemplatePath: 'pages/promotions/valentines/valentines-day'
     }
 
   },
@@ -18,9 +18,9 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    let trial = false; let promo = true; let plan = 'premium'; let period = 'annually'; let promoCode = 'VAL20';
+    let trial = false; let promo = true; let plan = 'premium'; let period = 'annually'; let promoCode = 'VALENTINE';
 
-    const addressfield = require('../../../lib/addressfield.json');
+    const addressfield = require('../../../../lib/addressfield.json');
 
     let ipData = {};
 
@@ -29,7 +29,10 @@ module.exports = {
       production: 'AWZiTif-WpZUU8mjN2PbrRy_fTYDj2-_VqswzgiEUepQZc7g-jFJFaB4OjnSeU00UQtsReGPMo_tQ7yu'
     };
 
-    if (sails.config.environment === 'production') {
+
+    let isProduction = sails.config.environment === 'production';
+
+    if (isProduction) {
       delete client['sandbox']
     }
 
@@ -43,6 +46,7 @@ module.exports = {
       billingCycle: period,
       promoShow: promo,
       client: client,
+      ppMode: isProduction ? 'production' : 'sandbox', // sandbox | production
       formData: {
         emailAddress: this.req.me ? this.req.me.email : '',
         promoCode: promoCode,

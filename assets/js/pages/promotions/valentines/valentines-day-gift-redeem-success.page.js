@@ -14,7 +14,9 @@ parasails.registerPage('valentines-day-gift-redeem-success', {
     _.extend(this, SAILS_LOCALS);
   },
   mounted: async function() {
-    //…
+    setTimeout(() => {
+      window.location.href = '/home'
+    }, 4000)
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗

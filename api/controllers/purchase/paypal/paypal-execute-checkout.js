@@ -25,6 +25,15 @@ module.exports = {
       responseType: 'badRequest',
       description: 'Paypal error',
     },
+    declined: {
+      description: 'The provided payment method is invalid.'
+    },
+    trialAlreadyUsed: {
+      description: 'User has already used a trial subscription before.'
+    },
+    loginFirst: {
+      description: 'User email is not unique and should log in before checkout.'
+    }
 
   },
 
@@ -32,6 +41,8 @@ module.exports = {
 
 
   fn: async function (inputs) {
+
+    const stripe = require('stripe')(sails.config.custom.stripeSecret);
 
     const plans = {
       premium: {
