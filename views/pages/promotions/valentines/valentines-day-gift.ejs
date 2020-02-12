@@ -19,20 +19,20 @@
                   <li class="col-12 col-xl-6">
                     <div class="heading">
                       <span class="number">1</span>
-                      <h3>Select the gift</h3>
+                      <h3>Gift of Language - 3 Months</h3>
                     </div>
 
                     <div class="basic-info">
                       <div class="row">
+<!--                        <div class="pt-2 col-lg-4 col-sm-6 col-xl-6">-->
+<!--                          <button :disabled="ppData.payerID" class="btn btn-block py-3" :class="[billingCycle === 'annually' ? 'btn-chinesepod-blue' : 'btn-outline-chinesepod-blue']" @click.prevent="billingCycle = 'annually'">Gift 12 Months - ${{pricing['premium']['annually']}}</button>-->
+<!--                        </div>-->
                         <div class="pt-2 col-lg-4 col-sm-6 col-xl-6">
-                          <button :disabled="ppData.payerID" class="btn btn-block py-3" :class="[billingCycle === 'annually' ? 'btn-chinesepod-blue' : 'btn-outline-chinesepod-blue']" @click.prevent="billingCycle = 'annually'">Gift 12 Months - ${{pricing['premium']['annually']}}</button>
+                          <button disabled class="btn btn-block py-3" :class="[billingCycle === 'quarterly' ? 'btn-chinesepod-blue' : 'btn-outline-chinesepod-blue']" @click.prevent="billingCycle = 'quarterly'">3 Months - ${{pricing['premium']['quarterly']}}</button>
                         </div>
-                        <div class="pt-2 col-lg-4 col-sm-6 col-xl-6">
-                          <button :disabled="ppData.payerID" class="btn btn-block py-3" :class="[billingCycle === 'quarterly' ? 'btn-chinesepod-blue' : 'btn-outline-chinesepod-blue']" @click.prevent="billingCycle = 'quarterly'">Gift 3 Months - ${{pricing['premium']['quarterly']}}</button>
-                        </div>
-                        <div class="pt-2 col-lg-4 col-sm-6 col-xl-6">
-                          <button :disabled="ppData.payerID" class="btn btn-block py-3" :class="[billingCycle === 'monthly' ? 'btn-chinesepod-blue' : 'btn-outline-chinesepod-blue']" @click.prevent="billingCycle = 'monthly'">Gift 1 Month - ${{pricing['premium']['monthly']}}</button>
-                        </div>
+<!--                        <div class="pt-2 col-lg-4 col-sm-6 col-xl-6">-->
+<!--                          <button :disabled="ppData.payerID" class="btn btn-block py-3" :class="[billingCycle === 'monthly' ? 'btn-chinesepod-blue' : 'btn-outline-chinesepod-blue']" @click.prevent="billingCycle = 'monthly'">Gift 1 Month - ${{pricing['premium']['monthly']}}</button>-->
+<!--                        </div>-->
                       </div>
                     </div>
                     <div class="heading">
@@ -79,9 +79,9 @@
                         </div>
                       </div>
                     </div>
-                    <p class="small">They'll see it as:</p>
+                    <p class="">They'll see it as:</p>
                     <blockquote class="blockquote">
-                      <p class="m-0 p-0 small">"<strong v-html="formData.senderName ? formData.senderName : 'John'"></strong> has just sent you a gift of language."</p>
+                      <p class="m-0 p-0 small">"<strong v-html="formData.senderName ? formData.senderName : 'John'"></strong> has just sent you a gift of language, receive the gift now!"</p>
                     </blockquote>
 
                     <div class="heading">

@@ -1,6 +1,6 @@
 const paypal = require('paypal-rest-sdk');
 paypal.configure({
-  mode: 'sandbox', // Sandbox or live
+  mode: sails.config.environment === 'production' ? 'live' : 'sandbox', // Sandbox or live
   client_id: sails.config.custom.paypalPublishableKey,
   client_secret: sails.config.custom.paypalSecret
 });

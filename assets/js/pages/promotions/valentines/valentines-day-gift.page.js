@@ -215,7 +215,7 @@ parasails.registerPage('valentines-day-gift', {
       let onAuthorize = async (data) => {
         this.ppData = data;
         this.syncing = false;
-
+        await this.processPayment();
       };
 
       paypal.Button.render({

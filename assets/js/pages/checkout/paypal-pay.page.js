@@ -23,6 +23,8 @@ parasails.registerPage('paypal-pay', {
 
     // Server error state for the form
     cloudError: '',
+    ppMode: 'sandbox',
+    client: '',
 
     success: false
   },
@@ -35,11 +37,6 @@ parasails.registerPage('paypal-pay', {
     _.extend(this, SAILS_LOCALS);
   },
   mounted: async function() {
-
-    let  client = {
-      sandbox: 'AZGCQyxdYVNlEao8bzD7tMrccqocSl4hjZmhR6nZ8bL7rCewPXRywjP-uwolycnyIodbL5oQvN8dixZE',
-      production: 'AWZiTif-WpZUU8mjN2PbrRy_fTYDj2-_VqswzgiEUepQZc7g-jFJFaB4OjnSeU00UQtsReGPMo_tQ7yu'
-    };
 
     let  payment = (data, actions) => {
       return actions.payment.create({
@@ -55,8 +52,6 @@ parasails.registerPage('paypal-pay', {
 
     let onAuthorize = (data) => {
       this.syncing = true;
-
-      console.log(data);
 
       var data = {
         paymentID: data.paymentID,
@@ -75,8 +70,10 @@ parasails.registerPage('paypal-pay', {
       });
     };
 
+    let client = this.client;
+
     paypal.Button.render({
-      env: 'sandbox', // sandbox | production
+      env: this.ppMode, // sandbox | production
       commit: true,
       style: {
         size: 'responsive',

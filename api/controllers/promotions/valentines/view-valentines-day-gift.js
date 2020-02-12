@@ -18,7 +18,7 @@ module.exports = {
 
   fn: async function () {
 
-    let trial = false; let promo = false; let plan = 'premium'; let period = 'annually';
+    let trial = false; let promo = false; let plan = 'premium'; let period = 'quarterly';
 
     let ipData = {};
 
@@ -53,11 +53,9 @@ module.exports = {
       },
       pricing:{
         premium: {
-          monthly: 22,
-          quarterly: 65,
-          annually: 199,
-          savingQ: '1 Week Free',
-          savingA: 'Save $99'
+          monthly: 20,
+          quarterly: 39,
+          annually: 149
         },
         discount: 0
       },

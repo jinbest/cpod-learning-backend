@@ -39,19 +39,19 @@ module.exports = {
           id: 2,
           stripeId: 'Monthly Plan -2',
           length: 1,
-          price: 22.00,
+          price: 20.00,
         },
         quarterly: {
           id: 18,
           stripeId: 'Quarterly Plan -18',
           length: 3,
-          price: 65.00,
+          price: 39.00,
         },
         annually: {
           id: 140,
           stripeId: 'Annual Plan -140',
           length: 12,
-          price: 199.00,
+          price: 149.00,
         }
       }
     };
