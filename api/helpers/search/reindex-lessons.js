@@ -32,6 +32,7 @@ module.exports = {
           'type',
           'publication_timestamp',
           'level',
+          'levelId',
           'hosts',
           'hash_code',
           'image',
@@ -72,11 +73,26 @@ module.exports = {
         }
       };
 
+
+      const levelIds = {
+        newbie: 1,
+        elementary: 2,
+        'pre intermediate': 3,
+        intermediate: 4,
+        'upper intermediate': 5,
+        advanced: 6,
+        media: 7,
+        any: 0
+      };
+
+
       records.forEach(record => {
         let indexRecord = {};
         index.elasticRecord.forEach(key => {
           indexRecord[key] = record[key];
         });
+
+        indexRecord['levelId'] = levelIds[indexRecord['level'].toLowerCase()];
 
         commands.push(action);
         commands.push(indexRecord);
