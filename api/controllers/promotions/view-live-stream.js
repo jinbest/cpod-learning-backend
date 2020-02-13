@@ -23,13 +23,13 @@ module.exports = {
       .then(({data}) => {return data})
       .catch((e) => sails.log.error(e));
 
-    if (YTdata && YTdata.items.length > 0) {
+    let countdown = new Date('Feb 13 2020 12:00:00 EST');
+
+    if ((YTdata && YTdata.items.length > 0) || new Date() > countdown) {
 
       return this.res.redirect('https://www.youtube.com/watch?v=' + YTdata.items[0]['id']['videoId'])
 
     } else {
-
-      let countdown = new Date('Feb 13 2020 12:00:00 EST');
 
       // Respond with view.
       return this.res.view('pages/promotions/live-stream',{countdown: countdown})
