@@ -31,7 +31,7 @@ module.exports = {
       isIn:  ['any', 'newbie', 'pre-intermediate', 'intermediate', 'upper-intermediate', 'advanced', 'media'],
     },
     startTime: { type: 'ref', columnType: 'datetime' },
-    promoteFrom: { type: 'ref', columnType: 'datetime', allowNull: true },
+    promoteFrom: { type: 'ref', columnType: 'datetime'},
 
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
