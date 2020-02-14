@@ -17,7 +17,7 @@ parasails.registerPage('live-stream', {
   mounted: async function() {
     window.setInterval(() => {
       this.now = Math.trunc((new Date()).getTime() / 1000);
-      if (new Date() > new Date(this.countdown)) {
+      if (this.isLiveStream && new Date() > new Date(this.countdown)) {
         window.location.href = 'https://youtube.com/channel/UCRY8eBLd9tPFw5-JY7S7O8Q/live'
       }
     },1000);
