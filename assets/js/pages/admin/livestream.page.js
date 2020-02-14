@@ -13,7 +13,11 @@ parasails.registerPage('livestream', {
 
 
     cloudError: false,
-    cloudSuccess: false
+    cloudSuccess: false,
+
+    startTime: '',
+    promotionFrom: ''
+
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -25,10 +29,12 @@ parasails.registerPage('livestream', {
   },
   mounted: function() {
     this.streams.forEach(stream => {
-      stream.startTime = stream.startTime.slice(0,-5);
-      if (stream.promotionFrom) {
-        stream.promotionFrom = stream.promotionFrom.slice(0,-5);
-      }
+      // stream.startTimeShow = stream.startTime;
+      // stream.startTime = stream.startTime.slice(0,-5);
+      // if (stream.promotionFrom) {
+      //   stream.promotionFromShow = stream.promotionFrom
+      //   stream.promotionFrom = stream.promotionFrom.slice(0,-5);
+      // }
     })
   },
 
@@ -57,6 +63,16 @@ parasails.registerPage('livestream', {
     async saveStream() {
       await Cloud['saveLivestreamData'].with(this.formData);
       this.updateStreams();
+    },
+    updateStartTime () {
+      this.formData.startTime = new Date(`${this.formData.startYear}-${this.formData.startMonth}-${this.formData.startDay}
+      ${this.formData.startHour}:${this.formData.startMinute} EST`);
+      console.log(this.formData.startTime)
+    },
+    updatePromotionTime () {
+      this.formData.promoteFrom = new Date(`${this.formData.promotionYear}-${this.formData.promotionMonth}-${this.formData.promotionDay}
+      ${this.formData.promotionHour}:${this.formData.promotionMinute} EST`);
+      console.log(this.formData.promoteFrom)
     }
   }
 });

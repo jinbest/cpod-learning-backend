@@ -25,7 +25,7 @@
               <td>{{ row.title }}</td>
               <td>{{ row.level }}</td>
               <td>{{ new Date(row.startTime).toLocaleString("en-US", {timeZone: "America/New_York", month: 'long', day: 'numeric', time: 'numeric', hour: 'numeric', minute: 'numeric', timeZoneName: 'short'}) }}</td>
-              <td>{{ new Date(row.promoteFrom).toLocaleString("en-US", {timeZone: "America/New_York", month: 'long', day: 'numeric', time: 'numeric', hour: 'numeric', minute: 'numeric', timeZoneName: 'short'}) }}</td>
+              <td>{{ row.promoteFromShow ? new Date(row.promoteFrom).toLocaleString("en-US", {timeZone: "America/New_York", month: 'long', day: 'numeric', time: 'numeric', hour: 'numeric', minute: 'numeric', timeZoneName: 'short'}) : '' }}</td>
               <td>
                 <button type="button" class="btn btn-danger btn-sm"  @click="deleteStream(row.id)"><i class="fa fa-trash"></i></button>
                 <button type="button" class="btn btn-primary btn-sm" @click="editStream(row)"><i class="fa fa-edit"></i></button>
@@ -62,12 +62,67 @@
           </select>
         </div>
         <div class="form-group my-3">
-          <label>Stream Start (Your Local Time)</label>
-          <input type="datetime-local" class="form-control" placeholder="New Live Stream" v-model="formData.startTime">
+          <label>Stream Start (EST)</label>
+          <div class="col-12">
+            <div class="row">
+              <select class="custom-select col-12 col-md-2" v-model="formData.startYear" @change="updateStartTime()">
+                <option value="" disabled>Year</option>
+                <option value="2020" selected>2020</option>
+                <option v-for="year in [2021, 2022]" :value="year">{{ year }}</option>
+              </select>
+              <select class="custom-select col-12 col-md-2" v-model="formData.startMonth" @change="updateStartTime()">
+                <option value="" disabled selected>Month</option>
+                <option v-for="month in [1,2,3,4,5,6,7,8,9,10,11,12]" :value="month">{{ month }}</option>
+              </select>
+              <select class="custom-select col-12 col-md-2" v-model="formData.startDay" @change="updateStartTime()">
+                <option value="" disabled selected>Day</option>
+                <option v-for="day in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]" :value="day">{{ day }}</option>
+              </select>
+
+              <select class="custom-select col-12 col-md-2" v-model="formData.startHour" @change="updateStartTime()">
+                <option value="" disabled selected>Hour</option>
+                <option v-for="hour in ['00','01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23']" :value="hour">{{ hour }}</option>
+              </select>
+              <select class="custom-select col-12 col-md-2" v-model="formData.startMinute" @change="updateStartTime()">
+                <option value="" disabled selected>Minute</option>
+                <option v-for="minute in ['00','01','02','03','04','05','06','07','08','09','10','11','12','13','14',
+                '15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34',
+                '35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53','54',
+                '55','56','57','58','59']" :value="minute">{{ minute }}</option>
+              </select>
+            </div>
+          </div>
         </div>
         <div class="form-group my-3">
-          <label>Web Promo (optional) (Your Local Time)</label>
-          <input type="datetime-local" class="form-control" v-model="formData.promotionFrom">
+          <label>Web Promo (optional) (EST)</label>
+          <div class="col-12">
+            <div class="row">
+              <select class="custom-select col-12 col-md-2" v-model="formData.promotionYear" @change="updatePromotionTime()">
+                <option value="" disabled selected>Year</option>
+                <option v-for="year in [2020, 2021, 2020]" :value="year">{{ year }}</option>
+              </select>
+              <select class="custom-select col-12 col-md-2" v-model="formData.promotionMonth" @change="updatePromotionTime()">
+                <option value="" disabled selected>Month</option>
+                <option v-for="month in [1,2,3,4,5,6,7,8,9,10,11,12]" :value="month">{{ month }}</option>
+              </select>
+              <select class="custom-select col-12 col-md-2" v-model="formData.promotionDay" @change="updatePromotionTime()">
+                <option value="" disabled selected>Day</option>
+                <option v-for="day in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]" :value="day">{{ day }}</option>
+              </select>
+
+              <select class="custom-select col-12 col-md-2" v-model="formData.promotionHour" @change="updatePromotionTime()">
+                <option value="" disabled selected>Hour</option>
+                <option v-for="hour in ['00','01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23']" :value="hour">{{ hour }}</option>
+              </select>
+              <select class="custom-select col-12 col-md-2" v-model="formData.promotionMinute" @change="updatePromotionTime()">
+                <option value="" disabled selected>Minute</option>
+                <option v-for="minute in ['00','01','02','03','04','05','06','07','08','09','10','11','12','13','14',
+                '15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34',
+                '35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53','54',
+                '55','56','57','58','59']" :value="minute">{{ minute }}</option>
+              </select>
+            </div>
+          </div>
         </div>
         <p class="text-danger" v-if="cloudError"><small>An error occurred while processing your request. Please check the form and try again.</small></p>
         <div class="form-group">
