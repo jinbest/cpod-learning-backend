@@ -31,7 +31,7 @@ module.exports = {
 
     } else {
 
-      return this.res.view('pages/promotions/live-stream',{isLiveStream: false})
+      return this.res.view('pages/promotions/live-stream',{isLiveStream: false, countdown: new Date(Date.now() + 30 * 60 * 1000)})
 
     }
 

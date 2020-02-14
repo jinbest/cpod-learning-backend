@@ -4,10 +4,10 @@
     <h1 class="headline font-weight-bold text-center py-4">
       ChinesePod Live Stream
     </h1>
-    <div class="card bg-dark">
+    <div v-if="isLiveStream && countdown"  class="card bg-dark">
       <img class="card-img d-none d-md-block" src="https://i.ytimg.com/vi/HORpmT47ldo/maxresdefault_live.jpg" alt="ChinesePod YouTube">
       <div class="card-img-overlay">
-        <div v-if="isLiveStream && countdown" class="card p-3 col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+        <div class="card p-3 col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
           <h2 class="headline  text-center">
             Next stream starts in:
           </h2>
@@ -18,14 +18,17 @@
             {{ new Date(countdown).toLocaleString("en-US", {timeZone: "America/New_York", month: 'long', day: 'numeric', time: 'numeric', hour: 'numeric', minute: 'numeric', timeZoneName: 'long'}) }}
           </h2>
         </div>
-        <div v-else class="card p-3 col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+      </div>
+    </div>
+    <div v-else  class="card bg-dark">
+      <div class="card-img-overlay">
+        <div class="card p-3 col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
           <h2 class="headline  text-center">
-            Latest Live Stream has ended. Let us know if you want to be notified in the future.
+            Latest Live Stream has ended.
           </h2>
         </div>
       </div>
     </div>
-
   </div>
 
 </div>
