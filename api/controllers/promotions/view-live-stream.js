@@ -25,14 +25,13 @@ module.exports = {
 
     let countdown = new Date('Feb 13 2020 12:00:00 EST');
 
-    if ((YTdata && YTdata.items.length > 0) || new Date() > countdown) {
+    if ((YTdata && YTdata.items.length > 0)) {
 
       return this.res.redirect('https://www.youtube.com/watch?v=' + YTdata.items[0]['id']['videoId'])
 
     } else {
 
-      // Respond with view.
-      return this.res.view('pages/promotions/live-stream',{countdown: countdown})
+      return this.res.view('pages/promotions/live-stream',{isLiveStream: false})
 
     }
 
