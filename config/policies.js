@@ -21,7 +21,7 @@ module.exports.policies = {
 
   'redeem/*': 'is-logged-in',
 
-  // 'admin/*': 'is-staff',
+  'admin/*': 'is-staff',
 
   'purchase/paypal/view-paypal-pay': 'is-logged-in',
 

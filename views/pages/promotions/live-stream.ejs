@@ -1,32 +1,30 @@
-<div id="live-stream" class="bg-gray min-vh-100" v-cloak>
+<div id="live-stream" class="min-vh-100" v-cloak>
 
   <div class="container p-3">
     <h1 class="headline font-weight-bold text-center py-4">
       ChinesePod Live Stream
     </h1>
-    <div v-if="isLiveStream && countdown"  class="card bg-dark">
-      <img class="card-img d-none d-md-block" src="https://i.ytimg.com/vi/HORpmT47ldo/maxresdefault_live.jpg" alt="ChinesePod YouTube">
-      <div class="card-img-overlay">
-        <div class="card p-3 col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-          <h2 class="headline  text-center">
-            Next stream starts in:
-          </h2>
-          <h1 class="font-weight-bold text-center py-2">
-            {{ twoDigits(days) }} : {{ twoDigits(hours) }} : {{ twoDigits(minutes) }} : {{ twoDigits(seconds) }}
-          </h1>
-          <h2 class="text-center py-2">
-            {{ new Date(countdown).toLocaleString("en-US", {timeZone: "America/New_York", month: 'long', day: 'numeric', time: 'numeric', hour: 'numeric', minute: 'numeric', timeZoneName: 'long'}) }}
-          </h2>
-        </div>
+    <hr/>
+    <div class="card p-3 col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+      <div v-if="isLiveStream" class="card-body">
+        <h1 class="card-title h3">Valentine's Day Vocabulary</h1>
+        <h6 class="card-subtitle mb-2 text-muted">Stream starts in:</h6>
+        <h1 class="font-weight-bold text-center py-2">
+          {{ twoDigits(days) }} : {{ twoDigits(hours) }} : {{ twoDigits(minutes) }} : {{ twoDigits(seconds) }}
+        </h1>
+        <h3 class="text-center py-2">
+          {{ new Date(countdown).toLocaleString("en-US", {timeZone: "America/New_York", month: 'long', day: 'numeric', time: 'numeric', hour: 'numeric', minute: 'numeric', timeZoneName: 'long'}) }}
+        </h3>
+        <a href="/home" class="card-link">Back to Dashboard</a>
+        <a href="https://www.youtube.com/ChinesePodTV?sub_confirmation=1" class="card-link">Subscribe to Our Channel</a>
+<!--        <a href="https://www.youtube.com/user/ChinesePodTV" class="card-link">Notify Me</a>-->
       </div>
-    </div>
-    <div v-else  class="card bg-dark">
-      <div class="card-img-overlay">
-        <div class="card p-3 col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-          <h2 class="headline  text-center">
-            Latest Live Stream has ended.
-          </h2>
-        </div>
+      <div v-else class="card-body">
+        <h1 class="card-title h3">Live stream has ended</h1>
+        <p class="card-text">Subscribe to our Youtube page or click on "Notify Me" and don't miss the next stream!</p>
+        <a href="/home" class="card-link">Back to Dashboard</a>
+        <a href="https://www.youtube.com/ChinesePodTV?sub_confirmation=1" class="card-link">Subscribe to Our Channel</a>
+<!--        <a href="https://www.youtube.com/user/ChinesePodTV" class="card-link">Notify Me</a>-->
       </div>
     </div>
   </div>

@@ -1,0 +1,81 @@
+<div id="livestream" class="bg-gray-lighter min-vh-100" v-cloak>
+  <div class="container">
+    <h1 class="headline font-weight-bold text-center py-3">
+      ADMIN | Livestream Panel
+    </h1>
+    {{streams}}
+    <div class="text-center card p-2 mb-4 col-lg-10 offset-lg-1">
+      <div class="row">
+        <div class="col-12">
+          <button class="btn btn-success float-right mb-2"><i class="fa fa-plus"></i> Create</button>
+          <table class="table table-hover">
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Title</th>
+              <th scope="col">Level</th>
+              <th scope="col">Stream Start (EST)</th>
+              <th scope="col">Web Promotion Start (EST)</th>
+              <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="row in streams">
+              <th scope="row">{{ row.id }}</th>
+              <td>{{ row.title }}</td>
+              <td>{{ row.level }}</td>
+              <td>{{ new Date(row.startTime).toLocaleString("en-US", {timeZone: "America/New_York", month: 'long', day: 'numeric', time: 'numeric', hour: 'numeric', minute: 'numeric', timeZoneName: 'short'}) }}</td>
+              <td>{{ new Date(row.promoteFrom).toLocaleString("en-US", {timeZone: "America/New_York", month: 'long', day: 'numeric', time: 'numeric', hour: 'numeric', minute: 'numeric', timeZoneName: 'short'}) }}</td>
+              <td>
+                <button type="button" class="btn btn-danger btn-sm"  @click="deleteStream(row.id)"><i class="fa fa-trash"></i></button>
+                <button type="button" class="btn btn-primary btn-sm" @click="editStream(row)"><i class="fa fa-edit"></i></button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <modal class="editStream modal fade" v-if="modal==='editStream'" @close="modal = ''" v-cloak>
+    <div class="container">
+      <h2 class="text-center">Live stream information</h2>
+      <hr/>
+      <ajax-form action="saveLivestreamData" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-errors.sync="formErrors" @submitted="updateStreams()">
+        <div class="form-group my-3">
+          <label for="title">Title</label>
+          <input id="title" type="text" class="form-control" placeholder="New Live Stream" v-model="formData.title">
+        </div>
+        <div class="form-group my-3">
+          <label for="levelSelect">Level</label>
+          <select class="custom-select" id="levelSelect" v-model="formData.level">
+            <option selected>Choose...</option>
+            <option value="newbie">Newbie</option>
+            <option value="elementary">Elementary</option>
+            <option value="pre-intermediate">Pre-Intermediate</option>
+            <option value="intermediate">Intermediate</option>
+
+            <option value="upper-intermediate">Upper Intermediate</option>
+            <option value="advanced">Advanced</option>
+            <option value="media">Media</option>
+          </select>
+        </div>
+        <div class="form-group my-3">
+          <label>Stream Start (Your Local Time)</label>
+          <input type="datetime-local" class="form-control" placeholder="New Live Stream" v-model="formData.startTime">
+        </div>
+        <div class="form-group my-3">
+          <label>Web Promo (optional) (Your Local Time)</label>
+          <input type="datetime-local" class="form-control" v-model="formData.promotionFrom">
+        </div>
+        <p class="text-danger" v-if="cloudError"><small>An error occurred while processing your request. Please check the form and try again.</small></p>
+        <div class="form-group">
+          <ajax-button :syncing="syncing" class="btn-primary btn-lg btn-block">Save Stream Info</ajax-button>
+        </div>
+      </ajax-form>
+    </div>
+  </modal>
+
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

@@ -118,7 +118,6 @@ module.exports.routes = {
   'GET /valentines-day-gift/:code?':                     { action: 'promotions/valentines/view-valentines-day-gift'},
   'GET /valentines-day-gift/success/:code?':             { action: 'promotions/valentines/view-valentines-day-gift-success'},
   'GET /valentines-day-gift/redeem/:code?/:userCode?':   { action: 'promotions/valentines/view-valentines-day-gift-redeem'},
-  'GET /valentines-day-gift/redeem/:code?/:userCode?':   { action: 'promotions/valentines/view-valentines-day-gift-redeem'},
   // 'GET /valentines-day-gift/redeem/confirm/:code?':      { action: 'promotions/valentines/view-valentines-day-gift-redeem-confirm'},
   'GET /valentines-day-gift/redeem/success/:code?':      { action: 'promotions/valentines/view-valentines-day-gift-redeem-success'},
   'GET /CNY-2020/:code?':                                { action: 'promotions/view-cny-promo'},
@@ -140,6 +139,8 @@ module.exports.routes = {
   //ACCESS VOUCHER CODES
   'GET /admin/access-code-panel':                        {action: 'admin/access-codes/view-access-code-panel'},
   'GET /admin/comments':                                 {action: 'admin/comments/view-list-all-comments'},
+  'GET /admin/livestream':                               {action: 'admin/view-livestream' },
+
 
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
   //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗  ┌┼─   ║║║ ║║║║║║║║  ║ ║╠═╣ ║║╚═╗
@@ -170,8 +171,6 @@ module.exports.routes = {
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝
   // …
-  'POST /api/v1/webhooks/mautic/update':                 { action: 'webhooks/mautic/update' },
-  'POST /api/v1/webhooks/stripe/failed':                 { action: 'webhooks/stripe/failed' },
   'POST /api/v1/webhooks/mautic/update':                 { action: 'webhooks/mautic/update' },
   'POST /api/v1/webhooks/stripe/failed':                 { action: 'webhooks/stripe/failed' },
   'POST /api/v1/webhooks/paypal':                        { action: 'webhooks/paypal' },
@@ -291,6 +290,8 @@ module.exports.routes = {
   //ACCESS CODES
   'POST /api/v1/admin/access-codes/generate':            { action: 'admin/access-codes/generate-access-codes'},
   'POST /api/v1/admin/access-codes/delete':              { action: 'admin/access-codes/delete-access-codes'},
+  'POST /api/v1/admin/livestream/save-livestream-data':  { action: 'admin/livestream/save-livestream-data' },
+  'DELETE /api/v1/admin/livestream/delete-livestream-data': { action: 'admin/livestream/delete-livestream-data' },
 
   //SEARCH
   'GET /api/v1/search/reindex-lessons':                  { action: 'search/reindex-lessons' },
