@@ -30,15 +30,8 @@ module.exports = {
       type: 'string',
       isIn:  ['any', 'newbie', 'pre-intermediate', 'intermediate', 'upper-intermediate', 'advanced', 'media'],
     },
-    startTime: {
-      type: 'string',
-      columnType: 'datetime'
-    },
-    promoteFrom: {
-      type: 'string',
-      columnType: 'datetime',
-      allowNull: true
-    },
+    startTime: { type: 'ref', columnType: 'datetime' },
+    promoteFrom: { type: 'ref', columnType: 'datetime', allowNull: true },
 
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
