@@ -34,10 +34,10 @@ module.exports = {
 
     let currentStatus = await UserContents.findOne({user_id: inputs.userId, lesson: inputs.lessonId, lesson_type: 0});
     if (currentStatus) {
-      await UserContents.updateOne({id: currentStatus.id})
+      return await UserContents.updateOne({id: currentStatus.id})
         .set({saved: inputs.status ? 1 : 0})
     } else {
-      await UserContents.create({
+      return await UserContents.create({
         user_id: inputs.userId ,
         lesson: inputs.lessonId,
         saved: inputs.status ? 1 : 0,

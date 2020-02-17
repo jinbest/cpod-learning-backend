@@ -31,18 +31,24 @@ module.exports = {
   fn: async function (inputs) {
     inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
-    let currentStatus = await UserContents.findOne({user_id: inputs.userId, lesson: inputs.lessonId, lesson_type: 0});
-    if (currentStatus) {
-      await UserContents.updateOne({id: currentStatus.id})
+    let currentStatus = await UserContents.find({user_id: inputs.userId, lesson: inputs.lessonId, lesson_type: 0});
+
+    if (currentStatus && currentStatus.length > 0) {
+
+      return await UserContents.update({id: {in: currentStatus.map(lesson => lesson.id)}})
         .set({studied: inputs.status ? 1 : 0})
+
     } else {
-      await UserContents.create({
+
+      return await UserContents.create({
         user_id: inputs.userId,
         lesson: inputs.lessonId,
-        studied: inputs.studied ? 1 : 0,
+        studied: inputs.status ? 1 : 0,
         lesson_type: 0
       })
+
     }
+
   }
 
 
