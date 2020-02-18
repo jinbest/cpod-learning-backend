@@ -8,6 +8,10 @@ module.exports = {
 
 
   inputs: {
+    userId: {
+      type: 'number',
+      isInteger: true
+    },
     lessonId: {
       type: 'string'
     },
@@ -27,7 +31,10 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
+
+    if (!inputs.userId) {
+      inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
+    }
 
     sails.log.info(inputs);
 

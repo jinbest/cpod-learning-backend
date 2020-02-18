@@ -38,6 +38,8 @@ module.exports.policies = {
 
   'octopus/*': 'is-super-admin',
 
+  'lessons/progress/post-lesson-progress': true,
+
 
   // // Bypass the `is-logged-in` policy for:
   // 'entrance/*': true,
