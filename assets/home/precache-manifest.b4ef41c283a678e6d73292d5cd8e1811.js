@@ -4,8 +4,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/home/_redirects"
   },
   {
-    "revision": "b373a4b35325d964a816",
-    "url": "/home/css/app.e10c0aa6.css"
+    "revision": "a856e554fed9a06a542c",
+    "url": "/home/css/app.d38de79b.css"
   },
   {
     "revision": "945b6ea6cf5fed68d875",
@@ -18,6 +18,14 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "72758cdb9fd2b850545747fed624e7e3",
     "url": "/home/favicon.png"
+  },
+  {
+    "revision": "7ea394491582acc7f7449b694c3cd50c",
+    "url": "/home/fonts/Flaticon.7ea39449.eot"
+  },
+  {
+    "revision": "b6de2486764104a55b8f59d3b6f90cc1",
+    "url": "/home/fonts/Flaticon.b6de2486.ttf"
   },
   {
     "revision": "2fad952a20fbbcfd1bf2ebb210dccf7a",
@@ -54,6 +62,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "f82ec6ba2dc4181db2af35c499462840",
     "url": "/home/fonts/nucleo-icons.f82ec6ba.ttf"
+  },
+  {
+    "revision": "854fd2940ac36b3a77106b8c98e31885",
+    "url": "/home/img/Flaticon.854fd294.svg"
   },
   {
     "revision": "365fc333c183bf39ef777a760ca718cf",
@@ -160,12 +172,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/home/img/symbol.f9b78d93.svg"
   },
   {
-    "revision": "498b6598bfdaed14384421ce4269aa42",
+    "revision": "eb969a73dff0cb1dd61e2d9ac50fd838",
     "url": "/home/index.html"
   },
   {
-    "revision": "b373a4b35325d964a816",
-    "url": "/home/js/app.e9b863dc.js"
+    "revision": "a856e554fed9a06a542c",
+    "url": "/home/js/app.bece1ba0.js"
   },
   {
     "revision": "226bdf82826d95d37df9",
