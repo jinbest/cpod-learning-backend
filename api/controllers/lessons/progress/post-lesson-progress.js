@@ -13,14 +13,17 @@ module.exports = {
       isInteger: true
     },
     lessonId: {
-      type: 'string'
+      type: 'string',
+      required: true
     },
     track: {
-      type: 'string'
+      type: 'string',
+      required: true
     },
     progress: {
       type: 'number',
-      isInteger: true
+      isInteger: true,
+      required: true
     }
   },
 
