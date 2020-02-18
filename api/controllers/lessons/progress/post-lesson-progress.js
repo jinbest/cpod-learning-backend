@@ -24,6 +24,9 @@ module.exports = {
       type: 'number',
       isInteger: true,
       required: true
+    },
+    source: {
+      type: 'string',
     }
   },
 
@@ -37,6 +40,10 @@ module.exports = {
 
     if (!inputs.userId) {
       inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
+    }
+
+    if (!inputs.source) {
+      inputs.source = 'www.chinesepod.com'
     }
 
     sails.log.info(inputs);
@@ -53,7 +60,7 @@ module.exports = {
 
     if (!currentProgress) {
 
-      return await LessonProgress.create({userId: inputs.userId, lessonId: inputs.lessonId, track_type: inputs.track, progress: inputs.progress / 100})
+      return await LessonProgress.create({userId: inputs.userId, lessonId: inputs.lessonId, track_type: inputs.track, progress: inputs.progress / 100, source: inputs.source})
 
     } else if (inputs.progress > currentProgress.progress * 100){
 

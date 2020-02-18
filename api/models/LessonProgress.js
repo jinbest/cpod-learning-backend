@@ -34,6 +34,11 @@ module.exports = {
       columnName: 'timestamp',
       autoCreatedAt: true
     },
+    source: {
+      type: 'string',
+      columnType: 'varchar',
+      defaultsTo: 'www.chinesepod.com'
+    },
     updatedAt: {
       type: 'ref',
       columnName: 'updated_at',
