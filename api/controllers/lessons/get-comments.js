@@ -25,12 +25,13 @@ module.exports = {
     // let lessonComments = await Comments.find({parent_id: inputs.lessonId, type: 'lesson'})
     //   .populate('user', {select: 'username'});
     let lessonComments = (await Comments.getDatastore().sendNativeQuery(
-      `select c.id, c.content, c.reply_to_id, c.reply_to_id_2, c.reply_to_user_id, c.comment_from, c.created_at, 
-      c.user_id, u.username, p.avatar_url 
-      from comments c 
-      left join users u on c.user_id=u.id 
-      left join user_preferences p on p.user_id=c.user_id 
-      where c.parent_id = $1 and c.type = 'lesson'`, [inputs.lessonId]
+      `select c.id, c.content, c.reply_to_id, c.reply_to_id_2, c.reply_to_user_id, c.comment_from, c.created_at,
+      c.user_id, u.username, p.avatar_url
+      from comments c
+      left join users u on c.user_id=u.id
+      left join user_preferences p on p.user_id=c.user_id
+      where c.parent_id = $1 and c.type = 'lesson'
+      order by c.created_at desc`, [inputs.lessonId]
     ))['rows'];
 
     _.each(lessonComments, function (comment) {
