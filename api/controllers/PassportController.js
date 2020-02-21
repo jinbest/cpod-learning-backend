@@ -29,12 +29,12 @@ module.exports = {
         sails.log.info('facebook credentials');
         sails.log.info(user);
 
-        sails.hooks.bugsnag.notify('FB User: ' + JSON.stringify(user));
-
         let hasEmail = true;
 
         if (!user.email) {
+
           sails.hooks.bugsnag.notify('No User Email: ' + JSON.stringify(user));
+
           user.email = `fb${user.id}`;
           hasEmail = false;
         }
@@ -48,7 +48,6 @@ module.exports = {
         }
 
         if (!userData) {
-          sails.hooks.bugsnag.notify('New User From FB: ' + JSON.stringify(user));
           newAccount = true;
           const ip = req.ip ? req.ip : false;
           let ipData = {};
