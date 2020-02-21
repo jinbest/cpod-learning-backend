@@ -2,7 +2,8 @@ module.exports.apianalytics = {
   onRequest: function (report, req) {
     const ignore = [
       '/api/v1/health/time',
-      '/api/v1/webhooks/mautic/update'
+      '/api/v1/webhooks/mautic/update',
+      '/api/v1/lessons/progress'
     ];
 
     let userId = null;
@@ -16,7 +17,7 @@ module.exports.apianalytics = {
     }
 
     if(!ignore.includes(req.path)) {
-      sails.hooks.jobs.loggingQueue.add('Logging Requests',
+      loggingQueue.add('Logging Requests',
         {
           userId: userId,
           ip: req.ip,
@@ -27,7 +28,7 @@ module.exports.apianalytics = {
         },
         {
           attempts: 2,
-          timeout: 60000,
+          timeout: 120000,
           removeOnComplete: true
         }
       );
