@@ -249,6 +249,8 @@ module.exports.routes = {
   'POST /api/v1/dashboard/toggle-course':                { action: 'dashboard/toggle-course' },
   'GET /api/v1/dashboard/get-stats':                     { action: 'dashboard/get-stats' },
   'GET /api/v1/dashboard/get-info':                      { action: 'dashboard/get-info' },
+  'GET /api/v1/dashboard/onboarding/questions':          { action: 'dashboard/onboarding/get-onboarding-questions'},
+  'POST /api/v1/dashboard/onboarding/questions':         { action: 'dashboard/onboarding/post-onboarding-questions'},
 
   //Lesson Routes
   'GET /api/v1/lessons/get-lesson':                      { action: 'lessons/get-lesson' },

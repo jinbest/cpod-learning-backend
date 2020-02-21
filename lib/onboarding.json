@@ -1,0 +1,94 @@
+[
+  {
+    "id": 1,
+    "key": "level",
+    "multipleChoice": false,
+    "branching": false,
+    "question": "What's Your Chinese Proficiency?",
+    "answers": [
+      {
+        "label": "newbie",
+        "id": 1,
+        "description": "Trying to learn some survival Chinese"
+      },
+      {
+        "label": "elementary",
+        "id": 2,
+        "description": "Trying to have basic conversations in Chinese"
+      },
+      {
+        "label": "pre-intermediate",
+        "id": 6,
+        "description": "You have the basics, but need to build up vocabulary."
+      },
+      {
+        "label": "intermediate",
+        "id": 3,
+        "description": ""
+      },
+      {
+        "label": "upper-intermediate",
+        "id": 4,
+        "description": ""
+      },
+      {
+        "label": "advanced",
+        "id": 5,
+        "description": ""
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "key": "charSet",
+    "multipleChoice": false,
+    "branching": false,
+    "question": "Your Preferred Character Set?",
+    "answers": [
+      {
+        "label": "simplified",
+        "id": 1,
+        "description": "Used in Mainland China."
+      },
+      {
+        "label": "traditional",
+        "id": 2,
+        "description": "Used in Taiwan, Hong Kong, and Macau."
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "key": "interests",
+    "multipleChoice": true,
+    "branching": false,
+    "question": "What topics are you interested in?",
+    "answers": [
+      {
+        "label": "business",
+        "id": 1,
+        "description": "Lessons about Chinese Business culture and vocabulary"
+      },
+      {
+        "label": "sports",
+        "id": 2,
+        "description": "Lessons about sports in China and sports vocabulary"
+      },
+      {
+        "label": "technology",
+        "id": 3,
+        "description": "Lessons about China tech and technological vocabulary"
+      },
+      {
+        "label": "literature",
+        "id": 4,
+        "description": "Lessons about Chinese literature and traditional culture"
+      },
+      {
+        "label": "movies",
+        "id": 5,
+        "description": "Lessons about Chinese movies and movie culture in China"
+      }
+    ]
+  }
+]
