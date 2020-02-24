@@ -249,23 +249,6 @@ module.exports = {
           : `https://s3contents.chinesepod.com/extra/${content.v3_id}/${content.hash_code}/${content.image}`;
       }
 
-      // Logging API Requests
-
-      // sails.hooks.jobs.loggingQueue.add('Logging Requests',
-      //   {
-      //     userId: user.id,
-      //     ip: this.req.ip,
-      //     url: `https://www.chinesepod.com${this.req.url}`,
-      //     sessionId: this.req.session.id,
-      //     urlbase: `https://www.chinesepod.com${this.req.path}`,
-      //     referer: this.req.get('referer')
-      //   },
-      //   {
-      //     attempts: 2,
-      //     timeout: 60000
-      //   }
-      // );
-
       let access = await sails.helpers.users.getAccessType(user.id);
 
       let returnData = {

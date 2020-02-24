@@ -55,7 +55,7 @@ module.exports = function defineJobsHook(sails) {
               'https://www.chinesepod.com/checkout',
               'https://www.chinesepod.com/login'
             ].includes(job.data.urlbase) || (userData && userData.email)) {
-              await Logging.create({
+              await sails.models['logging'].create({
                 id: userData.email ? userData.email : 'NONE',
                 access_ip: job.data.ip,
                 accesslog_url: job.data.url,
@@ -114,9 +114,9 @@ module.exports = function defineJobsHook(sails) {
             let userData = null;
 
             if (!job.data.userId && job.data.email) {
-              userData = await User.findOne({email: job.data.email});
+              userData = await sails.models['user'].findOne({email: job.data.email});
             } else if (job.data.userId) {
-              userData = await User.findOne({id: job.data.userId});
+              userData = await sails.models['user'].findOne({id: job.data.userId});
             } else {
               done(null, 'Not Enough Job Data to Pursue');
             }
@@ -134,7 +134,7 @@ module.exports = function defineJobsHook(sails) {
             let userOptions = null;
 
             try {
-              userOptions = await UserOptions.findOne({
+              userOptions = await sails.models['useroptions'].findOne({
                 user_id: userData.id,
                 option_key: 'level'
               })
@@ -146,7 +146,7 @@ module.exports = function defineJobsHook(sails) {
             let userSiteLinks = [];
 
             try {
-              userSiteLinks = await UserSiteLinks.find({user_id: userData.id, site_id: 2})
+              userSiteLinks = await sails.models['usersitelinks'].find({user_id: userData.id, site_id: 2})
                 .sort('updatedAt DESC')
                 .limit(1);
             } catch (e) {
@@ -199,7 +199,7 @@ module.exports = function defineJobsHook(sails) {
             let userSettings = null;
 
             try {
-              userSettings = await UserSettings.findOne({user_id: userData.id});
+              userSettings = await sails.models['usersettings'].findOne({user_id: userData.id});
             } catch (e) {
 
             }
@@ -234,12 +234,12 @@ module.exports = function defineJobsHook(sails) {
             //No Mautic ID in UserData
             if (!userData.member_id) {
 
-              let mauticUser = await MauticContacts.findOne({email: userData.email});
+              let mauticUser = await sails.models['mauticcontacts'].findOne({email: userData.email});
 
 
               //If User exists - Add Mautic ID to user record
               if (mauticUser) {
-                userData = await User.updateOne({id: userData.id})
+                userData = await sails.models['user'].updateOne({id: userData.id})
                   .set({member_id: mauticUser.id})
                   .catch((err) => {
                     sails.hooks.bugsnag.notify(err);
@@ -266,7 +266,7 @@ module.exports = function defineJobsHook(sails) {
                   mauticData.fullname = userData.name;
                 }
 
-                updatedUser = await MauticContacts.updateOne({id: userData.member_id})
+                updatedUser = await sails.models['mauticcontacts'].updateOne({id: userData.member_id})
                   .set(mauticData);
 
               } else {
@@ -303,7 +303,7 @@ module.exports = function defineJobsHook(sails) {
                   });
 
                 if (updatedUser) {
-                  userData = await User.updateOne({id: userData.id})
+                  userData = await sails.models['user'].updateOne({id: userData.id})
                     .set({member_id: updatedUser.contact.id});
                 }
               }
@@ -334,7 +334,7 @@ module.exports = function defineJobsHook(sails) {
               }
 
               try {
-                updatedUser = await MauticContacts.updateOne({id: userData.member_id})
+                updatedUser = await sails.models['mauticcontacts'].updateOne({id: userData.member_id})
                   .set(mauticData);
               } catch (e) {
                 sails.hooks.bugsnag.notify(e);
@@ -354,7 +354,7 @@ module.exports = function defineJobsHook(sails) {
 
             let userList = [];
 
-            let usersToUpdate = await User.find({
+            let usersToUpdate = await sails.models['user'].find({
               where: {
                 updatedAt: {
                   '>=': new Date(Date.now() - 15 * 60 * 1000 - 5 * 60 * 60 * 1000)
@@ -366,7 +366,7 @@ module.exports = function defineJobsHook(sails) {
               userList.push(el.id)
             });
 
-            let optionsToUpdate = await UserOptions.find({
+            let optionsToUpdate = await sails.models['useroptions'].find({
               where: {
                 option_key: {
                   'in': ['level']
@@ -382,7 +382,7 @@ module.exports = function defineJobsHook(sails) {
             });
 
 
-            let subscriptionsToUpdate = await UserSiteLinks.find({
+            let subscriptionsToUpdate = await sails.models['usersitelinks'].find({
               where: {
                 updatedAt: {
                   '>=': new Date(Date.now() - 15 * 60 * 1000 - 5 * 60 * 60 * 1000)
@@ -469,14 +469,12 @@ module.exports = function defineJobsHook(sails) {
             });
           });
 
-          triggerQueue.removeRepeatable('UpdateUsers', {repeat: {cron: '*/15 * * * *'}});
-          triggerQueue.removeRepeatable('UpdateUsersWithNoID', {repeat: {cron: '15 * * * *'}});
+          userInfoQueue.clean(1000);
+          triggerQueue.clean(0);
+
           triggerQueue.add('UpdateUsers', {data: 'Push User Data to Mautic every 15min'}, {repeat: {cron: '*/15 * * * *'}});
           triggerQueue.add('UpdateUsersWithNoID', {data: 'Push Missing User Data to Mautic every hour'}, {repeat: {cron: '15 * * * *'}});
-          triggerQueue.removeRepeatable('UpdateAllUsers', {repeat: {cron: '5 4 * * 7'}});
           // triggerQueue.add('UpdateAllUsers', {data: 'Push All User Data to Mautic once a Month'}, {repeat: {cron: '5 4 * * 7'}});
-          userInfoQueue.clean(1000, 'failed');
-          userInfoQueue.clean(1000, 'completed');
 
           global.userInfoQueue = userInfoQueue;
 
