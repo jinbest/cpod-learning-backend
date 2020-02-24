@@ -96,7 +96,6 @@ and exposed as \`req.me\`.)`
       throw 'badCombo';
     }
 
-
     // If "Remember Me" was enabled, then keep the session alive for
     // a longer amount of time.  (This causes an updated "Set Cookie"
     // response header to be sent as the result of this request -- thus
@@ -118,7 +117,7 @@ and exposed as \`req.me\`.)`
     // (This will be persisted when the response is sent.)
     this.req.session.userId = userRecord.id;
 
-    sails.log.info({userId: this.req.session.userId});
+    delete this.req.session.limitedAuth;
 
     await sails.helpers.createPhpSession.with({
       userId: userRecord.id,

@@ -103,6 +103,11 @@ module.exports = {
             ipData: ipData
           })
             .catch((e) => {sails.log.error(e)});
+
+          // LOG STORED CAMPAIGN INFO
+          if (req.session.campaignId) {
+            await UserOptions.create({user_id: newUserRecord.id, option_key: 'campaignId', option_value: req.session.campaignId})
+          }
         }
 
         // Modify the active session instance.
@@ -215,6 +220,12 @@ module.exports = {
             ipData: ipData
           })
             .catch((e) => {sails.log.error(e)});
+
+          // LOG STORED CAMPAIGN INFO
+          if (req.session.campaignId) {
+            await UserOptions.create({user_id: newUserRecord.id, option_key: 'campaignId', option_value: req.session.campaignId})
+          }
+
         }
 
         // Modify the active session instance.
@@ -230,6 +241,7 @@ module.exports = {
               expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
             });
           });
+
 
         if (newAccount) {
           res.redirect('/level')

@@ -48,11 +48,11 @@
                         </div>
                       </div>
 
-                      <!-- TODO ONLY FOR TEMPORARY ACCOUNTS-->
-                      <div v-if="needsAccount" class="row">
+                      <div class="row">
                         <div class="col-lg-4 col-sm-6 col-xl-6">
                           <label for="email">Email Address<span class="required-mark">&nbsp;*</span></label>
                           <input type="email" name="email" placeholder="email@domain.com" :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress"  :required="needsAccount" :disabled="!needsAccount"/>
+                          <div v-if="!needsAccount" class="small font-italic">Your linked email</div>
                           <div class="invalid-feedback" v-if="formErrors.emailAddress">Please enter a valid email address.</div>
                         </div>
                       </div>
@@ -95,7 +95,6 @@
                           </div>
                         </div>
                       </div>
-
                     </div>
                   </li>
                   <li class="d-xl-none">

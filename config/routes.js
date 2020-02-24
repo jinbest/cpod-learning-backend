@@ -35,20 +35,26 @@ module.exports.routes = {
 
   'GET /':                                               { action: 'view-homepage-or-redirect' },
 
+  'GET /login':                                          { action: 'entrance/view-login' },
+  'GET /email/confirm':                                  { action: 'entrance/confirm-email' },
+  'GET /logout':                                         { action: 'account/logout' },
+
   'GET /email-signup':                                   { action: 'entrance/view-signup' },
   'GET /get-started':                                    { action: 'entrance/view-signup' },
   'GET /signup':                                         { action: 'entrance/view-signup' },
   'GET /free-signup':                                    { action: 'entrance/view-free-signup' },
   'GET /signup-free':                                    { action: 'view-homepage-or-redirect' },
-  'GET /login':                                          { action: 'entrance/view-login' },
-  'GET /email/confirm':                                  { action: 'entrance/confirm-email' },
-  'GET /logout':                                         { action: 'account/logout' },
+  'GET /signup-free/:campaignId':                        { action: 'entrance/link-campaign' },
+  'GET /email-signup/:campaignId':                       { action: 'entrance/link-campaign' },
+  'GET /get-started/:campaignId':                        { action: 'entrance/link-campaign' },
+  'GET /signup/:campaignId':                             { action: 'entrance/link-campaign' },
+  'GET /free-signup/:campaignId':                        { action: 'entrance/link-campaign' },
 
   'GET /pricing':                                        { action: 'onboarding/view-pricing' },
   'GET /pricing-alt':                                    { action: 'onboarding/view-pricing-alt' },
-  'GET /checkout':                                       { action: 'view-checkout' },
+  'GET /checkout':                                       { action: 'purchase/view-checkout' },
   'GET /checkout/paypal':                                { action: 'purchase/paypal/view-paypal-pay' },
-  'GET /checkout/paypal-success':                                { action: 'purchase/paypal/view-paypal-success' },
+  'GET /checkout/paypal-success':                        { action: 'purchase/paypal/view-paypal-success' },
 
   'GET /redeem':                                         { action: 'redeem/view-redeem-voucher' },
   'GET /redeem/:code':                                   { action: 'redeem/redeem-voucher' },
@@ -61,7 +67,6 @@ module.exports.routes = {
   //ONBOARDING
   'GET /choice':                                         { action: 'onboarding/view-new-dash' },
   'GET /switch-page':                                    { action: 'onboarding/view-switch-page' },
-  // 'GET /beta-promo':                                     { action: 'onboarding/view-beta-promo' },
   'GET /beta':                                           { action: 'onboarding/view-beta' },
   'GET /beta-how-it-works':                              { action: 'onboarding/view-beta-how-it-works' },
   'GET /beta-confirm':                                   { action: 'onboarding/view-beta-confirm' },
@@ -97,10 +102,10 @@ module.exports.routes = {
 
   //PROMOTIONS
   'GET /expired-promotion':                              { action: 'promotions/view-expired-promo'},
-  // 'GET /black-friday/:code?':                            { action: 'promotions/view-sales-promotion'},
-  // 'GET /black-friday-last-chance/:code?':                { action: 'promotions/view-black-friday-last-chance'},
-  // 'GET /cyber-monday/:code?':                            { action: 'promotions/view-cyber-monday'},
-  // 'GET /cyber-monday-last-chance/:code?':                { action: 'promotions/view-cyber-monday-last-chance'},
+  // 'GET /black-friday/:code?': { action: 'promotions/view-sales-promotion'},
+  // 'GET /black-friday-last-chance/:code?': { action: 'promotions/view-black-friday-last-chance'},
+  // 'GET /cyber-monday/:code?': { action: 'promotions/view-cyber-monday'},
+  // 'GET /cyber-monday-last-chance/:code?': { action: 'promotions/view-cyber-monday-last-chance'},
   'GET /live':                                           { action: 'promotions/view-live-stream' },
   'GET /black-friday/:code?':                            { action: 'promotions/view-expired-promo'},
   'GET /black-friday-last-chance/:code?':                { action: 'promotions/view-expired-promo'},
@@ -112,15 +117,16 @@ module.exports.routes = {
   'GET /holiday-offer-alt/:code?':                       { action: 'promotions/view-expired-promo'},
   'GET /holiday-offer-success/:code?':                   { action: 'promotions/view-expired-promo'},
   'GET /cheers/:code?':                                  { action: 'promotions/view-expired-promo'},
-  'GET /australia-day/:code?':                           { action: 'promotions/view-cheers-promo'},
-  'GET /valentines-day/:code?':                          { action: 'promotions/valentines/view-valentines-day-promo'},
-  'GET /valentines-day/success':                         { action: 'promotions/valentines/view-valentines-day-success' },
-  'GET /valentines-day-gift/:code?':                     { action: 'promotions/valentines/view-valentines-day-gift'},
-  'GET /valentines-day-gift/success/:code?':             { action: 'promotions/valentines/view-valentines-day-gift-success'},
+  'GET /australia-day/:code?':                           { action: 'promotions/view-expired-promo'},
+  'GET /valentines-day/:code?':                          { action: 'promotions/view-expired-promo'},
+  'GET /valentines-day-gift/:code?':                     { action: 'promotions/view-expired-promo'},
+  'GET /CNY-2020/:code?':                                { action: 'promotions/view-expired-promo'},
+  'GET /test-promo/':                                    { action: 'promotions/view-cny-promo'},
+  'GET /test-promo/:token':                              { action: 'promotions/create-limited-auth'},
+
+  //PROMOTIONS - REDEEM GIFTS
   'GET /valentines-day-gift/redeem/:code?/:userCode?':   { action: 'promotions/valentines/view-valentines-day-gift-redeem'},
-  // 'GET /valentines-day-gift/redeem/confirm/:code?':      { action: 'promotions/valentines/view-valentines-day-gift-redeem-confirm'},
   'GET /valentines-day-gift/redeem/success/:code?':      { action: 'promotions/valentines/view-valentines-day-gift-redeem-success'},
-  'GET /CNY-2020/:code?':                                { action: 'promotions/view-cny-promo'},
 
   //DICTIONARY
   'GET /dictionary-testing/:query?':                     { action: 'view-dictionary' },

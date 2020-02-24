@@ -190,24 +190,6 @@ the account verification message.)`,
       sails.log.info('Skipping new account email verification... (since `verifyEmailAddresses` is disabled)');
     }
 
-    // Dropping Mailchimp since migration
-    // if (inputs.optIn) {
-    //   const data = {
-    //     email_address: email,
-    //     status: 'subscribed'
-    //   };
-    //   axios.post('https://us9.api.mailchimp.com/3.0/lists/0a8579be6a/members', data, {
-    //     mode: 'no-cors', // no-cors, cors, *same-origin
-    //     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'Authorization': 'apikey d1056769726aa0f9129a5ce02a23dd93-us9'
-    //     }
-    //   }).catch((err) => {
-    //     console.log(err)
-    //   });
-    // }
-
     let level = '';
     if (inputs.level) {
       level = inputs.level.toString();
@@ -252,6 +234,11 @@ the account verification message.)`,
       charSet = inputs.charSet
       //TODO Helper Set user Char Set
     }
+
+    if (this.req.session.campaignId) {
+      await UserOptions.create({user_id: newUserRecord.id, option_key: 'campaignId', option_value: this.req.session.campaignId})
+    }
+
     return {
       id: newUserRecord.id,
       optIn: inputs.optIn,

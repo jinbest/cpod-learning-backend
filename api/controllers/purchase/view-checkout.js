@@ -1,3 +1,7 @@
+/*
+ * Copyright © 2020. Ugis Rozkalns. All Rights Reserved.
+ */
+
 module.exports = {
 
 
@@ -45,13 +49,13 @@ module.exports = {
 
     // Respond with view.
     return {
-      needsAccount: !this.req.me,
+      needsAccount: !(this.req.me || this.req.session.limitedAuth),
       trial: trial,
       plan: plan,
       billingCycle: period,
       promoShow: promo,
       formData: {
-        emailAddress: this.req.me ? this.req.me.email : '',
+        emailAddress: this.req.me ? this.req.me.email : this.req.session.limitedAuth ? this.req.session.limitedAuth.email : '',
         promoCode: promoCode
       },
       pricing:{

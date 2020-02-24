@@ -161,7 +161,7 @@ module.exports = {
 
     let ipData = {};
 
-    if (!this.req.me) {
+    if (!this.req.me && !this.req.session.limitedAuth) {
 
       // Create a new User
       const email = inputs.emailAddress.toLowerCase();
@@ -261,7 +261,11 @@ module.exports = {
       }
 
     } else {
-      inputs.userId = this.req.me.id;
+      inputs.userId = this.req.me ? this.req.me.id : this.req.session.limitedAuth ? this.req.session.limitedAuth.id : null;
+
+      if (!inputs.userId) {
+        throw 'invalid'
+      }
 
       // Check if User has Used a Trial before
       if (inputs.trial) {
@@ -276,7 +280,7 @@ module.exports = {
             <p>Name: ${inputs.fName} ${inputs.lName}</p>
             <p>Email: ${inputs.emailAddress}</p>
             <br />
-            <p>Error: Unfortunately, you can only enroll in a trial subscription once. 
+            <p>Error: Unfortunately, you can only enroll in a trial subscription once.
             It was already redeemed on ${new Date(userTrial.trial.toString()).toLocaleString()}</p>
             <br />
             <p>Cheers,</p>
@@ -287,7 +291,7 @@ module.exports = {
             from: 'errors@chinesepod.com',
             fromName: 'ChinesePod Errors'
           });
-          throw {trialAlreadyUsed: `Unfortunately, you can only enroll in a trial subscription once. 
+          throw {trialAlreadyUsed: `Unfortunately, you can only enroll in a trial subscription once.
         It was already redeemed on ${new Date(userTrial.trial.toString()).toLocaleString()}`};
         }
       }

@@ -6,6 +6,11 @@ module.exports = {
 
   description: 'Display "Happy New Year Promo" page.',
 
+  inputs: {
+    token: {
+      type: 'string'
+    }
+  },
 
   exits: {
 
@@ -18,35 +23,26 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    let expiry = new Date(Date.now() + 4 * 60 * 60 * 1000);
-
-    // if (this.req.cookies.cyber) {
-    //   expiry = new Date(this.req.cookies.cyber);
-    // } else {
-    //   this.req.session.expiry = expiry;
-    //   this.res.cookie('cyber_last', expiry, {
-    //     domain: '.chinesepod.com',
-    //     expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-    //   });
-    // }
-
     let trial = false; let promo = true; let plan = 'premium'; let period = 'annually'; let promoCode = 'CNY2020';
 
     const addressfield = require('../../../lib/addressfield.json');
 
     let ipData = {};
 
+    sails.log.info({full: this.req.me});
+    sails.log.info({limited: this.req.session.limitedAuth});
+
     // Respond with view.
     return {
       layout: 'layouts/layout-promo',
       expiry: null,
-      needsAccount: !this.req.me,
+      needsAccount: !(this.req.me || this.req.session.limitedAuth),
       trial: trial,
       plan: plan,
       billingCycle: period,
       promoShow: promo,
       formData: {
-        emailAddress: this.req.me ? this.req.me.email : '',
+        emailAddress: this.req.me ? this.req.me.email : this.req.session.limitedAuth ? this.req.session.limitedAuth.email : '',
         promoCode: promoCode,
         country: ipData['country'] ? ipData['country'] : 'US',
         state: '',

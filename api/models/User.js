@@ -9,6 +9,10 @@ module.exports = {
     // Return a shallow copy of this record with the password and ssn removed.
     return _.pick(this, ['id', 'username', 'preferences'])
   },
+  toLimitedAuth: function() {
+    // Return a shallow copy of this record.
+    return _.pick(this, ['id', 'username', 'email'])
+  },
   attributes: {
     id: {
       type: 'number',
