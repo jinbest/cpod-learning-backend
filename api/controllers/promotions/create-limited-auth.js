@@ -23,7 +23,7 @@ module.exports = {
 
   fn: async function (inputs) {
     const Hashids = require('hashids/cjs');
-    const hashids = new Hashids();
+    const hashids = new Hashids('lithographer-defeater');
 
     let userId = hashids.decode(inputs.token);
 
