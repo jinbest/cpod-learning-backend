@@ -26,6 +26,7 @@
     "grunt-contrib-sass": "^1.0.0",
     "grunt-rename": "^0.1.4",
     "hanzi": "^2.1.5",
+    "hashids": "^2.2.1",
     "howler": "^2.1.2",
     "html-to-text": "^5.1.1",
     "ipdata": "^2.2.0",

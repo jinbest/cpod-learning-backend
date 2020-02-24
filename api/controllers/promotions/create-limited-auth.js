@@ -22,8 +22,10 @@ module.exports = {
 
 
   fn: async function (inputs) {
+    const Hashids = require('hashids/cjs');
+    const hashids = new Hashids();
 
-    let userId = Buffer.from(inputs.token, 'base64').toString();
+    let userId = hashids.decode(inputs.token);
 
     sails.log.info(userId);
     userId = parseInt(userId);
