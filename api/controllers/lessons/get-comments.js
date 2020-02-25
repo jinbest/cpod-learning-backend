@@ -37,10 +37,12 @@ module.exports = {
     _.each(lessonComments, function (comment) {
       if (comment.reply_to_id && comment.reply_to_id > 0) {
         let parent = lessonComments.find(x => x.id === comment.reply_to_id);
-        if (!parent.nestedComments) {
-          parent.nestedComments = [];
+        if(parent) {
+          if (!parent.nestedComments) {
+            parent.nestedComments = [];
+          }
+          parent.nestedComments.push(comment);
         }
-        parent.nestedComments.push(comment);
       }
     });
     return {
