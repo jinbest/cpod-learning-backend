@@ -7,7 +7,7 @@
 
 module.exports = function defineApmHook(sails) {
 
-  if (sails.config.environment !== 'production') {
+  if (sails.config.environment === 'development') {
     return {
       initialize: async function () {
         sails.log.info('Ignoring hook (`APM`) for DEV')
