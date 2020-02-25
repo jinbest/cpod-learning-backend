@@ -80,7 +80,7 @@ module.exports = {
     addresses.forEach(address => {
       let ship_from = `ChinesePod LLC  |  246 West Broadway  |  New York NY 10013`;
       if (europeanAddresses.includes(address.country.toUpperCase())) {
-        ship_from = `ChinesePod  |  P.O. Box 92002  |  NL-1090 AA Amsterdam`;
+        ship_from = `ChinesePod LLC  |  P.O. Box 9026  |  NL-6070 AA Swalmen`;
       } else if (asiaAddresses.includes(address.country.toUpperCase())) {
         ship_from = `ChinesePod Limited  |  General Post Office Box 7347  |  Hong Kong S.A.R.`;
       } else if ('PH' === address.country.toUpperCase()) {
