@@ -9,4 +9,8 @@ sudo npm install
 
 # Setup nginx
 sudo cp /home/ubuntu/chinesepod.com/scripts/nginx /etc/nginx/sites-available/default
+sudo cp /home/ubuntu/chinesepod.com/scripts/status /etc/nginx/sites-available/status
+sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-available/default
+sudo ln -s /etc/nginx/sites-available/status /etc/nginx/sites-available/status
+
 sudo systemctl restart nginx

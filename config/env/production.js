@@ -341,6 +341,9 @@ module.exports = {
       passportInit: require('passport').initialize(),
       passportSession: require('passport').session(),
 
+      requestHandler: bugsnagmiddleware.requestHandler,
+      errorHandler: bugsnagmiddleware.errorHandler,
+
       order: [
         'requestHandler',
         'cookieParser',
@@ -370,8 +373,6 @@ module.exports = {
         var middlewareFn = skipper({ strict: true });
         return middlewareFn;
       })(),
-      requestHandler: bugsnagmiddleware.requestHandler,
-      errorHandler: bugsnagmiddleware.errorHandler,
     },
 
     /***************************************************************************
