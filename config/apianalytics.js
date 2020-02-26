@@ -2,8 +2,7 @@ module.exports.apianalytics = {
   onRequest: function (report, req) {
     const ignore = [
       '/api/v1/health/time',
-      '/api/v1/webhooks/mautic/update',
-      '/api/v1/lessons/progress'
+      '/api/v1/webhooks/mautic/update'
     ];
 
     let userId = null;

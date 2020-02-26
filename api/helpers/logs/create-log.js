@@ -25,15 +25,33 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    await Logging.create({
-      id: inputs.data.id,
-      access_ip: inputs.data.access_ip,
-      accesslog_url: inputs.data.accesslog_url,
-      accesslog_sessionid: inputs.data.accesslog_sessionid,
-      accesslog_urlbase: inputs.data.accesslog_urlbase,
-      accesslog_country: inputs.data.accesslog_country,
-      referer: inputs.data.referer,
-    });
+
+    let ipData = {};
+
+    if (inputs.data.access_ip && inputs.data.access_ip !== '::1') {
+      const geoip = require('geoip-country');
+      ipData = geoip.lookup(inputs.data.access_ip)
+    }
+
+    if ([
+      'https://www.chinesepod.com/dash',
+      'https://www.chinesepod.com/home',
+      'https://www.chinesepod.com/signup',
+      'https://www.chinesepod.com/checkout',
+      'https://www.chinesepod.com/login'
+    ].includes(inputs.data.accesslog_urlbase)
+      || (inputs.data.userData && inputs.data.userData.email && !['https://www.chinesepod.com/api/v1/lessons/progress'].includes(inputs.data.accesslog_urlbase))) {
+      await Logging.create({
+        id: inputs.data.id,
+        access_ip: inputs.data.access_ip,
+        accesslog_url: inputs.data.accesslog_url,
+        accesslog_sessionid: inputs.data.accesslog_sessionid,
+        accesslog_urlbase: inputs.data.accesslog_urlbase,
+        accesslog_country: ipData && ipData['country'] ? ipData['country'] : null,
+        referer: inputs.data.referer,
+      });
+    }
+
 
     let date = new Date();
 
