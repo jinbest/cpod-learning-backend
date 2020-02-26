@@ -29,7 +29,7 @@ module.exports = {
     let ipData = {};
 
     if (inputs.data.access_ip && inputs.data.access_ip !== '::1') {
-      const geoip = require('geoip-country');
+      const geoip = require('geoip-lite');
       ipData = geoip.lookup(inputs.data.access_ip)
     }
 
@@ -90,6 +90,7 @@ module.exports = {
       });
       indexRecord['accesslog_time'] = new Date().toISOString();
       indexRecord['timestamp'] = new Date().toISOString();
+      indexRecord['geoip'] = ipData;
       commands.push(action);
       commands.push(indexRecord);
 

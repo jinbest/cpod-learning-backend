@@ -22,6 +22,7 @@
     "elastic-apm-node": "^3.4.0",
     "email-octopus": "^1.1.2",
     "geoip-country": "^3.3.4",
+    "geoip-lite": "^1.4.0",
     "git-rev": "^0.2.1",
     "grunt": "1.0.1",
     "grunt-contrib-sass": "^1.0.0",
