@@ -88,6 +88,7 @@ module.exports = {
       index.elasticRecord.forEach(key => {
         indexRecord[key] = inputs.data[key];
       });
+      indexRecord['accesslog_time'] = new Date().toISOString();
       commands.push(action);
       commands.push(indexRecord);
 
