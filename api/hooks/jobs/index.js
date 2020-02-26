@@ -63,7 +63,7 @@ module.exports = function defineJobsHook(sails) {
               'https://www.chinesepod.com/checkout',
               'https://www.chinesepod.com/login'
             ].includes(job.data.urlbase) || (userData && userData.email)) {
-              await sails.models['logging'].create({
+              await sails.helpers.logs.createLog({
                 id: userData.email ? userData.email : 'NONE',
                 access_ip: job.data.ip,
                 accesslog_url: job.data.url,
@@ -77,8 +77,7 @@ module.exports = function defineJobsHook(sails) {
               done(null, 'Ignoring this log')
             }
           });
-          loggingQueue.clean(1000, 'failed');
-          loggingQueue.clean(1000, 'completed');
+          loggingQueue.clean(100);
           global.loggingQueue = loggingQueue;
 
           //                 //
