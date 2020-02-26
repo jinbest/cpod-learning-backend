@@ -54,7 +54,7 @@ module.exports = function defineJobsHook(sails) {
             accesslog_url: job.data.url,
             accesslog_sessionid: job.data.sessionId,
             accesslog_urlbase: job.data.urlbase,
-            accesslog_country: ipData && ipData['country'] ? ipData['country'] : null,
+            accesslog_country: null,
             referer: job.data.referer,
             userData: userData
           });
