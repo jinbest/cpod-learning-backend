@@ -194,11 +194,11 @@ module.exports = {
     await sails.helpers.sendTemplateEmail.with({
       to: userData.email, //'recap-request@chinesepod.com',
       subject: `${inputs.data.senderName ? inputs.data.senderName : 'Someone'} has just sent you a gift of language, receive the gift now!`,
-      template: 'automated/email-valentines-day-gift',
+      template: 'automated/email-gift',
       layout: false,
       templateData: {
         firstName: inputs.data.fName,
-        claimLink: `https://www.chinesepod.com/valentines-day-gift/redeem/${voucher.voucher_code}/${userData.code}`
+        claimLink: `https://www.chinesepod.com/redeem-gift/${voucher.voucher_code}/${userData.code}`
       }
     });
 

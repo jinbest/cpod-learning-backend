@@ -123,10 +123,17 @@ module.exports.routes = {
   'GET /CNY-2020/:code?':                                { action: 'promotions/view-expired-promo'},
   'GET /test-promo/':                                    { action: 'promotions/view-cny-promo'},
   'GET /test-promo/:token':                              { action: 'promotions/create-limited-auth'},
+  'GET /womens-day/:token':                              { action: 'promotions/create-limited-auth'},
+  'GET /womens-day':                                     { action: 'promotions/womens-day/view-promo'},
+  'GET /womens-day/success':                             { action: 'promotions/womens-day/view-promo-success'},
+  'GET /womens-day-gift':                                { action: 'promotions/womens-day/view-gift'},
+  'GET /womens-day-gift/success':                        { action: 'promotions/womens-day/view-gift-success'},
 
   //PROMOTIONS - REDEEM GIFTS
   'GET /valentines-day-gift/redeem/:code?/:userCode?':   { action: 'promotions/valentines/view-valentines-day-gift-redeem'},
   'GET /valentines-day-gift/redeem/success/:code?':      { action: 'promotions/valentines/view-valentines-day-gift-redeem-success'},
+  'GET /redeem/gift/:code?/:userCode?':                  { action: 'redeem/gift-subscription/view-gift-redeem'},
+  'GET /redeem/gift/success/:code?':                     { action: 'redeem/gift-subscription/view-gift-redeem-success'},
 
   //DICTIONARY
   'GET /dictionary-testing/:query?':                     { action: 'view-dictionary' },

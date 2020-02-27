@@ -1,0 +1,39 @@
+<div id="gift-redeem-confirm" v-cloak>
+  <div class="container p-3">
+    <h1 class="headline font-weight-bold text-center py-4 text-white">
+      Redeem your voucher!
+    </h1>
+    <div class="jumbotron-fluid jumbotron col-12 col-md-8 offset-md-2  col-lg-6 offset-lg-3 bg-white">
+      <h1 class="font-weight-bold text-center py-2">
+        We noticed an existing subscription!
+      </h1>
+      <p class="pt-5 px-5">
+        You can either redeem your voucher now and upgrade to <strong>{{ formData.plan }}</strong> for {{ formData.productLength }}.
+        Or you can redeem your voucher at a later date. <strong>It will expire on {{ new Date(formData.expiry).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}}</strong>, so you have time.
+      </p>
+      <ajax-form class="p-3" action="redeemVoucher" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-rules="formRules" :form-errors.sync="formErrors" @submitted="submittedForm()">
+        <div class="form-group col-12">
+          <input class="form-control mx-auto text-center"
+                 id="code"
+                 name="code"
+                 type="text"
+                 style="width:300px; height:55px; font-size:39px;"
+                 :class="[formErrors.code ? 'is-invalid' : '']"
+                 v-model.trim="formData.code"
+                 placeholder="ABCDEFGH12"
+                 autofocus
+                 focus-first
+                 maxlength="10"
+          >
+          <div class="invalid-feedback d-block" v-if="formErrors.code">Please check your code and try again.</div>
+          <div class="text-danger" v-if="cloudError==='invalid'"><small>The voucher code you entered is invalid or has expired. Please check your information and try again.</small></div>
+          <div class="text-danger" v-else-if="cloudError"><small>An error occurred while processing your request. Please check your information and try again, or <a href="mailto:support@chinesepod.com">contact support</a> if the error persists.</small></div>
+        </div>
+        <div class="form-group text-center">
+          <ajax-button :syncing="syncing" class="btn btn-lg btn-primary">Redeem Voucher Code</ajax-button>
+        </div>
+      </ajax-form>
+    </div>
+  </div>
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

@@ -1,0 +1,156 @@
+<div id="womens-day-gift" v-cloak>
+  <div class="promo-banner">
+    <div class="container  p-md-4">
+      <div class="row pb-md-4 px-md-4">
+        <div class="col-12 my-3 text-center text-white">
+          <h1 class="headline-1 py-2">International Women's Day</h1>
+          <h5 class="tagline-1 py-2">
+            Gift price is $38 for a 3-month/quarterly subscription.
+          </h5>
+          <img class="img-fluid" src="/images/promotions/womens-day/banner.png"/>
+          <h5 class="tagline-2 py-2">
+            A one time purchase, no auto-renewal, 3 months of language empowerment!
+          </h5>
+        </div>
+        <div class="col-12 col-lg-10 offset-lg-1 col-xl-12 offset-xl-0 mb-0">
+          <div class="container outer" id="checkout-form">
+            <div class="body">
+              <ajax-form v-if="!cloudSuccess" name="ccForm" id="cc_form" action="paypalExecuteGiftCheckout" :syncing.sync="syncing"  :cloud-error.sync="cloudError" :form-data="formData" :form-errors.sync="formErrors" @submitted="successfulPayment()">
+                <ul class="row">
+                  <li class="col-12 col-xl-6">
+                    <div class="heading">
+                      <span class="number">1</span>
+                      <h3>Gift of Language - 3 Months</h3>
+                    </div>
+
+                    <div class="basic-info">
+                      <div class="row">
+                        <div class="pt-2 col-lg-4 col-sm-6 col-xl-6">
+                          <button disabled class="btn btn-block py-3" :class="[billingCycle === 'quarterly' ? 'btn-chinesepod-blue' : 'btn-outline-chinesepod-blue']" @click.prevent="billingCycle = 'quarterly'">3 Months - ${{pricing['premium']['quarterly']}}</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="heading">
+                      <span class="number">2</span>
+                      <h3>Gift recipient information</h3>
+                    </div>
+
+                    <div class="basic-info">
+                      <div class="row">
+                        <div class="col-lg-4 col-sm-6 col-xl-6">
+                          <label for="first-name" :class="[formErrors.fName ? 'text-danger' : '']">First Name<span class="required-mark">&nbsp;*</span></label>
+                          <input type="text" name="first_name" id="first-name" placeholder="First Name" v-model="formData.fName" required/>
+                          <div class="invalid-feedback d-block" v-if="formErrors.fName">Please enter a first name.</div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-xl-6">
+                          <label for="last-name" :class="[formErrors.lName ? 'text-danger' : '']">Last Name<span class="required-mark">&nbsp;*</span></label>
+                          <input type="text" name="last_name" placeholder="Last Name" v-model="formData.lName" required/>
+                          <div class="invalid-feedback d-block" v-if="formErrors.lName">Please enter a last name.</div>
+                        </div>
+                      </div>
+
+                      <!-- TODO ONLY FOR TEMPORARY ACCOUNTS-->
+                      <div class="row">
+                        <div class="col-lg-4 col-sm-6 col-xl-6">
+                          <label for="email" :class="[formErrors.emailAddress ? 'text-danger' : '']">Email Address<span class="required-mark">&nbsp;*</span></label>
+                          <input type="email" name="email" placeholder="email@domain.com" :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress"  :required="needsAccount" :disabled="!needsAccount"/>
+                          <div class="invalid-feedback d-block" v-if="formErrors.emailAddress">Please enter a valid email address.</div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </li>
+                  <li class="col-12 col-xl-6">
+                    <div class="heading">
+                      <span class="number">3</span>
+                      <h3>Add your name</h3>
+                    </div>
+
+                    <div class="basic-info">
+                      <div class="row">
+                        <div class="col-lg-4 col-sm-6 col-xl-6">
+                          <label for="sender-name">Your Name</label>
+                          <input type="text" name="sender_name" id="sender-name" placeholder="Your Name" v-model="formData.senderName" required/>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="">They'll see it as:</p>
+                    <blockquote class="blockquote">
+                      <p class="m-0 p-0 small">"<strong v-html="formData.senderName ? formData.senderName : 'John'"></strong> has just sent you a gift of language, receive the gift now!"</p>
+                    </blockquote>
+
+                    <div class="heading">
+                      <span class="number">4</span>
+                      <h3>Your payment information</h3>
+                    </div>
+
+                    <p v-if="!trial && !pricing.discount">
+                      You will be charged <b>
+                        <span class="price-switch total-amount">${{ (Math.round((pricing[plan][billingCycle] - pricing.discount) * 100) / 100).toFixed(2)  }}</span>
+                      </b> today.</p>
+                    <p v-if="!trial && pricing.discount">
+                      You will be charged <span class="price-switch total-amount font-weight-bold">${{ (Math.round((pricing[plan][billingCycle] - pricing.discount) * 100) / 100).toFixed(2) }} today</span></p>
+                    <div v-show="!ppData.payerID">
+                      <div class="payment-content-paypal pt-2">
+                        <span>When you click "<b>Pay with PayPal</b>" below we'll take you to PayPal's site to set up a payment method. You'll be routed back here to finalize your gift.</span>
+                      </div>
+                      <div class="btn btn-lg btn-block" id="paypal-button-container"></div>
+                    </div>
+                    <div v-show="ppData.payerID">
+                      <div class="heading">
+                        <span class="number">5</span>
+                        <h3>Ready to send</h3>
+                      </div>
+                      <div class="basic-info">
+                        <p>Confirm the information above and click the button to send out your gift.</p>
+                      </div>
+                      <div class="basic-info">
+                        <div class="row">
+                          <div class="col-12">
+                            <button @click.prevent="processPayment()" type="submit" class="btn btn-block btn-lg btn-chinesepod-blue ajax-button" :class="[syncing ? 'syncing' : '']" :disabled="!ppData.payerID">
+                              <span class="button-text" v-if="!syncing"><slot name="default">Submit</slot></span>
+                              <span class="button-loader clearfix" v-if="syncing">
+                                <slot name="syncing-state">
+                                  <div class="loading-dot dot1"></div>
+                                  <div class="loading-dot dot2"></div>
+                                  <div class="loading-dot dot3"></div>
+                                  <div class="loading-dot dot4"></div>
+                                </slot>
+                              </span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </ajax-form>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-10 offset-1 col-md-4 offset-md-4 my-4">
+          <img class="img-fluid" src="/images/brand/brand-white.svg" alt="ChinesePod" loading="lazy">
+        </div>
+
+        <modal class="paymentError modal fade" v-if="modal==='paymentError'" @close="modal = ''" v-cloak>
+          <div class="modal-header">
+            <h2 class="modal-title">Error During Checkout</h2>
+            <hr/>
+            <button type="button" class="modal-close-button" data-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <h5>{{ paymentErrors ? 'Unfortunately the payment was not successful. This is the potential issue: ' + paymentErrors : 'An unknown error occurred during checkout. Please check your information and try again.' }}</h5>
+          </div>
+          <div class="modal-footer flex-row-reverse justify-content-between">
+            <button type="button" data-dismiss="modal" class="btn btn-info">Close</button>
+          </div>
+        </modal>
+
+      </div>
+    </div>
+  </div>
+</div>
+<link href="https://fonts.googleapis.com/css?family=EB+Garamond:400,700|Roboto:700&display=swap" rel="stylesheet">
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
