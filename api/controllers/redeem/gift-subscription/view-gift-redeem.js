@@ -81,7 +81,7 @@ module.exports = {
 
       if (!userData) {
 
-        return this.res.redirect(`/gift/redeem${inputs.code ? `/${inputs.code}` : ''}`)
+        return this.res.redirect(`/redeem-gift${inputs.code ? `/${inputs.code}` : ''}`)
 
       } else {
 
@@ -174,13 +174,13 @@ module.exports = {
             redeemed_by: inputs.userId
           });
 
-        return this.res.redirect('/redeem/gift/success')
+        return this.res.redirect('/redeem-gift/success')
 
       }
 
     } else {
 
-      return this.res.redirect('/login?continue=' + `/redeem/gift${inputs.code ? `/${inputs.code}` : ''}`);
+      return this.res.redirect('/login?continue=' + `/redeem-gift${inputs.code ? `/${inputs.code}` : ''}`);
 
     }
 

@@ -19,7 +19,11 @@ module.exports.policies = {
   'home/*': 'is-logged-in',
   'podcasts/*': true,
 
-  'redeem/*': 'is-logged-in',
+  'redeem/view-redeem-voucher': 'is-logged-in',
+  'redeem/redeem-voucher': 'is-logged-in',
+  'redeem/view-redeem-access-token': 'is-logged-in',
+  'redeem/redeem-access-token': 'is-logged-in',
+  'redeem/view-redeem-success': 'is-logged-in',
 
   'admin/*': 'is-staff',
 

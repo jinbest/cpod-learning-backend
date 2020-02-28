@@ -132,8 +132,8 @@ module.exports.routes = {
   //PROMOTIONS - REDEEM GIFTS
   'GET /valentines-day-gift/redeem/:code?/:userCode?':   { action: 'promotions/valentines/view-valentines-day-gift-redeem'},
   'GET /valentines-day-gift/redeem/success/:code?':      { action: 'promotions/valentines/view-valentines-day-gift-redeem-success'},
-  'GET /redeem/gift/:code?/:userCode?':                  { action: 'redeem/gift-subscription/view-gift-redeem'},
-  'GET /redeem/gift/success/:code?':                     { action: 'redeem/gift-subscription/view-gift-redeem-success'},
+  'GET /redeem-gift/:code?/:userCode?':                  { action: 'redeem/gift-subscription/view-gift-redeem'},
+  'GET /redeem-gift/success/:code?':                     { action: 'redeem/gift-subscription/view-gift-redeem-success'},
 
   //DICTIONARY
   'GET /dictionary-testing/:query?':                     { action: 'view-dictionary' },
