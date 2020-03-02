@@ -21,6 +21,7 @@
     "discourse-sso": "^1.0.3",
     "elastic-apm-node": "^3.4.0",
     "email-octopus": "^1.1.2",
+    "feed": "^4.1.0",
     "geoip-country": "^3.3.4",
     "geoip-lite": "^1.4.0",
     "git-rev": "^0.2.1",

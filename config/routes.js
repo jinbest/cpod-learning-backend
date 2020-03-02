@@ -147,6 +147,9 @@ module.exports.routes = {
   'GET /logos':                                          { action:   'misc/view-logos' },
   'GET /brand-guidelines':                               { action:   'misc/view-brand-guidelines' },
 
+  //FEEDS
+  'GET /feed/:feedType?':                                { action:   'feed/feed' },
+
 
   //ADMIN PAGES
   //ACCESS VOUCHER CODES
