@@ -58,7 +58,7 @@ module.exports = {
     let index = {
       model: 'accesslog-*',
       elasticModel: 'accesslog-*',
-      elasticIndex: `accesslog-${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`,
+      elasticIndex: `accesslog-${date.getFullYear()}-${((date.getMonth() + 1) < 10 ? '0' : '') + (date.getMonth() + 1)}-${(date.getDate() < 10 ? '0' : '') + date.getDate()}`,
       elasticRecord: [
         'email',
         'access_ip',
