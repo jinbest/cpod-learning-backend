@@ -99,6 +99,8 @@ module.exports = function defineJobsHook(sails) {
 
         userInfoQueue.process('Update Data to Mautic', 5, async function (job, done) {
 
+          done();
+
           if (!job.data) {
             done('No job data')
           }
@@ -342,131 +344,8 @@ module.exports = function defineJobsHook(sails) {
           }
         });
 
-        triggerQueue.process('UpdateUsers', 1, async function (job) {
-
-          let userList = [];
-
-          let usersToUpdate = await sails.models['user'].find({
-            where: {
-              updatedAt: {
-                '>=': new Date(Date.now() - 15 * 60 * 1000 - 5 * 60 * 60 * 1000)
-              }
-            },
-            select: ['id']
-          });
-          usersToUpdate.map(function (el) {
-            userList.push(el.id)
-          });
-
-          let optionsToUpdate = await sails.models['useroptions'].find({
-            where: {
-              option_key: {
-                'in': ['level']
-              },
-              updatedAt: {
-                '>=': new Date(Date.now() - 15 * 60 * 1000 - 5 * 60 * 60 * 1000)
-              }
-            },
-            select: ['user_id']
-          });
-          optionsToUpdate.map(function (el) {
-            userList.push(el.user_id)
-          });
-
-
-          let subscriptionsToUpdate = await sails.models['usersitelinks'].find({
-            where: {
-              updatedAt: {
-                '>=': new Date(Date.now() - 15 * 60 * 1000 - 5 * 60 * 60 * 1000)
-              }
-            },
-            select: ['user_id']
-          });
-          subscriptionsToUpdate.map(function (el) {
-            userList.push(el.user_id)
-          });
-
-          if (userList.length < 400) {
-            Array.from(new Set(userList)).forEach(function (user) {
-              userInfoQueue.add('Update Data to Mautic', {
-                  userId: user
-                },
-                {
-                  attempts: 2,
-                  timeout: 120000
-                })
-            });
-          }
-        });
-
-        triggerQueue.process('UpdateUsersWithNoID', 1, async function (job) {
-          // Update Users to Mautic
-
-          let userList = [];
-
-          let usersToUpdate = await User.find({
-            where: {
-              member_id: null,
-              updatedAt: {
-                '>=': '2019-06-01'
-              }
-            },
-            select: ['id']
-          });
-          usersToUpdate.map(function (el) {
-            userList.push(el.id)
-          });
-
-          Array.from(new Set(userList)).forEach(function (user) {
-            userInfoQueue.add('Update Data to Mautic', {
-                userId: user
-              },
-              {
-                attempts: 1,
-                timeout: 120000
-              })
-          });
-        });
-
-        triggerQueue.process('UpdateAllUsers', 1, async function (job) {
-          // Update Users to Mautic
-
-          let userList = [];
-
-          let usersToUpdate = await User.find({
-            where: {
-              member_id: {
-                '!': null
-              },
-              updatedAt: {
-                '>=': new Date(Date.now() - 31 * 24 * 60 * 60 * 1000)
-              }
-            },
-            select: ['id']
-          });
-          usersToUpdate.map(function (el) {
-            userList.push(el.id)
-          });
-
-          sails.log.info(userList.length);
-
-          Array.from(new Set(userList)).forEach(function (user) {
-            userInfoQueue.add('Update Data to Mautic', {
-                userId: user
-              },
-              {
-                attempts: 1,
-                timeout: 120000
-              })
-          });
-        });
-
         userInfoQueue.clean(1000);
         triggerQueue.clean(0);
-
-        triggerQueue.add('UpdateUsers', {data: 'Push User Data to Mautic every 15min'}, {repeat: {cron: '*/15 * * * *'}});
-        triggerQueue.add('UpdateUsersWithNoID', {data: 'Push Missing User Data to Mautic every hour'}, {repeat: {cron: '15 * * * *'}});
-        // triggerQueue.add('UpdateAllUsers', {data: 'Push All User Data to Mautic once a Month'}, {repeat: {cron: '5 4 * * 7'}});
 
         global.userInfoQueue = userInfoQueue;
 
