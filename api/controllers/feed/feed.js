@@ -52,8 +52,8 @@ module.exports = {
         hostData.forEach(host => {
           returnData.push({
             name: host,
-            email: `${host.toLowerCase()}@chinesepod.com`,
-            link: `https://www.chinesepod.com/explore?query=${host}`
+            email: `${host.toLowerCase().split(' ').join('.')}@chinesepod.com`,
+            link: `https://www.chinesepod.com/explore?query=${host.split(' ').join('+')}`
           })
         });
         return returnData
@@ -77,6 +77,7 @@ module.exports = {
           link: `https://www.chinesepod.com/lesson/${lesson.slug}`,
           image: `https://s3contents.chinesepod.com/${lesson.type === 'extra' ? 'extra/' : ''}${lesson.id}/${lesson.hash_code}/${lesson.image}`,
           description: lesson.description,
+          content: lesson.description,
           author: [{
             name: 'ChinesePod',
             email: 'team@chinesepod.com',
@@ -96,7 +97,7 @@ module.exports = {
         return this.res.set({'Content-Type': 'application/xml'}).send(feed.atom1());
 
       default:
-        return this.res.set({'Content-Type': 'application/xml'}).send(feed.rss2());
+        return this.res.set({'Content-Type': 'application/rss+xml'}).send(feed.rss2());
 
     }
   }
