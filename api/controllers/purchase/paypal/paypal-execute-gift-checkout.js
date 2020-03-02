@@ -196,6 +196,7 @@ module.exports = {
       subject: `${inputs.data.senderName ? inputs.data.senderName : 'Someone'} has just sent you a gift of language, receive the gift now!`,
       template: 'automated/email-gift',
       layout: false,
+      toName: inputs.data.fName + ' ' + inputs.data.lName,
       templateData: {
         firstName: inputs.data.fName,
         claimLink: `https://www.chinesepod.com/redeem-gift/${voucher.voucher_code}/${userData.code}`

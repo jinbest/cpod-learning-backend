@@ -44,7 +44,7 @@ parasails.registerPage('gift-redeem-confirm', {
       // > (Note that we re-enable the syncing state here.  This is on purpose--
       // > to make sure the spinner stays there until the page navigation finishes.)
       this.syncing = true;
-      window.location.href = window.location.href.split('?')[0] + '/success';
+      window.location.href = '/redeem-gift/success';
     }
   }
 });

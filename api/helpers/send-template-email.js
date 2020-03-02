@@ -48,6 +48,13 @@ module.exports = {
       required: true
     },
 
+    toName: {
+      example: 'Jane Doe',
+      description: 'Full name of the primary recipient.',
+      extendedDescription: 'If left blank, defaults to the recipient\'s email address.',
+      defaultsTo: ''
+    },
+
     subject: {
       description: 'The subject of the email.',
       example: 'Hello there.',
@@ -205,7 +212,8 @@ module.exports = {
       var deferred = sails.helpers.mailgun.sendHtmlEmail.with({
         htmlMessage: htmlEmailContents,
         to: inputs.to,
-        subject: inputs.subject
+        subject: inputs.subject,
+        toName: inputs.toName
       });
 
       if (inputs.ensureAck) {

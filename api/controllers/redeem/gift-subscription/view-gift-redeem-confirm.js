@@ -10,7 +10,7 @@ module.exports = {
   exits: {
 
     success: {
-      viewTemplatePath: 'pages/promotions/redeem/gift/confirm'
+      viewTemplatePath: 'pages/redeem/gift/confirm'
     }
 
   },
