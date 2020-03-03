@@ -639,7 +639,7 @@ module.exports = {
           planId: plans[inputs.plan].id
         });
 
-        let productName = `${inputs.promoCode ? `${promoCode} Promotion ` : ''}${inputs.trial ? 'Trial ' : ''}${_.capitalize(inputs.plan)} Subscription ${transaction.product_length} Months`;
+        let productName = `${inputs.promoCode ? `${inputs.promoCode} Promotion ` : ''}${inputs.trial ? 'Trial ' : ''}${_.capitalize(inputs.plan)} Subscription ${transaction.product_length} Months`;
 
         if (holidayPromo) {
           productName = plans['holiday'].description;
