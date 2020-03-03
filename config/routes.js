@@ -340,6 +340,9 @@ module.exports.routes = {
   'GET /api/v1/labels/gift-packages':                    { action: 'labels/gift-package/get-gift-package-labels'},
   'POST /api/v1/labels/gift-packages':                   { action: 'labels/gift-package/post-gift-package-labels'},
 
+  //NOTIFICATIONS
+  '/api/v1/notifications':                               { action: 'notifications/subscribe', isSocket: true },
+
   //Sample Routes
   // 'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
   // 'POST  /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },
