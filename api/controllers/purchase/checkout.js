@@ -56,6 +56,9 @@ module.exports = {
     },
     promoCode: {
       type: 'string'
+    },
+    nonRecurring: {
+      type: 'boolean'
     }
   },
 
@@ -431,12 +434,10 @@ module.exports = {
       customer: customerData.id,
       items: [{plan: plans[inputs.plan][inputs.billingCycle].stripeId}],
       trial_period_days: holidayPromo ? 90 : inputs.trial ? 14 : 0, // Holiday Promo or 2 week trial or No trial
-      coupon: coupon ? coupon.id : null
+      coupon: coupon ? coupon.id : null,
+      cancel_at_period_end: inputs.nonRecurring ? true : false
     })
       .then(async (subscription) => {
-
-        sails.log.info(subscription);
-
         // If Trial - Mark User Record as Such
         if (inputs.trial) {
           await User.updateOne({id: inputs.userId})
@@ -466,8 +467,9 @@ module.exports = {
           subscription_type: plans[inputs.plan].type, // converted 'plan'
           product_id: plans[inputs.plan][inputs.billingCycle].id, // Product ID
           product_length: plans[inputs.plan][inputs.billingCycle].length, // converted 'billingCycle'
-          status: 1, //  1=active, 2=cancelled, 3=past due
-          next_billing_time: new Date(subscription['current_period_end'] * 1000).toISOString(),
+          status: inputs.nonRecurring ? 2 : 1, //  1=active, 2=cancelled, 3=past due
+          next_billing_time: inputs.nonRecurring ? null : new Date(subscription['current_period_end'] * 1000).toISOString(),
+          date_cancelled: inputs.nonRecurring ? new Date() : null,
           cc_num: cardData ? cardData.last4 : '9999',
           cc_exp: cardData ? `${cardData.exp_month}/${cardData.exp_year}` : '99/99',
         }).fetch();
@@ -522,8 +524,6 @@ module.exports = {
           created_by: inputs.userId,
           modified_by: inputs.userId,
         }).fetch();
-
-        sails.log.info(transaction);
 
         if (inputs.address1 && inputs.country && inputs.city) {
           await TransactionAddresses.create({
@@ -639,8 +639,7 @@ module.exports = {
           planId: plans[inputs.plan].id
         });
 
-
-        let productName = `${inputs.trial ? 'Trial ' : ''}${_.capitalize(inputs.plan)} Subscription ${transaction.product_length} Months`;
+        let productName = `${inputs.promoCode ? `${promoCode} Promotion ` : ''}${inputs.trial ? 'Trial ' : ''}${_.capitalize(inputs.plan)} Subscription ${transaction.product_length} Months`;
 
         if (holidayPromo) {
           productName = plans['holiday'].description;
@@ -660,7 +659,6 @@ module.exports = {
       })
       .catch(async(err) => {
         sails.log.error(err);
-
         await sails.helpers.mailgun.sendHtmlEmail.with({
           htmlMessage: `
             <p>Failed User Purchase on https://www.chinesepod.com</p>

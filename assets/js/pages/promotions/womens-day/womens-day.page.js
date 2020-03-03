@@ -21,6 +21,7 @@ parasails.registerPage('womens-day-promo', {
     promoShow: false,
     promoToggle: false,
     promoLimit: 0,
+    nonRecurring: false,
     pricing:{},
     formData: {
       fName: '',
@@ -285,12 +286,10 @@ parasails.registerPage('womens-day-promo', {
         state: this.formData.state,
         country: this.formData.country,
         zip: this.formData.zip,
+        nonRecurring: this.nonRecurring
       })
         .then((info) => {
-          this.cloudSuccess = true;
-          setTimeout(() => {
-            window.location.href = window.location.href.split('?')[0] + '/success';
-          }, 5000);
+          window.location.href = window.location.href.split('?')[0] + '/success';
         })
         .catch((e) => {
           this.paymentErrors = e.responseInfo.body;

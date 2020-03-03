@@ -147,13 +147,15 @@
 
                     <p v-if="!trial && !pricing.discount">
                       You will be charged <b>
-                        <span class="price-switch total-amount">${{ (Math.round((pricing[plan][billingCycle] - pricing.discount) * 100) / 100).toFixed(2)  }} {{ billingCycle }}</span>
+                        <span class="price-switch total-amount">${{ (Math.round((pricing[plan][billingCycle] - pricing.discount) * 100) / 100).toFixed(2) }} {{ billingCycle }}</span>
                       </b> starting today.</p>
-                    <p v-if="!trial && pricing.discount">
+                    <p v-if="!trial && pricing.discount && !nonRecurring">
                       You will be charged <span class="price-switch total-amount font-weight-bold">${{ (Math.round((pricing[plan][billingCycle] - pricing.discount) * 100) / 100).toFixed(2) }} today</span>
                       and <span class="price-switch total-amount font-weight-bold">${{ pricing[plan][billingCycle] }} {{ billingCycle }}</span> afterwards.
                       You can cancel at any time.</p>
-
+                    <p v-if="!trial && pricing.discount && nonRecurring">
+                      You will be charged <span class="price-switch total-amount font-weight-bold">${{ (Math.round((pricing[plan][billingCycle] - pricing.discount) * 100) / 100).toFixed(2) }} today</span>.
+                      This is a non-recurring subscription.</p>
                     <div class="form-group clearfix">
                       <ul class="cards">
                         <li>
@@ -170,21 +172,11 @@
                         </li>
                       </ul>
                     </div>
-
-                    <!-- Used to display form errors. -->
                     <div v-show="false" id="card-errors" class="alert alert-danger" role="alert"></div>
                     <div class="payment-content-stripe">
                       <div class="form-group clearfix pl-0">
                         <label for="card-element">Card<span class="required-mark">&nbsp;*</span></label>
                         <div id="card-element" class="form-control"></div>
-                        <!--                      <div class="help-info"><img src="/images/question-mark.svg" alt="What is this ?">-->
-                        <!--                        <div id="tooltip-description">-->
-                        <!--                          <p>-->
-                        <!--                            <span class="text-white">What's this ?</span>-->
-                        <!--                            The CVC number is a 3 or 4 digit security code printed on the front or back of your card.-->
-                        <!--                          </p>-->
-                        <!--                        </div>-->
-                        <!--                      </div>-->
                       </div>
                       <div class="row">
                         <div class="col-lg-3 col-xl-6 payment-badge">
@@ -194,10 +186,6 @@
                           <img src="/images/powered-by-stripe.svg" width="180"/>
                         </div>
                       </div>
-                    </div>
-                    <div class="payment-content-paypal d-none">
-                      <span>When you click "<b>Join ChinesePod</b>" below we'll take you to PayPal's site to set up your billing information.</span>
-                      </br></br>
                     </div>
                   </li>
                   <li class="col-12">

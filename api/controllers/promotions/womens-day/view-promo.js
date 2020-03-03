@@ -18,7 +18,7 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    let trial = false; let promo = true; let plan = 'premium'; let period = 'annually'; let promoCode = 'EMPOWER38';
+    let trial = false; let promo = true; let plan = 'premium'; let period = 'quarterly'; let promoCode = 'EMPOWER38'; let nonRecurring = true;
 
     const addressfield = require('../../../../lib/addressfield.json');
 
@@ -33,6 +33,7 @@ module.exports = {
       plan: plan,
       billingCycle: period,
       promoShow: promo,
+      nonRecurring: nonRecurring,
       formData: {
         emailAddress: this.req.me ? this.req.me.email : '',
         promoCode: promoCode,
