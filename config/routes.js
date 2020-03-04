@@ -94,7 +94,7 @@ module.exports.routes = {
   'GET /secret-page':                                    { action: 'recap/view-secret-page' },
   'GET /super-secret-page':                              { action: 'recap/view-popular-recap-lessons' },
   'GET /current-lesson':                                 { action: 'recap/view-current-lesson' },
-  'GET /set-lesson/:unused?':                            { action: 'recap/set-lesson' },
+  'GET /set-lesson/:lessonId':                           { action: 'recap/set-lesson' },
   'GET /recap':                                          { action: 'recap/view-recap' },
   'GET /recapp':                                         { action: 'recap/view-recap' },
   'GET /app':                                            { action: 'recap/view-recap' },

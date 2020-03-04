@@ -8,6 +8,10 @@ module.exports = {
 
 
   inputs: {
+    lessonId: {
+      type: 'string',
+      required: true
+    }
 
   },
 
@@ -17,12 +21,14 @@ module.exports = {
   },
 
 
-  fn: async function () {
+  fn: async function (inputs) {
 
-    let lessonId = this.req.path.split('/')[2].toUpperCase();
+    sails.log.info(inputs);
+
+    let lessonId = inputs.lessonId;
 
     if (this.req.me) {
-      await Logging.create({
+      let log = await Logging.create({
         id: this.req.me.email,
         access_ip: this.req.ip,
         accesslog_url: `https://chinesepod.com/lessons/api?v3_id=${lessonId}&type=lesson`,
@@ -30,11 +36,10 @@ module.exports = {
         accesslog_urlbase: 'https://chinesepod.com/lessons/api',
       }).fetch();
 
-      return `Set current lesson to ${lessonId} for user ${this.req.me.email}`
+      return `Set current lesson to ${lessonId} for user ${this.req.me.email} \n${JSON.stringify(log)}`
 
     } else {
-
-      this.res.redirect('https://www.chinesepod.com/login')
+      return this.res.redirect('/login')
     }
 
 
