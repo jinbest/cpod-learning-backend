@@ -26,13 +26,17 @@ module.exports = {
     let userData = await sails.helpers.users.getUserOptions(inputs.userId);
 
     let toAsk = [];
+
     questions.forEach(question => {
       if(!userData.options[question.key]) {
         toAsk.push(question)
       }
     });
 
-    return toAsk
+    return {
+      completeness: (questions.length - toAsk.length) / questions.length,
+      questions: toAsk
+    }
 
   }
 

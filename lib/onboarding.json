@@ -59,6 +59,64 @@
   },
   {
     "id": 3,
+    "key": "studyGoal",
+    "multipleChoice": false,
+    "branching": false,
+    "question": "What's your study goal?",
+    "answers": [
+      {
+        "label": "basics",
+        "id": 1,
+        "description": "Lessons about Chinese Business culture and vocabulary"
+      },
+      {
+        "label": "intermediate",
+        "id": 2,
+        "description": "Lessons about sports in China and sports vocabulary"
+      },
+      {
+        "label": "advanced",
+        "id": 3,
+        "description": "Lessons about China tech and technological vocabulary"
+      },
+      {
+        "label": "fluency",
+        "id": 4,
+        "description": "Lessons about Chinese literature and traditional culture"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "key": "studyGoal",
+    "multipleChoice": false,
+    "branching": false,
+    "question": "What's your time commitment per week?",
+    "answers": [
+      {
+        "label": "< 1 hour",
+        "id": 1,
+        "description": "Lessons about Chinese Business culture and vocabulary"
+      },
+      {
+        "label": "1 hour",
+        "id": 2,
+        "description": "Lessons about sports in China and sports vocabulary"
+      },
+      {
+        "label": "2 hours",
+        "id": 3,
+        "description": "Lessons about China tech and technological vocabulary"
+      },
+      {
+        "label": "2+ hours",
+        "id": 4,
+        "description": "Lessons about Chinese literature and traditional culture"
+      }
+    ]
+  },
+  {
+    "id": 5,
     "key": "interests",
     "multipleChoice": true,
     "branching": false,
