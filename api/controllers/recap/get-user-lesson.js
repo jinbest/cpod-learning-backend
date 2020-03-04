@@ -157,25 +157,6 @@ module.exports = {
         limit: 1
       });
 
-
-      // let latestLesson = (await sails.sendNativeQuery(`
-      // SELECT accesslog_url, accesslog_time
-      // FROM chinesepod_logging.cp_accesslog
-      // WHERE accesslog_user = '${user.email}'
-      // AND accesslog_urlbase in ('https://chinesepod.com/lessons/api', 'https://ws.chinesepod.com:444/1.0.0/instances/prod/lessons/get-lesson-detail', 'https://server4.chinesepod.com:444/1.0.0/instances/prod/lessons/get-lesson-detail', 'https://server4.chinesepod.com:444/1.0.0/instances/prod/lessons/get-dialogue')
-      // ORDER BY accesslog_time DESC
-      // LIMIT 1
-      // `))['rows'];
-      //
-      // let latestJSLesson = (await sails.sendNativeQuery(`
-      // SELECT accesslog_url, accesslog_time
-      // FROM chinesepod_logging.cp_accesslog
-      // WHERE accesslog_user = '${user.email}'
-      // AND accesslog_urlbase = 'https://www.chinesepod.com/api/v1/lessons/get-dialogue'
-      // ORDER BY accesslog_time DESC
-      // LIMIT 1
-      // `))['rows'];
-
       if (!latestLesson && !latestJSLesson){
         return {
           message: 'No Lesson Available',
