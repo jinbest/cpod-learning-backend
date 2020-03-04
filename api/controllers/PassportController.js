@@ -106,7 +106,7 @@ module.exports = {
 
           // LOG STORED CAMPAIGN INFO
           if (req.session.campaignId) {
-            await UserOptions.create({user_id: newUserRecord.id, option_key: 'campaignId', option_value: req.session.campaignId})
+            await UserOptions.create({user_id: userData.id, option_key: 'campaignId', option_value: req.session.campaignId})
           }
         }
 
@@ -223,7 +223,7 @@ module.exports = {
 
           // LOG STORED CAMPAIGN INFO
           if (req.session.campaignId) {
-            await UserOptions.create({user_id: newUserRecord.id, option_key: 'campaignId', option_value: req.session.campaignId})
+            await UserOptions.create({user_id: userData.id, option_key: 'campaignId', option_value: req.session.campaignId})
           }
 
         }
