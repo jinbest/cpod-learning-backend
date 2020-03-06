@@ -294,8 +294,8 @@ module.exports = {
       collection: 'UserContents',
       via: 'user_id'
     },
-    options: {
-      type: 'json'
-    }
+    // options: {
+    //   type: 'json'
+    // }
   }
 };
