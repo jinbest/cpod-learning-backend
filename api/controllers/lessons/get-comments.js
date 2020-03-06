@@ -30,8 +30,7 @@ module.exports = {
       from comments c
       left join users u on c.user_id=u.id
       left join user_preferences p on p.user_id=c.user_id
-      where c.parent_id = $1 and c.type = 'lesson'
-      order by c.created_at desc`, [inputs.lessonId]
+      where c.parent_id = $1 and c.type = 'lesson'`, [inputs.lessonId]
     ))['rows'];
 
     _.each(lessonComments, function (comment) {
@@ -47,6 +46,7 @@ module.exports = {
     });
     return {
       count: lessonComments.length,
-      comments: lessonComments.filter((comment) => comment.reply_to_user_id === 0)}
+      comments: lessonComments.filter((comment) => comment.reply_to_user_id === 0).sort((a, b) => b.created_at - a.created_at)
+    }
   }
 };
