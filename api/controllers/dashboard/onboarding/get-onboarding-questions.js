@@ -23,12 +23,12 @@ module.exports = {
 
     const questions = require('../../../../lib/onboarding');
 
-    let userData = await sails.helpers.users.getUserOptions(inputs.userId);
+    let userOptions = await sails.helpers.users.getUserOptions(inputs.userId);
 
     let toAsk = [];
 
     questions.forEach(question => {
-      if(!userData.options[question.key]) {
+      if(!userOptions[question.key]) {
         toAsk.push(question)
       }
     });

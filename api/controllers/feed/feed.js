@@ -34,7 +34,7 @@ module.exports = {
       image: "https://www.chinesepod.com/images/brand/logo.png",
       favicon: "https://www.chinesepod.com/favicon.ico",
       copyright: "© 2020 ChinesePod LLC",
-      generator: "awesome", // optional, default = 'Feed for Node.js'
+      generator: "chinesepod.com", // optional, default = 'Feed for Node.js'
       feedLinks: {
         json: "https://www.chinesepod.com/feed/json",
         atom: "https://www.chinesepod.com/feed/atom"
@@ -78,12 +78,7 @@ module.exports = {
           image: `https://s3contents.chinesepod.com/${lesson.type === 'extra' ? 'extra/' : ''}${lesson.id}/${lesson.hash_code}/${lesson.image}`,
           description: lesson.description,
           content: lesson.description,
-          author: [{
-            name: 'ChinesePod',
-            email: 'team@chinesepod.com',
-            link: 'https://www.chinesepod.com'
-          }],
-          contributor: prepareContributors(lesson.hosts),
+          author: prepareContributors(lesson.hosts),
           date: lesson.publication_timestamp
         });
       });
@@ -94,7 +89,7 @@ module.exports = {
         return this.res.set({'Content-Type': 'application/json'}).send(feed.json1());
 
       case 'atom':
-        return this.res.set({'Content-Type': 'application/xml'}).send(feed.atom1());
+        return this.res.set({'Content-Type': 'application/atom+xml'}).send(feed.atom1());
 
       default:
         return this.res.set({'Content-Type': 'application/rss+xml'}).send(feed.rss2());

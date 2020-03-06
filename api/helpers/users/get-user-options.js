@@ -24,11 +24,11 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    let userData = await User.findOne({id: inputs.userId});
-
-    if (!userData) {
-      return
-    }
+    // let userData = await User.findOne({id: inputs.userId});
+    //
+    // if (!userData) {
+    //   return
+    // }
 
     let userOptions = await UserOptions.find({user_id: inputs.userId});
 
@@ -37,10 +37,10 @@ module.exports = {
       data[entry.option_key] = entry.option_value
     });
 
-    userData = await User.updateOne({id: userData.id})
-      .set({options: {...userData.options, ...data}});
+    // userData = await User.updateOne({id: userData.id})
+    //   .set({options: {...userData.options, ...data}});
 
-    return userData
+    return data
 
   }
 

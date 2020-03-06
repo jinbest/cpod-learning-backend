@@ -40,47 +40,52 @@
   },
   {
     "id": 2,
-    "key": "charSet",
+    "key": "studyMethod",
     "multipleChoice": false,
     "branching": false,
-    "question": "Your Preferred Character Set?",
+    "question": "How Do You Prefer to Study?",
     "answers": [
       {
-        "label": "simplified",
-        "id": 1,
-        "description": "Used in Mainland China."
+        "label": "podcast",
+        "id": "podcast",
+        "description": "Listening to Podcasts"
       },
       {
-        "label": "traditional",
-        "id": 2,
-        "description": "Used in Taiwan, Hong Kong, and Macau."
+        "label": "video",
+        "id": "video",
+        "description": "Watching Videos"
+      },
+      {
+        "label": "both",
+        "id": "both",
+        "description": "Both Podcasts and Videos"
       }
     ]
   },
   {
     "id": 3,
-    "key": "studyGoal",
+    "key": "studyAmount",
     "multipleChoice": false,
     "branching": false,
-    "question": "What's your study goal?",
+    "question": "How much time do you spend on Chinese per week?",
     "answers": [
       {
-        "label": "basics",
+        "label": "<1 hour",
         "id": 1,
         "description": "Lessons about Chinese Business culture and vocabulary"
       },
       {
-        "label": "intermediate",
+        "label": "few hours",
         "id": 2,
         "description": "Lessons about sports in China and sports vocabulary"
       },
       {
-        "label": "advanced",
+        "label": "5+ hours",
         "id": 3,
         "description": "Lessons about China tech and technological vocabulary"
       },
       {
-        "label": "fluency",
+        "label": "10+ hours",
         "id": 4,
         "description": "Lessons about Chinese literature and traditional culture"
       }
@@ -88,30 +93,35 @@
   },
   {
     "id": 4,
-    "key": "studyGoal",
+    "key": "studyHistory",
     "multipleChoice": false,
     "branching": false,
-    "question": "What's your time commitment per week?",
+    "question": "How long have you been learning Chinese?",
     "answers": [
       {
-        "label": "< 1 hour",
+        "label": "0-3 months",
         "id": 1,
-        "description": "Lessons about Chinese Business culture and vocabulary"
+        "description": "0-3 months"
       },
       {
-        "label": "1 hour",
+        "label": "<1 yr",
         "id": 2,
-        "description": "Lessons about sports in China and sports vocabulary"
+        "description":  "<1 year"
       },
       {
-        "label": "2 hours",
+        "label": "1-2 yr",
         "id": 3,
-        "description": "Lessons about China tech and technological vocabulary"
+        "description": "1-2 yr"
       },
       {
-        "label": "2+ hours",
+        "label": "2-4 yr",
         "id": 4,
-        "description": "Lessons about Chinese literature and traditional culture"
+        "description": "2-4 yr"
+      },
+      {
+        "label": "4+ yr",
+        "id": 5,
+        "description": "4+ yr"
       }
     ]
   },
@@ -124,28 +134,33 @@
     "answers": [
       {
         "label": "business",
-        "id": 1,
+        "id": "business",
         "description": "Lessons about Chinese Business culture and vocabulary"
       },
       {
         "label": "sports",
-        "id": 2,
+        "id": "sports",
         "description": "Lessons about sports in China and sports vocabulary"
       },
       {
         "label": "technology",
-        "id": 3,
+        "id": "technology",
         "description": "Lessons about China tech and technological vocabulary"
       },
       {
         "label": "literature",
-        "id": 4,
-        "description": "Lessons about Chinese literature and traditional culture"
+        "id": "literature",
+        "description": "Lessons about Chinese literature"
       },
       {
         "label": "movies",
-        "id": 5,
+        "id": "movies",
         "description": "Lessons about Chinese movies and movie culture in China"
+      },
+      {
+        "label": "history",
+        "id": "history",
+        "description": "Lessons about Chinese history"
       }
     ]
   }
