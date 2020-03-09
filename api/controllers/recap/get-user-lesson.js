@@ -42,7 +42,7 @@ module.exports = {
 
     const minTimer = 15; //minutes
 
-    let testers = ['mg@chinesepod.com', 'ugis@chinesepod.com', 'mick@chinesepod.com'];
+    let testers = [];
 
     let session = await sails.helpers.phpApi.checkSession(inputs.sessionId);
 

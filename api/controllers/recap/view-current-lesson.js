@@ -23,13 +23,14 @@ module.exports = {
       this.res.redirect('https://www.chinesepod.com/login')
     }
 
-    let testers = ['mg@chinesepod.com', 'mick@chinesepod.com'];
+    let testers = [];
 
     let user = await User.findOne({id: userId});
 
     //TODO REMOVE THIS DUMMY API CALL PROCESS
     if (testers.includes(user.email)) {
       let currentHour = new Date(new Date() - 4 * 60 * 60 * 1000).getHours(); //NY Time
+
       let latestStudiedLesson = '4121';
 
       if([1,6,11,16,21].includes(currentHour)) {
