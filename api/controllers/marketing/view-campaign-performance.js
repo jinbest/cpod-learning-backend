@@ -12,6 +12,11 @@ module.exports = {
     },
     toDate: {
       type: 'string'
+    },
+    code: {
+      type: 'string',
+      required: true,
+      minLength: 2
     }
   },
 
@@ -35,7 +40,7 @@ module.exports = {
 
     let data  = await sails.sendNativeQuery(`
     select uo.option_value as campaignId, count(uo.option_key) as conversions
-    from user_options uo where uo.option_key = 'campaignId' and uo.last_update between $1 and $2
+    from user_options uo where uo.option_key = 'campaignId' and uo.option_value like '${inputs.code}%' and uo.last_update between $1 and $2
     group by uo.option_value;`,[inputs.fromDate, inputs.toDate]);
 
     sails.log.info(data);

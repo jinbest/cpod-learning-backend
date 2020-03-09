@@ -159,7 +159,7 @@ module.exports.routes = {
 
 
   //MARKETING PAGES
-  'GET /marketing/campaign-performance':                 {action: 'marketing/view-campaign-performance'},
+  'GET /marketing/campaign-performance/:code':           {action: 'marketing/view-campaign-performance'},
 
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
   //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗  ┌┼─   ║║║ ║║║║║║║║  ║ ║╠═╣ ║║╚═╗
@@ -270,6 +270,7 @@ module.exports.routes = {
   'GET /api/v1/dashboard/get-info':                      { action: 'dashboard/get-info' },
   'GET /api/v1/dashboard/onboarding/questions':          { action: 'dashboard/onboarding/get-onboarding-questions'},
   'PUT /api/v1/dashboard/onboarding/questions':          { action: 'dashboard/onboarding/put-onboarding-questions'},
+  'GET /api/v1/dashboard/get-suggestions':               { action: 'dashboard/get-suggestions' },
 
   //Lesson Routes
   'GET /api/v1/lessons/get-lesson':                      { action: 'lessons/get-lesson' },

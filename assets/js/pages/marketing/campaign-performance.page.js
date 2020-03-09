@@ -37,7 +37,7 @@ parasails.registerPage('campaign-performance', {
   methods: {
     startSearch(){
       if (this.formData.fromDate && this.formData.toDate){
-        window.location.href = `/marketing/campaign-performance?fromDate=${this.formData.fromDate.toISOString()}&toDate=${this.formData.toDate.toISOString()}`
+        window.location.search = `?fromDate=${this.formData.fromDate.toISOString()}&toDate=${this.formData.toDate.toISOString()}`
       } else {
         alert('Invalid Date Range')
       }
