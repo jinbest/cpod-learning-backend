@@ -942,24 +942,24 @@ return new(b[["Active"].concat("Object").join("X")])("Microsoft.XMLHTTP")}catch(
          */
         self.on('connect', function socketConnected() {
           self._isConnecting = false;
-          consolog.noPrefix(
-            '\n' +
-            '\n' +
-            // '    |>    ' + '\n' +
-            // '  \\___/  '+️
-            // '\n'+
-             '  |>    Now connected to '+(self.url ? self.url : 'Sails')+'.' + '\n' +
-            '\\___/   For help, see: http://bit.ly/2q0QDpf' + '\n' +
-             '        (using sails.io.js '+io.sails.sdk.platform+' SDK @v'+io.sails.sdk.version+')'+ '\n' +
-            '         Connected at: '+(new Date())+'\n'+
-            '\n'+
-            '\n'+
-            // '\n'+
-            ''
-            // ' ⚓︎ (development mode)'
-            // 'e.g. to send a GET request to Sails via WebSockets, run:'+ '\n' +
-            // '`io.socket.get("/foo", function serverRespondedWith (body, jwr) { console.log(body); })`'+ '\n' +
-          );
+          // consolog.noPrefix(
+          //   '\n' +
+          //   '\n' +
+          //   // '    |>    ' + '\n' +
+          //   // '  \\___/  '+️
+          //   // '\n'+
+          //    '  |>    Now connected to '+(self.url ? self.url : 'Sails')+'.' + '\n' +
+          //   '\\___/   For help, see: http://bit.ly/2q0QDpf' + '\n' +
+          //    '        (using sails.io.js '+io.sails.sdk.platform+' SDK @v'+io.sails.sdk.version+')'+ '\n' +
+          //   '         Connected at: '+(new Date())+'\n'+
+          //   '\n'+
+          //   '\n'+
+          //   // '\n'+
+          //   ''
+          //   // ' ⚓︎ (development mode)'
+          //   // 'e.g. to send a GET request to Sails via WebSockets, run:'+ '\n' +
+          //   // '`io.socket.get("/foo", function serverRespondedWith (body, jwr) { console.log(body); })`'+ '\n' +
+          // );
         });
 
         self.on('disconnect', function() {
@@ -997,12 +997,12 @@ return new(b[["Active"].concat("Object").join("X")])("Microsoft.XMLHTTP")}catch(
             });
           }
 
-          consolog('====================================');
-          consolog('Socket was disconnected from Sails.');
-          consolog('Usually, this is due to one of the following reasons:' + '\n' +
-            ' -> the server ' + (self.url ? self.url + ' ' : '') + 'was taken down' + '\n' +
-            ' -> your browser lost internet connectivity');
-          consolog('====================================');
+          // consolog('====================================');
+          // consolog('Socket was disconnected from Sails.');
+          // consolog('Usually, this is due to one of the following reasons:' + '\n' +
+          //   ' -> the server ' + (self.url ? self.url + ' ' : '') + 'was taken down' + '\n' +
+          //   ' -> your browser lost internet connectivity');
+          // consolog('====================================');
         });
 
         self.on('reconnecting', function(numAttempts) {
