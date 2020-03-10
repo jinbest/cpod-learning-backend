@@ -42,7 +42,7 @@ module.exports = {
     let courseData = await CourseContents.find({
       where: {course_id: inputs.courseId},
       select: ['course_id', 'lesson', 'displaysort'],
-      limit: 50 // inputs.limit ? inputs.limit : 50
+      sort: 'displaysort ASC'
     }).populate('lesson.userContents', {
       where: {
         user_id: inputs.userId,

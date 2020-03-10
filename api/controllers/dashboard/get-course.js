@@ -27,7 +27,9 @@ module.exports = {
 
     let courseDetails = await CourseDetail.findOne({id: inputs.courseId});
 
-    let courseLessons = await CourseContents.find({course_id: inputs.courseId}).populate('lesson');
+    let courseLessons = await CourseContents.find({course_id: inputs.courseId})
+      .sort('displaysort ASC')
+      .populate('lesson');
 
     let userLessons = await UserContents.find({
       where: {

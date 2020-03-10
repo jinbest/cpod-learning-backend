@@ -141,6 +141,4 @@ module.exports = {
         access: access
       }};
   }
-
-
 };
