@@ -21,10 +21,12 @@ parasails.registerPage('campaign-performance', {
       wrap: true,
       mode: "range",
       maxDate: new Date(),
+      dateFormat: "Y-m-d",
       onChange: (selectedDates, dateStr, instance) => {
-        console.log({selectedDates: selectedDates, dateStr: dateStr, instance: instance});
-        this.formData.fromDate = selectedDates[0];
-        this.formData.toDate = selectedDates[1];
+        let from = new Date(selectedDates[0]);
+        let to = new Date(selectedDates.slice(-1)[0]);
+        this.formData.fromDate = new Date(`${from.getFullYear()}-${("0" + (from.getMonth() + 1)).slice(-2)}-${("0" + from.getDate()).slice(-2)} UTC`);
+        this.formData.toDate =  new Date(`${to.getFullYear()}-${("0" + (to.getMonth() + 1)).slice(-2)}-${("0" + to.getDate()).slice(-2)} 23:59:59 UTC`);
         console.log(this.formData);
       },
     });
@@ -37,7 +39,10 @@ parasails.registerPage('campaign-performance', {
   methods: {
     startSearch(){
       if (this.formData.fromDate && this.formData.toDate){
-        window.location.search = `?fromDate=${this.formData.fromDate.toISOString()}&toDate=${this.formData.toDate.toISOString()}`
+        this.formData.fromDate = this.formData.fromDate.toISOString();
+        this.formData.toDate = this.formData.toDate.toISOString();
+        console.log(`?fromDate=${this.formData.fromDate}&toDate=${this.formData.toDate}`);
+        window.location.search = `?fromDate=${this.formData.fromDate}&toDate=${this.formData.toDate}`
       } else {
         alert('Invalid Date Range')
       }

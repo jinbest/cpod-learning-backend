@@ -33,8 +33,8 @@ module.exports = {
 
     sails.log.info(inputs);
 
-    inputs.fromDate = new Date(inputs.fromDate ? inputs.fromDate : Date.now() - 7 * 24 * 60 * 60 * 1000); // -1 Day
-    inputs.toDate = new Date(inputs.toDate ? inputs.toDate : Date.now()); // -1 Day
+    inputs.fromDate = inputs.fromDate ? new Date(inputs.fromDate) : new Date(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).setHours(0,0,0,0)); // -7 Days
+    inputs.toDate = inputs.toDate ? new Date(inputs.toDate) : new Date(new Date().setHours(23,59,59,999));
 
     sails.log.info(inputs);
 
