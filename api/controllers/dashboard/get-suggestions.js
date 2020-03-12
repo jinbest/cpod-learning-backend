@@ -44,15 +44,12 @@ module.exports = {
       business: function businessSuggestions (level) {
         switch (level) {
           case 'newbie':
-            return [927, 37];
           case 'elementary':
             return [927, 37];
           case 'preInt':
-            return [36, 22];
           case 'intermediate':
-            return [36, 22];
+            return [965, 36, 22];
           case 'upperInt':
-            return [38, 925, 926];
           case 'advanced':
             return [38, 925, 926];
           default:
@@ -65,11 +62,36 @@ module.exports = {
       },
 
       movies: function moviesSuggestions (level) {
-        return [930]
+        switch (level) {
+          case 'newbie':
+          case 'elementary':
+          case 'preInt':
+          case 'intermediate':
+            return [930];
+          case 'upperInt':
+            return [967];
+          case 'advanced':
+            return [968];
+          default:
+            return []
+        }
       },
 
       technology: function technologySuggestions (level) {
-        return []
+        switch (level) {
+          case 'newbie':
+          case 'elementary':
+            return [969];
+          case 'preInt':
+          case 'intermediate':
+            return [970];
+          case 'upperInt':
+            return [971];
+          case 'advanced':
+            return [972];
+          default:
+            return []
+        }
       },
 
       history: function historySuggestions (level) {
@@ -77,7 +99,16 @@ module.exports = {
       },
 
       literature: function literatureSuggestions (level) {
-        return []
+        switch (level) {
+          case 'newbie':
+          case 'elementary':
+            return [963, 962];
+          case 'preInt':
+          case 'intermediate':
+            return [963, 962, 966];
+          default:
+            return []
+        }
       }
     };
 
