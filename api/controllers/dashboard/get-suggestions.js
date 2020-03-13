@@ -95,7 +95,13 @@ module.exports = {
       },
 
       history: function historySuggestions (level) {
-        return []
+        switch (level) {
+          case 'upperInt':
+          case 'advanced':
+            return [973];
+          default:
+            return []
+        }
       },
 
       literature: function literatureSuggestions (level) {
@@ -106,6 +112,10 @@ module.exports = {
           case 'preInt':
           case 'intermediate':
             return [963, 962, 966];
+          case 'upperInt':
+            return [974];
+          case 'advanced':
+            return [975];
           default:
             return []
         }
