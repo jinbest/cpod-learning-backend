@@ -15,7 +15,7 @@ if (process.env.NODE_ENV !== 'production' || sails.config.environment === 'stagi
   triggerQueue.process('ReindexSentences', 1, async function () {
     await sails.helpers.search.reindexSentences();
   });
-  triggerQueue.add('ReindexSentences', {data: 'Reindex Lessons Once a Day'}, {repeat: {cron: '0 1 * * *'}});
+  // triggerQueue.add('ReindexSentences', {data: 'Reindex Lessons Once a Day'}, {repeat: {cron: '0 1 * * *'}});
 
   triggerQueue.process('NewLessonNotifications', 1, async function () {
     await sails.helpers.notifications.newLesson();
