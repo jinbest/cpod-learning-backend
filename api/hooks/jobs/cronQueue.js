@@ -20,6 +20,6 @@ if (process.env.NODE_ENV !== 'production' || sails.config.environment === 'stagi
   triggerQueue.process('NewLessonNotifications', 1, async function (job) {
     await sails.helpers.notifications.newLesson();
   });
-  triggerQueue.add('NewLessonNotifications', {data: 'Check Lessons Every 10 min'}, {repeat: {every: 10 * 60 * 1000}});
+  triggerQueue.add('NewLessonNotifications', {data: 'Check Lessons Every 15 min'}, {repeat: {every: 15 * 60 * 1000}});
 
 }
