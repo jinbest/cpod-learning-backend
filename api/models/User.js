@@ -127,8 +127,9 @@ module.exports = {
       maxLength: 10,
       allowNull: true
     },
-    admin_note: {
+    lastSeenAt: {
       type: 'string',
+      columnName: 'admin_note',
       columnType: 'text',
       allowNull: true
     },
