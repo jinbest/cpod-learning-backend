@@ -40,7 +40,7 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    const minTimer = 15; //minutes
+    const minTimer = 60; //minutes
 
     let testers = [];
 
