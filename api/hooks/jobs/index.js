@@ -7,13 +7,13 @@
 
 module.exports = function defineJobsHook(sails) {
 
-  // if (sails.config.environment !== 'production' || sails.config.environment === 'staging') {
-  //   // return {
-  //   //   initialize: async function () {
-  //   //     sails.log.info('Ignoring hook (`APM`) for DEV')
-  //   //   }
-  //   // }
-  // }
+  if (sails.config.environment !== 'production' || sails.config.environment === 'staging') {
+    return {
+      initialize: async function () {
+        sails.log.info('Ignoring hook (`APM`) for DEV')
+      }
+    }
+  }
 
   return {
 
@@ -342,8 +342,6 @@ module.exports = function defineJobsHook(sails) {
           }
         });
 
-        userInfoQueue.clean(1000);
-
         //                  //
         // USER EVENT QUEUE //
         //                  //
@@ -356,6 +354,8 @@ module.exports = function defineJobsHook(sails) {
         });
 
         global.userInfoQueue = userInfoQueue;
+
+        userInfoQueue.clean(1000);
 
         done()
       })
