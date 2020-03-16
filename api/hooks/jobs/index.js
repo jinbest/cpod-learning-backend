@@ -8,11 +8,11 @@
 module.exports = function defineJobsHook(sails) {
 
   if (sails.config.environment !== 'production' || sails.config.environment === 'staging') {
-    return {
-      initialize: async function () {
-        sails.log.info('Ignoring hook (`APM`) for DEV')
-      }
-    }
+    // return {
+    //   initialize: async function () {
+    //     sails.log.info('Ignoring hook (`APM`) for DEV')
+    //   }
+    // }
   }
 
   return {
@@ -81,8 +81,8 @@ module.exports = function defineJobsHook(sails) {
           sails.log.info('userInfoQueue job finished:', job.data.id ? job.data.id : job.data.email, result);
           cleanupQueue.add(job, {
             jobId: job.id,
-            // delete job after one day
-            delay: 1000 * 60 * 60 * 24,
+            // delete job after one hour
+            delay: 1000 * 60 * 60,
             removeOnComplete: true
           });
         });
@@ -343,6 +343,17 @@ module.exports = function defineJobsHook(sails) {
         });
 
         userInfoQueue.clean(1000);
+
+        //                  //
+        // USER EVENT QUEUE //
+        //                  //
+        userInfoQueue.process('LogEvent', 100, async function (job, done) {
+          if (!job.data) {
+            done(null, 'No job data')
+          }
+          await sails.helpers.logs.createEvent(job.data);
+          done()
+        });
 
         global.userInfoQueue = userInfoQueue;
 

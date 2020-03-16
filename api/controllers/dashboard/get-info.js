@@ -103,52 +103,6 @@ module.exports = {
 
     }
 
-    //TODO CLEANUP WHEN NOT NEEDED
-
-    // // if (!['premium', 'admin'].includes(access)) {
-    // if (false) {
-    //   let lessonTimeline = await Logging.find({
-    //     where: {
-    //       id: userData.email,
-    //       accesslog_urlbase: 'https://www.chinesepod.com/api/v1/lessons/get-lesson',
-    //       createdAt: {
-    //         '>': new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-    //       }
-    //     },
-    //     select: ['accesslog_url', 'createdAt'],
-    //     sort: 'createdAt DESC',
-    //     limit: 30   // Upper Limit Trigger
-    //   });
-    //
-    //   let lessonCount = [...new Set(lessonTimeline.map(x => x.accesslog_url))].length;
-    //
-    //   if (lessonCount < 10) {
-    //     access = 'premium';
-    //     returnData.upgrade = {
-    //       needsUpgrade: true,
-    //       allowedCount:10,
-    //       lessonCount: lessonCount,
-    //       lessonTimeline: lessonTimeline,
-    //     }
-    //   } else {
-    //     access = 'free';
-    //     returnData.upgrade = {
-    //       needsUpgrade: false,
-    //       allowedCount:10,
-    //       lessonCount: lessonCount,
-    //       lessonTimeline: lessonTimeline,
-    //       canDismiss: true,
-    //       upgradePath: 2 // 3 , 2 , 1
-    //     }
-    //   }
-    // } else {
-    //   returnData.upgrade = {
-    //     needsUpgrade: false,
-    //     canDismiss: true,
-    //     upgradePath: 0
-    //   }
-    // }
-
     let newLastLogin = 0; let oldLastLogin = 0;
 
     if (userData.admin_note && Number.isInteger(userData.admin_note)) {
