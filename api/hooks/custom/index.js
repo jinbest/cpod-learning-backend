@@ -116,12 +116,6 @@ will be disabled and/or hidden in the UI.
             // attach a couple of guaranteed locals.
             if (req.method === 'GET') {
 
-              // //Add Google Analytics
-              // if (req.path.slice(0, 5) !== '/api/'){
-              //   sails.log.info(req.path);
-              //   req.visitor.pageview(req.path).send();
-              // }
-
               // The  `_environment` local lets us do a little workaround to make Vue.js
               // run in "production mode" without unnecessarily involving complexities
               // with webpack et al.)
@@ -207,6 +201,12 @@ will be disabled and/or hidden in the UI.
               throw new Error('Cannot attach logged-in user as `req.me` because this property already exists!  (Is it being attached somewhere else?)');
             }
             req.me = loggedInUser;
+
+            if (req.location === undefined) {
+              const geoip = require('geoip-country');
+              const geo = geoip.lookup(req.ip);
+              req.location = geo ? geo['country'] : false
+            }
 
             // If our "lastSeenAt" attribute for this user is at least a few seconds old, then set it
             // to the current timestamp.
