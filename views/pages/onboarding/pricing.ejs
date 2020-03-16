@@ -83,7 +83,7 @@
       <div class="plan team">
         <h4>For Teams</h4><img src="/images/chinesepod_corporate_icon.svg" width="50px" class="team pull-right"><br>
         <p>Custom created plans <br>for any size company.</p><br>
-        <p>Need to train 2 or more team<br> members ? We have custom<br> solutions for companies of any size.</p>
+        <p>Need to train 2 or more team<br> members? We have custom<br> solutions for companies of any size.</p>
         <a href="/corporate" class="btn gray">Read More</a>
         <span id="line"></span>
         <br>
@@ -91,23 +91,30 @@
         <p>Unlimited access to all of our academic content.</p>
         <br>
         <p>
-          Need access for your students ?
+          Need access for your students?
           We offer custom packages for all institution sizes.
         </p>
         <a href="/academic-offers" class="btn gray">Read More</a>
         <span id="line"></span>
         <br>
-        <h4 class="team-border">Try a Free Demo</h4><br>
-        <p>Not convinced? Try a free Demo account with some sample lessons.</p>
-        <button v-on:click="submittedForm('free')" class="btn gray team">Read More</button>
+        <div v-if="showFree">
+          <h4 class="team-border">Try a Free Demo</h4><br>
+          <p>Not convinced? Try a free Demo account with some sample lessons.</p>
+          <button v-on:click="submittedForm('free')" class="btn gray team">Read More</button>
+        </div>
+        <div v-else>
+          <h4 class="team-border">Ask us More</h4><br>
+          <p>Not convinced? Let us know what questions you have.</p>
+          <a class="btn gray team" href="mailto:support@chinesepod.com">Reach Out</a>
+        </div>
       </div>
     </div>
   </div>
 </div>
 <% if (conversion) { %>
-<script>
-  gtag('event', 'conversion', {'send_to': 'AW-758600947/r5XKCKnwmKkBEPOp3ekC'});
-</script>
-<!-- Event snippet for Confirmed Account on Pricing conversion page -->
+  <script>
+    gtag('event', 'conversion', {'send_to': 'AW-758600947/r5XKCKnwmKkBEPOp3ekC'});
+  </script>
+  <!-- Event snippet for Confirmed Account on Pricing conversion page -->
 <% } %>
 <%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

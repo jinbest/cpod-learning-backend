@@ -125,7 +125,27 @@ module.exports = {
           });
 
         if (newAccount) {
-          res.redirect('/level')
+
+          const currentDate = new Date();
+          const geoip = require('geoip-country');
+          const geo = geoip.lookup(req.ip);
+
+          if (!geo || !geo.country){
+
+            res.redirect('/pricing');
+
+          } else if (sails.config.custom.coreMarkets.includes(geo.country) && !sails.config.custom.coreFreeMonths.includes(currentDate.getMonth())) {
+
+            res.redirect('/pricing');
+
+          } else if (!sails.config.custom.coreMarkets.includes(geo.country) && !sails.config.custom.nonCoreFreeMonths.includes(currentDate.getMonth())) {
+
+            res.redirect('/pricing');
+
+          } else {
+            res.redirect('/level')
+          }
+
         } else {
           res.redirect('/home')
         }
@@ -242,9 +262,27 @@ module.exports = {
             });
           });
 
-
         if (newAccount) {
-          res.redirect('/level')
+          const currentDate = new Date();
+          const geoip = require('geoip-country');
+          const geo = geoip.lookup(req.ip);
+
+          if (!geo || !geo.country){
+
+            res.redirect('/pricing');
+
+          } else if (sails.config.custom.coreMarkets.includes(geo.country) && !sails.config.custom.coreFreeMonths.includes(currentDate.getMonth())) {
+
+            res.redirect('/pricing');
+
+          } else if (!sails.config.custom.coreMarkets.includes(geo.country) && !sails.config.custom.nonCoreFreeMonths.includes(currentDate.getMonth())) {
+
+            res.redirect('/pricing');
+
+          } else {
+            res.redirect('/level')
+          }
+
         } else {
           res.redirect('/home')
         }

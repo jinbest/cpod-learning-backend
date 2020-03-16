@@ -57,85 +57,119 @@ module.exports = {
 
     let access = await sails.helpers.users.getAccessType(inputs.userId);
 
-    let currentDate = new Date();
+    let trial = userData.trial;
 
-    if (access !== 'premium' && currentDate < new Date('2020-04-01')) {
-      try {
+    if (!['premium', 'admin'].includes(access)) {
 
-        let ipCurrent = {};
-        let ipSignup = {};
+      const currentDate = new Date();
 
-        const CoreCountries = ['AE','AT','AU','CA','BE','CH','DE','DK','FI','FR','HK','JP','NL','NO','QA','SE','SG','UK','US'];
+      if (sails.config.custom.coreMarkets.includes(this.req.location) && sails.config.custom.coreFreeMonths.includes(currentDate.getMonth())) {
 
-        const geoip = require('geoip-country');
+        access = 'premium'
 
-        if (this.req.ip && this.req.ip !== '::1') {
-          ipCurrent = geoip.lookup(this.req.ip);
-        }
+      } else if (!sails.config.custom.coreMarkets.includes(this.req.location) && sails.config.custom.nonCoreFreeMonths.includes(currentDate.getMonth())) {
 
-        if (ipCurrent && !CoreCountries.includes(ipCurrent.country)) {
-          access = 'premium'
-        }
+        access = 'premium'
 
-      } catch (e) {
-        sails.hooks.bugsnag.notify(e)
-      }
-    }
-
-    //TODO Killing upgrade based on low-activity
-
-    // if (!['premium', 'admin'].includes(access)) {
-    if (false) {
-      let lessonTimeline = await Logging.find({
-        where: {
-          id: userData.email,
-          accesslog_urlbase: 'https://www.chinesepod.com/api/v1/lessons/get-lesson',
-          createdAt: {
-            '>': new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-          }
-        },
-        select: ['accesslog_url', 'createdAt'],
-        sort: 'createdAt DESC',
-        limit: 30   // Upper Limit Trigger
-      });
-
-      let lessonCount = [...new Set(lessonTimeline.map(x => x.accesslog_url))].length;
-
-      if (lessonCount < 10) {
-        access = 'premium';
-        returnData.upgrade = {
-          needsUpgrade: true,
-          allowedCount:10,
-          lessonCount: lessonCount,
-          lessonTimeline: lessonTimeline,
-        }
       } else {
-        access = 'free';
+
+        let lessonTimeline = await Logging.find({
+          where: {
+            id: userData.email,
+            accesslog_urlbase: 'https://www.chinesepod.com/api/v1/lessons/get-lesson',
+            createdAt: {
+              '>': new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+            }
+          },
+          select: ['accesslog_url', 'createdAt'],
+          sort: 'createdAt DESC',
+          limit: 30   // Upper Limit Trigger
+        });
+
+        let lessonCount = [...new Set(lessonTimeline.map(x => x.accesslog_url))].length;
+
         returnData.upgrade = {
           needsUpgrade: false,
           allowedCount:10,
           lessonCount: lessonCount,
           lessonTimeline: lessonTimeline,
           canDismiss: true,
-          upgradePath: 2 // 3 , 2 , 1
-        }
+          upgradePath: 3 // 3 , 2 , 1
+        };
+
+        trial = new Date(); //OVERRIDE TRIAL DATE TO FORCE ONLY PREMIUM OPTIONS IN DASH
+
       }
-    } else {
-      returnData.upgrade = {
-        needsUpgrade: false,
-        canDismiss: true,
-        upgradePath: 0
-      }
+
     }
+
+    //TODO CLEANUP WHEN NOT NEEDED
+
+    // // if (!['premium', 'admin'].includes(access)) {
+    // if (false) {
+    //   let lessonTimeline = await Logging.find({
+    //     where: {
+    //       id: userData.email,
+    //       accesslog_urlbase: 'https://www.chinesepod.com/api/v1/lessons/get-lesson',
+    //       createdAt: {
+    //         '>': new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+    //       }
+    //     },
+    //     select: ['accesslog_url', 'createdAt'],
+    //     sort: 'createdAt DESC',
+    //     limit: 30   // Upper Limit Trigger
+    //   });
+    //
+    //   let lessonCount = [...new Set(lessonTimeline.map(x => x.accesslog_url))].length;
+    //
+    //   if (lessonCount < 10) {
+    //     access = 'premium';
+    //     returnData.upgrade = {
+    //       needsUpgrade: true,
+    //       allowedCount:10,
+    //       lessonCount: lessonCount,
+    //       lessonTimeline: lessonTimeline,
+    //     }
+    //   } else {
+    //     access = 'free';
+    //     returnData.upgrade = {
+    //       needsUpgrade: false,
+    //       allowedCount:10,
+    //       lessonCount: lessonCount,
+    //       lessonTimeline: lessonTimeline,
+    //       canDismiss: true,
+    //       upgradePath: 2 // 3 , 2 , 1
+    //     }
+    //   }
+    // } else {
+    //   returnData.upgrade = {
+    //     needsUpgrade: false,
+    //     canDismiss: true,
+    //     upgradePath: 0
+    //   }
+    // }
+
+    let newLastLogin = 0; let oldLastLogin = 0;
+
+    if (userData.admin_note && Number.isInteger(userData.admin_note)) {
+      newLastLogin = new Date(userData.admin_note)
+    }
+
+    if (userPreferences && userPreferences['last_login']) {
+      oldLastLogin = new Date(userPreferences['last_login'])
+    }
+
+    let lastLogin = newLastLogin > oldLastLogin ? newLastLogin : oldLastLogin;
 
     return {...returnData, ...{
         userId: inputs.userId,
         name: userData.name,
         email: userData.email,
         username: userData.username,
-        trial: userData.trial,
+        trial: trial,
         userAvatar: userPreferences ? userPreferences['avatar_url'] : 'https://www.chinesepod.com/dash/img/brand/symbol-black-center.svg',
-        lastLogin: userPreferences ? userPreferences['last_login'] : '',
+        lastLogin: lastLogin,
+        location: this.req.location,
         level: level,
         charSet: charSet,
         access: access

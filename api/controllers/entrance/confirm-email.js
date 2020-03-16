@@ -79,36 +79,38 @@ then redirect to either a special landing page (for newly-signed up users), or t
     if (this.req.wantsJSON) {
       return;
     } else {
-      // throw { redirect: '/email/confirmed' };
-
-      //Enable Trial options for all newly confirmed accounts
-      if (!user.trial) {
-        this.req.session.trial = true;
-      }
-
       //Create PHP Website Session & Cookie
       await sails.helpers.createPhpSession.with({
         userId: user.id,
       })
         .then((phpSessionId) => {
-          console.log(phpSessionId);
+          sails.log.info(phpSessionId);
           this.res.cookie('CPODSESSID', phpSessionId, {
             domain: '.chinesepod.com',
             expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
           });
-
         });
+
+      const currentDate = new Date();
+      const geoip = require('geoip-country');
+      const geo = geoip.lookup(this.req.ip);
+
+      if (!geo || !geo.country){
+
+        return this.res.redirect('/pricing');
+
+      } else if (sails.config.custom.coreMarkets.includes(geo.country) && !sails.config.custom.coreFreeMonths.includes(currentDate.getMonth())) {
+
+        return this.res.redirect('/pricing');
+
+      } else if (!sails.config.custom.coreMarkets.includes(geo.country) && !sails.config.custom.nonCoreFreeMonths.includes(currentDate.getMonth())) {
+
+        return this.res.redirect('/pricing');
+
+      }
 
       return this.res.redirect('/level');
 
-      //TODO Reenable Push to Trial
-
-      // return this.res.view('pages/onboarding/pricing', {
-      //   locals: {
-      //     conversion: true
-      //   },
-      //   conversion: true
-      // });
     }
 
 
