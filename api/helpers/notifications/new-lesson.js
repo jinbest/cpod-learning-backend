@@ -23,20 +23,18 @@ module.exports = {
 
   fn: async function (inputs) {
 
+    sails.hooks.bugsnag.notify(`Lesson Alert - TEST RUN`);
+
     let time = new Date();
-    //
     let offsetUS = - 4 * 60;
-    //
-    // let offsetServer = sails.config.environment === 'development' ? new Date().getTimezoneOffset() : 0;
 
     let fromTime = new Date(time);
-    fromTime.setMinutes(time.getMinutes() + offsetUS - 60);
+    fromTime.setMinutes(time.getMinutes() + offsetUS - 15);
     fromTime.setSeconds(0);
 
     let toTime = new Date(time);
     toTime.setMinutes(time.getMinutes() + offsetUS);
     toTime.setSeconds(0);
-
 
     let lessons = await LessonData.find({
       publication_timestamp: {
@@ -45,10 +43,6 @@ module.exports = {
       },
       status_published: 'publish'
     });
-
-    console.log({org: time.getTime(), from: fromTime, to: toTime, offset: offsetUS});
-
-    console.log(lessons);
 
     let targetLesson = lessons[0];
 
