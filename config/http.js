@@ -9,6 +9,7 @@
  * https://sailsjs.com/config/http
  */
 
+
 module.exports.http = {
 
   /****************************************************************************
@@ -59,6 +60,7 @@ module.exports.http = {
       var middlewareFn = skipper({ strict: true });
       return middlewareFn;
     })(),
+
   },
 
   trustProxy: true,

@@ -28,6 +28,25 @@ bugsnagClient.use(bugsnagExpress);
 
 var bugsnagmiddleware = bugsnagClient.getPlugin('express');
 
+// const RateLimit = require('express-rate-limit');
+// const slowDown = require("express-slow-down");
+// const RedisStore = require('rate-limit-redis');
+//
+// const rateLimiter = new RateLimit({
+//   store: new RedisStore({
+//     redisURL: 'redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/4'
+//   }),
+//   max: 200,
+// });
+//
+// const lessonsLimiter = slowDown({
+//   store: new RedisStore({
+//     redisURL: 'redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/5'
+//   }),
+//   delayAfter: 50,
+//   delayMs: 500
+// });
+
 module.exports = {
 
 
@@ -343,6 +362,13 @@ module.exports = {
 
       requestHandler: bugsnagmiddleware.requestHandler,
       errorHandler: bugsnagmiddleware.errorHandler,
+
+      rateLimit: function () {
+        var client = require('redis').createClient();
+        var limiter = require('express-limiter')(app, client)
+      },
+
+
 
       order: [
         'requestHandler',
