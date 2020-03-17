@@ -59,7 +59,7 @@ module.exports = {
 
     let trial = userData.trial;
 
-    if (!['premium', 'admin'].includes(access)) {
+    if (!['premium', 'admin', 'basic'].includes(access)) {
 
       const currentDate = new Date();
 
@@ -100,6 +100,13 @@ module.exports = {
         trial = new Date(); //OVERRIDE TRIAL DATE TO FORCE ONLY PREMIUM OPTIONS IN DASH
 
       }
+    } else if (access === 'basic') {
+
+      returnData.upgrade = {
+        needsUpgrade: false,
+        canDismiss: true,
+        upgradePath: 2 // 3 , 2 , 1
+      };
 
     }
 
