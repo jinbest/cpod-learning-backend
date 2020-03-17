@@ -27,6 +27,10 @@ module.exports = {
 
 
   fn: async function (inputs) {
+    if (sails.config.environment !== 'production') {
+      return
+    }
+
     inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
     userInfoQueue.add('LogEvent', {
