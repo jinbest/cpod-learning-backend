@@ -7,7 +7,8 @@
 
 module.exports = function defineJobsHook(sails) {
 
-  if (sails.config.environment !== 'production' || sails.config.environment === 'staging') {
+  // if (sails.config.environment !== 'production' || sails.config.environment === 'staging') {
+  if (sails.config.environment !== 'production') {
     return {
       initialize: async function () {
         sails.log.info('Ignoring hook (`APM`) for DEV')

@@ -27,7 +27,7 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    if (sails.config.environment !== 'production') {
+    if (sails.config.environment === 'development') {
       return
     }
 
