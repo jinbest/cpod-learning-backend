@@ -223,7 +223,6 @@ module.exports.routes = {
   // 'PUT   /api/v1/account/update-billing-card':           { action: 'account/update-billing-card' },
   // 'PUT   /api/v1/entrance/login':                        { action: 'entrance/login' },
 
-  'PUT   /api/v1/account/update-options':                { action: 'account/update-options' },
   'POST   /api/v1/placement/email-results':              { action: 'placement/email-results' },
   'POST  /api/v1/entrance/signup':                       { action: 'entrance/signup' },
   'POST  /api/v1/entrance/login':                        { action: 'entrance/login' },
@@ -234,6 +233,14 @@ module.exports.routes = {
   'POST  /api/v1/purchase/checkout/paypal/cancel':       { action: 'purchase/checkout' },
   'POST  /api/v1/purchase/check-promo':                  { action: 'purchase/check-promo' },
   'POST /api/v1/purchase/check-email':                   { action: 'purchase/check-email' },
+
+  'PUT   /api/v1/account/update-options':                { action: 'account/update-options' },
+
+  'POST /api/v1/account/subscriptions/update':           { action: 'account/subscription/update-card-details'},
+  'POST /api/v1/account/subscriptions/cancel':           { action: 'account/subscription/cancel-stripe-details'},
+  'GET /api/v1/account/subscription/subscriptions':      { action: 'account/subscription/get-subscriptions' },
+  'GET /api/v1/account/subscription/transactions':       { action: 'account/subscription/get-transactions' },
+  'PUT /api/v1/account/settings/update':                 { action: 'account/settings/update-profile'},
 
   // Information Routes - Health Check
   '/api/v1/request':                                     { action: 'health/request' },

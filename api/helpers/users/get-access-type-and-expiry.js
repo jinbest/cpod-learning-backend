@@ -29,6 +29,7 @@ module.exports = {
 
   },
 
+
   fn: async function (inputs) {
     function accessMap(level) {
       switch (level) {
@@ -45,8 +46,8 @@ module.exports = {
       }
     }
 
-    let userAccess = await UserSiteLinks.findOne({user_id: inputs.userId, site_id: 2});
-    return accessMap(userAccess.usertype_id)
+    let userAccess = (await UserSiteLinks.find({user_id: inputs.userId, site_id: 2}).limit(1))[0];
+    return {type: accessMap(userAccess.usertype_id), expiry: userAccess.expiry}
   }
 };
 

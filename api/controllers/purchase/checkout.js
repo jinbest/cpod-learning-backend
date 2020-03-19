@@ -160,8 +160,6 @@ module.exports = {
       throw {invalid: 'No Data Submitted'}
     }
 
-    sails.log.info(inputs);
-
     let ipData = {};
 
     if (!this.req.me && !this.req.session.limitedAuth) {
@@ -430,179 +428,32 @@ module.exports = {
       })
     }
 
-    await stripe.subscriptions.create({
-      customer: customerData.id,
-      items: [{plan: plans[inputs.plan][inputs.billingCycle].stripeId}],
-      trial_period_days: holidayPromo ? 90 : inputs.trial ? 14 : 0, // Holiday Promo or 2 week trial or No trial
-      coupon: coupon ? coupon.id : null,
-      cancel_at_period_end: inputs.nonRecurring ? true : false
-    })
-      .then(async (subscription) => {
-        // If Trial - Mark User Record as Such
-        if (inputs.trial) {
-          await User.updateOne({id: inputs.userId})
-            .set({trial: new Date(Date.now()).toISOString()});
+    //TODO CREATE OR UPGRADE SPLIT HERE'
+
+    const existingSubscriptions = await Subscriptions.find({
+      user_id: inputs.userId,
+      status: 1,
+      next_billing_time: {
+        '>=': new Date()
+      }
+    });
+
+    let existingStripeSubscriptions = [];
+
+    if (existingSubscriptions.length > 0) {
+      const asyncForEach = async (array, callback) => {
+        for (let index = 0; index < array.length; index++) {
+          await callback(array[index], index, array)
         }
-        try {
-          cardData = customerData.sources.data[0];
-        } catch (e) {
-          sails.log.error(e);
+      };
+      await asyncForEach(existingSubscriptions, async (subscription) => {
+        if(subscription.subscription_from === 7) {
 
-          sails.hooks.bugsnag.notify(e);
-        }
+          existingStripeSubscriptions.push(subscription)
 
-        const existingSubscriptions = await Subscriptions.find({
-          user_id: inputs.userId,
-          status: 1,
-          next_billing_time: {
-            '>=': new Date()
-          }
-        });
-
-        // Check Subscriptions Table
-        const cpodSubscription = await Subscriptions.create({
-          user_id: inputs.userId,
-          subscription_id: subscription.id,
-          subscription_from: 7, // Stripe = 7
-          subscription_type: plans[inputs.plan].type, // converted 'plan'
-          product_id: plans[inputs.plan][inputs.billingCycle].id, // Product ID
-          product_length: plans[inputs.plan][inputs.billingCycle].length, // converted 'billingCycle'
-          status: inputs.nonRecurring ? 2 : 1, //  1=active, 2=cancelled, 3=past due
-          next_billing_time: inputs.nonRecurring ? null : new Date(subscription['current_period_end'] * 1000).toISOString(),
-          date_cancelled: inputs.nonRecurring ? new Date() : null,
-          cc_num: cardData ? cardData.last4 : '9999',
-          cc_exp: cardData ? `${cardData.exp_month}/${cardData.exp_year}` : '99/99',
-        }).fetch();
-
-        if (!ipData['country_name']) {
-          const IPData = require('ipdata').default;
-          const ipdata = new IPData( sails.config.custom.ipDataKey);
-
-          if(this.req.ip && this.req.ip !== '::1') {
-            try {
-              await ipdata.lookup(this.req.ip)
-                .then((info) => {
-                  ipData = info;
-                })
-                .catch((err) => {
-                  sails.log.error(err);
-                  sails.hooks.bugsnag.notify(err);
-                });
-            } catch (e) {
-              sails.log.error(e)
-            }
-
-          }
-        }
-
-        let stripeSubscription = {};
-
-        try {
-          stripeSubscription = await stripe.invoices.retrieve(subscription.latest_invoice);
-        } catch (e) {
-          sails.log.error(e);
-          sails.hooks.bugsnag.notify(e);
-        }
-
-        let transaction = await Transactions.create({
-          subscription_id: subscription.id,
-          transaction_id: stripeSubscription && stripeSubscription.charge ? stripeSubscription.charge : '',
-          user_id: inputs.userId,
-          product_id: plans[inputs.plan][inputs.billingCycle].id,
-          product_length: plans[inputs.plan][inputs.billingCycle].length,
-          product_price: plans[inputs.plan][inputs.billingCycle].price,
-          discount: discount ? discount : 0.00,
-          billed_amount: holidayPromo ? plans[inputs.plan][inputs.billingCycle].setupFee : inputs.trial ? 0.00 : plans[inputs.plan][inputs.billingCycle].price - discount,
-          promotion_code: inputs.promoCode ? inputs.promoCode : null,
-          pay_status: 2,
-          pay_method: 9,
-          notes: 'CPOD JS PAGE',
-          region: ipData['region'] ? ipData['region'] : null,
-          country: ipData['country_name'] ? ipData['country_name'] : null,
-          city: ipData['city'] ? ipData['city'] : null,
-          ip_address: this.req.ip,
-          created_by: inputs.userId,
-          modified_by: inputs.userId,
-        }).fetch();
-
-        if (inputs.address1 && inputs.country && inputs.city) {
-          await TransactionAddresses.create({
-            transaction_id: transaction.id,
-            city: inputs.city,
-            country: inputs.country,
-            state: inputs.state,
-            zip_code: inputs.zip,
-            full_name: `${inputs.fName} ${inputs.lName}`,
-            address1: inputs.address1,
-            address2: inputs.address2 ? inputs.address2 : '',
-          });
-        }
-
-        if (existingSubscriptions.length > 0) {
-          const asyncForEach = async (array, callback) => {
-            for (let index = 0; index < array.length; index++) {
-              await callback(array[index], index, array)
-            }
-          };
-
-          await asyncForEach(existingSubscriptions, async (subscription) => {
-            if(subscription.subscription_from === 7) {
-              await stripe.subscriptions.del(subscription.subscription_id)
-                .then( async (confirmation) => {
-                  sails.log.info('cancelling subscription');
-                  await Subscriptions.updateOne({subscription_id: subscription.subscription_id})
-                    .set({
-                      status: 2,
-                      date_cancelled: new Date()
-                    });
-                  await sails.helpers.mailgun.sendHtmlEmail.with({
-                    htmlMessage: `
-                        <p>Duplicate ChinesePod Stripe Subscription Created https://www.chinesepod.com</p>
-                        <br />
-                        <p>Name: ${inputs.fName} ${inputs.lName}</p>
-                        <p>Email: ${inputs.emailAddress}</p>
-                        <br />
-                        ${inputs.promoCode ? `<p>Code: ${inputs.promoCode}</p>` : ''}
-                        <p>Product: ${inputs.plan} - ${inputs.billingCycle}</p>
-                        <p>Existing Subscription:</p>
-                        <p>Subscription ID: ${subscription.subscription_id}</p>
-                        <br />
-                        <p>Cheers,</p>
-                        <p>The Friendly ChinesePod Contact Robot</p>
-                        `,
-                    to: 'followup@chinesepod.com',
-                    subject: 'Duplicate ChinesePod Subscriptions',
-                    from: 'subscriptions@chinesepod.com',
-                    fromName: 'ChinesePod Subscriptions'
-                  });
-                })
-                .catch(async(e) => {
-                  sails.log.error(e);
-                  // sails.hooks.bugsnag.notify(e);
-                  await sails.helpers.mailgun.sendHtmlEmail.with({
-                    htmlMessage: `
-                        <p>Duplicate ChinesePod Stripe Subscription Created https://www.chinesepod.com</p>
-                        <br />
-                        <p>Name: ${inputs.fName} ${inputs.lName}</p>
-                        <p>Email: ${inputs.emailAddress}</p>
-                        <br />
-                        ${inputs.promoCode ? `<p>Code: ${inputs.promoCode}</p>` : ''}
-                        <p>Product: ${inputs.plan} - ${inputs.billingCycle}</p>
-                        <p>Existing Subscription:</p>
-                        <p>Subscription ID: ${subscription.subscription_id}</p>
-                        <br />
-                        <p>Cheers,</p>
-                        <p>The Friendly ChinesePod Contact Robot</p>
-                        `,
-                    to: 'followup@chinesepod.com',
-                    subject: 'Duplicate ChinesePod Subscriptions',
-                    from: 'subscriptions@chinesepod.com',
-                    fromName: 'ChinesePod Subscriptions'
-                  });
-                });
-            } else {
-              await sails.helpers.mailgun.sendHtmlEmail.with({
-                htmlMessage: `
+        } else {
+          await sails.helpers.mailgun.sendHtmlEmail.with({
+            htmlMessage: `
                         <p>Duplicate ChinesePod Subscription Created https://www.chinesepod.com</p>
                         <br />
                         <p>Name: ${inputs.fName} ${inputs.lName}</p>
@@ -616,51 +467,220 @@ module.exports = {
                         <p>Cheers,</p>
                         <p>The Friendly ChinesePod Contact Robot</p>
                         `,
+            to: 'followup@chinesepod.com',
+            subject: 'Duplicate ChinesePod Subscriptions',
+            from: 'subscriptions@chinesepod.com',
+            fromName: 'ChinesePod Subscriptions'
+          });
+        }
+      });
+
+      if (existingStripeSubscriptions.length > 1) {
+
+        await asyncForEach(existingStripeSubscriptions, async (subscription) => {
+
+          await stripe.subscriptions.del(subscription.subscription_id)
+            .then( async (confirmation) => {
+              await Subscriptions.updateOne({subscription_id: subscription.subscription_id})
+                .set({
+                  status: 2,
+                  date_cancelled: new Date()
+                });
+              await sails.helpers.mailgun.sendHtmlEmail.with({
+                htmlMessage: `
+                        <p>Duplicate ChinesePod Stripe Subscription Created https://www.chinesepod.com | THIS USER HAS MULTIPLE STRIPE SUBSCRIPTIONS - PLEASE INVESTIGATE!</p>
+                        <br />
+                        <p>Name: ${inputs.fName} ${inputs.lName}</p>
+                        <p>Email: ${inputs.emailAddress}</p>
+                        <br />
+                        ${inputs.promoCode ? `<p>Code: ${inputs.promoCode}</p>` : ''}
+                        <p>Product: ${inputs.plan} - ${inputs.billingCycle}</p>
+                        <p>Existing Subscription:</p>
+                        <p>Subscription ID: ${subscription.subscription_id}</p>
+                        <br />
+                        <p>Cheers,</p>
+                        <p>The Friendly ChinesePod Contact Robot</p>
+                        `,
                 to: 'followup@chinesepod.com',
                 subject: 'Duplicate ChinesePod Subscriptions',
                 from: 'subscriptions@chinesepod.com',
                 fromName: 'ChinesePod Subscriptions'
               });
-            }
-          });
+            })
+            .catch(async(e) => {
+              sails.log.error(e);
+              // sails.hooks.bugsnag.notify(e);
+              await sails.helpers.mailgun.sendHtmlEmail.with({
+                htmlMessage: `
+                        <p>Duplicate ChinesePod Stripe Subscription Created https://www.chinesepod.com</p>
+                        <br />
+                        <p>Name: ${inputs.fName} ${inputs.lName}</p>
+                        <p>Email: ${inputs.emailAddress}</p>
+                        <br />
+                        ${inputs.promoCode ? `<p>Code: ${inputs.promoCode}</p>` : ''}
+                        <p>Product: ${inputs.plan} - ${inputs.billingCycle}</p>
+                        <p>Existing Subscription:</p>
+                        <p>Subscription ID: ${subscription.subscription_id}</p>
+                        <br />
+                        <p>Cheers,</p>
+                        <p>The Friendly ChinesePod Contact Robot</p>
+                        `,
+                to: 'followup@chinesepod.com',
+                subject: 'Duplicate ChinesePod Subscriptions',
+                from: 'subscriptions@chinesepod.com',
+                fromName: 'ChinesePod Subscriptions'
+              });
+            });
+
+        })
+      }
+    }
+
+    if (existingStripeSubscriptions.length === 1) {
+
+      let currentSub = existingStripeSubscriptions[0]['subscription_id'];
+      let currentSubscriptionInfo = await stripe.subscriptions.retrieve(currentSub);
+
+      sails.log.info(currentSubscriptionInfo);
+
+      let currentSubItem = currentSubscriptionInfo['items']['data'][0]['id'];
+
+      await stripe.subscriptions.update(
+        currentSub,
+        {
+          items: [{id: currentSubItem, plan: plans[inputs.plan][inputs.billingCycle].stripeId}],
+          coupon: coupon ? coupon.id : null,
+          cancel_at_period_end: !!inputs.nonRecurring,
+          billing_cycle_anchor: 'now',
+          proration_behavior: 'always_invoice'
         }
+      )
+        .then(async (subscription) => {
+          try {
+            cardData = customerData.sources.data[0];
+          } catch (e) {
+            sails.log.error(e);
+            sails.hooks.bugsnag.notify(e);
+          }
+
+          // Check Subscriptions Table
+          await Subscriptions.updateOne({subscription_id: subscription.id}).set({
+            user_id: inputs.userId,
+            subscription_from: 7, // Stripe = 7
+            subscription_type: plans[inputs.plan].type, // converted 'plan'
+            product_id: plans[inputs.plan][inputs.billingCycle].id, // Product ID
+            product_length: plans[inputs.plan][inputs.billingCycle].length, // converted 'billingCycle'
+            status: inputs.nonRecurring ? 2 : 1, //  1=active, 2=cancelled, 3=past due
+            next_billing_time: inputs.nonRecurring ? null : new Date(subscription['current_period_end'] * 1000).toISOString(),
+            date_cancelled: inputs.nonRecurring ? new Date() : null,
+            cc_num: cardData ? cardData.last4 : '9999',
+            cc_exp: cardData ? `${cardData.exp_month}/${cardData.exp_year}` : '99/99',
+          });
+
+          if (!ipData['country_name']) {
+            const IPData = require('ipdata').default;
+            const ipdata = new IPData( sails.config.custom.ipDataKey);
+
+            if(this.req.ip && this.req.ip !== '::1') {
+              try {
+                await ipdata.lookup(this.req.ip)
+                  .then((info) => {
+                    ipData = info;
+                  })
+                  .catch((err) => {
+                    sails.log.error(err);
+                    sails.hooks.bugsnag.notify(err);
+                  });
+              } catch (e) {
+                sails.log.error(e)
+              }
+
+            }
+          }
+
+          let stripeSubscription = {};
+
+          try {
+            stripeSubscription = await stripe.invoices.retrieve(subscription.latest_invoice);
+
+            sails.log.info(stripeSubscription);
+
+          } catch (e) {
+            sails.log.error(e);
+            sails.hooks.bugsnag.notify(e);
+          }
+
+          let transaction = await Transactions.create({
+            subscription_id: subscription.id,
+            transaction_id: stripeSubscription && stripeSubscription.charge ? stripeSubscription.charge : '',
+            currency: stripeSubscription && stripeSubscription.currency ? stripeSubscription.currency.toUpperCase() : 'USD',
+            user_id: inputs.userId,
+            product_id: plans[inputs.plan][inputs.billingCycle].id,
+            product_length: plans[inputs.plan][inputs.billingCycle].length,
+            product_price: plans[inputs.plan][inputs.billingCycle].price,
+            discount: discount ? discount : 0.00,
+            billed_amount: stripeSubscription && stripeSubscription['amount_paid'] ? stripeSubscription['amount_paid'] : 0,
+            promotion_code: inputs.promoCode ? inputs.promoCode : null,
+            pay_status: 2,
+            pay_method: 9,
+            notes: 'CPOD JS PAGE',
+            region: ipData['region'] ? ipData['region'] : null,
+            country: ipData['country_name'] ? ipData['country_name'] : null,
+            city: ipData['city'] ? ipData['city'] : null,
+            ip_address: this.req.ip,
+            created_by: inputs.userId,
+            modified_by: inputs.userId,
+          }).fetch();
+
+          if (inputs.address1 && inputs.country && inputs.city) {
+            await TransactionAddresses.create({
+              transaction_id: transaction.id,
+              city: inputs.city,
+              country: inputs.country,
+              state: inputs.state,
+              zip_code: inputs.zip,
+              full_name: `${inputs.fName} ${inputs.lName}`,
+              address1: inputs.address1,
+              address2: inputs.address2 ? inputs.address2 : '',
+            });
+          }
 
 // Update User Access on UserSiteLinks
-        let userSiteLinks = await UserSiteLinks.updateOne({user_id:inputs.userId, site_id: 2})
-          .set({
-            usertype_id: plans[inputs.plan].id,
-            expiry: new Date(subscription['current_period_end'] * 1000).toISOString()
-          });
+          let userSiteLinks = await UserSiteLinks.updateOne({user_id:inputs.userId, site_id: 2})
+            .set({
+              usertype_id: plans[inputs.plan].id,
+              expiry: new Date(subscription['current_period_end'] * 1000).toISOString()
+            });
 
 // Update User SessionInfo to Match Current Access Level
-        const phpSession = await sails.helpers.php.updateSession.with({
-          userId: inputs.userId,
-          planName: inputs.plan,
-          planId: plans[inputs.plan].id
-        });
+          const phpSession = await sails.helpers.php.updateSession.with({
+            userId: inputs.userId,
+            planName: inputs.plan,
+            planId: plans[inputs.plan].id
+          });
 
-        let productName = `${inputs.promoCode ? `${inputs.promoCode} Promotion ` : ''}${inputs.trial ? 'Trial ' : ''}${_.capitalize(inputs.plan)} Subscription ${transaction.product_length} Months`;
+          let productName = `${inputs.promoCode ? `${inputs.promoCode} Promotion ` : ''}${inputs.trial ? 'Trial ' : ''}${_.capitalize(inputs.plan)} Subscription ${transaction.product_length} Months`;
 
-        if (holidayPromo) {
-          productName = plans['holiday'].description;
-        }
+          if (holidayPromo) {
+            productName = plans['holiday'].description;
+          }
 
-        this.req.visitor
-          .event('payment', 'payment')
-          .transaction(transaction.id, transaction.billed_amount)
-          .item(transaction.billed_amount, 1, transaction.product_id, productName)
-          .send();
+          this.req.visitor
+            .event('payment', 'payment')
+            .transaction(transaction.id, transaction.billed_amount)
+            .item(transaction.billed_amount, 1, transaction.product_id, productName)
+            .send();
 
-        this.res.cookie('CPODSESSID', phpSession, {
-          domain: '.chinesepod.com',
-          expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
-        });
-        exits.success();
-      })
-      .catch(async(err) => {
-        sails.log.error(err);
-        await sails.helpers.mailgun.sendHtmlEmail.with({
-          htmlMessage: `
+          this.res.cookie('CPODSESSID', phpSession, {
+            domain: '.chinesepod.com',
+            expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
+          });
+          exits.success();
+        })
+        .catch(async (err) => {
+          sails.log.error(err);
+          await sails.helpers.mailgun.sendHtmlEmail.with({
+            htmlMessage: `
             <p>Failed User Purchase on https://www.chinesepod.com</p>
             <br />
             <p>Name: ${inputs.fName} ${inputs.lName}</p>
@@ -673,14 +693,177 @@ module.exports = {
             <p>Cheers,</p>
             <p>The Friendly ChinesePod Contact Robot</p>
             `,
-          to: 'followup@chinesepod.com',
-          subject: 'Failed User Purchase',
-          from: 'errors@chinesepod.com',
-          fromName: 'ChinesePod Errors'
-        });
+            to: 'followup@chinesepod.com',
+            subject: 'Failed User Purchase',
+            from: 'errors@chinesepod.com',
+            fromName: 'ChinesePod Errors'
+          });
 
-        errors.push(err.message);
-        throw {declined: errors.length > 0 ? errors[0] : 'Could not confirm the payment method. Please try again later.'};
+          errors.push(err.message);
+          throw {declined: errors.length > 0 ? errors[0] : 'Could not confirm the payment method. Please try again later.'};
+        })
+
+    } else {
+
+      await stripe.subscriptions.create({
+        customer: customerData.id,
+        items: [{plan: plans[inputs.plan][inputs.billingCycle].stripeId}],
+        trial_period_days: holidayPromo ? 90 : inputs.trial ? 14 : 0, // Holiday Promo or 2 week trial or No trial
+        coupon: coupon ? coupon.id : null,
+        cancel_at_period_end: !!inputs.nonRecurring
       })
+        .then(async (subscription) => {
+          // If Trial - Mark User Record as Such
+          if (inputs.trial) {
+            await User.updateOne({id: inputs.userId})
+              .set({trial: new Date(Date.now()).toISOString()});
+          }
+          try {
+            cardData = customerData.sources.data[0];
+          } catch (e) {
+            sails.log.error(e);
+
+            sails.hooks.bugsnag.notify(e);
+          }
+
+          // Check Subscriptions Table
+          const cpodSubscription = await Subscriptions.create({
+            user_id: inputs.userId,
+            subscription_id: subscription.id,
+            subscription_from: 7, // Stripe = 7
+            subscription_type: plans[inputs.plan].type, // converted 'plan'
+            product_id: plans[inputs.plan][inputs.billingCycle].id, // Product ID
+            product_length: plans[inputs.plan][inputs.billingCycle].length, // converted 'billingCycle'
+            status: inputs.nonRecurring ? 2 : 1, //  1=active, 2=cancelled, 3=past due
+            next_billing_time: inputs.nonRecurring ? null : new Date(subscription['current_period_end'] * 1000).toISOString(),
+            date_cancelled: inputs.nonRecurring ? new Date() : null,
+            cc_num: cardData ? cardData.last4 : '9999',
+            cc_exp: cardData ? `${cardData.exp_month}/${cardData.exp_year}` : '99/99',
+          }).fetch();
+
+          if (!ipData['country_name']) {
+            const IPData = require('ipdata').default;
+            const ipdata = new IPData( sails.config.custom.ipDataKey);
+
+            if(this.req.ip && this.req.ip !== '::1') {
+              try {
+                await ipdata.lookup(this.req.ip)
+                  .then((info) => {
+                    ipData = info;
+                  })
+                  .catch((err) => {
+                    sails.log.error(err);
+                    sails.hooks.bugsnag.notify(err);
+                  });
+              } catch (e) {
+                sails.log.error(e)
+              }
+
+            }
+          }
+
+          let stripeSubscription = {};
+
+          try {
+            stripeSubscription = await stripe.invoices.retrieve(subscription.latest_invoice);
+          } catch (e) {
+            sails.log.error(e);
+            sails.hooks.bugsnag.notify(e);
+          }
+
+          let transaction = await Transactions.create({
+            subscription_id: subscription.id,
+            transaction_id: stripeSubscription && stripeSubscription.charge ? stripeSubscription.charge : '',
+            currency: stripeSubscription && stripeSubscription.currency ? stripeSubscription.currency.toUpperCase() : 'USD',
+            user_id: inputs.userId,
+            product_id: plans[inputs.plan][inputs.billingCycle].id,
+            product_length: plans[inputs.plan][inputs.billingCycle].length,
+            product_price: plans[inputs.plan][inputs.billingCycle].price,
+            discount: discount ? discount : 0.00,
+            billed_amount: holidayPromo ? plans[inputs.plan][inputs.billingCycle].setupFee : inputs.trial ? 0.00 : plans[inputs.plan][inputs.billingCycle].price - discount,
+            promotion_code: inputs.promoCode ? inputs.promoCode : null,
+            pay_status: 2,
+            pay_method: 9,
+            notes: 'CPOD JS PAGE',
+            region: ipData['region'] ? ipData['region'] : null,
+            country: ipData['country_name'] ? ipData['country_name'] : null,
+            city: ipData['city'] ? ipData['city'] : null,
+            ip_address: this.req.ip,
+            created_by: inputs.userId,
+            modified_by: inputs.userId,
+          }).fetch();
+
+          if (inputs.address1 && inputs.country && inputs.city) {
+            await TransactionAddresses.create({
+              transaction_id: transaction.id,
+              city: inputs.city,
+              country: inputs.country,
+              state: inputs.state,
+              zip_code: inputs.zip,
+              full_name: `${inputs.fName} ${inputs.lName}`,
+              address1: inputs.address1,
+              address2: inputs.address2 ? inputs.address2 : '',
+            });
+          }
+
+// Update User Access on UserSiteLinks
+          let userSiteLinks = await UserSiteLinks.updateOne({user_id:inputs.userId, site_id: 2})
+            .set({
+              usertype_id: plans[inputs.plan].id,
+              expiry: new Date(subscription['current_period_end'] * 1000).toISOString()
+            });
+
+// Update User SessionInfo to Match Current Access Level
+          const phpSession = await sails.helpers.php.updateSession.with({
+            userId: inputs.userId,
+            planName: inputs.plan,
+            planId: plans[inputs.plan].id
+          });
+
+          let productName = `${inputs.promoCode ? `${inputs.promoCode} Promotion ` : ''}${inputs.trial ? 'Trial ' : ''}${_.capitalize(inputs.plan)} Subscription ${transaction.product_length} Months`;
+
+          if (holidayPromo) {
+            productName = plans['holiday'].description;
+          }
+
+          this.req.visitor
+            .event('payment', 'payment')
+            .transaction(transaction.id, transaction.billed_amount)
+            .item(transaction.billed_amount, 1, transaction.product_id, productName)
+            .send();
+
+          this.res.cookie('CPODSESSID', phpSession, {
+            domain: '.chinesepod.com',
+            expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
+          });
+          exits.success();
+        })
+        .catch(async (err) => {
+          sails.log.error(err);
+          await sails.helpers.mailgun.sendHtmlEmail.with({
+            htmlMessage: `
+            <p>Failed User Purchase on https://www.chinesepod.com</p>
+            <br />
+            <p>Name: ${inputs.fName} ${inputs.lName}</p>
+            <p>Email: ${inputs.emailAddress}</p>
+            <br />
+            ${inputs.promoCode ? `<p>Code: ${inputs.promoCode}</p>` : ''}
+            <p>Product: ${inputs.plan} - ${inputs.billingCycle}</p>
+            <p>Error: ${err}</p>
+            <br />
+            <p>Cheers,</p>
+            <p>The Friendly ChinesePod Contact Robot</p>
+            `,
+            to: 'followup@chinesepod.com',
+            subject: 'Failed User Purchase',
+            from: 'errors@chinesepod.com',
+            fromName: 'ChinesePod Errors'
+          });
+
+          errors.push(err.message);
+          throw {declined: errors.length > 0 ? errors[0] : 'Could not confirm the payment method. Please try again later.'};
+        })
+
+    }
   }
 };

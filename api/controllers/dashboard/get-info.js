@@ -55,7 +55,9 @@ module.exports = {
 
     let userPreferences = (await UserPreferences.find(inputs.userId).sort('updatedAt DESC').limit(1))[0];
 
-    let access = await sails.helpers.users.getAccessType(inputs.userId);
+    let accessInfo = await sails.helpers.users.getAccessTypeAndExpiry(inputs.userId);
+
+    let access = accessInfo.type;
 
     let trial = userData.trial;
 
@@ -133,7 +135,8 @@ module.exports = {
         location: this.req.location,
         level: level,
         charSet: charSet,
-        access: access
+        access: access,
+        expiry: accessInfo.expiry
       }};
   }
 };

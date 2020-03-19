@@ -8,6 +8,18 @@ module.exports = {
 
 
   inputs: {
+    userId: {
+      type: 'number',
+      isInteger: true,
+    },
+    fullName: {
+      type: 'string',
+      required: true
+    },
+    token: {
+      type: 'string',
+      required: true
+    }
 
   },
 
@@ -22,7 +34,26 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    // TODO
+    const stripe = require('stripe')(sails.config.custom.stripeSecret);
+
+    let customerData = {};
+
+    await stripe.customers
+      .update(
+        `${inputs.userId}`, {
+          source: inputs.token,
+        })
+      .then((customer) => {
+        customerData = customer;
+        sails.log.info(`Found User ${customer.id} at ${new Date()}`);
+      })
+      .catch((err) => {
+        // This should not fail - if that's the case - something wrong with user record
+        sails.log.error(err.message);
+        customerData.err = err.message;
+      });
+
+    return customerData
   }
 
 
