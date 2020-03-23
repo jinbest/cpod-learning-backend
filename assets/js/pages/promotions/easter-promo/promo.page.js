@@ -1,4 +1,8 @@
-parasails.registerPage('holiday-offer', {
+/*
+ * Copyright © 2020. Ugis Rozkalns. All Rights Reserved.
+ */
+
+parasails.registerPage('promotion', {
   //  ╦╔╗╔╦╔╦╗╦╔═╗╦    ╔═╗╔╦╗╔═╗╔╦╗╔═╗
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
@@ -17,6 +21,7 @@ parasails.registerPage('holiday-offer', {
     promoShow: false,
     promoToggle: false,
     promoLimit: 0,
+    nonRecurring: false,
     pricing:{},
     formData: {
       fName: '',
@@ -281,10 +286,10 @@ parasails.registerPage('holiday-offer', {
         state: this.formData.state,
         country: this.formData.country,
         zip: this.formData.zip,
+        nonRecurring: this.nonRecurring
       })
         .then((info) => {
-          window.location.href = '/holiday-offer-success';
-
+          window.location.href = window.location.href.split('?')[0] + '/success';
         })
         .catch((e) => {
           this.paymentErrors = e.responseInfo.body;
