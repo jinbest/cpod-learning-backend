@@ -23,7 +23,8 @@ module.exports.apianalytics = {
           url: `https://www.chinesepod.com${req.url}`,
           sessionId: req.session ? req.session.id : '',
           urlbase: `https://www.chinesepod.com${req.path}`,
-          referer: req.get('referer')
+          referer: req.get('referer'),
+          timestamp: new Date().toISOString()
         },
         {
           attempts: 2,

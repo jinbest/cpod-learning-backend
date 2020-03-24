@@ -1,4 +1,4 @@
-parasails.registerPage('holiday-offer-success', {
+parasails.registerPage('promotion-gift-success', {
   //  ╦╔╗╔╦╔╦╗╦╔═╗╦    ╔═╗╔╦╗╔═╗╔╦╗╔═╗
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
@@ -14,9 +14,9 @@ parasails.registerPage('holiday-offer-success', {
     _.extend(this, SAILS_LOCALS);
   },
   mounted: async function() {
-    setTimeout(() => {
-      window.location.href = '/level';
-    }, 5000);
+    // setTimeout(() => {
+    //   window.location.href = '/home'
+    // }, 4000)
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗

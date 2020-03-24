@@ -87,6 +87,7 @@ module.exports.routes = {
   'GET /podcasts/:unused?':                              'PodcastsController.serve',
   // 'GET /dictionary/:unused?':                            'PodcastsController.serve',
 
+
   //PLACEMENT TEST
   'GET /placement/:unused?':                             'PlacementController.serve',
 
@@ -102,10 +103,6 @@ module.exports.routes = {
 
   //PROMOTIONS
   'GET /expired-promotion':                              { action: 'promotions/view-expired-promo'},
-  // 'GET /black-friday/:code?': { action: 'promotions/view-sales-promotion'},
-  // 'GET /black-friday-last-chance/:code?': { action: 'promotions/view-black-friday-last-chance'},
-  // 'GET /cyber-monday/:code?': { action: 'promotions/view-cyber-monday'},
-  // 'GET /cyber-monday-last-chance/:code?': { action: 'promotions/view-cyber-monday-last-chance'},
   'GET /live':                                           { action: 'promotions/view-live-stream' },
   'GET /black-friday/:code?':                            { action: 'promotions/view-expired-promo'},
   'GET /black-friday-last-chance/:code?':                { action: 'promotions/view-expired-promo'},
@@ -121,13 +118,14 @@ module.exports.routes = {
   'GET /valentines-day/:code?':                          { action: 'promotions/view-expired-promo'},
   'GET /valentines-day-gift/:code?':                     { action: 'promotions/view-expired-promo'},
   'GET /CNY-2020/:code?':                                { action: 'promotions/view-expired-promo'},
-  'GET /test-promo/':                                    { action: 'promotions/view-cny-promo'},
-  'GET /test-promo/:token':                              { action: 'promotions/create-limited-auth'},
   'GET /womens-day/:token':                              { action: 'promotions/create-limited-auth'},
-  'GET /womens-day':                                     { action: 'promotions/womens-day/view-promo'},
-  'GET /womens-day/success':                             { action: 'promotions/womens-day/view-promo-success'},
-  'GET /womens-day-gift':                                { action: 'promotions/womens-day/view-gift'},
-  'GET /womens-day-gift/success':                        { action: 'promotions/womens-day/view-gift-success'},
+  'GET /womens-day':                                     { action: 'promotions/view-expired-promo'},
+  'GET /womens-day-gift':                                { action: 'promotions/view-expired-promo'},
+  'GET /easter-2020/:token':                             { action: 'promotions/create-limited-auth'},
+  'GET /easter-2020':                                    { action: 'promotions/easter-promo/view-promo'},
+  'GET /easter-2020/success':                            { action: 'promotions/easter-promo/view-promo-success'},
+  'GET /easter-gift-2020':                               { action: 'promotions/easter-promo/view-gift'},
+  'GET /easter-gift-2020/success':                       { action: 'promotions/easter-promo/view-gift-success'},
 
   //PROMOTIONS - REDEEM GIFTS
   'GET /valentines-day-gift/redeem/:code?/:userCode?':   { action: 'promotions/valentines/view-valentines-day-gift-redeem'},

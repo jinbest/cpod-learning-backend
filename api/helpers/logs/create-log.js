@@ -48,6 +48,7 @@ module.exports = {
         accesslog_sessionid: inputs.data.accesslog_sessionid,
         accesslog_urlbase: inputs.data.accesslog_urlbase,
         accesslog_country: ipData && ipData['country'] ? ipData['country'] : null,
+        accesslog_time: inputs.data.accesslog_time,
         referer: inputs.data.referer,
       });
     }
@@ -66,6 +67,8 @@ module.exports = {
         'accesslog_sessionid',
         'accesslog_urlbase',
         'accesslog_country',
+        'accesslog_time',
+        'timestamp',
         'referer'
       ],
       idColumn: 'email'
@@ -88,8 +91,6 @@ module.exports = {
       index.elasticRecord.forEach(key => {
         indexRecord[key] = inputs.data[key];
       });
-      indexRecord['accesslog_time'] = new Date().toISOString();
-      indexRecord['timestamp'] = new Date().toISOString();
       indexRecord['geoip'] = ipData;
       commands.push(action);
       commands.push(indexRecord);

@@ -40,9 +40,7 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    const minTimer = 15; //minutes
-
-    let testers = [];
+    const minTimer = 60; //minutes
 
     let session = await sails.helpers.phpApi.checkSession(inputs.sessionId);
 
@@ -56,78 +54,41 @@ module.exports = {
     const {promisify} = require('util');
     const getAsync = promisify(client.get).bind(client);
 
-    //TODO REMOVE THIS DUMMY API CALL PROCESS
-    if (testers.includes(session.email)) {
-      let currentHour = new Date(new Date() - 4 * 60 * 60 * 1000).getHours(); //NY Time
-      let latestStudiedLesson = '4121';
+    let user = await User.findOne({
+      email: session.email
+    });
 
-      if([1,6,11,16,21].includes(currentHour)) {
-        latestStudiedLesson = '4123'
-      } else if ([2,7,12,17,22].includes(currentHour)) {
-        latestStudiedLesson = '4124'
-      } else if ([3,8,13,18,23].includes(currentHour)) {
-        latestStudiedLesson = '4125'
-      } else if ([4,9,14,19].includes(currentHour)) {
-        latestStudiedLesson = '4126'
+    if(!user.id) {
+      throw 'invalid'
+    }
+    //Connect Sails Session to PHP API Session
+    this.req.session.userId = user.id;
+
+    let response = await getAsync(user.email);
+
+    if (response) {
+      let json = false;
+      try {
+        json = JSON.parse(response);
+      } catch (e) {
+        sails.log.error(e)
       }
 
-      let content = await Contents.findOne({v3_id: latestStudiedLesson});
+      if (json && new Date(json['timestamp']) > new Date(Date.now() - minTimer * 60 * 1000)) {
 
-      let lessonTitle = '';
-      let lessonImg = '';
+        sails.log.info({result: new Date(json['timestamp']) > new Date(Date.now() - minTimer * 60 * 1000), killdate: new Date(Date.now() - minTimer * 60 * 1000), redisdate: new Date(json['timestamp'])});
 
-      if (!content) {
-        sails.log.error('No Recap Lesson for Testers');
-        lessonTitle = 'Demo Lesson for Testers';
-        lessonImg = 'https://via.placeholder.com/640x360.png?text=Sample+Image+For+Missing+Artwork';
-      } else {
-        lessonTitle = content.title;
-        lessonImg = content.type === 'lesson'
-          ? `https://s3contents.chinesepod.com/${content.v3_id}/${content.hash_code}/${content.image}`
-          : `https://s3contents.chinesepod.com/extra/${content.v3_id}/${content.hash_code}/${content.image}`;
+        return JSON.parse(response)
       }
+    }
 
-      return {
-        lessonTitle: lessonTitle,
-        lessonId: latestStudiedLesson, //latestStudiedLesson
-        lessonImg: lessonImg,
-        emailAddress: session.email,
-        charSet: 'simplified', //charset
-        subscription: 'premium' //subscription
-      }
+    async function getLatestLessons(email, window = 30) {
 
-    } else {
-      let user = await User.findOne({
-        email: session.email
-      });
-
-      if(!user.id) {
-        throw 'invalid'
-      }
-      //Connect Sails Session to PHP API Session
-      this.req.session.userId = user.id;
-
-      let response = await getAsync(user.email);
-
-      if (response) {
-        let json = false;
-        try {
-          json = JSON.parse(response);
-        } catch (e) {
-          sails.log.error(e)
-        }
-
-        if (json && new Date(json['timestamp']) > new Date(Date.now() - minTimer * 60 * 1000)) {
-
-          sails.log.info({result: new Date(json['timestamp']) > new Date(Date.now() - minTimer * 60 * 1000), killdate: new Date(Date.now() - minTimer * 60 * 1000), redisdate: new Date(json['timestamp'])});
-
-          return JSON.parse(response)
-        }
-      }
+      sails.log.info(`Fetching logs for ${window} days`);
 
       let latestLesson = await BackupLogging.find({
         where: {
-          id: user.email,
+          id: email,
           accesslog_urlbase: {
             'in': [
               'https://chinesepod.com/lessons/api',
@@ -136,7 +97,7 @@ module.exports = {
               'https://server4.chinesepod.com:444/1.0.0/instances/prod/lessons/get-dialogue'
             ]},
           createdAt: {
-            '>': new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+            '>': new Date(Date.now() - window * 24 * 60 * 60 * 1000)
           }
         },
         select: ['accesslog_url', 'createdAt'],
@@ -146,10 +107,10 @@ module.exports = {
 
       let latestJSLesson = await BackupLogging.find({
         where: {
-          id: user.email,
+          id: email,
           accesslog_urlbase: 'https://www.chinesepod.com/api/v1/lessons/get-dialogue',
           createdAt: {
-            '>': new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+            '>': new Date(Date.now() - window * 24 * 60 * 60 * 1000)
           }
         },
         select: ['accesslog_url', 'createdAt'],
@@ -158,14 +119,10 @@ module.exports = {
       });
 
       if (!latestLesson && !latestJSLesson){
-        return {
-          message: 'No Lesson Available',
-          lessonId: `0000`,
-          emailAddress: session.email,
-        }
+        return false
       }
 
-      let latestStudiedLesson = [];
+      let latestStudiedLesson = '';
 
       try {
         if (latestJSLesson && latestJSLesson[0] && latestJSLesson[0]['createdAt'] && latestLesson && latestLesson[0] && latestLesson[0]['createdAt']) {
@@ -192,62 +149,79 @@ module.exports = {
 
       } catch (e) {
         sails.log.error(e);
-        return {
-          message: 'No Lesson Available',
-          lessonId: `0000`,
-          emailAddress: session.email,
-        }
+        return false
       }
 
-      if (!latestStudiedLesson){
-        return {
-          message: 'No Lesson Available',
-          lessonId: `0000`,
-          emailAddress: session.email,
-        }
-      }
-
-      //Select User CharSet
-      let userSettings = await UserSettings.findOne({user_id: user.id});
-
-      let charSet = 'simplified';
-
-      try {
-        let rawChar = userSettings.setting.split('"ctype";i:')[1].slice(0,1);
-        if (rawChar == 2) {
-          charSet = 'traditional';
-        }
-
-      } catch (e) {
-        await sails.helpers.users.setCharSet(user.id, charSet);
-      }
-
-      let content = await Contents.findOne({v3_id: latestStudiedLesson});
-      let lessonImg = '';
-      if (content) {
-        lessonImg = content.type === 'lesson'
-          ? `https://s3contents.chinesepod.com/${content.v3_id}/${content.hash_code}/${content.image}`
-          : `https://s3contents.chinesepod.com/extra/${content.v3_id}/${content.hash_code}/${content.image}`;
-      }
-
-      let access = await sails.helpers.users.getAccessType(user.id);
-
-      let returnData = {
-        lessonTitle: content ? content.title : 'ChinesePod Lesson',
-        lessonId: latestStudiedLesson,
-        lessonImg: lessonImg,
-        emailAddress: session.email,
-        charSet: charSet,
-        subscription: access ? access : 'Free',
-        timestamp: new Date()
-      };
-
-      client.set(user.email, JSON.stringify(returnData));
-
-      client.end(true);
-
-      return returnData
+      return latestStudiedLesson
 
     }
+
+    let latestStudiedLesson = await getLatestLessons(user.email, 1);
+
+    if (!latestStudiedLesson) {
+      latestStudiedLesson = await getLatestLessons(user.email, 3);
+    }
+
+    if (!latestStudiedLesson) {
+      latestStudiedLesson = await getLatestLessons(user.email, 7);
+    }
+
+    if (!latestStudiedLesson) {
+      latestStudiedLesson = await getLatestLessons(user.email, 14);
+    }
+
+    if (!latestStudiedLesson) {
+      latestStudiedLesson = await getLatestLessons(user.email, 30);
+    }
+
+    if (!latestStudiedLesson){
+      return {
+        message: 'No Lesson Available',
+        lessonId: `0000`,
+        emailAddress: session.email,
+      }
+    }
+
+    //Select User CharSet
+    let userSettings = await UserSettings.findOne({user_id: user.id});
+
+    let charSet = 'simplified';
+
+    try {
+      let rawChar = userSettings.setting.split('"ctype";i:')[1].slice(0,1);
+      if (rawChar == 2) {
+        charSet = 'traditional';
+      }
+
+    } catch (e) {
+      await sails.helpers.users.setCharSet(user.id, charSet);
+    }
+
+    let content = await Contents.findOne({v3_id: latestStudiedLesson});
+    let lessonImg = '';
+    if (content) {
+      lessonImg = content.type === 'lesson'
+        ? `https://s3contents.chinesepod.com/${content.v3_id}/${content.hash_code}/${content.image}`
+        : `https://s3contents.chinesepod.com/extra/${content.v3_id}/${content.hash_code}/${content.image}`;
+    }
+
+    let access = await sails.helpers.users.getAccessType(user.id);
+
+    let returnData = {
+      lessonTitle: content ? content.title : 'ChinesePod Lesson',
+      lessonId: latestStudiedLesson,
+      lessonImg: lessonImg,
+      emailAddress: session.email,
+      charSet: charSet,
+      subscription: access ? access : 'Free',
+      timestamp: new Date()
+    };
+
+    client.set(user.email, JSON.stringify(returnData));
+
+    client.end(true);
+
+    return returnData
+
   }
 };

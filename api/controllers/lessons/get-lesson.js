@@ -84,6 +84,8 @@ module.exports = {
         lesson.saved = false;
       }
 
+      lesson.extra = lesson.type === 'extra'
+
       return lesson
     } else {
       throw 'invalid'
