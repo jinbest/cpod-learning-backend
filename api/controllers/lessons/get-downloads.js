@@ -50,7 +50,19 @@ module.exports = {
         returnData.downloads.pdf2 = '/' + (extra ? 'extra/' : '') + lessonData.id + '/' + lessonData.hash_code + '/' + lessonData.pdf2;
       }
       return returnData;
-    } else {
+    } else if (access === 'basic') {
+      let lessonData = await LessonData.findOne({id: inputs.lessonId});
+      let returnData = {
+        type: 'basic',
+        downloads: {}
+      };
+      if (lessonData.pdf1) {
+        returnData.downloads.pdf1 = '/' + (extra ? 'extra/' : '') + lessonData.id + '/' + lessonData.hash_code + '/' + lessonData.pdf1;
+      }
+      if (lessonData.pdf2) {
+        returnData.downloads.pdf2 = '/' + (extra ? 'extra/' : '') + lessonData.id + '/' + lessonData.hash_code + '/' + lessonData.pdf2;
+      }
+    }else {
       return {
         type: 'free'
       }
