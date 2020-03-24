@@ -10,7 +10,8 @@
                 <div class="col-12 my-auto col-md-8 offset-md-2 col-xl-6 offset-xl-3">
                   <h1 class="headline-1">OH, HOPPY DAY!</h1>
                   <h5 class="tagline-1 mt-0">
-                    Discover thousands of recordings, vocabulary lessons, videos and downloadable lesson materials at your fingertips.
+                    Gift your loved ones the opportunity to access thousands of Chinese recordings, vocabulary lessons,
+                    videos and downloadable lesson materials at your fingertips.
                   </h5>
                 </div>
               </div>
@@ -19,10 +20,10 @@
         </div>
         <div class="col-12 text-center col-md-8 offset-md-2">
           <h5 class="tagline-2 mb-4 text-uppercase">
-            Hop Onboard with ChinesePod today!
+            Choose from our annual, quarterly or monthly premium plans today!
           </h5>
           <h5 class="tagline-3 mb-3">
-            We’re giving all NEW USERS 40% off 3 months in celebration of Easter Sunday!
+            Limit is one gift per account. This is a one-time purchase.
           </h5>
         </div>
         <div class="col-12 col-lg-10 offset-lg-1 col-xl-12 offset-xl-0 mb-0">
@@ -39,13 +40,13 @@
                     <div class="basic-info">
                       <div class="row">
                         <div class="pt-2 col-lg-4 col-sm-6 col-xl-6">
-                          <button class="btn btn-block py-3" :class="[billingCycle === 'monthly' ? 'btn-chinesepod-blue' : 'btn-outline-chinesepod-blue']" @click.prevent="billingCycle = 'monthly'">1 Month - ${{pricing['premium']['monthly']}}</button>
+                          <button class="btn btn-block py-3" :class="[billingCycle === 'monthly' ? 'btn-chinesepod-blue' : 'btn-outline-chinesepod-blue']" @click.prevent="billingCycle = 'monthly'"><span class="text-uppercase">1 Month</span><br/>Originally <del>$29</del> Now <span class="font-weight-bold">${{pricing['premium']['monthly']}}</span></button>
                         </div>
                         <div class="pt-2 col-lg-4 col-sm-6 col-xl-6">
-                          <button class="btn btn-block py-3" :class="[billingCycle === 'quarterly' ? 'btn-chinesepod-blue' : 'btn-outline-chinesepod-blue']" @click.prevent="billingCycle = 'quarterly'">3 Months - ${{pricing['premium']['quarterly']}}</button>
+                          <button class="btn btn-block py-3" :class="[billingCycle === 'quarterly' ? 'btn-chinesepod-blue' : 'btn-outline-chinesepod-blue']" @click.prevent="billingCycle = 'quarterly'"><span class="text-uppercase">3 Months</span><br/>Originally <del>$79</del> Now <span class="font-weight-bold">${{pricing['premium']['quarterly']}}</span></button>
                         </div>
                         <div class="pt-2 col-lg-4 col-sm-6 col-xl-6">
-                          <button class="btn btn-block py-3" :class="[billingCycle === 'annually' ? 'btn-chinesepod-blue' : 'btn-outline-chinesepod-blue']" @click.prevent="billingCycle = 'annually'">12 Months - ${{pricing['premium']['annually']}}</button>
+                          <button class="btn btn-block py-3" :class="[billingCycle === 'annually' ? 'btn-chinesepod-blue' : 'btn-outline-chinesepod-blue']" @click.prevent="billingCycle = 'annually'"><span class="text-uppercase">12 Months</span><br/>Originally <del>$249</del> Now <span class="font-weight-bold">${{pricing['premium']['annually']}}</span></button>
                         </div>
                       </div>
                     </div>
@@ -68,7 +69,6 @@
                         </div>
                       </div>
 
-                      <!-- TODO ONLY FOR TEMPORARY ACCOUNTS-->
                       <div class="row">
                         <div class="col-lg-4 col-sm-6 col-xl-6">
                           <label for="email" :class="[formErrors.emailAddress ? 'text-danger' : '']">Email Address<span class="required-mark">&nbsp;*</span></label>

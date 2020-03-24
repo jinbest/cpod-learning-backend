@@ -75,26 +75,26 @@ module.exports = {
 
       } else {
 
-        let lessonTimeline = await Logging.find({
-          where: {
-            id: userData.email,
-            accesslog_urlbase: 'https://www.chinesepod.com/api/v1/lessons/get-lesson',
-            createdAt: {
-              '>': new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-            }
-          },
-          select: ['accesslog_url', 'createdAt'],
-          sort: 'createdAt DESC',
-          limit: 30   // Upper Limit Trigger
-        });
-
-        let lessonCount = [...new Set(lessonTimeline.map(x => x.accesslog_url))].length;
+        // let lessonTimeline = await Logging.find({
+        //   where: {
+        //     id: userData.email,
+        //     accesslog_urlbase: 'https://www.chinesepod.com/api/v1/lessons/get-lesson',
+        //     createdAt: {
+        //       '>': new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+        //     }
+        //   },
+        //   select: ['accesslog_url', 'createdAt'],
+        //   sort: 'createdAt DESC',
+        //   limit: 30   // Upper Limit Trigger
+        // });
+        //
+        // let lessonCount = [...new Set(lessonTimeline.map(x => x.accesslog_url))].length;
 
         returnData.upgrade = {
           needsUpgrade: false,
           allowedCount:10,
-          lessonCount: lessonCount,
-          lessonTimeline: lessonTimeline,
+          // lessonCount: lessonCount,
+          // lessonTimeline: lessonTimeline,
           canDismiss: true,
           upgradePath: 3 // 3 , 2 , 1
         };

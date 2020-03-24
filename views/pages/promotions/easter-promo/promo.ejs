@@ -10,7 +10,8 @@
                 <div class="col-12 my-auto col-md-8 offset-md-2 col-xl-6 offset-xl-3">
                   <h1 class="headline-1">OH, HOPPY DAY!</h1>
                   <h5 class="tagline-1 mt-0">
-                    Discover thousands of recordings, vocabulary lessons, videos and downloadable lesson materials at your fingertips.
+                    Enhance your Chinese skills with our library of thousands of recordings, vocabulary lessons,
+                    videos and downloadable lesson materials at your fingertips.
                   </h5>
                 </div>
               </div>
@@ -19,17 +20,17 @@
         </div>
         <div class="col-12 text-center col-md-8 offset-md-2">
           <h5 class="tagline-2 mb-4 text-uppercase">
-            Hop Onboard with ChinesePod today!
+            Upgrade your account with 25% off today!
           </h5>
           <h5 class="tagline-3 mb-3">
-            We’re giving all NEW USERS 40% off 3 months in celebration of Easter Sunday!
+            Limit is one promo per account. This is a one-time purchase.
           </h5>
         </div>
         <div class="col-12 col-lg-10 offset-lg-1 col-xl-12 offset-xl-0">
           <div class="container outer" id="checkout-form">
             <div class="body">
               <ajax-form v-if="!cloudSuccess" name="ccForm" id="cc_form" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-submitting="handleSubmitting" :handle-parsing="handleParsingForm">
-                <ul class="row">
+                <ul class="row easter-form-container">
                   <li class="col-12">
                     <div class="heading">
                       <span class="number">1</span>
@@ -39,13 +40,13 @@
                     <div class="basic-info">
                       <div class="row">
                         <div class="pt-2 col-lg-4 col-sm-6">
-                          <button class="btn btn-block py-3" :class="[billingCycle === 'monthly' ? 'btn-chinesepod-blue' : 'btn-outline-chinesepod-blue']" @click.prevent="billingCycle = 'monthly'">Monthly - ${{pricing['premium']['monthly']}}</button>
+                          <button class="btn btn-block py-3" :class="[billingCycle === 'monthly' ? 'btn-chinesepod-blue' : 'btn-outline-chinesepod-blue']" @click.prevent="billingCycle = 'monthly'"><span class="text-uppercase">Monthly</span><br/> Originally <del>${{pricing['premium']['monthly']}}</del> and now for <span class="font-weight-bold">${{ (Math.round((pricing['premium']['monthly'] * 0.75) * 100) / 100).toFixed(2) }}</span></button>
                         </div>
                         <div class="pt-2 col-lg-4 col-sm-6">
-                          <button class="btn btn-block py-3" :class="[billingCycle === 'quarterly' ? 'btn-chinesepod-blue' : 'btn-outline-chinesepod-blue']" @click.prevent="billingCycle = 'quarterly'">Quarterly - ${{pricing['premium']['quarterly']}}</button>
+                          <button class="btn btn-block py-3" :class="[billingCycle === 'quarterly' ? 'btn-chinesepod-blue' : 'btn-outline-chinesepod-blue']" @click.prevent="billingCycle = 'quarterly'"><span class="text-uppercase">Quarterly</span><br/> Originally <del>${{pricing['premium']['quarterly']}}</del> and now for <span class="font-weight-bold">${{ (Math.round((pricing['premium']['quarterly'] * 0.75) * 100) / 100).toFixed(2) }}</span></button>
                         </div>
                         <div class="pt-2 col-lg-4 col-sm-6">
-                          <button class="btn btn-block py-3" :class="[billingCycle === 'annually' ? 'btn-chinesepod-blue' : 'btn-outline-chinesepod-blue']" @click.prevent="billingCycle = 'annually'">Annually - ${{pricing['premium']['annually']}}</button>
+                          <button class="btn btn-block py-3" :class="[billingCycle === 'annually' ? 'btn-chinesepod-blue' : 'btn-outline-chinesepod-blue']" @click.prevent="billingCycle = 'annually'"><span class="text-uppercase">Annually</span><br/> Originally <del>${{pricing['premium']['annually']}}</del> and now for <span class="font-weight-bold">${{ (Math.round((pricing['premium']['annually'] * 0.75) * 100) / 100).toFixed(2) }}</span></button>
                         </div>
                       </div>
                     </div>
