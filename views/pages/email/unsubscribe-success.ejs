@@ -1,0 +1,25 @@
+<div id="unsubscribe-success" v-cloak class="min-vh-100 bg-gray-lighter">
+  <div class="container">
+    <h1 class="headline font-weight-bold text-center py-3 mb-3">
+      Successfully Unsubscribed
+    </h1>
+    <div class="text-center card p-5 mb-4 col-lg-8 offset-lg-2">
+      <div class="row">
+        <div class="col-12">
+          <p class="text-left">
+            You have successfully unsubscribed from our email messages.
+          </p>
+          <p class="text-left">
+            We've removed <span class="font-weight-bold">{{ email }}</span> from our lists.
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 text-center pt-5">
+          <a href="/home" class="btn btn-lg btn-success px-5">Back to Dashboard</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

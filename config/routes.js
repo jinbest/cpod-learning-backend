@@ -154,10 +154,17 @@ module.exports.routes = {
   'GET /admin/access-code-panel':                        {action: 'admin/access-codes/view-access-code-panel'},
   'GET /admin/comments':                                 {action: 'admin/comments/view-list-all-comments'},
   'GET /admin/livestream':                               {action: 'admin/view-livestream' },
-
+  'GET /admin/lookup/users':                             { action: 'recap/users-by-current-lesson' }, //TODO REMOVE THIS WHEN SAFE
+  'GET /admin/lookup/recap/users':                       { action: 'recap/view-list-users' },
+  'GET /admin/lookup/charactercrush/users':              { action: 'charactercrush/view-list-users' },
 
   //MARKETING PAGES
   'GET /marketing/campaign-performance/:code':           {action: 'marketing/view-campaign-performance'},
+
+  //EMAIL MARKETING PAGES
+  'GET /unsubscribe/:token':                             { action: 'email/unsubscribe'},
+  'GET /unsubscribe':                                    { action: 'email/view-unsubscribe'},
+  'GET /unsubscribe/success':                            { action: 'email/view-unsubscribe-success'},
 
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
   //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗  ┌┼─   ║║║ ║║║║║║║║  ║ ║╠═╣ ║║╚═╗
@@ -180,9 +187,6 @@ module.exports.routes = {
 
   'GET /chinese/:unused?/:unused?':                      { action: 'redirect/why-choose-us'},
   'GET /sitemap' :                                       { action: 'sitemap'},
-  'GET /users':                                          { action: 'recap/users-by-current-lesson' }, //TODO REMOVE THIS WHEN SAFE
-  'GET /recap/users':                                    { action: 'recap/view-list-users' },
-  'GET /charactercrush/users':                           { action: 'charactercrush/view-list-users' },
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
@@ -356,6 +360,11 @@ module.exports.routes = {
   // 'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
   // 'POST  /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },
   // 'POST  /api/v1/deliver-contact-form-message':          { action: 'deliver-contact-form-message' },
+
+
+  //EMAIL MARKETING
+  'POST /api/v1/email/unsubscribe-user-email':           { action: 'email/unsubscribe-user'},
+  'POST /api/v1/email/subscribe-user-email':             { action: 'email/subscribe-user'},
 
   'GET /api/v1/octopus/process-inactive':                { action: 'octopus/process-inactive' },
   'GET /api/v1/octopus/process-bounced':                 { action: 'octopus/process-bounced' },

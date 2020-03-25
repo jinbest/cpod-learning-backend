@@ -41,15 +41,21 @@ module.exports = {
 
   fn: async function (inputs) {
 
+    if (inputs.optIn) {
+
+      let lists = await MailingLists.find({published: true});
+
+      let promises = [];
+
+      lists.forEach(list => {
+        promises.push(MailingListsUsers.create({list_id: list.id, user_id: inputs.userId, method: 'Website Optin'}))
+      });
+
+      return Promise.all(promises)
+
+    }
+
     return inputs;
-    //
-    // //MAUTIC
-    // const MauticConnector = require('node-mautic');
-    // const mauticConnector = new MauticConnector({
-    //   apiUrl: 'https://email.chinesepod.com',
-    //   username: 'CpodJsWebsite',
-    //   password: 'zro5YdSykdqYkkgPMBH9yCcGPguGdAbk8IXyjnCW'
-    // });
     //
     // const newContact = await mauticConnector.contacts.createContact({
     //   email: inputs.email,
