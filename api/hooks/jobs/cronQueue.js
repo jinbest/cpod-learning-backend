@@ -4,7 +4,7 @@ if (process.env.NODE_ENV !== 'production' || sails.config.environment === 'stagi
   var Queue = require('bull');
 
   var triggerQueue = new Queue('TriggerQueue', sails.config.jobs.url);
-  triggerQueue.clean(0);
+  triggerQueue.clean(0, 'delayed');
 
   triggerQueue.process('ReindexLessons', 1, async function () {
     await sails.helpers.search.reindexLessons();
