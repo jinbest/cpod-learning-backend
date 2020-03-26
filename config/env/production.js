@@ -363,10 +363,10 @@ module.exports = {
       requestHandler: bugsnagmiddleware.requestHandler,
       errorHandler: bugsnagmiddleware.errorHandler,
 
-      rateLimit: function () {
-        var client = require('redis').createClient();
-        var limiter = require('express-limiter')(app, client)
-      },
+      // rateLimit: function () {
+      //   var client = require('redis').createClient();
+      //   var limiter = require('express-limiter')(app, client)
+      // },
 
 
 
