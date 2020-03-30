@@ -44,7 +44,7 @@
               <td class="text-center">{{ campaign.transactions }}</td>
               <td class="text-center">{{ campaign.billedAmount }}</td>
             </tr>
-            <tr>
+            <tr class="table-dark">
               <th scope="col"><span class="font-weight-bold">TOTAL</span></th>
               <th scope="col" class="text-center">{{ campaigns.map(campaign => campaign.signups).reduce((a, b) => a + b, 0)}}</th>
               <th scope="col" class="text-center">{{ campaigns.map(campaign => campaign.confirmed).reduce((a, b) => a + b, 0)}}</th>
