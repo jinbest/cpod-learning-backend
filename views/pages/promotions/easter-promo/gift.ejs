@@ -40,13 +40,13 @@
                     <div class="basic-info">
                       <div class="row">
                         <div class="pt-2 col-lg-4 col-sm-6 col-xl-6">
-                          <button class="btn btn-block py-3" :class="[billingCycle === 'monthly' ? 'btn-chinesepod-blue' : 'btn-outline-chinesepod-blue']" @click.prevent="billingCycle = 'monthly'"><span class="text-uppercase">1 Month</span><br/>Originally <del>$29</del> Now <span class="font-weight-bold">${{pricing['premium']['monthly']}}</span></button>
+                          <button class="btn btn-block py-3" :class="[billingCycle === 'monthly' ? 'btn-promo-active' : 'btn-promo-inactive']" @click.prevent="billingCycle = 'monthly'"><span class="text-uppercase">1 Month</span><br/>Originally <del>$29</del> Now <span class="font-weight-bold">${{pricing['premium']['monthly']}}</span></button>
                         </div>
                         <div class="pt-2 col-lg-4 col-sm-6 col-xl-6">
-                          <button class="btn btn-block py-3" :class="[billingCycle === 'quarterly' ? 'btn-chinesepod-blue' : 'btn-outline-chinesepod-blue']" @click.prevent="billingCycle = 'quarterly'"><span class="text-uppercase">3 Months</span><br/>Originally <del>$79</del> Now <span class="font-weight-bold">${{pricing['premium']['quarterly']}}</span></button>
+                          <button class="btn btn-block py-3" :class="[billingCycle === 'quarterly' ? 'btn-promo-active' : 'btn-promo-inactive']" @click.prevent="billingCycle = 'quarterly'"><span class="text-uppercase">3 Months</span><br/>Originally <del>$79</del> Now <span class="font-weight-bold">${{pricing['premium']['quarterly']}}</span></button>
                         </div>
                         <div class="pt-2 col-lg-4 col-sm-6 col-xl-6">
-                          <button class="btn btn-block py-3" :class="[billingCycle === 'annually' ? 'btn-chinesepod-blue' : 'btn-outline-chinesepod-blue']" @click.prevent="billingCycle = 'annually'"><span class="text-uppercase">12 Months</span><br/>Originally <del>$249</del> Now <span class="font-weight-bold">${{pricing['premium']['annually']}}</span></button>
+                          <button class="btn btn-block py-3" :class="[billingCycle === 'annually' ? 'btn-promo-active' : 'btn-promo-inactive']" @click.prevent="billingCycle = 'annually'"><span class="text-uppercase">12 Months</span><br/>Originally <del>$249</del> Now <span class="font-weight-bold">${{pricing['premium']['annually']}}</span></button>
                         </div>
                       </div>
                     </div>

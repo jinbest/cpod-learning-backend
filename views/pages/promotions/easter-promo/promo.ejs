@@ -40,13 +40,13 @@
                     <div class="basic-info">
                       <div class="row">
                         <div class="pt-2 col-lg-4 col-sm-6">
-                          <button class="btn btn-block py-3" :class="[billingCycle === 'monthly' ? 'btn-chinesepod-blue' : 'btn-outline-chinesepod-blue']" @click.prevent="billingCycle = 'monthly'"><span class="text-uppercase">Monthly</span><br/> Originally <del>${{pricing['premium']['monthly']}}</del> and now for <span class="font-weight-bold">${{ (Math.round((pricing['premium']['monthly'] * 0.75) * 100) / 100).toFixed(2) }}</span></button>
+                          <button class="btn btn-block py-3" :class="[billingCycle === 'monthly' ? 'btn-promo-active' : 'btn-promo-inactive']" @click.prevent="billingCycle = 'monthly'"><span class="text-uppercase">Monthly</span><br/> Originally <del>${{pricing['premium']['monthly']}}</del> and now for <span class="font-weight-bold">${{ (Math.round((pricing['premium']['monthly'] * 0.75) * 100) / 100).toFixed(2) }}</span></button>
                         </div>
                         <div class="pt-2 col-lg-4 col-sm-6">
-                          <button class="btn btn-block py-3" :class="[billingCycle === 'quarterly' ? 'btn-chinesepod-blue' : 'btn-outline-chinesepod-blue']" @click.prevent="billingCycle = 'quarterly'"><span class="text-uppercase">Quarterly</span><br/> Originally <del>${{pricing['premium']['quarterly']}}</del> and now for <span class="font-weight-bold">${{ (Math.round((pricing['premium']['quarterly'] * 0.75) * 100) / 100).toFixed(2) }}</span></button>
+                          <button class="btn btn-block py-3" :class="[billingCycle === 'quarterly' ? 'btn-promo-active' : 'btn-promo-inactive']" @click.prevent="billingCycle = 'quarterly'"><span class="text-uppercase">Quarterly</span><br/> Originally <del>${{pricing['premium']['quarterly']}}</del> and now for <span class="font-weight-bold">${{ (Math.round((pricing['premium']['quarterly'] * 0.75) * 100) / 100).toFixed(2) }}</span></button>
                         </div>
                         <div class="pt-2 col-lg-4 col-sm-6">
-                          <button class="btn btn-block py-3" :class="[billingCycle === 'annually' ? 'btn-chinesepod-blue' : 'btn-outline-chinesepod-blue']" @click.prevent="billingCycle = 'annually'"><span class="text-uppercase">Annually</span><br/> Originally <del>${{pricing['premium']['annually']}}</del> and now for <span class="font-weight-bold">${{ (Math.round((pricing['premium']['annually'] * 0.75) * 100) / 100).toFixed(2) }}</span></button>
+                          <button class="btn btn-block py-3" :class="[billingCycle === 'annually' ? 'btn-promo-active' : 'btn-promo-inactive']" @click.prevent="billingCycle = 'annually'"><span class="text-uppercase">Annually</span><br/> Originally <del>${{pricing['premium']['annually']}}</del> and now for <span class="font-weight-bold">${{ (Math.round((pricing['premium']['annually'] * 0.75) * 100) / 100).toFixed(2) }}</span></button>
                         </div>
                       </div>
                     </div>
