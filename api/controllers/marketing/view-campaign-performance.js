@@ -15,7 +15,6 @@ module.exports = {
     },
     code: {
       type: 'string',
-      required: true,
       minLength: 2
     }
   },
@@ -38,10 +37,28 @@ module.exports = {
 
     sails.log.info(inputs);
 
-    let data  = await sails.sendNativeQuery(`
-    select uo.option_value as campaignId, count(uo.option_key) as conversions
-    from user_options uo where uo.option_key = 'campaignId' and uo.option_value like '${inputs.code}%' and uo.last_update between $1 and $2
+    let data
+    if (inputs.code) {
+
+      data  = await sails.sendNativeQuery(`
+    select uo.option_value as campaignId, count(uo.option_key) as signups, sum(u.confirm_status) confirmed, count(t.billed_amount) transactions, sum(t.billed_amount) billedAmount
+    from user_options uo
+        left join users u on uo.user_id = u.id
+        left join transactions t on uo.user_id = t.user_id and pay_status = 2
+    where uo.option_key = 'campaignId' and uo.option_value like '${inputs.code}%' and uo.last_update between $1 and $2
     group by uo.option_value;`,[inputs.fromDate, inputs.toDate]);
+
+    } else {
+
+      data  = await sails.sendNativeQuery(`
+    select uo.option_value as campaignId, count(uo.option_key) as signups, sum(u.confirm_status) confirmed, count(t.billed_amount) transactions, sum(t.billed_amount) billedAmount
+    from user_options uo
+        left join users u on uo.user_id = u.id
+        left join transactions t on uo.user_id = t.user_id and pay_status = 2
+    where uo.option_key = 'campaignId' and uo.last_update between $1 and $2
+    group by uo.option_value;`,[inputs.fromDate, inputs.toDate]);
+
+    }
 
     sails.log.info(data);
 

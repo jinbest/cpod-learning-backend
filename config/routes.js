@@ -160,6 +160,7 @@ module.exports.routes = {
 
   //MARKETING PAGES
   'GET /marketing/campaign-performance/:code':           {action: 'marketing/view-campaign-performance'},
+  'GET /marketing/campaign-performance-all':           {action: 'marketing/view-campaign-performance'},
 
   //EMAIL MARKETING PAGES
   'GET /unsubscribe/:token':                             { action: 'email/unsubscribe'},

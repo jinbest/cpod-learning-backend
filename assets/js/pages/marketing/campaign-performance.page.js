@@ -39,8 +39,8 @@ parasails.registerPage('campaign-performance', {
   methods: {
     startSearch(){
       if (this.formData.fromDate && this.formData.toDate){
-        this.formData.fromDate = this.formData.fromDate.toISOString();
-        this.formData.toDate = this.formData.toDate.toISOString();
+        this.formData.fromDate = new Date(this.formData.fromDate).toISOString();
+        this.formData.toDate = new Date(this.formData.toDate).toISOString();
         console.log(`?fromDate=${this.formData.fromDate}&toDate=${this.formData.toDate}`);
         window.location.search = `?fromDate=${this.formData.fromDate}&toDate=${this.formData.toDate}`
       } else {
