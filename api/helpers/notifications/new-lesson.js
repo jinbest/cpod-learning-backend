@@ -50,7 +50,9 @@ module.exports = {
       sails.hooks.bugsnag.notify(`Lesson Alert - ${lessons[0].title}`);
       sails.hooks.bugsnag.notify(JSON.stringify({title: lessons[0].title, slug: lessons[0].slug, level: lessons[0].level.toUpperCase()}));
       // sails.sockets.blast('NEW_LESSON', {title: lessons[0].title, slug: lessons[0].slug, level: lessons[0].level.toUpperCase()});
-
+      for (const lesson of lessons) {
+        await sails.helpers.search.indexLesson(lesson.id)
+      }
     }
   }
 
