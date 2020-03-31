@@ -1,0 +1,32 @@
+{
+  "files": {
+    "main.css": "/onboarding-test/static/css/main.d25e0f7d.chunk.css",
+    "main.js": "/onboarding-test/static/js/main.08995608.chunk.js",
+    "main.js.map": "/onboarding-test/static/js/main.08995608.chunk.js.map",
+    "runtime~main.js": "/onboarding-test/static/js/runtime~main.0f51a76d.js",
+    "runtime~main.js.map": "/onboarding-test/static/js/runtime~main.0f51a76d.js.map",
+    "static/js/2.48d63185.chunk.js": "/onboarding-test/static/js/2.48d63185.chunk.js",
+    "static/js/2.48d63185.chunk.js.map": "/onboarding-test/static/js/2.48d63185.chunk.js.map",
+    "index.html": "/onboarding-test/index.html",
+    "precache-manifest.129b46ba9526db74d933f660f4ef96a3.js": "/onboarding-test/precache-manifest.129b46ba9526db74d933f660f4ef96a3.js",
+    "service-worker.js": "/onboarding-test/service-worker.js",
+    "static/css/main.d25e0f7d.chunk.css.map": "/onboarding-test/static/css/main.d25e0f7d.chunk.css.map",
+    "static/media/fonts.css": "/onboarding-test/static/media/Robotothinitalic.f31f3151.woff2",
+    "static/media/cpod_level_advanced.svg": "/onboarding-test/static/media/cpod_level_advanced.795b4881.svg",
+    "static/media/cpod_level_elementary.svg": "/onboarding-test/static/media/cpod_level_elementary.a1a7b56f.svg",
+    "static/media/cpod_level_intermediate.svg": "/onboarding-test/static/media/cpod_level_intermediate.e0fa4cdb.svg",
+    "static/media/cpod_level_newbie.svg": "/onboarding-test/static/media/cpod_level_newbie.ed4e16b5.svg",
+    "static/media/cpod_level_pre-intermediate.svg": "/onboarding-test/static/media/cpod_level_pre-intermediate.f08cfedb.svg",
+    "static/media/cpod_level_upper-intermediate.svg": "/onboarding-test/static/media/cpod_level_upper-intermediate.0e660e37.svg",
+    "static/media/facebook-icon.png": "/onboarding-test/static/media/facebook-icon.011e726a.png",
+    "static/media/icon-app-store.png": "/onboarding-test/static/media/icon-app-store.3050e221.png",
+    "static/media/icon-google-play.png": "/onboarding-test/static/media/icon-google-play.ef656241.png",
+    "static/media/icon-i-don-t-know.jpg": "/onboarding-test/static/media/icon-i-don-t-know.97fdbb38.jpg",
+    "static/media/incorrect.jpg": "/onboarding-test/static/media/incorrect.fe22b6f1.jpg",
+    "static/media/insta-icon.png": "/onboarding-test/static/media/insta-icon.0895d0b6.png",
+    "static/media/lighter-icon.png": "/onboarding-test/static/media/lighter-icon.2807bdb9.png",
+    "static/media/logo.svg": "/onboarding-test/static/media/logo.ab786ca5.svg",
+    "static/media/twitter-icon.png": "/onboarding-test/static/media/twitter-icon.fc2a345b.png",
+    "static/media/youtube-icon.png": "/onboarding-test/static/media/youtube-icon.2ac07ff2.png"
+  }
+}
