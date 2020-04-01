@@ -377,8 +377,6 @@ module.exports = {
         'requestHandler',
         'cookieParser',
         'session',
-        'rateLimiter',
-        'lessonsLimiter',
         'passportInit',
         'passportSession',
         'bodyParser',
