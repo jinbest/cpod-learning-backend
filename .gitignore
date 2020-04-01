@@ -121,7 +121,6 @@ nbproject
 .idea
 .node_history
 dump.rdb
-package-lock.json
 
 npm-debug.log
 lib-cov
