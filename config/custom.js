@@ -116,7 +116,7 @@ module.exports.custom = {
 
   // ADVERTISING PROMOS
   // coreMarkets: ['US', 'CA', 'CN'],
-  coreMarkets: ['US', 'CA', 'UK'],
+  coreMarkets: ['US', 'CA', 'UK', 'IE'],
   coreFreeMonths: [0,2,4,6,8,10],
   nonCoreFreeMonths: [1,2,3,5,7,9,11],
   // coreFreeMonths: [],
