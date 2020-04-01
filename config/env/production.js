@@ -363,6 +363,9 @@ module.exports = {
       requestHandler: bugsnagmiddleware.requestHandler,
       errorHandler: bugsnagmiddleware.errorHandler,
 
+      rateLimiter: rateLimiter,
+      lessonsLimiter: lessonsLimiter,
+
       // rateLimit: function () {
       //   var client = require('redis').createClient();
       //   var limiter = require('express-limiter')(app, client)
