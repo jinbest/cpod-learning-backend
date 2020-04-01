@@ -90,7 +90,7 @@ module.exports = {
           // lessonTimeline: lessonTimeline,
           canDismiss: true,
           upgradePath: 2, // 3 , 2 , 1,
-          prerollAdId: 'enmbbwiwmn',
+          prerollAdId: ['hdzh7ccqf6', 'ltrh1h50od'],
           upgradeLink: '/upgrade/aprilfools'
         };
         trial = new Date(); //OVERRIDE TRIAL DATE TO FORCE ONLY PREMIUM OPTIONS IN DAS
