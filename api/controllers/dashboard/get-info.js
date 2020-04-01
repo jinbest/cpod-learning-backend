@@ -96,7 +96,7 @@ module.exports = {
           // lessonCount: lessonCount,
           // lessonTimeline: lessonTimeline,
           canDismiss: true,
-          upgradePath: 3 // 3 , 2 , 1
+          upgradePath: 2 // 3 , 2 , 1
         };
 
         trial = new Date(); //OVERRIDE TRIAL DATE TO FORCE ONLY PREMIUM OPTIONS IN DASH
