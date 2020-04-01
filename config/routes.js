@@ -55,6 +55,7 @@ module.exports.routes = {
   'GET /checkout':                                       { action: 'purchase/view-checkout' },
   'GET /upgrade':                                        { action: 'purchase/view-checkout' },
   'GET /april-fools-day-upgrade':                        '/upgrade?promo=APRILFOOLSDAY',
+  'GET /april-fools':                                    '/upgrade?promo=APRILFOOLSDAY',
   'GET /checkout/paypal':                                { action: 'purchase/paypal/view-paypal-pay' },
   'GET /checkout/paypal-success':                        { action: 'purchase/paypal/view-paypal-success' },
 

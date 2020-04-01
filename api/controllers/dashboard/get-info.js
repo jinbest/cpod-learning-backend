@@ -65,6 +65,14 @@ module.exports = {
 
       const currentDate = new Date();
 
+      if (!this.req.location) {
+
+        const geoip = require('geoip-country');
+        const geo = geoip.lookup(this.req.ip);
+        this.req.location = geo ? geo['country'] : false;
+
+      }
+
       if (sails.config.custom.coreMarkets.includes(this.req.location) && sails.config.custom.coreFreeMonths.includes(currentDate.getMonth())) {
 
         access = 'premium'
@@ -75,33 +83,20 @@ module.exports = {
 
       } else {
 
-        // let lessonTimeline = await Logging.find({
-        //   where: {
-        //     id: userData.email,
-        //     accesslog_urlbase: 'https://www.chinesepod.com/api/v1/lessons/get-lesson',
-        //     createdAt: {
-        //       '>': new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-        //     }
-        //   },
-        //   select: ['accesslog_url', 'createdAt'],
-        //   sort: 'createdAt DESC',
-        //   limit: 30   // Upper Limit Trigger
-        // });
-        //
-        // let lessonCount = [...new Set(lessonTimeline.map(x => x.accesslog_url))].length;
-
         returnData.upgrade = {
           needsUpgrade: false,
           allowedCount:10,
           // lessonCount: lessonCount,
           // lessonTimeline: lessonTimeline,
           canDismiss: true,
-          upgradePath: 2 // 3 , 2 , 1
+          upgradePath: 2, // 3 , 2 , 1,
+          prerollAdId: 'enmbbwiwmn',
+          upgradeLink: '/april-fools'
         };
-
-        trial = new Date(); //OVERRIDE TRIAL DATE TO FORCE ONLY PREMIUM OPTIONS IN DASH
-
+        trial = new Date(); //OVERRIDE TRIAL DATE TO FORCE ONLY PREMIUM OPTIONS IN DAS
       }
+
+
     } else if (access === 'basic') {
 
       returnData.upgrade = {
