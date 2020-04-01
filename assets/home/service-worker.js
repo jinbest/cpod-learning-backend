@@ -15,7 +15,7 @@ importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox
 
 importScripts(
   "/home/updateSW.js",
-  "/home/precache-manifest.13b362025836c5585b6f80ff23887a46.js"
+  "/home/precache-manifest.2ff41decdcc0061789994b5ca42f6233.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "chinesepod-dashboard"});
