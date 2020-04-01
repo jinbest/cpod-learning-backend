@@ -67,9 +67,13 @@ module.exports = {
 
       if (!this.req.location) {
 
-        const geoip = require('geoip-country');
-        const geo = geoip.lookup(this.req.ip);
-        this.req.location = geo ? geo['country'] : false;
+        try {
+          const geoip = require('geoip-country');
+          const geo = geoip.lookup(this.req.ip);
+          this.req.location = geo ? geo['country'] : false;
+        } catch (e) {
+
+        }
 
       }
 
