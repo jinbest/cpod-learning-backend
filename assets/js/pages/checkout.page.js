@@ -227,7 +227,7 @@ parasails.registerPage('checkout', {
           console.log('Successful Subscription');
           this.cloudSuccess = true;
           setTimeout(() => {
-            window.location = this.needsOnboarding ? '/level' : '/home';
+            window.location = '/home';
           }, 2000);
         })
         .catch((e) => {

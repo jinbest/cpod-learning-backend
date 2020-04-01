@@ -109,7 +109,7 @@ then redirect to either a special landing page (for newly-signed up users), or t
 
       }
 
-      return this.res.redirect('/level');
+      return this.res.redirect('/home')
 
     }
 

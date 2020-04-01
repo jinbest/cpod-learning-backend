@@ -143,7 +143,7 @@ module.exports = {
             res.redirect('/pricing');
 
           } else {
-            res.redirect('/level')
+            res.redirect('/home')
           }
 
         } else {
@@ -280,7 +280,7 @@ module.exports = {
             res.redirect('/pricing');
 
           } else {
-            res.redirect('/level')
+            res.redirect('/home')
           }
 
         } else {

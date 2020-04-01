@@ -42,7 +42,7 @@ parasails.registerPage('pricing', {
       this.syncing = true;
       switch (plan) {
         case 'free':
-          window.location = '/level';
+          window.location = '/home';
           break;
         case 'premium':
           window.location = '/checkout';

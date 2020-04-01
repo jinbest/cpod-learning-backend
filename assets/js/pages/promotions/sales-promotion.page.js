@@ -282,7 +282,7 @@ parasails.registerPage('sales-promotion', {
         .then((info) => {
           this.cloudSuccess = true;
           setTimeout(() => {
-            window.location = this.needsOnboarding ? '/level' : '/home';
+            window.location = '/home';
           }, 5000);
         })
         .catch((e) => {
