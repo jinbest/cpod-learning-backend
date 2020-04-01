@@ -45,11 +45,11 @@ module.exports = {
 
       await sails.hooks.elastic.client.indices.delete({index: index.elasticIndex}, (error, response) => {
         if (error) {
-          sails.hooks.bugsnag.notify(error);
+          sails.log.error(error);
         }
       });
 
-      sails.hooks.bugsnag.notify('Index Deleted');
+      sails.log.info('Index Deleted');
 
 
       let records = await LessonData.find({

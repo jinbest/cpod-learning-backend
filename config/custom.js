@@ -119,6 +119,8 @@ module.exports.custom = {
   coreMarkets: ['US', 'CA', 'UK', 'IE'],
   coreFreeMonths: [0,2,4,6,8,10],
   nonCoreFreeMonths: [1,2,3,5,7,9,11],
+  prerollAdId: ['p5yrv7huyo', 'sa5v4h9bm7'],
+  upgradeLink: '/upgrade/aprilfools',
   // coreFreeMonths: [],
   // nonCoreFreeMonths: [],
   overrideWindow: false  // TODO add a time window constraint as needed

@@ -94,8 +94,8 @@ module.exports = {
           // lessonTimeline: lessonTimeline,
           canDismiss: true,
           upgradePath: 2, // 3 , 2 , 1,
-          prerollAdId: ['hdzh7ccqf6', 'ltrh1h50od'],
-          upgradeLink: '/upgrade/aprilfools'
+          prerollAdId: sails.config.custom.prerollAdId,
+          upgradeLink: sails.config.custom.upgradeLink
         };
         trial = new Date(); //OVERRIDE TRIAL DATE TO FORCE ONLY PREMIUM OPTIONS IN DAS
       }
