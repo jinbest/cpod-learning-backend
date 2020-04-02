@@ -129,6 +129,7 @@ module.exports.routes = {
   'GET /easter-2020':                                    { action: 'promotions/easter-promo/view-promo'},
   'GET /easter-2020/success':                            { action: 'promotions/easter-promo/view-promo-success'},
   'GET /easter-gift-2020':                               { action: 'promotions/easter-promo/view-gift'},
+  'GET /easter-gift-2020/:token':                        { action: 'promotions/create-limited-auth'},
   'GET /easter-gift-2020/success':                       { action: 'promotions/easter-promo/view-gift-success'},
 
   //PROMOTIONS - REDEEM GIFTS
