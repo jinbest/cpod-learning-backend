@@ -202,11 +202,11 @@ will be disabled and/or hidden in the UI.
             }
             req.me = loggedInUser;
 
-            if (req.location === undefined) {
-              const geoip = require('geoip-country');
-              const geo = geoip.lookup(req.ip);
-              req.location = geo ? geo['country'] : false
-            }
+            // if (req.location === undefined) {
+            //   const geoip = require('geoip-country');
+            //   const geo = geoip.lookup(req.ip);
+            //   req.location = geo ? geo['country'] : false
+            // }
 
             // If our "lastSeenAt" attribute for this user is at least a few seconds old, then set it
             // to the current timestamp.
