@@ -350,11 +350,24 @@ module.exports = function defineJobsHook(sails) {
         //                  //
         // USER EVENT QUEUE //
         //                  //
-        userInfoQueue.process('LogEvent', 100, async function (job, done) {
+        userInfoQueue.process('LogEvent', 20, async function (job, done) {
           if (!job.data) {
             done(null, 'No job data')
           }
           await sails.helpers.logs.createEvent(job.data);
+          done()
+        });
+
+        //                     //
+        // USER PROGRESS QUEUE //
+        //                     //
+        userInfoQueue.process('LogProgress', 20, async function (job, done) {
+          if (!job.data) {
+            done(null, 'No job data')
+          }
+
+          let inputs = job.data;
+          await sails.helpers.lessons.logProgress.with({userId: inputs.userId, lessonId: inputs.lessonId, track: inputs.track, progress: inputs.progress, source: inputs.source});
           done()
         });
 

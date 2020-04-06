@@ -46,23 +46,13 @@ module.exports = {
       inputs.source = 'www.chinesepod.com'
     }
 
-    let progress = await LessonProgress.find({userId: inputs.userId, lessonId: inputs.lessonId, track_type: inputs.track});
+    if (sails.config.environment !== 'development') {
 
-    let currentProgress = progress[0];
+      userInfoQueue.add('LogProgress', inputs);
 
-    if (progress.length > 1) {
+    } else {
 
-      await LessonProgress.destroy({id: progress.slice(1).map(item => item.id)});
-
-    }
-
-    if (!currentProgress) {
-
-      return await LessonProgress.create({userId: inputs.userId, lessonId: inputs.lessonId, track_type: inputs.track, progress: inputs.progress / 100, source: inputs.source})
-
-    } else if (inputs.progress > currentProgress.progress * 100){
-
-      return await LessonProgress.updateOne({id: currentProgress.id}).set({userId: inputs.userId, lessonId: inputs.lessonId, track_type: inputs.track, progress: inputs.progress / 100})
+      await sails.helpers.lessons.logProgress.with({userId: inputs.userId, lessonId: inputs.lessonId, track: inputs.track, progress: inputs.progress, source: inputs.source});
 
     }
 
