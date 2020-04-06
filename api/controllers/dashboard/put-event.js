@@ -27,22 +27,33 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    if (sails.config.environment === 'development') {
-      return
-    }
-
     inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
-    userInfoQueue.add('LogEvent', {
-      'userId': inputs.userId,
-      'email': this.req.me ? this.req.me.email : '',
-      'sessionId': this.req.session.id,
-      'access_ip': this.req.ip,
-      'action': inputs.action,
-      'event_category': inputs.event_category,
-      'event_label': inputs.event_label,
-      'timestamp': new Date()
+    if (sails.config.environment === 'development') {
+      await sails.helpers.logs.createEvent({
+        'userId': inputs.userId,
+        'email': this.req.me ? this.req.me.email : '',
+        'sessionId': this.req.session.id,
+        'access_ip': this.req.ip,
+        'action': inputs.action,
+        'event_category': inputs.event_category,
+        'event_label': inputs.event_label,
+        'timestamp': new Date()
+      });
+    } else {
+
+      userInfoQueue.add('LogEvent', {
+        'userId': inputs.userId,
+        'email': this.req.me ? this.req.me.email : '',
+        'sessionId': this.req.session.id,
+        'access_ip': this.req.ip,
+        'action': inputs.action,
+        'event_category': inputs.event_category,
+        'event_label': inputs.event_label,
+        'timestamp': new Date()
       })
+
+    }
 
   }
 

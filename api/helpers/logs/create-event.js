@@ -56,25 +56,14 @@ module.exports = {
 
     await new Promise(async (resolve, reject) => {
 
-      let commands = [];
-      let action = {
-        index: {
-          _index: index.elasticIndex,
-          _type: index.elasticIndex
-        }
-      };
-
       let indexRecord = {};
 
       index.elasticRecord.forEach(key => {
         indexRecord[key] = inputs.data[key];
       });
       indexRecord['geoip'] = ipData;
-      commands.push(action);
-      commands.push(indexRecord);
 
-      // run bulk command
-      await sails.hooks.elastic.client.bulk({body: commands}, (error, response) => {
+      await sails.hooks.elastic.client.index({index: index.elasticIndex, body: indexRecord}, (error, response) => {
         if (error) {
           sails.log.error(error);
           reject(error);
