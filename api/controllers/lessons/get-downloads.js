@@ -28,6 +28,10 @@ module.exports = {
 
     let access = await sails.helpers.users.getAccessType(inputs.userId);
 
+    if (this.req.me && this.req.me.email && this.req.me.email.split('@')[1] === 'chinesepod.com') {
+      access = 'premium'
+    }
+
     let lessonData = await LessonData.findOne({id: inputs.lessonId});
 
     let extra = lessonData.type === 'extra';
