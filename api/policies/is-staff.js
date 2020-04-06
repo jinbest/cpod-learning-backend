@@ -22,6 +22,8 @@ module.exports = async function (req, res, proceed) {
     return res.forbidden();
   }//•
 
+  sails.log.info(req.me.email);
+
   // IWMIH, we've got ourselves a "super admin".
   return proceed();
 

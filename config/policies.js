@@ -44,14 +44,6 @@ module.exports.policies = {
 
   'lessons/progress/post-lesson-progress': true,
 
-  // // Bypass the `is-logged-in` policy for:
-  // 'entrance/*': true,
-  // 'account/logout': true,
-  // 'onboarding/view-pricing': true,
-  // 'view-checkout': true,
-  //
-  //
-  // // Admin Pages
-  // 'view-secret-page': true,
+  SwaggerOldController: {'*': 'is-staff'},
 
 };

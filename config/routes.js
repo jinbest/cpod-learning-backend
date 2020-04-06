@@ -159,6 +159,8 @@ module.exports.routes = {
   //FEEDS
   'GET /feed/:feedType?':                                { action:   'feed/feed' },
 
+  //DOCS
+  'GET /swagger-old/:unused?':                           'SwaggerOldController.serve',
 
   //ADMIN PAGES
   //ACCESS VOUCHER CODES
