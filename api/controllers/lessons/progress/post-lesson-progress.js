@@ -48,7 +48,13 @@ module.exports = {
 
     if (sails.config.environment !== 'development') {
 
-      userInfoQueue.add('LogProgress', inputs);
+      userInfoQueue.add(
+        'LogProgress',
+        inputs,
+        {
+          attempts: 2,
+          timeout: 30000
+      });
 
     } else {
 

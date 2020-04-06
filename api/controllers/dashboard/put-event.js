@@ -51,6 +51,9 @@ module.exports = {
         'event_category': inputs.event_category,
         'event_label': inputs.event_label,
         'timestamp': new Date()
+      },{
+        attempts: 2,
+        timeout: 10000
       })
 
     }
