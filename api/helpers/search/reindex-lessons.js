@@ -101,7 +101,7 @@ module.exports = {
       sails.log.info('Records Prepared');
 
       // run bulk command
-      await sails.hooks.elastic.client.bulk({refresh: 'true', body: commands}, (error, response) => {
+      await sails.hooks.elastic.client.bulk({body: commands}, (error, response) => {
         if (error) {
           reject(error);
         } else {

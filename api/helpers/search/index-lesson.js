@@ -57,15 +57,6 @@ module.exports = {
       });
 
 
-      let commands = [];
-      let action = {
-        index: {
-          _index: index.elasticIndex,
-          _type: index.elasticIndex
-        }
-      };
-
-
       const levelIds = {
         newbie: 1,
         elementary: 2,
@@ -92,7 +83,7 @@ module.exports = {
       sails.log.info('Records Prepared');
 
       // run bulk command
-      await sails.hooks.elastic.client.bulk({refresh: 'true', body: commands}, (error, response) => {
+      await sails.hooks.elastic.client.index({index: index.elasticIndex, body: indexRecord}, (error, response) => {
         if (error) {
           reject(error);
         } else {

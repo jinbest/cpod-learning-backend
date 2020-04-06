@@ -23,8 +23,6 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    sails.hooks.bugsnag.notify(`Lesson Alert - TEST RUN`);
-
     let time = new Date();
     let offsetUS = - 4 * 60;
 
@@ -47,9 +45,9 @@ module.exports = {
     let targetLesson = lessons[0];
 
     if(targetLesson && targetLesson.title && targetLesson.slug && targetLesson.level) {
-      sails.hooks.bugsnag.notify(`Lesson Alert - ${lessons[0].title}`);
-      sails.hooks.bugsnag.notify(JSON.stringify({title: lessons[0].title, slug: lessons[0].slug, level: lessons[0].level.toUpperCase()}));
-      // sails.sockets.blast('NEW_LESSON', {title: lessons[0].title, slug: lessons[0].slug, level: lessons[0].level.toUpperCase()});
+      sails.hooks.bugsnag.notify(`Lesson Alert - ${targetLesson.title}`);
+      sails.hooks.bugsnag.notify(JSON.stringify({title: targetLesson.title, slug: targetLesson.slug, level: targetLesson.level.toUpperCase()}));
+      sails.sockets.blast('NEW_LESSON', {title: targetLesson.title, slug: targetLesson.slug, level: targetLesson.level.toUpperCase()});
       for (const lesson of lessons) {
         await sails.helpers.search.indexLesson(lesson.id)
       }
