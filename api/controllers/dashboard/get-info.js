@@ -109,6 +109,10 @@ module.exports = {
         upgradePath: 2 // 3 , 2 , 1
       };
 
+    } else if (userData.email.split('@')[1] === 'chinesepod.com') {
+
+      access = 'premium'
+
     }
 
     let newLastLogin = 0; let oldLastLogin = 0;
