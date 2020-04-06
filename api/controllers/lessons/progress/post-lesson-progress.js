@@ -46,8 +46,6 @@ module.exports = {
       inputs.source = 'www.chinesepod.com'
     }
 
-    sails.log.info(inputs);
-
     let progress = await LessonProgress.find({userId: inputs.userId, lessonId: inputs.lessonId, track_type: inputs.track});
 
     let currentProgress = progress[0];
