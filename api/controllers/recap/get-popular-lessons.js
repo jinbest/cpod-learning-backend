@@ -10,6 +10,9 @@ module.exports = {
     days: {
       type: 'number',
       description: 'Length of period in days for which to lookup Popular Lessons'
+    },
+    level: {
+      type: 'string'
     }
   },
 
@@ -25,9 +28,13 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    let period = false;
+    let period = false; let level = false;
     if (inputs.days) {
       period = inputs.days <= 30 ? inputs.days : 30;
+    }
+
+    if (inputs.level) {
+      level = inputs.level.toLowerCase()
     }
 
     let sql = `
@@ -36,9 +43,9 @@ module.exports = {
     LEFT JOIN chinesepod_production.users u ON log.accesslog_user=u.email
     LEFT JOIN chinesepod_production.user_site_links usl ON u.id=usl.user_id
     WHERE log.accesslog_time > $1
-    AND log.accesslog_urlbase = 'https://ws.chinesepod.com:444/1.0.0/instances/prod/lessons/get-dialogue'
+    AND log.accesslog_urlbase in ('https://ws.chinesepod.com:444/1.0.0/instances/prod/lessons/get-dialogue', 'https://server4.chinesepod.com:444/1.0.0/instances/prod/lessons/get-lesson-detail')
     AND usl.usertype_id in (5,6);
-    `; //Android specific Endpoint used in query
+    `;
 
     let logData = await sails.sendNativeQuery(
       sql, [new Date(Date.now() - 60 * 60 * 1000 * (period ? period * 24 : 12) ).toISOString().split('T')[0]] //Adding 12 hour lag
@@ -68,9 +75,23 @@ module.exports = {
       topLessons[lesson] = (topLessons[lesson] || 0) +1;
     });
 
+    if (level) {
+      let filteredLessons = await LessonData.find({id: {in: Object.keys(topLessons)}});
+
+      let removeableLessons = filteredLessons.filter(lesson => lesson.level.split(' ').join('-').toLowerCase() !== level);
+
+      removeableLessons.forEach(lesson => {
+        delete topLessons[lesson.id]
+      })
+
+    }
+
+
     let sortedLessons = Object.keys(topLessons).sort(function (a, b) {
       return topLessons[b]-topLessons[a]
     });
+
+
 
     let topLessonItem = sortedLessons[0];
 

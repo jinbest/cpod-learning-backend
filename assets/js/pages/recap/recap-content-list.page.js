@@ -1,17 +1,10 @@
-parasails.registerPage('secret-page', {
+parasails.registerPage('recap-content-list', {
   //  ╦╔╗╔╦╔╦╗╦╔═╗╦    ╔═╗╔╦╗╔═╗╔╦╗╔═╗
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
-    topLesson: '',
-    topLessonTitle: '',
-    topLessonUsers: [],
-    otherTopLessons: [],
-    lessonViews: [],
-    syncing: true,
-    error: '',
-    days: '',
-    level: ''
+    lessonId: '',
+    content: []
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -22,23 +15,7 @@ parasails.registerPage('secret-page', {
     _.extend(this, SAILS_LOCALS);
   },
   mounted: async function() {
-    await Cloud['getPopularLessons'].with({
-      days: this.days,
-      level: this.level
-    })
-      .then((data) => {
-        this.topLesson = data.topLesson;
-        this.topLessonUsers = data.topLessonUsers;
-        this.otherTopLessons = data.otherTopLessons;
-        this.lessonViews = data.lessonViews;
-        this.days = data.period;
-        this.syncing = false
-      })
-      .catch((e) => {
-        this.error = e;
-        console.log(e);
-        this.syncing = false;
-      });
+    //…
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗

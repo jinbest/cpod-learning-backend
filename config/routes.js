@@ -97,12 +97,18 @@ module.exports.routes = {
 
   //RECAP LESSON VIEWS
   'GET /secret-page':                                    { action: 'recap/view-secret-page' },
+  'GET /secret-page/:level?':                            { action: 'recap/view-secret-page' },
+  'GET /recap-content-list/:lessonId?':                  { action: 'recap/view-recap-content-list' },
   'GET /super-secret-page':                              { action: 'recap/view-popular-recap-lessons' },
   'GET /current-lesson':                                 { action: 'recap/view-current-lesson' },
   'GET /set-lesson/:lessonId':                           { action: 'recap/set-lesson' },
   'GET /recap':                                          { action: 'recap/view-recap' },
   'GET /recapp':                                         { action: 'recap/view-recap' },
   'GET /app':                                            { action: 'recap/view-recap' },
+
+
+  //MISC
+  'GET /lesson-redirect/:v3id?':                          { action: 'lesson-redirect' },
 
 
   //PROMOTIONS
@@ -259,6 +265,7 @@ module.exports.routes = {
   'GET /api/v1/recap/get-popular-recap-lessons':         { action: 'recap/get-popular-recap-lessons' },
   'GET /api/v1/recap/get-all-recap-lessons':             { action: 'recap/get-all-recap-lessons' },
   'POST /api/v1/recap/get-lessons':                      { action: 'recap/get-user-lesson' },
+  'GET  /api/v1/recap/get-content/:lessonId':            { action: 'recap/list-recap-files' },
   'POST /api/v1/recap/request-lesson':                   { action: 'recap/request-lesson' },
   'GET /api/v1/recap/users':                             { action: 'recap/users-by-current-lesson' },
 

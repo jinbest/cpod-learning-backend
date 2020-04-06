@@ -1,0 +1,15 @@
+<div id="recap-content-list" v-cloak class="py-3">
+  <div class="container">
+
+    <h1 class="text-center">Recap Content List - {{ lessonId }}</h1>
+    <div v-if="content.length < 1"><p class="font-italic">No Recap content for this lesson!</p></div>
+    <table v-else class="table table-bordered table-striped table-hover">
+      <tbody>
+      <tr v-for="item in content">
+        <td><a :href="item">{{ item }}</a></td>
+      </tr>
+    </table>
+  </div>
+
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

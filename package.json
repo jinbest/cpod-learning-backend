@@ -61,6 +61,7 @@
     "sails-mysql": "^1.0.1",
     "sails-stdlib": "^0.11.2",
     "sanitize-html": "^1.20.1",
+    "skipper-better-s3": "^2.3.0",
     "stripe": "^7.5.4",
     "universal-analytics": "^0.4.20",
     "xkpasswd": "^1.0.5",

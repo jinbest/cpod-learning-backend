@@ -9,6 +9,10 @@ module.exports = {
 
   inputs: {
 
+    lessonId: {
+      type: 'string'
+    }
+
   },
 
 
@@ -28,14 +32,17 @@ module.exports = {
       // credentials and bucket defined above
       , adapter = require('skipper-better-s3')(options);
 
-    // Assuming there is a directory named 'avatars' in your bucket root...
-    let data = [];
-    await adapter.ls('', (err, files) => {
-      // files is now an array of paths, relative to the given directory name
-      console.log(files);
-      data = files;
+    return new Promise((resolve, reject) => {
+      adapter.ls(inputs.lessonId, (err, files) => {
+        let returnData = [];
+        files = files.filter(file => file.length > 0);
+        files.forEach(file => {
+          if (file.length > 0) {
+            returnData.push('https://chinesepod-recap.s3.amazonaws.com/' + inputs.lessonId + '/' + file)
+          }
+        });
+        resolve(returnData);
+      });
     });
-    console.log(data);
-    return data;
   }
 };

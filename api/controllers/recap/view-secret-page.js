@@ -6,6 +6,14 @@ module.exports = {
 
   description: 'Display "Recap lessons" page.',
 
+  inputs: {
+    level: {
+      type: 'string'
+    },
+    days: {
+      type: 'number'
+    }
+  },
 
   exits: {
 
@@ -16,11 +24,12 @@ module.exports = {
   },
 
 
-  fn: async function () {
+  fn: async function (inputs) {
 
     //Return view
     return {
-      days: this.req.param('days', '')
+      days: this.req.param('days', ''),
+      level: inputs.level
     };
   }
 
