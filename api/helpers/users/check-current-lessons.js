@@ -29,11 +29,17 @@ module.exports = {
 
     let time = new Date(Date.now() - 6 * 60 * 60 * 1000);
 
-    let users = (await BackupLogging.getDatastore().sendNativeQuery(`
-    select distinct log.accesslog_user from chinesepod_logging.cp_accesslog log where log.accesslog_time > $1 and log.accesslog_user != 'NONE'
-    `, time.toISOString()))['rows'];
+    let users = await Logging.find({
+      createdAt: {
+        '>': time
+      },
+      id: {
+        '!=': 'NONE'
+      }
+    })
+      .select(['id']);
 
-    sails.log.info(users);
+    users = [...new Set(users.map(user => user.id))];
 
     users.forEach(user => userInfoQueue.add('SetCurrentLesson', {email: user}, {attempts: 2, timeout: 120000}))
 
