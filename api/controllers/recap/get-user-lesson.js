@@ -92,25 +92,25 @@ module.exports = {
       userInfoQueue.add('SetCurrentLesson', {email: user.email}, {attempts: 2, timeout: 240000});
     }
 
-    if (!latestStudiedLesson) {
-      latestStudiedLesson = await sails.helpers.users.getUserCurrentLessonFromLogs(user.email, 1);
-    }
-
-    if (!latestStudiedLesson) {
-      latestStudiedLesson = await sails.helpers.users.getUserCurrentLessonFromLogs(user.email, 3);
-    }
-
-    if (!latestStudiedLesson) {
-      latestStudiedLesson = await sails.helpers.users.getUserCurrentLessonFromLogs(user.email, 7);
-    }
-
-    if (!latestStudiedLesson) {
-      latestStudiedLesson = await sails.helpers.users.getUserCurrentLessonFromLogs(user.email, 14);
-    }
-
-    if (!latestStudiedLesson) {
-      latestStudiedLesson = await sails.helpers.users.getUserCurrentLessonFromLogs(user.email, 30);
-    }
+    // if (!latestStudiedLesson) {
+    //   latestStudiedLesson = await sails.helpers.users.getUserCurrentLessonFromLogs(user.email, 1);
+    // }
+    //
+    // if (!latestStudiedLesson) {
+    //   latestStudiedLesson = await sails.helpers.users.getUserCurrentLessonFromLogs(user.email, 3);
+    // }
+    //
+    // if (!latestStudiedLesson) {
+    //   latestStudiedLesson = await sails.helpers.users.getUserCurrentLessonFromLogs(user.email, 7);
+    // }
+    //
+    // if (!latestStudiedLesson) {
+    //   latestStudiedLesson = await sails.helpers.users.getUserCurrentLessonFromLogs(user.email, 14);
+    // }
+    //
+    // if (!latestStudiedLesson) {
+    //   latestStudiedLesson = await sails.helpers.users.getUserCurrentLessonFromLogs(user.email, 30);
+    // }
 
     if (!latestStudiedLesson){
       return {
