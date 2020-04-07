@@ -77,7 +77,11 @@ module.exports = {
 
       }
 
-      if (sails.config.custom.coreMarkets.includes(this.req.location) && sails.config.custom.coreFreeMonths.includes(currentDate.getMonth())) {
+      if (userData.email.split('@')[1] === 'chinesepod.com') {
+
+        access = 'premium'
+
+      } else if (sails.config.custom.coreMarkets.includes(this.req.location) && sails.config.custom.coreFreeMonths.includes(currentDate.getMonth())) {
 
         access = 'premium'
 
@@ -108,10 +112,6 @@ module.exports = {
         canDismiss: true,
         upgradePath: 2 // 3 , 2 , 1
       };
-
-    } else if (userData.email.split('@')[1] === 'chinesepod.com') {
-
-      access = 'premium'
 
     }
 
