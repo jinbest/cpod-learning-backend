@@ -34,6 +34,7 @@ module.exports = {
     `, time))['rows'];
 
     sails.log.info(users);
+    sails.log.info(time);
 
     users.forEach(user => userInfoQueue.add('SetCurrentLesson', {email: user}, {attempts: 2, timeout: 120000}))
 
