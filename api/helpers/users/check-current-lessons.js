@@ -31,10 +31,9 @@ module.exports = {
 
     let users = (await Logging.getDatastore().sendNativeQuery(`
     select distinct log.accesslog_user from chinesepod_logging.cp_accesslog log where log.accesslog_time > $1 and log.accesslog_user != 'NONE'
-    `, time))['rows'];
+    `, time.toISOString()))['rows'];
 
     sails.log.info(users);
-    sails.log.info(time);
 
     users.forEach(user => userInfoQueue.add('SetCurrentLesson', {email: user}, {attempts: 2, timeout: 120000}))
 
