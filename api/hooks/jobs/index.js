@@ -32,7 +32,7 @@ module.exports = function defineJobsHook(sails) {
           sails.log.info('loggingQueue ready!');
         });
         loggingQueue.on('failed', (job, e) => {
-          sails.log.error('loggingQueue failed:', job.id, e);
+          // sails.log.error('loggingQueue failed:', job.id, e);
         });
 
         loggingQueue.process('Logging Requests', 5, async function (job, done) {
@@ -66,7 +66,7 @@ module.exports = function defineJobsHook(sails) {
 
         });
         loggingQueue.clean(1000);
-        loggingQueue.clean(1000, 'failed');
+        // loggingQueue.clean(1000, 'failed');
 
         global.loggingQueue = loggingQueue;
 
@@ -80,7 +80,7 @@ module.exports = function defineJobsHook(sails) {
           sails.log.info('userInfoQueue ready!');
         });
         userInfoQueue.on('failed', (job, e) => {
-          sails.log.error('userInfoQueue failed:', job.id, e);
+          // sails.log.error('userInfoQueue failed:', job.id, e);
         });
         userInfoQueue.on('completed', (job, result) => {
           sails.log.info('userInfoQueue job finished:', job.data.id ? job.data.id : job.data.email, result ? result : '');
@@ -408,7 +408,7 @@ module.exports = function defineJobsHook(sails) {
         global.userInfoQueue = userInfoQueue;
 
         userInfoQueue.clean(1000);
-        userInfoQueue.clean(1000, 'failed');
+        // userInfoQueue.clean(1000, 'failed');
 
         done()
       })

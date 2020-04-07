@@ -28,8 +28,7 @@ module.exports.apianalytics = {
         },
         {
           attempts: 2,
-          timeout: 120000,
-          removeOnComplete: true
+          timeout: 120000
         }
       );
     }
