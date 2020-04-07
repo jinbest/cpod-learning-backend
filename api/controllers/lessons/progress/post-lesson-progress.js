@@ -52,8 +52,8 @@ module.exports = {
         'LogProgress',
         inputs,
         {
-          attempts: 2,
-          timeout: 30000
+          attempts: 3,
+          timeout: 60000
       });
 
     } else {
