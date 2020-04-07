@@ -408,8 +408,6 @@ module.exports = function defineJobsHook(sails) {
         global.userInfoQueue = userInfoQueue;
 
         userInfoQueue.clean(1000);
-        // userInfoQueue.clean(1000, 'failed');
-
         done()
       })
     },
