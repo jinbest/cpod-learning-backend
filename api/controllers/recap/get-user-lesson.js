@@ -82,14 +82,18 @@ module.exports = {
       }
     }
 
-    let latestStudiedLesson = (await UserOptions.findOne({user_id: user.id, option_key: 'currentLesson'}))['option_value'];
+    let latestStudiedLesson = false;
+
+    let currentLesson = await UserOptions.findOne({user_id: user.id, option_key: 'currentLesson'});
+
+    if (currentLesson) {
+      latestStudiedLesson = currentLesson['option_value']
+    } else {
+      userInfoQueue.add('SetCurrentLesson', {email: user.email}, {attempts: 2, timeout: 240000});
+    }
 
     if (!latestStudiedLesson) {
-
       latestStudiedLesson = await sails.helpers.users.getUserCurrentLessonFromLogs(user.email, 1);
-
-      userInfoQueue.add('SetCurrentLesson', {email: user.email}, {attempts: 2, timeout: 240000});
-
     }
 
     if (!latestStudiedLesson) {
