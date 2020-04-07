@@ -12,15 +12,21 @@ if (process.env.NODE_ENV !== 'production' || sails.config.environment === 'stagi
     await sails.helpers.search.reindexLessons();
     await sails.helpers.search.reindexCourses();
   });
-  // triggerQueue.add('ReindexLessons', {data: 'Reindex Lessons Once a Day'}, {repeat: {cron: '0 0 * * *'}});
 
   triggerQueue.process('ReindexSentences', 1, async function () {
     await sails.helpers.search.reindexSentences();
   });
-  // triggerQueue.add('ReindexSentences', {data: 'Reindex Lessons Once a Day'}, {repeat: {cron: '0 1 * * *'}});
 
   triggerQueue.process('NewLessonNotifications', 1, async function () {
     await sails.helpers.notifications.newLesson();
   });
+
+  triggerQueue.process('UpdateUserCurrentLessons', 1, async  function () {
+    await sails.helpers.users.checkCurrentLessons();
+  });
+
   triggerQueue.add('NewLessonNotifications', {data: 'Check Lessons Every 15 min'}, {repeat: {every: 15 * 60 * 1000}});
+
+  triggerQueue.add('UpdateUserCurrentLessons', {data: 'Check Lessons Every 60 min'}, {repeat: {every: 60 * 60 * 1000}});
+
 }

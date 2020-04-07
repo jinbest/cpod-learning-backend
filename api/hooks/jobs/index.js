@@ -83,7 +83,7 @@ module.exports = function defineJobsHook(sails) {
           sails.log.error('userInfoQueue failed:', job.id, e);
         });
         userInfoQueue.on('completed', (job, result) => {
-          sails.log.info('userInfoQueue job finished:', job.data.id ? job.data.id : job.data.email, result);
+          sails.log.info('userInfoQueue job finished:', job.data.id ? job.data.id : job.data.email, result ? result : '');
           cleanupQueue.add(job, {
             jobId: job.id,
             // delete job after one hour
@@ -369,6 +369,40 @@ module.exports = function defineJobsHook(sails) {
           let inputs = job.data;
           await sails.helpers.lessons.logProgress.with({userId: inputs.userId, lessonId: inputs.lessonId, track: inputs.track, progress: inputs.progress, source: inputs.source});
           done()
+        });
+
+        userInfoQueue.process('SetCurrentLesson', 20, async function (job) {
+
+          let email = job.data.email;
+
+          let latestStudiedLesson = await sails.helpers.users.getUserCurrentLessonFromLogs(email, 1);
+
+          if (!latestStudiedLesson) {
+            latestStudiedLesson = await sails.helpers.users.getUserCurrentLessonFromLogs(email, 3);
+          }
+
+          if (!latestStudiedLesson) {
+            latestStudiedLesson = await sails.helpers.users.getUserCurrentLessonFromLogs(email, 7);
+          }
+
+          if (!latestStudiedLesson) {
+            latestStudiedLesson = await sails.helpers.users.getUserCurrentLessonFromLogs(email, 14);
+          }
+
+          if (!latestStudiedLesson) {
+            latestStudiedLesson = await sails.helpers.users.getUserCurrentLessonFromLogs(email, 30);
+          }
+
+          if (latestStudiedLesson) {
+
+            let userData = await User.findOne({email: email});
+
+            job.data.userId = userData.id;
+
+            await sails.helpers.users.setCurrentLesson.with({userId: job.data.userId, lessonId: latestStudiedLesson})
+
+          }
+
         });
 
         global.userInfoQueue = userInfoQueue;
