@@ -82,7 +82,13 @@ module.exports = {
       }
     }
 
-    let latestStudiedLesson = await sails.helpers.users.getUserCurrentLessonFromLogs(user.email, 1);
+    let latestStudiedLesson = (await UserOptions.findOne({user_id: user.id, option_key: 'currentLesson'}))['option_value'];
+
+    let currentLessonSet = !!latestStudiedLesson;
+
+    if (!latestStudiedLesson) {
+      latestStudiedLesson = await sails.helpers.users.getUserCurrentLessonFromLogs(user.email, 1);
+    }
 
     if (!latestStudiedLesson) {
       latestStudiedLesson = await sails.helpers.users.getUserCurrentLessonFromLogs(user.email, 3);
@@ -147,10 +153,11 @@ module.exports = {
 
     client.end(true);
 
-    await Promise.all(
-      await sails.helpers.users.setCurrentLesson(user.id, latestStudiedLesson),
-      await UserOptions.updateOrCreate({user_id: user.id, option_key: 'recapApp'}, {user_id: user.id, option_key: 'recapApp', option_value: new Date()})
-    );
+    if (!currentLessonSet) {
+      await sails.helpers.users.setCurrentLesson(user.id, latestStudiedLesson);
+    }
+
+    await UserOptions.updateOrCreate({user_id: user.id, option_key: 'recapApp'}, {user_id: user.id, option_key: 'recapApp', option_value: new Date()});
 
     return returnData
 
