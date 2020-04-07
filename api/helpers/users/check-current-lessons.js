@@ -29,7 +29,7 @@ module.exports = {
 
     let time = new Date(Date.now() - 6 * 60 * 60 * 1000);
 
-    let users = await Logging.find({
+    let users = await BackupLogging.find({
       createdAt: {
         '>': time
       },
