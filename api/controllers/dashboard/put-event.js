@@ -52,8 +52,8 @@ module.exports = {
         'event_label': inputs.event_label,
         'timestamp': new Date()
       },{
-        attempts: 2,
-        timeout: 10000
+        attempts: 3,
+        timeout: 60000
       })
 
     }
