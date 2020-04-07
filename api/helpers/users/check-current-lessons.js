@@ -29,7 +29,7 @@ module.exports = {
 
     let time = new Date(Date.now() - 6 * 60 * 60 * 1000);
 
-    let users = (await Logging.getDatastore().sendNativeQuery(`
+    let users = (await BackupLogging.getDatastore().sendNativeQuery(`
     select distinct log.accesslog_user from chinesepod_logging.cp_accesslog log where log.accesslog_time > $1 and log.accesslog_user != 'NONE'
     `, time.toISOString()))['rows'];
 
