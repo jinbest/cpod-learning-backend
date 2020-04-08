@@ -161,7 +161,9 @@ module.exports.routes = {
 
   //DOCS
   'GET /api-docs-old/:unused?':                          'SwaggerOldController.serve',
-  'GET /api-docs/:unused?':                              'SwaggerController.serve',
+  // 'GET /api-docs/:unused?':                              'SwaggerController.serve',
+  '/swagger-old/':                                       '/api-docs-old',
+  // '/swagger/':                                           '/api-docs',
 
   //ADMIN PAGES
   //ACCESS VOUCHER CODES
@@ -174,7 +176,7 @@ module.exports.routes = {
 
   //MARKETING PAGES
   'GET /marketing/campaign-performance/:code':           {action: 'marketing/view-campaign-performance'},
-  'GET /marketing/campaign-performance-all':           {action: 'marketing/view-campaign-performance'},
+  'GET /marketing/campaign-performance-all':             {action: 'marketing/view-campaign-performance'},
 
   //EMAIL MARKETING PAGES
   'GET /unsubscribe/:token':                             { action: 'email/unsubscribe'},
