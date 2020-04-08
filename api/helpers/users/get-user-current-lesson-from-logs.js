@@ -37,7 +37,7 @@ module.exports = {
 
     sails.log.info(`Fetching logs for ${window} days`);
 
-    let latestLesson = await Logging.find({
+    let latestLesson = await BackupLogging.find({
       where: {
         id: email,
         accesslog_urlbase: {
@@ -56,7 +56,7 @@ module.exports = {
       limit: 1
     });
 
-    let latestJSLesson = await Logging.find({
+    let latestJSLesson = await BackupLogging.find({
       where: {
         id: email,
         accesslog_urlbase: 'https://www.chinesepod.com/api/v1/lessons/get-dialogue',
