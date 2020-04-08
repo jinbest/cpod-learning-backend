@@ -65,14 +65,13 @@ module.exports = {
 
       await sails.hooks.elastic.client.index({index: index.elasticIndex, body: indexRecord}, (error, response) => {
         if (error) {
-          sails.log.error(error);
           reject(error);
         } else {
           resolve(response)
         }
-      });
+      })
 
-    });
+    }).catch(e => sails.log.error(e))
   }
 
 

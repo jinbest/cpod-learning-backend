@@ -44,6 +44,6 @@ module.exports.policies = {
 
   'lessons/progress/post-lesson-progress': true,
 
-  SwaggerOldController: {'*': 'is-staff'},
+  // SwaggerOldController: {'*': 'is-staff'},
 
 };
