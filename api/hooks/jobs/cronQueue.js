@@ -27,6 +27,6 @@ if (process.env.NODE_ENV !== 'production' || sails.config.environment === 'stagi
 
   triggerQueue.add('NewLessonNotifications', {data: 'Check Lessons Every 15 min'}, {repeat: {every: 15 * 60 * 1000}});
 
-  triggerQueue.add('UpdateUserCurrentLessons', {data: 'Check Lessons Every 30 min'}, {repeat: {every: 30 * 60 * 1000}});
+  triggerQueue.add('UpdateUserCurrentLessons', {data: 'Check Lessons Every 180 min'}, {repeat: {every: 3 * 60 * 60 * 1000}});
 
 }
