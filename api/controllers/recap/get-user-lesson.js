@@ -88,6 +88,13 @@ module.exports = {
 
     if (currentLesson) {
       latestStudiedLesson = currentLesson['option_value']
+
+      if (currentLesson['updatedAt'] < new Date(Date.now() - 60 * 60 * 1000)) {
+
+        userInfoQueue.add('SetCurrentLesson', {email: user.email}, {attempts: 2, timeout: 240000});
+
+      }
+
     } else {
       userInfoQueue.add('SetCurrentLesson', {email: user.email}, {attempts: 2, timeout: 240000});
     }

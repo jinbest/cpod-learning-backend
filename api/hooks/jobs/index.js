@@ -371,7 +371,7 @@ module.exports = function defineJobsHook(sails) {
           done()
         });
 
-        userInfoQueue.process('SetCurrentLesson', 20, async function (job) {
+        userInfoQueue.process('SetCurrentLesson', 1, async function (job) {
 
           let email = job.data.email;
 
