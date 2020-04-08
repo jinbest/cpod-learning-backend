@@ -87,7 +87,7 @@ module.exports = {
     }
 
     await sails.hooks.elastic.client.index({index: index.elasticIndex, body: indexRecord})
-      .catch(error => sails.helpers.bugsnag.notify(error))
+      .catch(error => sails.hooks.bugsnag.notify(error))
   }
 };
 
