@@ -112,50 +112,56 @@ module.exports = {
     //   latestStudiedLesson = await sails.helpers.users.getUserCurrentLessonFromLogs(user.email, 30);
     // }
 
+    let returnData;
+
     if (!latestStudiedLesson){
-      return {
+
+      client.end(true);
+
+      returnData = {
         message: 'No Lesson Available',
         lessonId: `0000`,
         emailAddress: session.email,
       }
-    }
+    } else {
 
-    //Select User CharSet
-    let userSettings = await UserSettings.findOne({user_id: user.id});
+      let userSettings = await UserSettings.findOne({user_id: user.id});
 
-    let charSet = 'simplified';
+      let charSet = 'simplified';
 
-    try {
-      let rawChar = userSettings.setting.split('"ctype";i:')[1].slice(0,1);
-      if (rawChar == 2) {
-        charSet = 'traditional';
+      try {
+        let rawChar = userSettings.setting.split('"ctype";i:')[1].slice(0,1);
+        if (rawChar == 2) {
+          charSet = 'traditional';
+        }
+
+      } catch (e) {
+        await sails.helpers.users.setCharSet(user.id, charSet);
       }
 
-    } catch (e) {
-      await sails.helpers.users.setCharSet(user.id, charSet);
+      let content = await Contents.findOne({v3_id: latestStudiedLesson});
+      let lessonImg = '';
+      if (content) {
+        lessonImg = content.type === 'lesson'
+          ? `https://s3contents.chinesepod.com/${content.v3_id}/${content.hash_code}/${content.image}`
+          : `https://s3contents.chinesepod.com/extra/${content.v3_id}/${content.hash_code}/${content.image}`;
+      }
+
+      let access = await sails.helpers.users.getAccessType(user.id);
+
+      returnData = {
+        lessonTitle: content ? content.title : 'ChinesePod Lesson',
+        lessonId: latestStudiedLesson,
+        lessonImg: lessonImg,
+        emailAddress: session.email,
+        charSet: charSet,
+        subscription: access ? access : 'Free',
+        timestamp: new Date()
+      };
+
+      client.set(user.email, JSON.stringify(returnData));
+
     }
-
-    let content = await Contents.findOne({v3_id: latestStudiedLesson});
-    let lessonImg = '';
-    if (content) {
-      lessonImg = content.type === 'lesson'
-        ? `https://s3contents.chinesepod.com/${content.v3_id}/${content.hash_code}/${content.image}`
-        : `https://s3contents.chinesepod.com/extra/${content.v3_id}/${content.hash_code}/${content.image}`;
-    }
-
-    let access = await sails.helpers.users.getAccessType(user.id);
-
-    let returnData = {
-      lessonTitle: content ? content.title : 'ChinesePod Lesson',
-      lessonId: latestStudiedLesson,
-      lessonImg: lessonImg,
-      emailAddress: session.email,
-      charSet: charSet,
-      subscription: access ? access : 'Free',
-      timestamp: new Date()
-    };
-
-    client.set(user.email, JSON.stringify(returnData));
 
     client.end(true);
 
