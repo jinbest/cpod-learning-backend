@@ -27,7 +27,7 @@ module.exports = {
 
     sails.log.info(inputs);
 
-    let ipData = {};
+    let ipData;
     const date = new Date();
 
     if (inputs.data.access_ip && inputs.data.access_ip !== '::1') {
@@ -54,24 +54,21 @@ module.exports = {
       idColumn: 'userId'
     };
 
-    await new Promise(async (resolve, reject) => {
+    let indexRecord = {};
 
-      let indexRecord = {};
+    index.elasticRecord.forEach(key => {
+      indexRecord[key] = inputs.data[key];
+    });
 
-      index.elasticRecord.forEach(key => {
-        indexRecord[key] = inputs.data[key];
-      });
+    if (ipData) {
       indexRecord['geoip'] = ipData;
+    }
 
-      await sails.hooks.elastic.client.index({index: index.elasticIndex, body: indexRecord}, (error, response) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(response)
-        }
-      })
+    sails.log.info(indexRecord);
 
-    }).catch(e => sails.log.error(e))
+    await sails.hooks.elastic.client.index({index: index.elasticIndex, body: indexRecord})
+      .catch(error => sails.helpers.bugsnag.notify(error))
+
   }
 
 

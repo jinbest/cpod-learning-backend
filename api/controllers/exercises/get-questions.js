@@ -54,7 +54,6 @@ module.exports = {
         case 2:
           question.question = {segments: []};
           question.options.type_b.data.section.forEach((segment, index) => {
-            // question.question.segments[index] = {...question.question.segments[index],...{}}
             question.question.segments.push({
               s: segment.prototype['_text'],
               t: question.options_2.type_b.data.section[index].prototype['_text'],

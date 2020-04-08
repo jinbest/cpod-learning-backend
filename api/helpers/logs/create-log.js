@@ -26,7 +26,7 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    let ipData = {};
+    let ipData;
 
     if (inputs.data.access_ip && inputs.data.access_ip !== '::1') {
       const geoip = require('geoip-lite');
@@ -74,27 +74,20 @@ module.exports = {
       idColumn: 'email'
     };
 
-    await new Promise(async (resolve, reject) => {
+    let indexRecord = {};
 
-      let indexRecord = {};
+    inputs.data.email = inputs.data.id;
 
-      inputs.data.email = inputs.data.id;
+    index.elasticRecord.forEach(key => {
+      indexRecord[key] = inputs.data[key];
+    });
 
-      index.elasticRecord.forEach(key => {
-        indexRecord[key] = inputs.data[key];
-      });
+    if (ipData) {
       indexRecord['geoip'] = ipData;
+    }
 
-      await sails.hooks.elastic.client.index({index: index.elasticIndex, body: indexRecord}, (error, response) => {
-        if (error) {
-          sails.log.error(error);
-          reject(error);
-        } else {
-          resolve(response)
-        }
-      });
-
-    }).catch(e => sails.log.error(e));
+    await sails.hooks.elastic.client.index({index: index.elasticIndex, body: indexRecord})
+      .catch(error => sails.helpers.bugsnag.notify(error))
   }
 };
 
