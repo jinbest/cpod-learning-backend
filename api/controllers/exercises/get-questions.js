@@ -31,9 +31,8 @@ module.exports = {
     // All done.
     let lessonQuestions = await Questions.find({scope: inputs.lessonId, product_id: 1, status: 1});
 
-
-    try {
-      lessonQuestions.forEach((question) => {
+    lessonQuestions.forEach((question) => {
+      try {
         question.options = convert.xml2js(question.options, {compact: true, ignoreAttributes: true});
         question.options_2 = convert.xml2js(question.options_2, {compact: true, ignoreAttributes: true});
         question.options_3 = convert.xml2js(question.options_3, {compact: true, ignoreAttributes: true});
@@ -104,10 +103,10 @@ module.exports = {
             });
             break;
         }
-      });
-    } catch (e) {
-      sails.log.error(e)
-    }
+      } catch (e) {
+        sails.log.error(e)
+      }
+    });
     lessonQuestions = lessonQuestions.map((question) => {return _.pick(question, ['id', 'scope', 'score', 'type_id', 'status', 'question', 'answer', 'createdAt'])});
 
     return {
