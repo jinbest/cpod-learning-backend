@@ -19,33 +19,26 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    let addIDs = sails.config.custom.prerollAndroidURLs;
+    let adIDs = sails.config.custom.prerollAndroidURLs;
 
-    let addURL = addIDs[Math.floor(Math.random() * addIDs.length)];
+    let adURL = adIDs[Math.floor(Math.random() * adIDs.length)];
+
+    let eventData = {
+      'userId': this.req.session.userId ? this.req.session.userId : 'NONE',
+      'email': this.req.me ? this.req.me.email : 'NONE',
+      'sessionId': this.req.session.id,
+      'access_ip': this.req.ip,
+      'action': 'show_mobile_preroll_ad',
+      'event_category': 'advertising',
+      'event_label': `Play Mobile Preroll Ad ${adURL}`,
+      'timestamp': new Date()
+    };
 
     if (sails.config.environment === 'development') {
-      await sails.helpers.logs.createEvent({
-        'userId': this.req.session.userId ? this.req.session.userId : 'NONE',
-        'email': this.req.me ? this.req.me.email : 'NONE',
-        'sessionId': this.req.session.id,
-        'access_ip': this.req.ip,
-        'action': 'show_mobile_preroll_ad',
-        'event_category': 'advertising',
-        'event_label': `Play Mobile Preroll Ad ${addURL}`,
-        'timestamp': new Date()
-      });
+      await sails.helpers.logs.createEvent(eventData);
     } else {
 
-      userInfoQueue.add('LogEvent', {
-        'userId': this.req.session.userId ? this.req.session.userId : 'NONE',
-        'email': this.req.me ? this.req.me.email : 'NONE',
-        'sessionId': this.req.session.id,
-        'access_ip': this.req.ip,
-        'action': 'show_mobile_preroll_ad',
-        'event_category': 'advertising',
-        'event_label': `Play Mobile Preroll Ad ${addURL}`,
-        'timestamp': new Date()
-      },{
+      userInfoQueue.add('LogEvent', eventData,{
         attempts: 3,
         timeout: 60000
       })
@@ -65,7 +58,7 @@ module.exports = {
                         <Duration>00:00:15</Duration>
                         <MediaFiles>
                             <MediaFile id="GDFP" delivery="progressive" width="1280" height="720" type="video/mp4" bitrate="533" scalable="true" maintainAspectRatio="true">
-                                <![CDATA[${addURL}]]>
+                                <![CDATA[${adURL}]]>
                             </MediaFile>
                         </MediaFiles>
                     </Linear>
