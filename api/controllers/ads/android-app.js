@@ -19,6 +19,9 @@ module.exports = {
 
   fn: function (inputs) {
 
+    let addIDs = sails.config.custom.prerollAndroidURLs;
+
+    let addURL = addIDs[Math.floor(Math.random() * addIDs.length)];
 
     const adObject = `<VAST xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vast.xsd" version="3.0">
     <Ad id="6972004961">
@@ -33,7 +36,7 @@ module.exports = {
                         <Duration>00:03:06</Duration>
                         <MediaFiles>
                             <MediaFile id="GDFP" delivery="progressive" width="1280" height="720" type="video/mp4" bitrate="533" scalable="true" maintainAspectRatio="true">
-                                <![CDATA[http://embed.wistia.com/deliveries/ad2c327bb68922ccec498c30db33cc6c302135f4.bin]]>
+                                <![CDATA[${addURL}]]>
                             </MediaFile>
                         </MediaFiles>
                     </Linear>

@@ -122,8 +122,16 @@ module.exports.custom = {
   // prerollAdId: ['p5yrv7huyo', 'sa5v4h9bm7'],
   prerollAdId: ['60qooe3gep', '2s3nnjmvz0', 'brmum6248y', 'mk2s8ktsnh', 'yg33tm12mm', '61ti28a28x'],
   upgradeLink: '/upgrade',
-  // coreFreeMonths: [],
-  // nonCoreFreeMonths: [],
+
+  prerollAndroidURLs: [
+    'http://embed.wistia.com/deliveries/e8f4ee6f5f56c1e812f3fbea73c2bfd60981ba9a.bin',
+    'http://embed.wistia.com/deliveries/35fbac664982dae4010463ce92540e4085373090.bin',
+    'http://embed.wistia.com/deliveries/880472027ad3e0856859ea0ac65d2afb58e1e0d4.bin',
+    'http://embed.wistia.com/deliveries/909448a028c4c92c20fe40d42766b0afccc71097.bin',
+    'http://embed.wistia.com/deliveries/b94c8551aa2e09d212ed9013801d99c2f137c9b3.bin',
+    'http://embed.wistia.com/deliveries/c80b34f4f3a9dd5e0dfa983ed0949f3bfa866d6a.bin',
+  ],
+
   overrideWindow: false,  // TODO add a time window constraint as needed
 
   // EXTERNAL DEVS
