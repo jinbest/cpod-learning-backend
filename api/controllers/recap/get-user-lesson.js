@@ -91,12 +91,12 @@ module.exports = {
 
       if (currentLesson['updatedAt'] < new Date(Date.now() - 60 * 60 * 1000)) {
 
-        userInfoQueue.add('SetCurrentLesson', {email: user.email}, {attempts: 2, timeout: 600000});
+        userInfoQueue.add('SetCurrentLesson', {email: user.email}, {jobId: `SetCurrentLesson-${user.email}`, attempts: 2, timeout: 600000, removeOnComplete: true});
 
       }
 
     } else {
-      userInfoQueue.add('SetCurrentLesson', {email: user.email}, {attempts: 2, timeout: 600000});
+      userInfoQueue.add('SetCurrentLesson', {email: user.email}, {jobId: `SetCurrentLesson-${user.email}`, attempts: 2, timeout: 600000, removeOnComplete: true});
     }
 
     // if (!latestStudiedLesson) {
