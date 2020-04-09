@@ -350,7 +350,7 @@ module.exports = function defineJobsHook(sails) {
         //                  //
         // USER EVENT QUEUE //
         //                  //
-        userInfoQueue.process('LogEvent', 20, async function (job, done) {
+        userInfoQueue.process('LogEvent', 5, async function (job, done) {
           if (!job.data) {
             done(null, 'No job data')
           }
@@ -361,7 +361,7 @@ module.exports = function defineJobsHook(sails) {
         //                     //
         // USER PROGRESS QUEUE //
         //                     //
-        userInfoQueue.process('LogProgress', 20, async function (job, done) {
+        userInfoQueue.process('LogProgress', 5, async function (job, done) {
           if (!job.data) {
             done(null, 'No job data')
           }
