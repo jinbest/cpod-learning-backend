@@ -162,7 +162,8 @@ module.exports = {
         lessonImg: lessonImg,
         emailAddress: session.email,
         charSet: charSet,
-        subscription: access ? access : 'Free',
+        subscription: access ? access : 'free',
+        adv: user.createdAt < new Date(Date.now() - 365.25 * 24 * 60 * 60 * 1000) && access === 'free',
         timestamp: new Date()
       };
 
