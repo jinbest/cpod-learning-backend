@@ -87,43 +87,22 @@ module.exports = {
     let currentLesson = await UserOptions.findOne({user_id: user.id, option_key: 'currentLesson'});
 
     if (currentLesson) {
+
       latestStudiedLesson = currentLesson['option_value']
 
       if (currentLesson['updatedAt'] < new Date(Date.now() - 60 * 60 * 1000)) {
 
-        userInfoQueue.add('SetCurrentLesson', {email: user.email}, {jobId: `SetCurrentLesson-${user.email}`, attempts: 2, timeout: 600000, removeOnComplete: true});
+        userInfoQueue.add('SetCurrentLesson', {email: user.email}, {jobId: `SetCurrentLesson-${user.email}`, attempts: 2, timeout: 600000, removeOnComplete: true, removeOnFail: true});
 
       }
 
     } else {
-      userInfoQueue.add('SetCurrentLesson', {email: user.email}, {jobId: `SetCurrentLesson-${user.email}`, attempts: 2, timeout: 600000, removeOnComplete: true});
+      userInfoQueue.add('SetCurrentLesson', {email: user.email}, {jobId: `SetCurrentLesson-${user.email}`, attempts: 2, timeout: 600000, removeOnComplete: true, removeOnFail: true});
     }
-
-    // if (!latestStudiedLesson) {
-    //   latestStudiedLesson = await sails.helpers.users.getUserCurrentLessonFromLogs(user.email, 1);
-    // }
-    //
-    // if (!latestStudiedLesson) {
-    //   latestStudiedLesson = await sails.helpers.users.getUserCurrentLessonFromLogs(user.email, 3);
-    // }
-    //
-    // if (!latestStudiedLesson) {
-    //   latestStudiedLesson = await sails.helpers.users.getUserCurrentLessonFromLogs(user.email, 7);
-    // }
-    //
-    // if (!latestStudiedLesson) {
-    //   latestStudiedLesson = await sails.helpers.users.getUserCurrentLessonFromLogs(user.email, 14);
-    // }
-    //
-    // if (!latestStudiedLesson) {
-    //   latestStudiedLesson = await sails.helpers.users.getUserCurrentLessonFromLogs(user.email, 30);
-    // }
 
     let returnData;
 
     if (!latestStudiedLesson){
-
-      client.end(true);
 
       returnData = {
         message: 'No Lesson Available',
