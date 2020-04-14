@@ -83,13 +83,13 @@ module.exports = function defineJobsHook(sails) {
           // sails.log.error('userInfoQueue failed:', job.id, e);
         });
         userInfoQueue.on('completed', (job, result) => {
-          sails.log.info('userInfoQueue job finished:', job.data.id ? job.data.id : job.data.email, result ? result : '');
-          cleanupQueue.add(job, {
-            jobId: job.id,
-            // delete job after one hour
-            delay: 1000 * 60 * 60,
-            removeOnComplete: true
-          });
+          // sails.log.info('userInfoQueue job finished:', job.data.id ? job.data.id : job.data.email, result ? result : '');
+          // cleanupQueue.add(job, {
+          //   jobId: job.id,
+          //   // delete job after one hour
+          //   delay: 1000 * 60 * 60,
+          //   removeOnComplete: true
+          // });
         });
 
         cleanupQueue.process(async job => {
