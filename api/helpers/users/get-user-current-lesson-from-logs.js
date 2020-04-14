@@ -103,6 +103,8 @@ module.exports = {
       return false
     }
 
+    sails.log.info(latestStudiedLesson);
+
     return latestStudiedLesson
 
   }

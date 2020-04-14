@@ -86,10 +86,11 @@ module.exports = {
       indexRecord['geoip'] = ipData;
     }
 
-    await sails.hooks.elastic.client.index({index: index.elasticIndex, body: indexRecord})
+    return await sails.hooks.elastic.client.index({index: index.elasticIndex, body: indexRecord})
       .catch(error => {
-        sails.hooks.bugsnag.metaData = {index: indexRecord};
-        sails.hooks.bugsnag.notify(error)
+        return error
+        // sails.hooks.bugsnag.metaData = {index: indexRecord};
+        // sails.hooks.bugsnag.notify(error)
       })
   }
 };
