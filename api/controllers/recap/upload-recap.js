@@ -53,13 +53,16 @@ module.exports = {
         , region: 'us-east-1'
         , dirname: lessonId
         , ACL: 'public-read',
+        headers: {
+          'x-amz-acl': 'public-read'
+        },
         saveAs: function (__newFileStream, next) {
           sails.log.info(__newFileStream.filename);
           return next(undefined, __newFileStream.filename);
         }
       };
 
-    let uploadedFiles = await sails.uploadOne(files, options)
+    let uploadedFiles = await sails.upload(files, options)
       .intercept('E_EXCEEDS_UPLOAD_LIMIT', 'tooBig')
       .intercept((err)=>new Error('The photo upload failed: '+util.inspect(err)));
 
