@@ -1,7 +1,7 @@
 module.exports.swaggerConfig = {
   disable: true,
-  //   pathToGenerateFile: '/nirav/test/asb/xyz/',
-  //   fileName: 'swagger.json',
+  // pathToGenerateFile: '/api-docs',
+  // fileName: 'index.html',
   defaults: {
     pathsToIgnore: ['api/v1/'],
     responses: {
@@ -32,7 +32,7 @@ module.exports.swaggerConfig = {
       },
       version: "1.0.0"
     },
-    host: "staging.chinesepod.com",
+    host: "www.chinesepod.com",
     basePath: "/",
     schemes: [
       "https"
@@ -114,14 +114,5 @@ module.exports.swaggerConfig = {
     },
     paths: {},
     definitions: {},
-    // securityDefinitions: {
-    //   "Authorization": {
-    //     "type": "apiKey",
-    //     "description": "user JWT Auth Token",
-    //     "name": "Authorization",
-    //     "in": "header",
-    //     "flow": "password"
-    //   },
-    // }
   }
 };

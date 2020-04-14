@@ -163,8 +163,8 @@ module.exports.routes = {
   //DOCS
   'GET /api-docs-old/:unused?':                          'SwaggerOldController.serve',
   // 'GET /api-docs/:unused?':                              'SwaggerController.serve',
-  '/swagger-old/':                                       '/api-docs-old',
-  // '/swagger/':                                           '/api-docs',
+  '/swagger-old':                                       '/api-docs-old',
+  // '/swagger':                                           '/api-docs',
 
   //ADMIN PAGES
   //ACCESS VOUCHER CODES

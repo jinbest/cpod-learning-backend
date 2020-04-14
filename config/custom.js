@@ -135,6 +135,6 @@ module.exports.custom = {
   overrideWindow: false,  // TODO add a time window constraint as needed
 
   // EXTERNAL DEVS
-  developers: { rozkalns: { password: '1xHN9EncPdXpJsZWD3rf' }, dev01: { password: 'HCkuL69P9LM29zO3jptW'}, dev02: { password: 'TQ4jenvoBBx8nJgpoHGt'}}
+  developers: { rozkalns: { password: '1xHN9EncPdXpJsZWD3rf' }, team: {password: '84MZwlBgXtss5cOwKria'}, aprilDev: { password: 'HCkuL69P9LM29zO3jptW'}, mayDev: { password: 'TQ4jenvoBBx8nJgpoHGt'}, juneDev: { password: '2xACiGzDbIJlnEBO9FNU'}}
 
 };
