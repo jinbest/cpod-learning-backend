@@ -88,7 +88,8 @@ module.exports.routes = {
   'GET /explore/:unused?':                               'HomeController.serve',
   'GET /course/:unused?':                                'HomeController.serve',
   'GET /courses/:unused?':                               'HomeController.serve',
-  'GET /podcasts/:unused?':                              'PodcastsController.serve',
+  '/podcasts':                                           'https://chinesepod.co.uk/video/new-podcasts',
+  // 'GET /podcasts/:unused?':                              'PodcastsController.serve',
   // 'GET /dictionary/:unused?':                            'PodcastsController.serve',
 
 
@@ -233,15 +234,8 @@ module.exports.routes = {
   'POST /api/v1/paypal/execute':                         { action: 'purchase/paypal/paypal-execute' },
   'POST /api/v1/paypal/execute-checkout':                { action: 'purchase/paypal/paypal-execute-checkout' },
   'POST /api/v1/purchase/paypal/execute-gift-checkout': { action: 'purchase/paypal/paypal-execute-gift-checkout' },
-  // 'POST /api/v1/paypal/create-agreement':                { action: 'purchase/paypal/cancel' },
-  // 'POST /api/v1/paypal/process-agreement':               'PaypalController.cancel',
 
-  //Sample Routes
-  // '/api/v1/account/logout':                              { action: 'account/logout' },
-  // 'PUT   /api/v1/account/update-profile':                { action: 'account/update-profile' },
-  // 'PUT   /api/v1/account/update-billing-card':           { action: 'account/update-billing-card' },
-  // 'PUT   /api/v1/entrance/login':                        { action: 'entrance/login' },
-
+  // ENTRANCE
   'POST   /api/v1/placement/email-results':              { action: 'placement/email-results' },
   'POST  /api/v1/entrance/signup':                       { action: 'entrance/signup' },
   'POST  /api/v1/entrance/login':                        { action: 'entrance/login' },
@@ -252,9 +246,7 @@ module.exports.routes = {
   'POST  /api/v1/purchase/checkout/paypal/cancel':       { action: 'purchase/checkout' },
   'POST  /api/v1/purchase/check-promo':                  { action: 'purchase/check-promo' },
   'POST /api/v1/purchase/check-email':                   { action: 'purchase/check-email' },
-
   'PUT   /api/v1/account/update-options':                { action: 'account/update-options' },
-
   'POST /api/v1/account/subscriptions/update':           { action: 'account/subscription/update-card-details'},
   'POST /api/v1/account/subscriptions/cancel':           { action: 'account/subscription/cancel-stripe-details'},
   'GET /api/v1/account/subscription/subscriptions':      { action: 'account/subscription/get-subscriptions' },
