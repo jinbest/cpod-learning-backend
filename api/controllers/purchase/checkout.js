@@ -619,7 +619,7 @@ module.exports = {
             product_length: plans[inputs.plan][inputs.billingCycle].length,
             product_price: plans[inputs.plan][inputs.billingCycle].price,
             discount: discount ? discount : 0.00,
-            billed_amount: stripeSubscription && stripeSubscription['amount_paid'] ? stripeSubscription['amount_paid'] : 0,
+            billed_amount: stripeSubscription && stripeSubscription['amount_paid'] ? stripeSubscription['amount_paid'] / 100 : 0,
             promotion_code: inputs.promoCode ? inputs.promoCode : null,
             pay_status: 2,
             pay_method: 9,
