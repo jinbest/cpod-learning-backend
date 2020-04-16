@@ -88,7 +88,7 @@ module.exports = {
             user_id: userData.id,
             usertype_id: 7, //Free
             expiry: new Date().toISOString(),
-            signup_user_agent: this.req.headers['user-agent']
+            signup_user_agent: req.headers['user-agent']
           });
 
           //Google Analytics Call
@@ -226,7 +226,7 @@ module.exports = {
             user_id: userData.id,
             usertype_id: 7, //Free
             expiry: new Date().toISOString(),
-            signup_user_agent: this.req.headers['user-agent']
+            signup_user_agent: req.headers['user-agent']
           });
 
           //Google Analytics Call
