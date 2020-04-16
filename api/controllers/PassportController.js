@@ -87,7 +87,8 @@ module.exports = {
           await UserSiteLinks.create({
             user_id: userData.id,
             usertype_id: 7, //Free
-            expiry: new Date().toISOString()
+            expiry: new Date().toISOString(),
+            signup_user_agent: this.req.headers['user-agent']
           });
 
           //Google Analytics Call
@@ -224,7 +225,8 @@ module.exports = {
           await UserSiteLinks.create({
             user_id: userData.id,
             usertype_id: 7, //Free
-            expiry: new Date().toISOString()
+            expiry: new Date().toISOString(),
+            signup_user_agent: this.req.headers['user-agent']
           });
 
           //Google Analytics Call

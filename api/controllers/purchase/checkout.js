@@ -219,7 +219,8 @@ module.exports = {
       let newUserSite = await UserSiteLinks.create(_.extend({
         user_id: newUserRecord.id,
         usertype_id: 7, //Free
-        expiry: new Date().toISOString()
+        expiry: new Date().toISOString(),
+        signup_user_agent: this.req.headers['user-agent']
       }, inputs.optIn ? {
         academic_email: 1,
         activity_email: 1,
@@ -649,7 +650,8 @@ module.exports = {
           let userSiteLinks = await UserSiteLinks.updateOne({user_id:inputs.userId, site_id: 2})
             .set({
               usertype_id: plans[inputs.plan].id,
-              expiry: new Date(subscription['current_period_end'] * 1000).toISOString()
+              expiry: new Date(subscription['current_period_end'] * 1000).toISOString(),
+              signup_user_agent: this.req.headers['user-agent']
             });
 
 // Update User SessionInfo to Match Current Access Level
@@ -810,7 +812,8 @@ module.exports = {
           let userSiteLinks = await UserSiteLinks.updateOne({user_id:inputs.userId, site_id: 2})
             .set({
               usertype_id: plans[inputs.plan].id,
-              expiry: new Date(subscription['current_period_end'] * 1000).toISOString()
+              expiry: new Date(subscription['current_period_end'] * 1000).toISOString(),
+              signup_user_agent: this.req.headers['user-agent']
             });
 
 // Update User SessionInfo to Match Current Access Level

@@ -91,22 +91,16 @@ then redirect to either a special landing page (for newly-signed up users), or t
           });
         });
 
+
+      let access = await sails.helpers.users.getAccessType(user.id);
+
+      if (access !== 'free') {
+        return this.res.redirect('/home')
+      }
+
       const currentDate = new Date();
       const geoip = require('geoip-country');
       const geo = geoip.lookup(this.req.ip);
-
-      let userAccess = await UserSiteLinks.find({user_id: user.id, site_id: 2}).sort('updatedAt DESC').limit(1);
-
-      if (userAccess.length > 0) {
-        try {
-          let access = userAccess[0]['usertype_id'];
-          if (access !== 7) {
-            return this.res.redirect('/home')
-          }
-        } catch (e) {
-
-        }
-      }
 
       if (!geo || !geo.country){
 

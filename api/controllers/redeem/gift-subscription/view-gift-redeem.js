@@ -154,7 +154,8 @@ module.exports = {
           await UserSiteLinks.update({user_id: inputs.userId, site_id: 2})
             .set({
               usertype_id: plan.levelId,
-              expiry: expiry
+              expiry: expiry,
+              signup_user_agent: this.req.headers['user-agent']
             });
 
         } else {
@@ -163,7 +164,8 @@ module.exports = {
             user_id: inputs.userId,
             site_id: 2,
             usertype_id: plan.levelId,
-            expiry: expiry
+            expiry: expiry,
+            signup_user_agent: this.req.headers['user-agent']
           });
 
         }

@@ -84,7 +84,8 @@ module.exports = {
     await UserSiteLinks.update({user_id: inputs.userId, site_id: 2})
       .set({
         usertype_id: action.access_type === 'premium' ? 5 : 6,
-        expiry: new Date(Date.now() + action.accessLength * 24 * 60 * 60 * 1000)
+        expiry: new Date(Date.now() + action.accessLength * 24 * 60 * 60 * 1000),
+        signup_user_agent: this.req.headers['user-agent']
       });
 
     await AccessVoucherCodes.updateOne({id: action.id})

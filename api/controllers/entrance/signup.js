@@ -132,7 +132,8 @@ the account verification message.)`,
     let newUserSite = await UserSiteLinks.create(_.extend({
       user_id: newUserRecord.id,
       usertype_id: 7, //Free
-      expiry: new Date().toISOString()
+      expiry: new Date().toISOString(),
+      signup_user_agent: this.req.headers['user-agent']
     }, inputs.optIn ? {
       academic_email: 1,
       activity_email: 1,
