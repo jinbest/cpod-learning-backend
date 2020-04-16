@@ -95,6 +95,15 @@ then redirect to either a special landing page (for newly-signed up users), or t
       const geoip = require('geoip-country');
       const geo = geoip.lookup(this.req.ip);
 
+      let userAccess = await UserSiteLinks.find({user_id: user.id, site_id: 2}).sort('updatedAt DESC').limit(1);
+
+      if (userAccess.length > 0) {
+        let access = userAccess[0]['usertype_id'];
+        if ([5, 6].includes(access)) {
+          return this.res.redirect('/home')
+        }
+      }
+
       if (!geo || !geo.country){
 
         return this.res.redirect('/pricing');
