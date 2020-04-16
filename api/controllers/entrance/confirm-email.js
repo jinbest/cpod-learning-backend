@@ -100,7 +100,7 @@ then redirect to either a special landing page (for newly-signed up users), or t
       if (userAccess.length > 0) {
         try {
           let access = userAccess[0]['usertype_id'];
-          if ([5, 6].includes(access)) {
+          if (access !== 7) {
             return this.res.redirect('/home')
           }
         } catch (e) {
