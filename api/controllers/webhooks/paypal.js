@@ -55,8 +55,9 @@ module.exports = {
             modified_by: transaction.user_id,
           });
 
-          await Subscriptions.updateOne({subscription_id: transaction.subscription_id})
-            .set()
+          //TODO UPDATE SUBSCRIPTION && UPDATE ACCESS
+          // await Subscriptions.updateOne({subscription_id: transaction.subscription_id})
+          //   .set()
 
         default:
           break;
