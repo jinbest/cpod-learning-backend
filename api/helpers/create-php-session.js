@@ -70,7 +70,7 @@ module.exports = {
       + `s:10:"created_at";s:19:"${sessionStart}";`
       + `s:6:"expiry";s:19:"${sessionEnd}";`
       + `s:7:"site_id";s:1:"2";`
-      + `s:17:"user_site_link_id";s:${userSiteLink.id.toString().length}:"${userSiteLink.id}";}`;
+      + `s:17:"user_site_link_id";s:${userSiteLink ? userSiteLink.id.toString().length : 1}:"${userSiteLink ? userSiteLink.id : 0}";}`;
     let session = await PhpSessions.create({
       id: inputs.sessionId ? inputs.sessionId : sails.helpers.strings.random(),
       session_user_id: userId,
