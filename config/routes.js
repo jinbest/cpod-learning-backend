@@ -266,6 +266,7 @@ module.exports.routes = {
   'GET  /api/v1/recap/get-content/:lessonId':            { action: 'recap/list-recap-files' },
   'POST /api/v1/recap/request-lesson':                   { action: 'recap/request-lesson' },
   'GET /api/v1/recap/users':                             { action: 'recap/users-by-current-lesson' },
+  'POST /api/v1/recap/upload':                           { action: 'recap/upload-recap' },
 
   //General Info Routes
   'GET /api/v1/health/ip-info':                          { action: 'health/ip-info' },
