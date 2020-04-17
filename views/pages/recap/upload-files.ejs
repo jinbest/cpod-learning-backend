@@ -10,9 +10,19 @@
           <div class="form-group">
             <label for="tempLessonId">Lesson ID</label>
             <input type="text" class="form-control" id="tempLessonId" aria-describedby="tempLessonIdHelp" v-model="formData.tempLessonId">
-            <small id="tempLessonIdHelp" class="form-text text-muted">Alpha numeric lesson id value</small>
+            <small id="tempLessonIdHelp" class="form-text text-muted">Alpha numeric Lesson ID value</small>
           </div>
-          <button class="btn btn-lg btn-success" @click.prevent="formData.lessonId = formData.tempLessonId">Confirm</button>
+          <button @click.prevent="setLessonId()" type="submit" class="btn btn-block btn-lg btn-chinesepod-blue ajax-button" :class="[syncing ? 'syncing' : '']" :disabled="!formData.tempLessonId">
+            <span class="button-text" v-if="!syncing"><slot name="default">Confirm</slot></span>
+            <span class="button-loader clearfix" v-if="syncing">
+                                <slot name="syncing-state">
+                                  <div class="loading-dot dot1"></div>
+                                  <div class="loading-dot dot2"></div>
+                                  <div class="loading-dot dot3"></div>
+                                  <div class="loading-dot dot4"></div>
+                                </slot>
+                              </span>
+          </button>
         </form>
       </div>
     </div>
@@ -21,8 +31,10 @@
       <form id="recap-file-upload" class="dropzone" action="/api/v1/recap/upload" method="post" enctype="multipart/form-data">
         <input type="text" name="lessonId" id="lesssonId" hidden="true" v-model="formData.lessonId"></form>
       </form>
+      <div class="container-sm pt-3">
+        <a class="btn btn-block btn-lg btn-chinesepod-blue ajax-button" :href="`/recap/list-files/${formData.lessonId}`">View Files</a>
+      </div>
     </div>
   </div>
-
 </div>
 <%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

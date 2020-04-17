@@ -6,14 +6,14 @@ module.exports = {
 
   description: 'Upload recap.',
 
-  files: ['files'],
+  files: ['file'],
 
   inputs: {
     lessonId: {
       type: 'string',
       required: true
     },
-    files: {
+    file: {
       description: 'Upstream for an incoming file upload.',
       type: 'ref'
     }
@@ -40,9 +40,9 @@ module.exports = {
   },
 
 
-  fn: async function ({lessonId, files}) {
+  fn: async function ({lessonId, file}) {
 
-    sails.log.info({lessonId, files});
+    sails.log.info({lessonId, file});
 
     var util = require('util');
 
@@ -64,9 +64,11 @@ module.exports = {
         }
       };
 
-    let uploadedFiles = await sails.upload(files, options)
+    let uploadedFiles = await sails.upload(file, options)
       .intercept('E_EXCEEDS_UPLOAD_LIMIT', 'tooBig')
       .intercept((err)=>new Error('The photo upload failed: '+util.inspect(err)));
+
+    sails.log.info(uploadedFiles);
 
     if(!uploadedFiles) {
       throw 'noFileAttached';

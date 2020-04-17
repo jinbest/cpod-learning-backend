@@ -6,7 +6,9 @@ parasails.registerPage('upload-files', {
     formData: {
       tempLessonId: '',
       lessonId: ''
-    }
+    },
+    showUpload: false,
+    syncing: false
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -24,6 +26,12 @@ parasails.registerPage('upload-files', {
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
-    //…
+    setLessonId () {
+      console.log(!!this.formData.tempLessonId);
+      if (this.formData.tempLessonId) {
+        this.syncing = true;
+        window.location.href = '/recap/upload-files/' + this.formData.tempLessonId
+      }
+    }
   }
 });
