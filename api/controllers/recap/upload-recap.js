@@ -42,6 +42,8 @@ module.exports = {
 
   fn: async function ({lessonId, files}) {
 
+    sails.log.info({lessonId, files});
+
     var util = require('util');
 
     let options =

@@ -1,31 +1,28 @@
-<div id="upload-files" v-cloak>
+<div id="upload-files" v-cloak class="pt-3">
 
   <div class="container">
-
-
-    <h1>Recap File Upload</h1>
-    <form action=""
-          class="dropzone"
-          id="recap-file-upload"></form>
+    <div class="container-sm">
+      <h1>Recap File Upload</h1>
+    </div>
+    <div v-if="!formData.lessonId">
+      <div class="container-sm">
+        <form>
+          <div class="form-group">
+            <label for="tempLessonId">Lesson ID</label>
+            <input type="text" class="form-control" id="tempLessonId" aria-describedby="tempLessonIdHelp" v-model="formData.tempLessonId">
+            <small id="tempLessonIdHelp" class="form-text text-muted">Alpha numeric lesson id value</small>
+          </div>
+          <button class="btn btn-lg btn-success" @click.prevent="formData.lessonId = formData.tempLessonId">Confirm</button>
+        </form>
+      </div>
+    </div>
+    <div v-show="formData.lessonId">
+      <h3>Uploading For Lesson ID: {{ formData.lessonId }}</h3>
+      <form id="recap-file-upload" class="dropzone" action="/api/v1/recap/upload" method="post" enctype="multipart/form-data">
+        <input type="text" name="lessonId" id="lesssonId" hidden="true" v-model="formData.lessonId"></form>
+      </form>
+    </div>
   </div>
 
 </div>
-<script src="./js/utilities/dropzone-5.7.0/dropzone.min.js"></script>
-<!--<style src="./js/utilities/dropzone-5.7.0/dropzone.min.css"></style>-->
-<script>
-  // "myAwesomeDropzone" is the camelized version of the HTML element's ID
-  Dropzone.options.recapFileUpload = {
-    params: {
-      lessonId: 9999
-    },
-    paramName: "files", // The name that will be used to transfer the file
-    maxFilesize: 50, // MB
-    accept: function(file, done) {
-      if (file.name == "justinbieber.jpg") {
-        done("Naha, you don't.");
-      }
-      else { done(); }
-    }
-  };
-</script>
 <%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
