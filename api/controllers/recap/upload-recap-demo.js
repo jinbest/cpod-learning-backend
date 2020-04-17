@@ -44,7 +44,7 @@ module.exports = {
 
     sails.log.info({lessonId, file});
 
-    lessonId = 9999;
+    lessonId = '9999';
 
     var util = require('util');
 
