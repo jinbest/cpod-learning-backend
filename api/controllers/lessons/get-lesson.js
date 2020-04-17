@@ -36,10 +36,9 @@ module.exports = {
     const sanitizeHtml = require('sanitize-html');
 
     const sanitizeOptions = {
-      allowedTags: ['b', 'i', 'em', 'strong', 'a', 'p', 'img', 'image'],
+      allowedTags: ['b', 'i', 'em', 'strong', 'a', 'p', 'image'],
       allowedAttributes: {
         a: [ 'href', 'name', 'target'],
-        img: ['src', 'alt', 'width', 'height'],
         image: ['src', 'alt', 'width', 'height'],
       }
     };
