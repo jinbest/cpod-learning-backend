@@ -100,6 +100,7 @@ module.exports.routes = {
   'GET /secret-page':                                    { action: 'recap/view-secret-page' },
   'GET /secret-page/:level?':                            { action: 'recap/view-secret-page' },
   'GET /recap-content-list/:lessonId?':                  { action: 'recap/view-recap-content-list' },
+  'GET /recap/upload-files/:lessonId?':                  { action: 'recap/view-upload-files' },
   'GET /super-secret-page':                              { action: 'recap/view-popular-recap-lessons' },
   'GET /current-lesson':                                 { action: 'recap/view-current-lesson' },
   'GET /set-lesson/:lessonId':                           { action: 'recap/set-lesson' },

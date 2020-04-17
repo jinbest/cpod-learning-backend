@@ -9,7 +9,8 @@ module.exports = {
 
   inputs: {
     v3id: {
-      type: 'string'
+      type: 'string',
+      required: true
     }
 
   },
