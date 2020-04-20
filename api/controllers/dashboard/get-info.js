@@ -78,6 +78,7 @@ module.exports = {
       }
 
       if (userData.email.split('@')[1] === 'chinesepod.com') {
+      // if (false) {
 
         access = 'premium'
 
@@ -99,6 +100,7 @@ module.exports = {
           canDismiss: true,
           upgradePath: 2, // 3 , 2 , 1,
           prerollAdId: sails.config.custom.prerollAdId,
+          prerollAds: sails.config.custom.prerollAds,
           upgradeLink: sails.config.custom.upgradeLink
         };
         trial = new Date(); //OVERRIDE TRIAL DATE TO FORCE ONLY PREMIUM OPTIONS IN DAS

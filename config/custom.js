@@ -120,7 +120,16 @@ module.exports.custom = {
   coreFreeMonths: [0,2,4,6,8,10],
   nonCoreFreeMonths: [1,2,5,7,9,11],
   // prerollAdId: ['p5yrv7huyo', 'sa5v4h9bm7'],
-  prerollAdId: ['60qooe3gep', '2s3nnjmvz0', 'brmum6248y', 'mk2s8ktsnh', 'yg33tm12mm', '61ti28a28x'],
+  prerollAdId: ['60qooe3gep', '2s3nnjmvz0', 'brmum6248y', 'mk2s8ktsnh', 'yg33tm12mm', '61ti28a28x'], //TODO DISABLE WHEN SAFE
+  prerollAds: [
+    {title: 'Ads Like This', wistia:'60qooe3gep', vimeo: '409693870', length: 17},
+    {title: 'Attention Free Users', wistia: '2s3nnjmvz0', vimeo: '409693833', length: 15},
+    {title: 'Finally Get Rid of this...', wistia: 'brmum6248y', vimeo: '409693802', length: 14},
+    {title: 'Get Access to Everything', wistia: 'mk2s8ktsnh', vimeo: '409693770', length: 12},
+    {title: 'Good Advice For You', wistia: 'yg33tm12mm', vimeo: '409693731', length: 13},
+    {title: 'It would mean so much to me', wistia: '61ti28a28x', vimeo: '409693898', length: 17}
+    ],
+
   upgradeLink: '/upgrade',
 
   prerollAndroidURLs: [
