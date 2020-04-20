@@ -88,7 +88,7 @@ module.exports.routes = {
   'GET /explore/:unused?':                               'HomeController.serve',
   'GET /course/:unused?':                                'HomeController.serve',
   'GET /courses/:unused?':                               'HomeController.serve',
-  '/podcasts':                                           'https://chinesepod.co.uk/video/new-podcasts',
+  '/podcasts':                                           'https://forum.chinesepod.com/t/weekly-lesson-announcement/6606',
   // 'GET /podcasts/:unused?':                              'PodcastsController.serve',
   // 'GET /dictionary/:unused?':                            'PodcastsController.serve',
 
