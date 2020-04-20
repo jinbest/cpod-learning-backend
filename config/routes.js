@@ -175,6 +175,10 @@ module.exports.routes = {
   'GET /admin/lookup/users':                             { action: 'recap/users-by-current-lesson' }, //TODO REMOVE THIS WHEN SAFE
   'GET /admin/lookup/recap/users':                       { action: 'recap/view-list-users' },
   'GET /admin/lookup/charactercrush/users':              { action: 'charactercrush/view-list-users' },
+  'GET /admin/upload/add/:email?':                       { action: 'admin/upload/add-access', skipAssets: false },
+  'GET /admin/upload/remove/:email?':                    { action: 'admin/upload/remove-access', skipAssets: false },
+  'GET /admin/access/add/:email?':                       { action: 'admin/access/add-access', skipAssets: false },
+  'GET /admin/access/remove/:email?':                    { action: 'admin/access/remove-access', skipAssets: false },
 
   //MARKETING PAGES
   'GET /marketing/campaign-performance/:code':           {action: 'marketing/view-campaign-performance'},
