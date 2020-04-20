@@ -100,7 +100,7 @@ module.exports.routes = {
   'GET /secret-page':                                    { action: 'recap/view-secret-page' },
   'GET /secret-page/:level?':                            { action: 'recap/view-secret-page' },
   'GET /recap/list-files/:lessonId?':                    { action: 'recap/view-recap-content-list' },
-  'GET /recap/upload-files/:lessonId?':                  { action: 'recap/view-upload-files' },
+  'GET /recap/upload-files/:lessonId?':                  'RecapController.serve',
   'GET /super-secret-page':                              { action: 'recap/view-popular-recap-lessons' },
   'GET /current-lesson':                                 { action: 'recap/view-current-lesson' },
   'GET /set-lesson/:lessonId':                           { action: 'recap/set-lesson' },
@@ -267,7 +267,7 @@ module.exports.routes = {
   'POST /api/v1/recap/request-lesson':                   { action: 'recap/request-lesson' },
   'GET /api/v1/recap/users':                             { action: 'recap/users-by-current-lesson' },
   'POST /api/v1/recap/upload':                           { action: 'recap/upload-recap' },
-  'POST /api/v1/recap/upload-demo':                      { action: 'recap/upload-recap-demo' },
+  // 'POST /api/v1/recap/upload-demo':                      { action: 'recap/upload-recap-demo' },
 
   //General Info Routes
   'GET /api/v1/health/ip-info':                          { action: 'health/ip-info' },
