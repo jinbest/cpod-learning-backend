@@ -37,6 +37,7 @@ module.exports.routes = {
 
   'GET /login':                                          { action: 'entrance/view-login' },
   'GET /email/confirm':                                  { action: 'entrance/confirm-email' },
+  'GET /email/confirmed':                                { action: 'onboarding/view-pricing-email-confirmed' },
   'GET /logout':                                         { action: 'account/logout' },
 
   'GET /email-signup':                                   { action: 'entrance/view-signup' },
@@ -116,29 +117,12 @@ module.exports.routes = {
   //PROMOTIONS
   'GET /expired-promotion':                              { action: 'promotions/view-expired-promo'},
   'GET /live':                                           { action: 'promotions/view-live-stream' },
-  'GET /black-friday/:code?':                            { action: 'promotions/view-expired-promo'},
-  'GET /black-friday-last-chance/:code?':                { action: 'promotions/view-expired-promo'},
-  'GET /cyber-monday/:code?':                            { action: 'promotions/view-expired-promo'},
-  'GET /cyber-monday-last-chance/:code?':                { action: 'promotions/view-expired-promo'},
-  'GET /holiday-gift/:code?':                            { action: 'promotions/view-expired-promo'},
-  'GET /holiday-offer/:code?':                           { action: 'promotions/view-expired-promo'},
-  'GET /holiday-offer-card/:code?':                      { action: 'promotions/view-expired-promo'},
-  'GET /holiday-offer-alt/:code?':                       { action: 'promotions/view-expired-promo'},
-  'GET /holiday-offer-success/:code?':                   { action: 'promotions/view-expired-promo'},
-  'GET /cheers/:code?':                                  { action: 'promotions/view-expired-promo'},
-  'GET /australia-day/:code?':                           { action: 'promotions/view-expired-promo'},
-  'GET /valentines-day/:code?':                          { action: 'promotions/view-expired-promo'},
-  'GET /valentines-day-gift/:code?':                     { action: 'promotions/view-expired-promo'},
-  'GET /CNY-2020/:code?':                                { action: 'promotions/view-expired-promo'},
-  'GET /womens-day/:token':                              { action: 'promotions/create-limited-auth'},
-  'GET /womens-day':                                     { action: 'promotions/view-expired-promo'},
-  'GET /womens-day-gift':                                { action: 'promotions/view-expired-promo'},
-  'GET /easter-2020/:token':                             { action: 'promotions/create-limited-auth'},
-  'GET /easter-2020':                                    { action: 'promotions/easter-promo/view-promo'},
-  'GET /easter-2020/success':                            { action: 'promotions/easter-promo/view-promo-success'},
-  'GET /easter-gift-2020':                               { action: 'promotions/easter-promo/view-gift'},
-  'GET /easter-gift-2020/:token':                        { action: 'promotions/create-limited-auth'},
-  'GET /easter-gift-2020/success':                       { action: 'promotions/easter-promo/view-gift-success'},
+  'GET /easter-2020/:token':                             { action: 'promotions/view-expired-promo'},
+  'GET /easter-2020':                                    { action: 'promotions/view-expired-promo'},
+  'GET /easter-2020/success':                            { action: 'promotions/view-expired-promo'},
+  'GET /easter-gift-2020':                               { action: 'promotions/view-expired-promo'},
+  'GET /easter-gift-2020/:token':                        { action: 'promotions/view-expired-promo'},
+  'GET /easter-gift-2020/success':                       { action: 'promotions/view-expired-promo'},
 
   //PROMOTIONS - REDEEM GIFTS
   'GET /valentines-day-gift/redeem/:code?/:userCode?':   { action: 'promotions/valentines/view-valentines-day-gift-redeem'},
@@ -172,7 +156,7 @@ module.exports.routes = {
   'GET /admin/access-code-panel':                        {action: 'admin/access-codes/view-access-code-panel'},
   'GET /admin/comments':                                 {action: 'admin/comments/view-list-all-comments'},
   'GET /admin/livestream':                               {action: 'admin/view-livestream' },
-  'GET /admin/lookup/users':                             { action: 'recap/users-by-current-lesson' }, //TODO REMOVE THIS WHEN SAFE
+  // 'GET /admin/lookup/users':                             { action: 'recap/users-by-current-lesson' }, //TODO REMOVE THIS WHEN SAFE
   'GET /admin/lookup/recap/users':                       { action: 'recap/view-list-users' },
   'GET /admin/lookup/charactercrush/users':              { action: 'charactercrush/view-list-users' },
   'GET /admin/upload/add/:email?':                       { action: 'admin/upload/add-access', skipAssets: false },

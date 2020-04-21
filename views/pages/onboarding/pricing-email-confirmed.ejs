@@ -1,0 +1,130 @@
+<div id="pricing" v-cloak>
+  <div class="container small">
+    <div class="heading text-center">
+      <h1 class="headline d-block">Congratulations, your Free Account is Confirmed!</h1>
+<!--      <h3 class="subheading d-none d-md-block">Join 500,000 students</h3>-->
+      <h5 class="subheading pt-2">
+        A free account allows you check out the quality of a limited selection of
+        ChinesePod lessons! When you get serious about learning Chinese, you may
+        want to upgrade and get access to the full library, complete
+        functionality, and all the apps!
+        Check out benefits and features of our paid subscriptions below!
+      </h5>
+      <div class="col-12 col-md-8 offset-md-2 col-lg-4 offset-lg-4 py-4">
+        <a class="btn btn-lg btn-block btn-pinterest" href="/home">No, I want just limited access</a>
+      </div>
+    </div>
+    <div class="flex mt">
+      <div class="plan main-plan hide">
+        <div id="main">
+          <p>Most popular</p>
+        </div>
+        <div class="plan-body">
+          <h4>Premium learner</h4>
+          <br>
+          <p>Taking your Mandarin Chinese learning seriously?</p>
+          <br>
+          <p>In depth explanations, practice exercises and access to custom courses</p>
+          <p class="price">$29/mo</p>
+          <ul>
+            <li><img src="/images/checkbox.svg"> <b>Everything from basic</b></li>
+            <li><img src="/images/checkbox.svg"> Vocabulary and audio review</li>
+            <li><img src="/images/checkbox.svg"> In depth lesson dialogues</li>
+            <li><img src="/images/checkbox.svg"> Interactive practice tests</li>
+            <li><img src="/images/checkbox.svg"> Access to mobile apps</li>
+            <li><img src="/images/checkbox.svg"> All content downloads</li>
+            <li><img src="/images/checkbox.svg"> Exclusive "Say It Right" pronunciation course</li>
+            <li><img src="/images/checkbox.svg"> Vocabulary exercises</li>
+            <li><img src="/images/checkbox.svg"> Popup definitions</li>
+            <li><img src="/images/checkbox.svg"> Grammar blocks</li>
+          </ul>
+          <button v-if="trial" v-on:click="submittedForm('premiumTrial')" class="get-started btn blue action">Start 14 day trial</button>
+          <button v-else v-on:click="submittedForm('premium')" class="get-started btn blue action">Get Started</button>
+        </div>
+      </div>
+      <div class="group-plan flex">
+        <div class="plan">
+          <h4>Basic Learner</h4><br>
+          <p>Give Chinese a try</p>
+          <br>
+          <br>
+          <p>Dive into 4000+ entertaining <br>audio & video lessons.</p><br><br>
+
+          <p class="price">$14<small>/mo</small></p>
+          <ul>
+            <li><img src="/images/checkbox.svg">On-demand video lessons.</li>
+            <li><img src="/images/checkbox.svg">On-demand audio lessons.</li>
+            <li><img src="/images/checkbox.svg">PDF lesson notes.</li>
+            <li><img src="/images/checkbox.svg">Simplified and Traditional Chinese support.</li>
+            <li><img src="/images/checkbox.svg">Courses and premade playlists.</li>
+            <li><img src="/images/checkbox.svg">An active community of learners and teachers</li>
+            <li><img src="/images/checkbox.svg">Dictionary and example sentence search.</li>
+          </ul>
+          <button v-on:click="submittedForm('basic')" class="get-started btn gray action">Get Started</button>
+        </div>
+        <div class="plan main-plan">
+          <div id="main">
+            <p>Most popular</p>
+          </div>
+          <div class="plan-body">
+            <h4>Premium learner</h4><br>
+            <p>Taking your Mandarin<br> Chinese learning seriously?</p>
+            <br>
+            <p>In-depth explanations, practice exercises and access to custom courses</p>
+
+            <p class="price">$29<small>/mo</small></p>
+            <ul>
+              <li><img src="/images/checkbox.svg"> <b>Everything from basic</b></li>
+              <li><img src="/images/checkbox.svg"> Vocabulary and audio review</li>
+              <li><img src="/images/checkbox.svg"> In-depth lesson dialogues</li>
+              <li><img src="/images/checkbox.svg"> Interactive practice tests</li>
+              <li><img src="/images/checkbox.svg"> Access to mobile apps</li>
+              <li><img src="/images/checkbox.svg"> All content downloads</li>
+              <li><img src="/images/checkbox.svg"> Exclusive "Say It Right" pronunciation course</li>
+              <li><img src="/images/checkbox.svg"> Vocabulary exercises</li>
+              <li><img src="/images/checkbox.svg"> Popup definitions</li>
+              <li><img src="/images/checkbox.svg"> Grammar blocks</li>
+            </ul>
+            <button v-if="trial" v-on:click="submittedForm('premiumTrial')" class="get-started btn blue action" >Start 14 day trial</button>
+            <button v-else v-on:click="submittedForm('premium')" class="get-started btn blue action">Get Started</button>
+          </div>
+        </div>
+      </div>
+      <div class="plan team">
+        <h4>For Teams</h4><img src="/images/chinesepod_corporate_icon.svg" width="50px" class="team pull-right"><br>
+        <p>Custom created plans <br>for any size company.</p><br>
+        <p>Need to train 2 or more team<br> members? We have custom<br> solutions for companies of any size.</p>
+        <a href="/corporate" class="btn gray">Read More</a>
+        <span id="line"></span>
+        <br>
+        <h4>For Education</h4><img src="/images/chinesepod_academic_icon.svg" width="50px" class="team pull-right"><br>
+        <p>Unlimited access to all of our academic content.</p>
+        <br>
+        <p>
+          Need access for your students?
+          We offer custom packages for all institution sizes.
+        </p>
+        <a href="/academic-offers" class="btn gray">Read More</a>
+        <span id="line"></span>
+        <br>
+        <div v-if="showFree">
+          <h4 class="team-border">Try a Free Demo</h4><br>
+          <p>Not convinced? Try a free Demo account with some sample lessons.</p>
+          <button v-on:click="submittedForm('free')" class="btn gray team">Read More</button>
+        </div>
+        <div v-else>
+          <h4 class="team-border">Ask us More</h4><br>
+          <p>Not convinced? Let us know what questions you have.</p>
+          <a class="btn gray team" href="mailto:support@chinesepod.com">Reach Out</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% if (conversion) { %>
+  <script>
+    gtag('event', 'conversion', {'send_to': 'AW-758600947/r5XKCKnwmKkBEPOp3ekC'});
+  </script>
+  <!-- Event snippet for Confirmed Account on Pricing conversion page -->
+<% } %>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
