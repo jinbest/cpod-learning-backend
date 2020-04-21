@@ -62,14 +62,20 @@ module.exports = {
     if (inputs.email){
 
       let conflictingEmail = await User.findOne({
-        email: inputs.email
+        email: inputs.email,
       });
 
       if (conflictingEmail && conflictingEmail.id !== inputs.userId) {
         throw 'emailAlreadyInUse';
       }
 
-      valuesToSet.email = inputs.email
+      if (!conflictingEmail || conflictingEmail.email.toLowerCase() !== inputs.email.toLowerCase()) {
+
+        valuesToSet.email = inputs.email;
+        valuesToSet.confirm_status  = 0;
+        valuesToSet.code = await sails.helpers.strings.random('url-friendly')
+
+      }
     }
     if (inputs.username){
 
@@ -94,6 +100,29 @@ module.exports = {
     // Save to the db
     let newData = await User.updateOne({id: inputs.userId })
     .set(valuesToSet);
+
+    if (valuesToSet.email) {
+
+      if (sails.config.custom.verifyEmailAddresses) {
+
+        await sails.helpers.sendTemplateEmail.with({
+          to: newData.email,
+          subject: 'Please confirm your new email',
+          template: 'email-verify-new-email',
+          templateData: {
+            fullName: newData.name,
+            email: newData.email,
+            token: newData.code ? newData.code : '',
+            mobile: false,
+            confirmation: false
+          }
+        });
+      } else {
+        sails.log.info('Skipping new account email verification... (since `verifyEmailAddresses` is disabled)');
+      }
+
+    }
+
 
     sails.log.info(newData);
     return newData

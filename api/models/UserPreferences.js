@@ -21,12 +21,12 @@ module.exports = {
       type: "number",
       columnType: "int",
       isInteger: true,
-      required: true
+      defaultsTo: 0
     },
     last_login: {
       type: "ref",
       columnType: "datetime",
-      required: true
+      defaultsTo: new Date().toISOString(),
     },
     hash_feed_only: {
       type: "number",
@@ -37,13 +37,13 @@ module.exports = {
     data: {
       type: "string",
       columnType: "longtext",
-      required: true
+      defaultsTo: ''
     },
     new_messages: {
       type: "number",
       columnType: "int",
       isInteger: true,
-      required: true
+      defaultsTo: 0
     },
     teacher_email: {
       type: "string",

@@ -240,7 +240,14 @@ module.exports.routes = {
   'POST /api/v1/account/subscriptions/cancel':           { action: 'account/subscription/cancel-stripe-details'},
   'GET /api/v1/account/subscription/subscriptions':      { action: 'account/subscription/get-subscriptions' },
   'GET /api/v1/account/subscription/transactions':       { action: 'account/subscription/get-transactions' },
-  'PUT /api/v1/account/settings/update':                 { action: 'account/settings/update-profile'},
+  'PUT /api/v1/account/profile/update':                 { action: 'account/settings/update-profile'},
+  'PUT /api/v1/account/settings/update':                 { action: 'account/settings/update-settings'},
+  'POST /api/v1/account/upload-avatar':                  { action: 'account/upload-avatar' ,
+    cors: {
+      allowOrigins: '*',
+      allowRequestMethods: 'POST',
+      allowAnyOriginWithCredentialsUnsafe: true
+    }},
 
   // Information Routes - Health Check
   '/api/v1/request':                                     { action: 'health/request' },
