@@ -54,11 +54,18 @@ module.exports = {
   },
 
   fn: async function (inputs) {
+    try {
+      inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
+    } catch (e) {
+
+    }
     if (!inputs.emailAddress && !inputs.userId) {
       throw 'invalid';
     }
     const type = inputs.type.toLowerCase();
     const value = typeof inputs.value  === 'string' ? inputs.value.toLowerCase() : inputs.value;
+
+    sails.log.info(inputs);
 
     const user = inputs.userId ? inputs.userId :
       await User.findOne({

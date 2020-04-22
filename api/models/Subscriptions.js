@@ -42,9 +42,7 @@ module.exports = {
       defaultsTo: 0  // undocumented
     },
     product_id: {
-      type: "number",
-      columnType: "int",
-      isInteger: true
+      model: 'Products'
     },
     product_length: {
       type: "number",

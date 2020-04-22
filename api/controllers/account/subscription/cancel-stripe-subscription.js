@@ -28,8 +28,10 @@ module.exports = {
 
     const stripe = require('stripe')(sails.config.custom.stripeSecret);
 
-    let stripeData = await stripe.customers.retrieve(inputs.userId)
+    let stripeData = await stripe.customers.retrieve(inputs.userId.toString())
       .catch(err => sails.hooks.bugsnag.notify(err));
+
+    sails.log.info(stripeData);
 
     if(!stripeData || !stripeData['subscriptions'] || stripeData['subscriptions']['data'].length < 1) {
 

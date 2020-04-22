@@ -34,24 +34,25 @@ module.exports = {
       throw 'invalid'
     }
 
-    let userOptions = await UserOptions.find({user_id: inputs.userId, option_key: 'level'}).sort('updatedAt DESC').limit(1);
+    let userOptions = await UserOptions.find({user_id: inputs.userId, option_key: {in: ['level', 'interests', 'autoMarkStudied', 'pinyin', 'newDash', 'timezone', 'currentLesson']}});
 
-    let level = 'newbie';
-
-    if (userOptions.length > 0 && userOptions[0].option_value) {
-      level = await sails.helpers.convert.intToLevel(userOptions[0].option_value);
-    } else {
-      returnData.levelUnset = true;
+    function toObject(arr) {
+      var rv = {};
+      arr.forEach(option => {
+        rv[option.option_key] = option.option_value
+      });
+      return rv;
     }
+    userOptions = toObject(userOptions);
 
-    let charSet = 'simplified';
-    let charData = await UserOptions.find({user_id: inputs.userId, option_key: 'charSet'}).sort('updatedAt DESC').limit(1);
+    let charSet = userOptions['charSet'] ? userOptions['charSet'] : 'simplified';
+    let level = userOptions['level'] ? await sails.helpers.convert.intToLevel(userOptions['level']) : 'newbie';
 
-    if (charData.length > 0) {
-      charSet = charData[0]['option_value'] ? charData[0]['option_value'] : 'simplified'
-    } else {
-      returnData.charSetUnset = true;
-    }
+    //CONVERT SOME OPTIONS TO Boolean
+
+    userOptions['pinyin'] = !(userOptions['pinyin'] === 'false');
+    userOptions['autoMarkStudied'] = !(userOptions['autoMarkStudied'] === 'false');
+    userOptions['newDash'] = !(userOptions['newDash'] === 'false');
 
     let userPreferences = (await UserPreferences.find(inputs.userId).sort('updatedAt DESC').limit(1))[0];
 
@@ -129,7 +130,7 @@ module.exports = {
 
     let lastLogin = newLastLogin > oldLastLogin ? newLastLogin : oldLastLogin;
 
-    return {...returnData, ...{
+    return {...returnData, ...userOptions, ...{
         userId: inputs.userId,
         name: userData.name,
         email: userData.email,
