@@ -51,22 +51,22 @@ module.exports = {
     const geoip = require('geoip-country');
     const geo = geoip.lookup(this.req.ip);
 
-    if (!geo || !geo.country){
-
-      trial = false;
-      delete this.req.session.trial
-
-    } else if (sails.config.custom.coreMarkets.includes(geo.country) && !sails.config.custom.coreFreeMonths.includes(currentDate.getMonth())) {
-
-      trial = false;
-      delete this.req.session.trial
-
-    } else if (!sails.config.custom.coreMarkets.includes(geo.country) && !sails.config.custom.nonCoreFreeMonths.includes(currentDate.getMonth())) {
-
-      trial = false;
-      delete this.req.session.trial
-
-    }
+    // if (!geo || !geo.country){
+    //
+    //   trial = false;
+    //   delete this.req.session.trial
+    //
+    // } else if (sails.config.custom.coreMarkets.includes(geo.country) && !sails.config.custom.coreFreeMonths.includes(currentDate.getMonth())) {
+    //
+    //   trial = false;
+    //   delete this.req.session.trial
+    //
+    // } else if (!sails.config.custom.coreMarkets.includes(geo.country) && !sails.config.custom.nonCoreFreeMonths.includes(currentDate.getMonth())) {
+    //
+    //   trial = false;
+    //   delete this.req.session.trial
+    //
+    // }
 
     // Respond with view.
     return {
