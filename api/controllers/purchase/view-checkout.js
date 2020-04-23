@@ -47,9 +47,9 @@ module.exports = {
       period = this.req.param('period', false).toLowerCase();
     }
 
-    const currentDate = new Date();
-    const geoip = require('geoip-country');
-    const geo = geoip.lookup(this.req.ip);
+    // const currentDate = new Date();
+    // const geoip = require('geoip-country');
+    // const geo = geoip.lookup(this.req.ip);
 
     // if (!geo || !geo.country){
     //
