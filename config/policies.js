@@ -8,7 +8,7 @@
  * https://sailsjs.com/docs/concepts/policies
  */
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = sails.config.environment !== 'development';
 
 const slowDown = require("express-slow-down");
 const RedisStore = require('rate-limit-redis');
