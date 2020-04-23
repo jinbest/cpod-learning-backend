@@ -8,19 +8,35 @@
  * https://sailsjs.com/docs/concepts/policies
  */
 
-// const rateLimit = require('express-rate-limit');
+const isProduction = process.env.NODE_ENV === 'production';
+
 const slowDown = require("express-slow-down");
 const RedisStore = require('rate-limit-redis');
 
-const loginLimiter = new slowDown({
-  store: new RedisStore({
-    redisURL: 'redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/4'
-  }),
+let sensitiveSlowDownOptions = {
   windowMs: 60 * 1000,
   delayAfter: 5,
-  delayMs: 1000
-});
-//
+  delayMs: 2000
+};
+
+let slowDownOptions = {
+  windowMs: 5 * 60 * 1000,
+  delayAfter: 20,
+  delayMs: 500
+};
+
+if (isProduction) {
+  sensitiveSlowDownOptions.store = new RedisStore({
+    redisURL: 'redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/4'
+  });
+  slowDownOptions.store = new RedisStore({
+    redisURL: 'redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/5'
+  });
+}
+
+const loginLimiter = new slowDown(sensitiveSlowDownOptions);
+const contentLimiter = new slowDown(slowDownOptions);
+
 // const lessonsLimiter = slowDown({
 //   store: new RedisStore({
 //     redisURL: 'redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/5'
@@ -54,17 +70,17 @@ module.exports.policies = {
   'sso/discourse': 'is-logged-in',
 
   'dashboard/*': 'is-authenticated',
-  'lessons/*': 'is-authenticated',
+  'lessons/*': ['is-authenticated', contentLimiter],
   'exercises/*': 'is-authenticated',
   'search/*': 'is-authenticated',
   'token/check': 'is-authenticated',
+
+  'lessons/progress/post-lesson-progress': true,
 
   'search/reindex-lessons': 'is-super-admin',
   'search/reindex-lessons-data': 'is-super-admin',
 
   'octopus/*': 'is-super-admin',
-
-  'lessons/progress/post-lesson-progress': true,
 
   // SwaggerOldController: {'*': 'is-staff'},
 
