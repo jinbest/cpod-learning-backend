@@ -28,24 +28,24 @@ bugsnagClient.use(bugsnagExpress);
 
 var bugsnagmiddleware = bugsnagClient.getPlugin('express');
 
-// const RateLimit = require('express-rate-limit');
-// const slowDown = require("express-slow-down");
-// const RedisStore = require('rate-limit-redis');
-//
-// const rateLimiter = new RateLimit({
-//   store: new RedisStore({
-//     redisURL: 'redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/4'
-//   }),
-//   max: 200,
-// });
-//
-// const lessonsLimiter = slowDown({
-//   store: new RedisStore({
-//     redisURL: 'redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/5'
-//   }),
-//   delayAfter: 50,
-//   delayMs: 500
-// });
+const slowDown = require("express-slow-down");
+const RedisStore = require('rate-limit-redis');
+const securityLimiter = new slowDown({
+  store: new RedisStore({
+    redisURL: 'redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/4'
+  }),
+  windowMs: 60 * 1000,
+  delayAfter: 5,
+  delayMs: 2000
+});
+const contentLimiter = new slowDown({
+  store: new RedisStore({
+    redisURL: 'redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/5'
+  }),
+  windowMs: 5 * 60 * 1000,
+  delayAfter: 20,
+  delayMs: 500
+});
 
 module.exports = {
 
@@ -335,7 +335,11 @@ module.exports = {
     level: 'error'
   },
 
-
+  policies: {
+    'entrance/login': securityLimiter,
+    'purchase/checkout': securityLimiter,
+    'lessons/*': ['is-authenticated', contentLimiter],
+  },
 
   http: {
 

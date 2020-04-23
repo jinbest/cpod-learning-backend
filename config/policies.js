@@ -8,33 +8,24 @@
  * https://sailsjs.com/docs/concepts/policies
  */
 
-const isProduction = sails.config.environment !== 'development';
-
 const slowDown = require("express-slow-down");
 const RedisStore = require('rate-limit-redis');
-
-let securityLimiter; let contentLimiter;
-
-if (isProduction) {
-  securityLimiter = new slowDown({
-    store: new RedisStore({
-      redisURL: 'redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/4'
-    }),
-    windowMs: 60 * 1000,
-    delayAfter: 5,
-    delayMs: 2000
-  });
-  contentLimiter = new slowDown({
-    store: new RedisStore({
-      redisURL: 'redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/5'
-    }),
-    windowMs: 5 * 60 * 1000,
-    delayAfter: 20,
-    delayMs: 500
-  });
-} else {
-  securityLimiter = contentLimiter = true
-}
+const securityLimiter = new slowDown({
+  // store: new RedisStore({
+  //   redisURL: 'redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/4'
+  // }),
+  windowMs: 60 * 1000,
+  delayAfter: 5,
+  delayMs: 2000
+});
+const contentLimiter = new slowDown({
+  // store: new RedisStore({
+  //   redisURL: 'redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/5'
+  // }),
+  windowMs: 5 * 60 * 1000,
+  delayAfter: 20,
+  delayMs: 500
+});
 
 module.exports.policies = {
   'entrance/login': securityLimiter,
