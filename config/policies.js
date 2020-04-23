@@ -8,16 +8,17 @@
  * https://sailsjs.com/docs/concepts/policies
  */
 
-const rateLimit = require('express-rate-limit');
+// const rateLimit = require('express-rate-limit');
 const slowDown = require("express-slow-down");
 const RedisStore = require('rate-limit-redis');
 
-const loginLimiter = new rateLimit({
+const loginLimiter = new slowDown({
   store: new RedisStore({
     redisURL: 'redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/4'
   }),
   windowMs: 60 * 1000,
-  max: 10
+  delayAfter: 5,
+  delayMs: 1000
 });
 //
 // const lessonsLimiter = slowDown({
