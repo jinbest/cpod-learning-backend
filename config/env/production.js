@@ -29,14 +29,23 @@ bugsnagClient.use(bugsnagExpress);
 var bugsnagmiddleware = bugsnagClient.getPlugin('express');
 
 const slowDown = require("express-slow-down");
+const rateLimit = require('express-rate-limit');
 const RedisStore = require('rate-limit-redis');
-const securityLimiter = new slowDown({
+const securitySlowLimiter = new slowDown({
   store: new RedisStore({
     redisURL: 'redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/4'
   }),
   windowMs: 60 * 1000,
   delayAfter: 5,
   delayMs: 2000
+});
+const securityLimiter = new rateLimit({
+  store: new RedisStore({
+    redisURL: 'redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/4'
+  }),
+  windowMs: 60 * 60 * 1000,
+  max: 20,
+  message: "Too many requests from this IP, please try again later."
 });
 const contentLimiter = new slowDown({
   store: new RedisStore({
@@ -336,8 +345,9 @@ module.exports = {
   },
 
   policies: {
-    'entrance/login': securityLimiter,
-    'purchase/checkout': securityLimiter,
+    'entrance/login': [securitySlowLimiter, securityLimiter],
+    'entrance/signup': [securitySlowLimiter, securityLimiter],
+    'purchase/checkout': [securitySlowLimiter, securityLimiter],
     'lessons/*': ['is-authenticated', contentLimiter],
   },
 
