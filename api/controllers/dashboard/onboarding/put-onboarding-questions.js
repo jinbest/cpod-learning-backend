@@ -51,7 +51,7 @@ module.exports = {
     }
 
     return await UserOptions.updateOrCreate({user_id: inputs.userId, option_key: inputs.questionId},
-      {user_id: inputs.userId, option_key: inputs.questionId, option_value: inputs.answer})
+      {user_id: inputs.userId, option_key: inputs.questionId, option_value: inputs.answer ? inputs.answer : 0})
   }
 
 
