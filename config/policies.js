@@ -34,19 +34,12 @@ if (isProduction) {
   });
 }
 
-const loginLimiter = new slowDown(sensitiveSlowDownOptions);
+const securityLimiter = new slowDown(sensitiveSlowDownOptions);
 const contentLimiter = new slowDown(slowDownOptions);
 
-// const lessonsLimiter = slowDown({
-//   store: new RedisStore({
-//     redisURL: 'redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/5'
-//   }),
-//   delayAfter: 50,
-//   delayMs: 500
-// });
-
 module.exports.policies = {
-  'entrance/login': loginLimiter,
+  'entrance/login': securityLimiter,
+  'purchase/checkout': securityLimiter,
   'onboarding/view-level': 'is-logged-in',
   'onboarding/view-beta-confirm': 'is-logged-in',
   'onboarding/view-beta-confirmed': 'is-logged-in',
@@ -75,7 +68,7 @@ module.exports.policies = {
   'search/*': 'is-authenticated',
   'token/check': 'is-authenticated',
 
-  'lessons/progress/post-lesson-progress': true,
+  // 'lessons/progress/post-lesson-progress': true,
 
   'search/reindex-lessons': 'is-super-admin',
   'search/reindex-lessons-data': 'is-super-admin',
