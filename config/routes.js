@@ -120,9 +120,15 @@ module.exports.routes = {
   'GET /easter-2020/:token':                             { action: 'promotions/view-expired-promo'},
   'GET /easter-2020':                                    { action: 'promotions/view-expired-promo'},
   'GET /easter-2020/success':                            { action: 'promotions/view-expired-promo'},
-  'GET /easter-gift-2020':                               { action: 'promotions/view-expired-promo'},
-  'GET /easter-gift-2020/:token':                        { action: 'promotions/view-expired-promo'},
-  'GET /easter-gift-2020/success':                       { action: 'promotions/view-expired-promo'},
+  'GET /anzac-2020/:token':                              { action: 'promotions/create-limited-auth'},
+  'GET /anzac-2020':                                     { action: 'promotions/anzac/view-promo'},
+  'GET /anzac-2020/success':                             { action: 'promotions/view-promo-success'},
+  'GET /freedom-day-2020/:token':                        { action: 'promotions/create-limited-auth'},
+  'GET /freedom-day-2020':                               { action: 'promotions/freedom-day/view-promo'},
+  'GET /freedom-day-2020/success':                       { action: 'promotions/view-promo-success'},
+  'GET /kings-day-2020/:token':                          { action: 'promotions/create-limited-auth'},
+  'GET /kings-day-2020':                                 { action: 'promotions/kings-day/view-promo'},
+  'GET /kings-day-2020/success':                         { action: 'promotions/view-promo-success'},
 
   //PROMOTIONS - REDEEM GIFTS
   'GET /valentines-day-gift/redeem/:code?/:userCode?':   { action: 'promotions/valentines/view-valentines-day-gift-redeem'},
