@@ -84,6 +84,7 @@ and exposed as \`req.me\`.)`
 
     // If there was no matching user, respond thru the "badCombo" exit.
     if(!userRecord) {
+      sails.log.warn(`badCombo - ${this.req.ip}`);
       throw 'badCombo';
     }
 
@@ -93,6 +94,7 @@ and exposed as \`req.me\`.)`
 
     const submittedPass = await sails.helpers.passwordHash(inputs.password);
     if (submittedPass !== userRecord.password){
+      sails.log.warn(`badCombo - ${this.req.ip}`);
       throw 'badCombo';
     }
 
