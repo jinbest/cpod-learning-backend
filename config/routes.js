@@ -344,6 +344,9 @@ module.exports.routes = {
   'POST /api/v1/admin/livestream/save-livestream-data':  { action: 'admin/livestream/save-livestream-data' },
   'DELETE /api/v1/admin/livestream/delete-livestream-data': { action: 'admin/livestream/delete-livestream-data' },
 
+  //ADMIN
+  'GET /api/v1/admin/user-token': { action: 'admin/user-token/get-token' },
+
   //SEARCH
   'GET /api/v1/search/reindex-lessons':                  { action: 'search/reindex-lessons' },
   // 'GET /api/v1/search/reindex-lessons-data':             { action: 'search/reindex-lessons-data' },
