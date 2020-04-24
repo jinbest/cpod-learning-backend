@@ -44,7 +44,7 @@ const securityLimiter = new rateLimit({
     redisURL: 'redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/4'
   }),
   windowMs: 24 * 60 * 60 * 1000,
-  max: 20,
+  max: 40,
   message: "Too many requests from this IP, please try again later."
 });
 const contentLimiter = new slowDown({
