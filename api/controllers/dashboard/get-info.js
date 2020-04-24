@@ -49,8 +49,7 @@ module.exports = {
     let level = userOptions['level'] ? await sails.helpers.convert.intToLevel(userOptions['level']) : 'newbie';
 
     //CONVERT SOME OPTIONS TO Boolean
-
-    userOptions['pinyin'] = !(userOptions['pinyin'] === 'false');
+    userOptions['pinyin'] = userOptions['pinyin'] === 'true';
     userOptions['autoMarkStudied'] = !(userOptions['autoMarkStudied'] === 'false');
     userOptions['newDash'] = !(userOptions['newDash'] === 'false');
 
