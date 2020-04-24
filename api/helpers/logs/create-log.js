@@ -53,7 +53,6 @@ module.exports = {
       });
     }
 
-
     let date = new Date();
 
     let index = {
@@ -69,6 +68,7 @@ module.exports = {
         'accesslog_country',
         'accesslog_time',
         'timestamp',
+        'ua',
         'referer'
       ],
       idColumn: 'email'
@@ -84,6 +84,11 @@ module.exports = {
 
     if (ipData) {
       indexRecord['geoip'] = ipData;
+    }
+
+    if (inputs.data.ua) {
+      var parser = require('ua-parser-js');
+      indexRecord['ua'] = parser(inputs.data.ua);
     }
 
     return await sails.hooks.elastic.client.index({index: index.elasticIndex, body: indexRecord})

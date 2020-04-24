@@ -16,6 +16,7 @@ module.exports.apianalytics = {
     }
 
     if(!ignore.includes(req.path)) {
+
       loggingQueue.add('Logging Requests',
         {
           userId: userId,
@@ -24,7 +25,8 @@ module.exports.apianalytics = {
           sessionId: req.session ? req.session.id : '',
           urlbase: `https://www.chinesepod.com${req.path}`,
           referer: req.get('referer'),
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
+          ua: req.headers['user-agent']
         },
         {
           attempts: 2,

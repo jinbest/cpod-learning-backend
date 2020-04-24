@@ -59,7 +59,8 @@ module.exports = function defineJobsHook(sails) {
             timestamp: job.data.timestamp,
             accesslog_time: job.data.timestamp,
             referer: job.data.referer,
-            userData: userData
+            userData: userData,
+            ua: job.data.ua
           });
 
           done(null, userData.email ? `Logged Request for User: ${userData.email}` : `Logged Request for Unknown User`)
