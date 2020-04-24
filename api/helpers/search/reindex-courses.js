@@ -28,12 +28,13 @@ module.exports = {
           'course_title',
           'course_introduction',
           'channel_id',
-          'type'
+          'type',
+          'publish_time',
+          'createdAt',
+          'updatedAt'
         ],
         idColumn: 'id'
       };
-
-    await new Promise(async (resolve, reject) => {
 
       await sails.hooks.elastic.client.indices.delete({index: index.elasticIndex}, (error, response) => {
         if (error) {
@@ -69,6 +70,8 @@ module.exports = {
           indexRecord[key] = record[key];
         });
 
+        action['_id'] = indexRecord['id'];
+
         commands.push(action);
         commands.push(indexRecord);
       });
@@ -76,14 +79,10 @@ module.exports = {
       sails.log.info('Records Prepared');
 
       // run bulk command
-      await sails.hooks.elastic.client.bulk({refresh: 'true', body: commands}, (error, response) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(response);
-        }
-      });
+      await sails.hooks.elastic.client.bulk({refresh: 'true', body: commands})
+        .catch(error => sails.hooks.bugsnag.notify(error));
 
-    });
+      sails.log.info('Records Pushed');
+
   }
 };

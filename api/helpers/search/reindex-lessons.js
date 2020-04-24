@@ -96,5 +96,6 @@ module.exports = {
     // run bulk command
     await sails.hooks.elastic.client.bulk({body: commands})
       .catch(error => sails.hooks.bugsnag.notify(error));
+    sails.log.info('Records Pushed');
   }
 };
