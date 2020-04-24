@@ -40,7 +40,7 @@ module.exports = {
       'https://www.chinesepod.com/checkout',
       'https://www.chinesepod.com/login'
     ].includes(inputs.data.accesslog_urlbase)
-      || (inputs.data.userData && inputs.data.userData.email && !['https://www.chinesepod.com/api/v1/lessons/progress'].includes(inputs.data.accesslog_urlbase))) {
+      || (inputs.data.userData && inputs.data.userData.email && !['https://www.chinesepod.com/api/v1/lessons/progress', 'https://www.chinesepod.com/api/v1/dashboard/event'].includes(inputs.data.accesslog_urlbase))) {
       await Logging.create({
         id: inputs.data.id,
         access_ip: inputs.data.access_ip,
