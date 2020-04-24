@@ -41,7 +41,8 @@ const securitySlowLimiter = new slowDown({
 });
 const securityLimiter = new rateLimit({
   store: new RedisStore({
-    redisURL: 'redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/6'
+    redisURL: 'redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/6',
+    expiry: 24 * 60 * 60
   }),
   windowMs: 24 * 60 * 60 * 1000,
   max: 20,
