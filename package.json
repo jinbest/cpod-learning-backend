@@ -67,6 +67,7 @@
     "skipper-better-s3": "^2.3.0",
     "skipper-s3": "^0.6.0",
     "stripe": "^7.15.0",
+    "ua-parser-js": "^0.7.21",
     "universal-analytics": "^0.4.20",
     "upgrade": "^1.1.0",
     "xkpasswd": "^1.0.5",
