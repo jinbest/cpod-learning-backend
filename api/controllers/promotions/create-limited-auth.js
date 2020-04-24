@@ -9,8 +9,7 @@ module.exports = {
 
   inputs: {
     token: {
-      type: 'string',
-      required: true
+      type: 'string'
     }
 
   },
@@ -22,25 +21,30 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    const Hashids = require('hashids/cjs');
-    const hashids = new Hashids('lithographer-defeater');
+    
+    try {
 
-    let userId = hashids.decode(inputs.token);
+      const Hashids = require('hashids/cjs');
+      const hashids = new Hashids('lithographer-defeater');
 
-    sails.log.info(userId);
-    userId = parseInt(userId);
+      let userId = hashids.decode(inputs.token);
 
-    if (Number.isInteger(userId)) {
-      let userData = await User.findOne({id: userId});
-      this.req.session.limitedAuth = {
-        id: userData.id,
-        email: userData.email,
-        authExpiry: new Date(Date.now() + 60 * 60 *1000)  //Limited Auth Expiry - 1 hour
-      };
-      sails.log.info(this.req.session.limitedAuth);
+      userId = parseInt(userId);
+
+      if (Number.isInteger(userId)) {
+        let userData = await User.findOne({id: userId});
+        this.req.session.limitedAuth = {
+          id: userData.id,
+          email: userData.email,
+          authExpiry: new Date(Date.now() + 60 * 60 *1000)  //Limited Auth Expiry - 1 hour
+        };
+        sails.log.info(this.req.session.limitedAuth);
+      }
+      
+    } catch (e) {
+      
     }
-
-    sails.log.info(this.req.session);
+    
 
     let path = this.req.path.split('/').slice(0,2).join('/');
 
