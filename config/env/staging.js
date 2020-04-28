@@ -97,7 +97,8 @@ module.exports = Object.assign({}, PRODUCTION_CONFIG, {
     cors: {
       allRoutes: true,
       allowOrigins: '*',
-      allowCredentials: true
+      allowCredentials: true,
+      allowAnyOriginWithCredentialsUnsafe: true
     },
   }),
 
