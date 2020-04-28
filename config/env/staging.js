@@ -95,10 +95,13 @@ module.exports = Object.assign({}, PRODUCTION_CONFIG, {
 
   security: Object.assign({}, PRODUCTION_CONFIG.security, {
     cors: {
-      allRoutes: true,
-      allowOrigins: '*',
-      allowCredentials: true,
-      allowAnyOriginWithCredentialsUnsafe: true
+      allowOrigins: [
+        'https://chinesepod.com',
+        'http://chinesepod.com',
+        'https://www.chinesepod.com',
+        'http://www.chinesepod.com',
+        'https://chinesepoduploader.netlify.app'
+      ],
     },
   }),
 
