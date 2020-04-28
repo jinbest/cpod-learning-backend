@@ -267,8 +267,18 @@ module.exports.routes = {
   'GET  /api/v1/recap/get-content/:lessonId':            { action: 'recap/list-recap-files' },
   'POST /api/v1/recap/request-lesson':                   { action: 'recap/request-lesson' },
   'GET /api/v1/recap/users':                             { action: 'recap/users-by-current-lesson' },
-  'POST /api/v1/recap/upload':                           { action: 'recap/upload-recap' },
-  'POST /api/v1/recap/upload-demo':                      { action: 'recap/upload-recap-demo' },
+  'POST /api/v1/recap/upload':                           { action: 'recap/upload-recap' ,
+    cors: {
+      allowOrigins: '*',
+      allowRequestMethods: 'POST',
+      allowAnyOriginWithCredentialsUnsafe: true
+    }},
+  'POST /api/v1/recap/upload-demo':                      { action: 'recap/upload-recap-demo',
+    cors: {
+      allowOrigins: '*',
+      allowRequestMethods: 'POST',
+      allowAnyOriginWithCredentialsUnsafe: true
+    }},
 
   //General Info Routes
   'GET /api/v1/health/ip-info':                          { action: 'health/ip-info' },
