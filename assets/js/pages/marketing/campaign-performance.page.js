@@ -20,7 +20,6 @@ parasails.registerPage('campaign-performance', {
       defaultDate: [new Date(this.formData.fromDate), new Date(this.formData['toDate'])],
       wrap: true,
       mode: "range",
-      maxDate: new Date(),
       dateFormat: "Y-m-d",
       onChange: (selectedDates, dateStr, instance) => {
         let from = new Date(selectedDates[0]);
@@ -46,6 +45,21 @@ parasails.registerPage('campaign-performance', {
       } else {
         alert('Invalid Date Range')
       }
+    },
+    csvExport(arrData) {
+      let csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += [
+        Object.keys(arrData[0]).join(","),
+        ...arrData.map(item => Object.values(item).join(","))
+      ]
+        .join("\n")
+        .replace(/(^\[)|(\]$)/gm, "");
+
+      const data = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", data);
+      link.setAttribute("download", `export-${new Date(this.formData.fromDate).toISOString().split('T')[0].split('-').join('')}-${new Date(this.formData.toDate).toISOString().split('T')[0].split('-').join('')}.csv`);
+      link.click();
     }
   }
 });

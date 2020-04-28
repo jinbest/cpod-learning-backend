@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-12 py-3">
           <div class="row">
-            <div class="col-8 col-md-10">
+            <div class="col-8 col-md-9">
               <div class="flatpickr input-group">
                 <input type="text" class="form-control" placeholder="Select Date Range..." data-input> <!-- input is mandatory -->
 
@@ -18,10 +18,19 @@
                 </button>
               </div>
             </div>
-            <div class="col-3 col-md-2">
-              <button class="btn btn-primary" @click="startSearch">
-                <i class="fa fa-search"></i>
-                 Search</button>
+            <div class="col-4 col-md-3">
+              <div class="row">
+                <div class="col-6">
+                  <button class="btn btn-primary" @click="startSearch">
+                    <i class="fa fa-search"></i>
+                    Search</button>
+                </div>
+                <div v-if="campaigns && campaigns.length > 0" class="col-6">
+                  <button class="btn btn-secondary" @click="csvExport(campaigns)">
+                    <i class="fa fa-download"></i>
+                    Export</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
