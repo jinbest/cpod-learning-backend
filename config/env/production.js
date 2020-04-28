@@ -45,7 +45,7 @@ const securityLimiter = new rateLimit({
     expiry: 24 * 60 * 60
   }),
   windowMs: 24 * 60 * 60 * 1000,
-  max: 20,
+  max: 100,
   message: "Too many requests from this IP, please try again later."
 });
 const contentLimiter = new slowDown({
