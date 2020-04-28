@@ -17,6 +17,9 @@ module.exports = {
 
 
   exits: {
+    notFound: {
+      responseType: 'notFound'
+    }
 
   },
 
@@ -31,6 +34,12 @@ module.exports = {
       // This will give you an adapter instance configured with the
       // credentials and bucket defined above
       , adapter = require('skipper-better-s3')(options);
+
+    let validLesson = await LessonData.count({id: inputs.lessonId});
+
+    if (!validLesson) {
+      return this.res.regularNotFound()
+    }
 
     return new Promise((resolve, reject) => {
       adapter.ls(inputs.lessonId, (err, files) => {
