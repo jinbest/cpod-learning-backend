@@ -102,7 +102,7 @@ module.exports.routes = {
   'GET /secret-page/:level?':                            { action: 'recap/view-secret-page' },
   'GET /recap/list-files/:lessonId?':                    { action: 'recap/view-recap-content-list' },
   'GET /recap/upload-files/:lessonId?':                  'RecapController.serve',
-  'GET /recap/uploadsubmit/:lessonId?':                  'RecapController.serve',
+  'GET /recapsubmit/:lessonId?':                         'RecapController.serve',
   'GET /recap/upload-files-v2/:lessonId?':               'RecapV2Controller.serve',
   'GET /super-secret-page':                              { action: 'recap/view-popular-recap-lessons' },
   'GET /current-lesson':                                 { action: 'recap/view-current-lesson' },
