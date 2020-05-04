@@ -112,9 +112,11 @@ module.exports.routes = {
   'GET /app':                                            { action: 'recap/view-recap' },
 
 
+
+
   //MISC
   'GET /lesson-redirect/:v3id?':                          { action: 'lesson-redirect' },
-
+  'GET /email-redirect/:token':                           { action: 'email-redirect' },
 
   //PROMOTIONS
   'GET /expired-promotion':                              { action: 'promotions/view-expired-promo'},
@@ -385,11 +387,9 @@ module.exports.routes = {
   //NOTIFICATIONS
   '/api/v1/notifications':                               { action: 'notifications/subscribe', isSocket: true },
 
-  //Sample Routes
-  // 'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
-  // 'POST  /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },
-  // 'POST  /api/v1/deliver-contact-form-message':          { action: 'deliver-contact-form-message' },
-
+  //YOUTUBE PROMO
+  'POST /api/v1/youtube':                                { action: 'youtube/post-user-data' },
+  'PUT /api/v1/youtube':                                 { action: 'youtube/put-confirmation' },
 
   //EMAIL MARKETING
   'POST /api/v1/email/unsubscribe-user-email':           { action: 'email/unsubscribe-user'},
