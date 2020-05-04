@@ -28,7 +28,7 @@ module.exports = {
       'jpc6lEl61LE':                      'https://www.youtube.com/watch?v=jpc6lEl61LE',
       'this-week':                        'https://www.youtube.com/watch?v=ma41_WXmwlk',
       'this-week-t':                      'https://www.youtube.com/watch?v=dIYSsCUhp64',
-      '66characters':                     'https://www.youtube.com/watch?v=Ua3N0Ag9B5U&list=PL2pHdzrcvbMiY5KSKPYLAprBWYBOJRxIw',
+      '66characters':                     'https://www.youtube.com/watch?v=Ua3N0Ag9B5U&list=PL2pHdzrcvbMiB936_31BTM3Jlg_0wj7hQ',
       '66characters-t':                   'https://www.youtube.com/watch?v=eRiRC5-_IBw&list=PLeYT_HGPLwrua3kn9_uX4OpQAsTDsmx8c',
       'hsk1prep':                         'https://www.youtube.com/watch?v=jpc6lEl61LE',
       'hsk1prep-t':                       'https://www.youtube.com/watch?v=jpc6lEl61LE',
