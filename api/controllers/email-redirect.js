@@ -54,6 +54,17 @@ module.exports = {
       'r5onCqBFpmo-t': {external: 'https://www.youtube.com/watch?v=jZtB4T3cWds', internal: 'https://www.chinesepod.com/lesson/chengyu-series-say-three-speak-four'},
       'gWdpcfVxCWw': {external: 'https://www.youtube.com/watch?v=gWdpcfVxCWw', internal: 'https://www.chinesepod.com/lesson/continued-tone-change-series-3-being-too-sick-for-work'},
       'gWdpcfVxCWw-t': {external: 'https://www.youtube.com/watch?v=W4Xo6yno6ag', internal: 'https://www.chinesepod.com/lesson/continued-tone-change-series-3-being-too-sick-for-work'},
+      '6Etyqph6No4': {external: 'https://www.youtube.com/watch?v=6Etyqph6No4', internal: 'https://www.chinesepod.com/lesson/coffee-break-series-airport-pick-up-1'},
+      '6Etyqph6No4-t': {external: 'https://www.youtube.com/watch?v=zhxMvdWCpSE', internal: 'https://www.chinesepod.com/lesson/coffee-break-series-airport-pick-up-1'},
+      'AAfRGLv-Y-o': {external: 'https://www.youtube.com/watch?v=AAfRGLv-Y-o', internal: 'https://www.chinesepod.com/lesson/animal-proverbs-the-weasel-wishes-the-chicken-a-good-year'},
+      'AAfRGLv-Y-o-t': {external: 'https://www.youtube.com/watch?v=cU78S6Sl6xo', internal: 'https://www.chinesepod.com/lesson/animal-proverbs-the-weasel-wishes-the-chicken-a-good-year'},
+      'coffee-break-series-1': {external: 'https://www.youtube.com/watch?v=WTMPqDZEoqk&list=PL2pHdzrcvbMjLxjbQMLS0I5vWE-Uv6qBD', internal: 'https://www.chinesepod.com/lesson/coffee-break-series-how-to-say-no-to-your-boss/965'},
+      'coffee-break-series-1-t': {external: 'https://www.youtube.com/watch?v=Xiwck7m-6AA&list=PLeYT_HGPLwrsgRSJZ0F0ev9yxNAkRTT-y', internal: 'https://www.chinesepod.com/lesson/coffee-break-series-how-to-say-no-to-your-boss/965'},
+      'coffee-break-series-2': {external: 'https://www.youtube.com/watch?v=6Etyqph6No4&list=PL2pHdzrcvbMiEH38LWmLRHHFfdu4XTv3f', internal: 'https://www.youtube.com/watch?v=6Etyqph6No4&list=PL2pHdzrcvbMiEH38LWmLRHHFfdu4XTv3f'},
+      'coffee-break-series-2-t': {external: 'https://www.youtube.com/watch?v=zhxMvdWCpSE&list=PLeYT_HGPLwrunKnqMR4VxIteGy2LwKY8l', internal: 'https://www.youtube.com/watch?v=zhxMvdWCpSE&list=PLeYT_HGPLwrunKnqMR4VxIteGy2LwKY8l'},
+      'animal-proverbs-series': {external: 'https://www.youtube.com/watch?v=D5nT_nno76M&list=PL2pHdzrcvbMjNkACK9zJ2ViEmZxJDTBRy', internal: 'https://www.chinesepod.com/lesson/animal-proverbs-mutton-on-the-menu-dog-meat-on-the-plate/966'},
+      'animal-proverbs-series-t': {external: 'https://www.youtube.com/watch?v=jiCQWmKO6FI&list=PLeYT_HGPLwruU6TNEmz44JGsZjPj7ojEt', internal: 'https://www.chinesepod.com/lesson/animal-proverbs-mutton-on-the-menu-dog-meat-on-the-plate/966'},
+
     };
 
     if (links[inputs.token]) {
