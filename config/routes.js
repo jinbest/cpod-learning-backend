@@ -195,6 +195,8 @@ module.exports.routes = {
   '/switchback':                                         '/api/v1/account/opt-out-of-new-dashboard',
   '/old-dashboard':                                      '/api/v1/account/opt-out-of-new-dashboard',
 
+  '/youtube-podcast':                                    'https://www.youtube.com/watch?v=3WpdN0MVf8g',
+
 
   'GET /api/v1/auth/facebook':                           { controller: 'PassportController', action: 'facebookAuth'},
   'GET /api/v1/auth/facebook/callback':                  { controller: 'PassportController', action: 'facebookCallback'},
