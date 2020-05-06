@@ -33,14 +33,7 @@ module.exports = {
       ipData = geoip.lookup(inputs.data.access_ip)
     }
 
-    if ([
-      'https://www.chinesepod.com/dash',
-      'https://www.chinesepod.com/home',
-      'https://www.chinesepod.com/signup',
-      'https://www.chinesepod.com/checkout',
-      'https://www.chinesepod.com/login'
-    ].includes(inputs.data.accesslog_urlbase)
-      || (inputs.data.userData && inputs.data.userData.email && !['https://www.chinesepod.com/api/v1/lessons/progress', 'https://www.chinesepod.com/api/v1/dashboard/event'].includes(inputs.data.accesslog_urlbase))) {
+    if (!['https://www.chinesepod.com/api/v1/lessons/progress', 'https://www.chinesepod.com/api/v1/dashboard/event'].includes(inputs.data.accesslog_urlbase)) {
       await Logging.create({
         id: inputs.data.id,
         access_ip: inputs.data.access_ip,

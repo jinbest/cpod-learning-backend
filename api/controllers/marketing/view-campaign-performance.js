@@ -37,7 +37,7 @@ module.exports = {
 
     sails.log.info(inputs);
 
-    let data
+    let data;
     if (inputs.code) {
 
       data  = await sails.sendNativeQuery(`
