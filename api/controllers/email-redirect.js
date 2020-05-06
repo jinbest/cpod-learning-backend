@@ -91,7 +91,7 @@ module.exports = {
             if (userData) {
               sails.log.warn({
                 name: sails.config.session.name,
-                sessionId: this.req.cookies[sails.config.session.name],
+                sessionId: this.req.cookies,
                 domain: sails.config.session.cookie.domain,
                 path: '/',
                 secure: true,
