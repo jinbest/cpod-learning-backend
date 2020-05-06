@@ -88,16 +88,28 @@ module.exports = {
         if (Number.isInteger(userId)) {
           if (!this.req.session.userId) {
             let userData = await User.findOne({id: userId});
-            this.res.cookie(sails.config.session.name, this.req.cookies[sails.config.session.name], {
-              domain: sails.config.session.cookie.domain,
-              path: '/',
-              secure: true,
-              httpOnly: true,
-              expires: new Date(Date.now() + 60 * 60 * 1000)
-            });
-            this.req.session.userId = userData.id;
+            if (userData) {
+              sails.log.warn({
+                name: sails.config.session.name,
+                sessionId: this.req.cookies[sails.config.session.name],
+                domain: sails.config.session.cookie.domain,
+                path: '/',
+                secure: true,
+                httpOnly: true,
+                expires: new Date(Date.now() + 15 * 60 * 1000)
+              });
+
+              this.res.cookie(sails.config.session.name, this.req.cookies[sails.config.session.name], {
+                domain: sails.config.session.cookie.domain,
+                path: '/',
+                secure: true,
+                httpOnly: true,
+                expires: new Date(Date.now() + 15 * 60 * 1000)
+              });
+              this.req.session.userId = userData.id;
+              pathParams.pop()
+            }
           }
-          pathParams.pop()
         }
 
       } catch (e) {
