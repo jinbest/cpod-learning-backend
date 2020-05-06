@@ -269,7 +269,7 @@ module.exports = {
      ***************************************************************************/
     cookie: {
       secure: true,
-      maxAge: 30 * 60 * 60 * 1000,  // 24 hours
+      maxAge: 30 * 24 * 60 * 60 * 1000,  // 30 days
       domain: '.chinesepod.com',
     },
 

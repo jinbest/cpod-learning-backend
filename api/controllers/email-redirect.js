@@ -70,10 +70,49 @@ module.exports = {
     if (links[inputs.token]) {
       return this.res.redirect(links[inputs.token][this.req.session.userId ? 'internal' : 'external'])
     } else {
-      return this.res.redirect('/')
+
+      sails.log.info(this.req.path);
+
+      let pathParams = this.req.path.split('/');
+
+      try {
+
+        const Hashids = require('hashids/cjs');
+        const hashids = new Hashids('lithographer-defeater');
+
+        let userToken = pathParams[pathParams.length - 1].split('?')[0];
+
+        sails.log.info(userToken);
+
+        let userId = parseInt(hashids.decode(userToken));
+        if (Number.isInteger(userId)) {
+          if (!this.req.session.userId) {
+            let userData = await User.findOne({id: userId});
+            this.res.cookie(sails.config.session.name, this.req.cookies[sails.config.session.name], {
+              domain: sails.config.session.cookie.domain,
+              path: '/',
+              secure: true,
+              httpOnly: true,
+              expires: new Date(Date.now() + 60 * 60 * 1000)
+            });
+            this.req.session.userId = userData.id;
+          }
+          pathParams.pop()
+        }
+
+      } catch (e) {
+        sails.log.error(e);
+      }
+
+      sails.log.info(pathParams);
+
+      let redirectPath = `/${pathParams.slice(2, pathParams.length).join('/')}`;
+
+      sails.log.info(redirectPath);
+
+      return this.res.redirect(redirectPath)
+
     }
-
-
 
   }
 
