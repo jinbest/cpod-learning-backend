@@ -7,13 +7,13 @@
 
 module.exports = function defineApmHook(sails) {
 
-  if (sails.config.environment !== 'production') {
+  // if (sails.config.environment !== 'production') {
     return {
       initialize: async function () {
         sails.log.info('Ignoring hook (`APM`) for DEV')
       }
     }
-  }
+  // }
 
   let appName = sails.config.environment === 'production' ? 'CPOD-JS-production' : 'CPOD-JS-staging';
 
