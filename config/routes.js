@@ -116,7 +116,7 @@ module.exports.routes = {
 
   //MISC
   'GET /lesson-redirect/:v3id?':                         { action: 'lesson-redirect' },
-  'GET /redirect/:token*':                              { action: 'email-redirect' },
+  'GET /redirect/:link*':                              { action: 'email-redirect' },
 
   //PROMOTIONS
   'GET /expired-promotion':                              { action: 'promotions/view-expired-promo'},

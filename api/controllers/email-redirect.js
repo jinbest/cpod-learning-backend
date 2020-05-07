@@ -8,6 +8,9 @@ module.exports = {
 
 
   inputs: {
+    link: {
+      type: 'string'
+    },
     token: {
       type: 'string'
     }
@@ -67,62 +70,39 @@ module.exports = {
 
     };
 
-    if (links[inputs.token]) {
-      return this.res.redirect(links[inputs.token][this.req.session.userId ? 'internal' : 'external'])
+    if (links[inputs.link]) {
+      return this.res.redirect(links[inputs.link][this.req.session.userId ? 'internal' : 'external'])
     } else {
 
-      sails.log.info(this.req.path);
+      if (inputs.token) {
 
-      let pathParams = this.req.path.split('/');
+        sails.log.info(inputs.token);
 
-      try {
-
-        const Hashids = require('hashids/cjs');
-        const hashids = new Hashids('lithographer-defeater');
-
-        let userToken = pathParams[pathParams.length - 1].split('?')[0];
-
-        sails.log.info(userToken);
-
-        let userId = parseInt(hashids.decode(userToken));
-        if (Number.isInteger(userId)) {
-          if (!this.req.session.userId) {
-            let userData = await User.findOne({id: userId});
-            if (userData) {
-              sails.log.warn({
-                name: sails.config.session.name,
-                sessionId: this.req.cookies,
-                domain: sails.config.session.cookie.domain,
-                path: '/',
-                secure: true,
-                httpOnly: true,
-                expires: new Date(Date.now() + 15 * 60 * 1000)
-              });
-
-              this.res.cookie(sails.config.session.name, this.req.cookies[sails.config.session.name], {
-                domain: sails.config.session.cookie.domain,
-                path: '/',
-                secure: true,
-                httpOnly: true,
-                expires: new Date(Date.now() + 15 * 60 * 1000)
-              });
-              this.req.session.userId = userData.id;
-              pathParams.pop()
-            }
+        jwToken.verify(inputs.token, (err, decoded) => {
+          if (err) {
+            sails.log.error(err)
           }
-        }
+          let data;
+          if (decoded && decoded.data) {
+            data = decoded.data
+          }
+          sails.log.info(data);
+          sails.log.info(this.req.session.id);
+          sails.log.info(this.req.cookies);
+          if (data && data.userId && data.redirect) {
+            this.req.session.userId = data.userId;
+            //TODO minimize COOKIE life
+            this.res.cookie('cpod.sid', encodeURI(this.req.session.id), {
+              domain: '.chinesepod.com',
+              expires: new Date(Date.now())
+            });
+            return this.res.redirect(data.redirect)
+          }
+        })
 
-      } catch (e) {
-        sails.log.error(e);
       }
 
-      sails.log.info(pathParams);
-
-      let redirectPath = `/${pathParams.slice(2, pathParams.length).join('/')}`;
-
-      sails.log.info(redirectPath);
-
-      return this.res.redirect(redirectPath)
+      // return this.res.redirect(this.req.path.split('/redirect')[1])
 
     }
 
