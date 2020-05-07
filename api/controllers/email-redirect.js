@@ -225,6 +225,8 @@ module.exports = {
           //   sails.log.info(this.req.session);
           // }
 
+          sails.log.info(this.req.session);
+
           return this.res.redirect(data.redirect)
 
         }
