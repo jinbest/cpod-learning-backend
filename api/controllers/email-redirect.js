@@ -87,9 +87,7 @@ module.exports = {
             data = decoded.data
           }
           sails.log.info(data);
-          sails.log.info(this.req.session.id);
           sails.log.info(this.req.session);
-          sails.log.info(this.req.cookies);
           if (data && data.userId && data.redirect) {
             this.req.session.userId = data.userId;
             sails.log.info(this.req.session);
