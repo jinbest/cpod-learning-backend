@@ -231,7 +231,7 @@ module.exports = {
 
         }
 
-        // return this.res.redirect(this.req.path.split('/redirect')[1])
+        return this.res.redirect(this.req.path.split('/redirect')[1])
 
       }
 
