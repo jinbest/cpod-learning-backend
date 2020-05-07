@@ -212,7 +212,7 @@ module.exports = {
         if (data && data.userId && data.redirect) {
           if (!this.req.session.userId) {
             this.req.session.userId = data.userId;
-            this.req.session.expires = new Date (Date.now() + (data.expires ? data.expires : 15 * 60 * 1000))
+            this.req.session.expires = new Date (Date.now() + (data.expires ? data.expires : 60 * 60 * 1000))
           }
 
           sails.log.info(this.req.session);
