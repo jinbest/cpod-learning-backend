@@ -407,6 +407,7 @@ module.exports = function defineJobsHook(sails) {
         });
 
         userInfoQueue.process('DestroySession', 1, function(job) {
+          sails.log.info('Destroying Session');
           job.data.session.destroy();
         });
 
