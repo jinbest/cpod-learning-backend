@@ -209,13 +209,10 @@ module.exports = {
           }
         });
 
-        sails.log.info(data);
-        sails.log.info(this.req.session);
-
         if (data && data.userId && data.redirect) {
           if (!this.req.session.userId) {
             this.req.session.userId = data.userId;
-            this.req.session.expires = new Date (Date.now() + 60 * 60 * 1000)
+            this.req.session.expires = new Date (Date.now() + (data.expires ? data.expires : 15 * 60 * 1000))
           }
 
           sails.log.info(this.req.session);
@@ -224,9 +221,9 @@ module.exports = {
 
         }
 
-        return this.res.redirect(this.req.path.split('/redirect')[1])
-
       }
+
+      return this.res.redirect(this.req.path.split('/redirect')[1])
 
     }
 

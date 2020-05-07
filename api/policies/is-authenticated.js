@@ -20,6 +20,9 @@ module.exports = function(req, res, proceed) {
     //authorization header is not present
     return res.status(401).json({err: 'No Authorization header was found'});
   }
+  if (req.session.expires && new Date() > new Date(req.session.expires)) {
+    return res.status(401).json({err: 'Session expired'});
+  }
   jwToken.verify(token, function(err, decoded) {
     if(err) {
       if (testingTokens.includes(token)) {
