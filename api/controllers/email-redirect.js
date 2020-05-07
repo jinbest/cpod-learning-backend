@@ -215,16 +215,8 @@ module.exports = {
         if (data && data.userId && data.redirect) {
           if (!this.req.session.userId) {
             this.req.session.userId = data.userId;
-            if (process.env.NODE_ENV === 'production') {
-              this.req.session.cookie.expires = new Date(Date.now() + data.expiry ? data.expiry : 60 * 1000);
-              userInfoQueue.add('DestroySession', {session: this.req.session}, {delay: data.expiry ? data.expiry : 60 * 1000})
-            }
+            this.req.session.expires = new Date (Date.now() + 60 * 60 * 1000)
           }
-          // let userData = await User.findOne({id: data.userId});
-          // if (userData) {
-          //   this.req.session.userId = userData.id;
-          //   sails.log.info(this.req.session);
-          // }
 
           sails.log.info(this.req.session);
 
