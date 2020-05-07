@@ -93,9 +93,9 @@ module.exports = {
           if (data && data.userId && data.redirect) {
             this.req.session.userId = data.userId;
             sails.log.info(this.req.session);
-            if (process.env.NODE_ENV === 'production') {
-              userInfoQueue.add('DestroySession', {session: this.req.session}, {delay: data.expiry ? data.expiry : 60 * 1000})
-            }
+            // if (process.env.NODE_ENV === 'production') {
+            //   userInfoQueue.add('DestroySession', {session: this.req.session}, {delay: data.expiry ? data.expiry : 60 * 1000})
+            // }
             return this.res.redirect(data.redirect)
           }
         })
