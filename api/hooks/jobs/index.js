@@ -406,9 +406,14 @@ module.exports = function defineJobsHook(sails) {
 
         });
 
+        userInfoQueue.process('DestroySession', 1, function(job) {
+          job.data.session.destroy();
+        });
+
         global.userInfoQueue = userInfoQueue;
 
         userInfoQueue.clean(1000);
+
         done()
       })
     },

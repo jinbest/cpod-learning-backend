@@ -92,11 +92,9 @@ module.exports = {
           sails.log.info(this.req.cookies);
           if (data && data.userId && data.redirect) {
             this.req.session.userId = data.userId;
-            //TODO minimize COOKIE life
-            this.res.cookie('cpod.sid', encodeURI(this.req.session.id), {
-              domain: '.chinesepod.com',
-              expires: new Date(Date.now())
-            });
+            if (process.env.NODE_ENV === 'production') {
+              userInfoQueue.add('DestroySession', {session: this.req.session}, {delay: data.expiry ? data.expiry : 60 * 1000})
+            }
             return this.res.redirect(data.redirect)
           }
         })
