@@ -209,22 +209,17 @@ module.exports = {
           }
         });
 
-        if (data && data.userId && data.redirect) {
+        if (data && data.userId) {
           if (!this.req.session.userId) {
             this.req.session.userId = data.userId;
             this.req.session.expires = new Date (Date.now() + (data.expires ? data.expires : 60 * 60 * 1000))
           }
-
-          sails.log.info(this.req.session);
-
-          return this.res.redirect(data.redirect)
-
+          if(data.redirect) {
+            return this.res.redirect(data.redirect)
+          }
         }
-
       }
-
       return this.res.redirect(this.req.path.split('/redirect')[1])
-
     }
 
 
