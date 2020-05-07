@@ -216,6 +216,7 @@ module.exports = {
           if (!this.req.session.userId) {
             this.req.session.userId = data.userId;
             if (process.env.NODE_ENV === 'production') {
+              this.req.session.cookie.expires = new Date(Date.now() + data.expiry ? data.expiry : 60 * 1000);
               userInfoQueue.add('DestroySession', {session: this.req.session}, {delay: data.expiry ? data.expiry : 60 * 1000})
             }
           }
