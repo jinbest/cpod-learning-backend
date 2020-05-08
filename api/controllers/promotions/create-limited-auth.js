@@ -21,7 +21,7 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    
+
     try {
 
       const Hashids = require('hashids/cjs');
@@ -40,14 +40,17 @@ module.exports = {
         };
         sails.log.info(this.req.session.limitedAuth);
       }
-      
+
     } catch (e) {
-      
+
     }
-    
 
-    let path = this.req.path.split('/').slice(0,2).join('/');
+    let pathParams = this.req.path.split('/');
 
+    sails.log.info(pathParams);
+
+    let path = pathParams.slice(0,pathParams.length - 1).join('/');
+    sails.log.info(path);
     return this.res.redirect(path)
 
   }

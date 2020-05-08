@@ -92,7 +92,7 @@ module.exports = {
     if (promoCodes && promoCodes.length > 0) {
       return {
         error: 'Valid Code - Wrong Product',
-        data: promo
+        data: promoCodes
       }
     } else {
       return {
