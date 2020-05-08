@@ -135,7 +135,7 @@ module.exports.routes = {
   'GET /kings-day-2020':                                 { action: 'promotions/view-expired-promo'},
   'GET /kings-day-2020/success':                         { action: 'promotions/view-promo-success'},
   'GET /mothers-day-2020/':                              { action: 'promotions/mothers-day/view-gift'},
-  'GET /mothers-day-2020/:token':                        { action: 'promotions/view-expired-promo'},
+  'GET /mothers-day-2020/:token':                        { action: 'promotions/create-limited-auth'},
   'GET /mothers-day-2020/success':                       { action: 'promotions/view-gift-success'},
 
   //PROMOTIONS - REDEEM GIFTS
