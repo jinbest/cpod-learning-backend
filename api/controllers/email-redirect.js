@@ -44,6 +44,14 @@ module.exports = {
         external: 'https://www.youtube.com/watch?v=dIYSsCUhp64',
         internal: 'https://www.youtube.com/watch?v=dIYSsCUhp64'
       },
+      'this-weekend': {
+        external: 'https://www.youtube.com/watch?v=VeONejYAJhQ',
+        internal: 'https://www.youtube.com/watch?v=VeONejYAJhQ'
+      },
+      'this-weekend-t': {
+        external: 'https://www.youtube.com/watch?v=jAoMITvHbDw',
+        internal: 'https://www.youtube.com/watch?v=jAoMITvHbDw'
+      },
       '66characters': {
         external: 'https://www.youtube.com/watch?v=Ua3N0Ag9B5U&list=PL2pHdzrcvbMiB936_31BTM3Jlg_0wj7hQ',
         internal: 'https://www.chinesepod.com/lesson/66-enjoyable-characters-with-joy-1/959'
@@ -187,6 +195,38 @@ module.exports = {
       'animal-proverbs-series-t': {
         external: 'https://www.youtube.com/watch?v=jiCQWmKO6FI&list=PLeYT_HGPLwruU6TNEmz44JGsZjPj7ojEt',
         internal: 'https://www.chinesepod.com/lesson/animal-proverbs-mutton-on-the-menu-dog-meat-on-the-plate/966'
+      },
+      'H9pB2m3SwnA': {
+        external: 'https://www.youtube.com/watch?v=H9pB2m3SwnA',
+        internal: 'https://www.chinesepod.com/lesson/i-am-not-that-hungry'
+      },
+      'H9pB2m3SwnA-t': {
+        external: 'https://youtu.be/tBAjezbcScA',
+        internal: 'https://www.chinesepod.com/lesson/i-am-not-that-hungry'
+      },
+      'gctKYNvBtmI': {
+        external: 'https://www.youtube.com/watch?v=gctKYNvBtmI',
+        internal: 'https://www.chinesepod.com/lesson/master-ill-be-late'
+      },
+      'gctKYNvBtmI-t': {
+        external: 'https://youtu.be/XieawhpQIhs',
+        internal: 'https://www.chinesepod.com/lesson/master-ill-be-late'
+      },
+      'IQppowcRIdU': {
+        external: 'https://youtu.be/IQppowcRIdU',
+        internal: 'https://www.chinesepod.com/lesson/coffee-break-series-5-ways-to-say-goodbye'
+      },
+      'IQppowcRIdU-t': {
+        external: 'https://youtu.be/a22nwmcN448',
+        internal: 'https://www.chinesepod.com/lesson/coffee-break-series-5-ways-to-say-goodbye'
+      },
+      'l7s8tzOX0jQ': {
+        external: 'https://youtu.be/l7s8tzOX0jQ',
+        internal: 'https://www.chinesepod.com/lesson/five-ways-of-seeing-%E7%9C%8B%E3%80%81%E8%A7%81%E3%80%81%E7%9C%8B%E8%A7%81%E3%80%81%E7%9C%8B%E5%88%B0%E3%80%81%E7%9C%8B%E5%87%BA'
+      },
+      'l7s8tzOX0jQ-t': {
+        external: 'https://youtu.be/lhQAzbhzPlw',
+        internal: 'https://www.chinesepod.com/lesson/five-ways-of-seeing-%E7%9C%8B%E3%80%81%E8%A7%81%E3%80%81%E7%9C%8B%E8%A7%81%E3%80%81%E7%9C%8B%E5%88%B0%E3%80%81%E7%9C%8B%E5%87%BA'
       },
 
     };
