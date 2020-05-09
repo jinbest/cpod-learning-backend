@@ -53,6 +53,11 @@ module.exports = {
 
       return Promise.all(promises)
 
+    } else {
+      await MailingDoNotContact.updateOrCreate({user_id: inputs.userId}, {
+        user_id: inputs.userId,
+        reason: 'Website Subscibe - Opt Out'
+      });
     }
 
     return inputs;

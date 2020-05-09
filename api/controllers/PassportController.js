@@ -101,7 +101,8 @@ module.exports = {
           await sails.helpers.mautic.createContact.with({
             email: userData.email,
             userId: userData.id,
-            ipData: ipData
+            ipData: ipData,
+            optIn: true
           })
             .catch((e) => {sails.log.error(e)});
 
@@ -239,7 +240,8 @@ module.exports = {
           await sails.helpers.mautic.createContact.with({
             email: userData.email,
             userId: userData.id,
-            ipData: ipData
+            ipData: ipData,
+            optIn: true
           })
             .catch((e) => {sails.log.error(e)});
 
