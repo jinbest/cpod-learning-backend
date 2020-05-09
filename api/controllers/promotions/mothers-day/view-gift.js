@@ -53,8 +53,8 @@ module.exports = {
       },
       pricing:{
         premium: {
-          monthly: 20,
-          quarterly: 38,
+          monthly: 17,
+          quarterly: 47,
           annually: 149
         },
         discount: 0
