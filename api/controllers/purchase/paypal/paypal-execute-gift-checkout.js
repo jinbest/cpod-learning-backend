@@ -140,7 +140,7 @@ module.exports = {
       user_id: inputs.userId,
       product_id: plans[inputs.data.plan][inputs.data.billingCycle].id,
       product_length: plans[inputs.data.plan][inputs.data.billingCycle].length,
-      product_price: plans[inputs.data.plan][inputs.data.billingCycle].price,
+      product_price: paymentData.amount,
       discount: discount ? discount : 0.00,
       billed_amount: paymentData.amount,
       promotion_code: inputs.data.promoCode ? inputs.data.promoCode : null,
