@@ -39,13 +39,13 @@ module.exports = {
           id: 2,
           stripeId: 'Monthly Plan -2',
           length: 1,
-          price: 20.00,
+          price: 17.00,
         },
         quarterly: {
           id: 18,
           stripeId: 'Quarterly Plan -18',
           length: 3,
-          price: 39.00,
+          price: 47.00,
         },
         annually: {
           id: 140,
