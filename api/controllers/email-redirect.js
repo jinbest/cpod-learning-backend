@@ -37,12 +37,12 @@ module.exports = {
         internal: 'https://www.chinesepod.com/lesson/chopsticks-are-difficult-to-use'
       },
       'this-week': {
-        external: 'https://www.youtube.com/watch?v=ma41_WXmwlk',
-        internal: 'https://www.youtube.com/watch?v=ma41_WXmwlk'
+        external: 'https://youtu.be/ehqNd702mi4',
+        internal: 'https://youtu.be/ehqNd702mi4'
       },
       'this-week-t': {
-        external: 'https://www.youtube.com/watch?v=dIYSsCUhp64',
-        internal: 'https://www.youtube.com/watch?v=dIYSsCUhp64'
+        external: 'https://youtu.be/TkSOMy6Nt7c',
+        internal: 'https://youtu.be/TkSOMy6Nt7c'
       },
       'this-weekend': {
         external: 'https://www.youtube.com/watch?v=VeONejYAJhQ',
