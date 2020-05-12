@@ -428,12 +428,10 @@ module.exports = {
         })
       })
     }
-
-    //TODO CREATE OR UPGRADE SPLIT HERE'
-
+    //TODO CHECK SUBSCRIPTION STATUS LOGIC
     const existingSubscriptions = await Subscriptions.find({
       user_id: inputs.userId,
-      status: 1,
+      status: {in: [1, 2]},
       next_billing_time: {
         '>=': new Date()
       }

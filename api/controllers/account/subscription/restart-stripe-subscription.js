@@ -1,10 +1,10 @@
 module.exports = {
 
 
-  friendlyName: 'Cancel',
+  friendlyName: 'Update',
 
 
-  description: 'Cancel subscription.',
+  description: 'Update subscription.',
 
 
   inputs: {
@@ -50,8 +50,8 @@ module.exports = {
 
     await Subscriptions.updateOne({subscription_id: inputs.subscriptionId})
       .set({
-        status: 2,
-        date_cancelled: new Date()
+        status: 1,
+        date_cancelled: ''
       })
 
   }

@@ -249,7 +249,7 @@ module.exports.routes = {
   'POST  /api/v1/purchase/check-promo':                  { action: 'purchase/check-promo' },
   'POST /api/v1/purchase/check-email':                   { action: 'purchase/check-email' },
   'PUT  /api/v1/account/update-options':                 { action: 'account/update-options' },
-  'POST /api/v1/account/subscriptions/update':           { action: 'account/subscription/update-card-details'},
+  'POST /api/v1/account/subscriptions/update':           { action: 'account/subscription/update-stripe-subscription-card'},
   'POST /api/v1/account/subscriptions/cancel':           { action: 'account/subscription/cancel-stripe-subscription'},
   'GET /api/v1/account/subscription/subscriptions':      { action: 'account/subscription/get-subscriptions' },
   'GET /api/v1/account/subscription/transactions':       { action: 'account/subscription/get-transactions' },
