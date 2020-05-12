@@ -112,12 +112,9 @@ module.exports.routes = {
   'GET /recapp':                                         { action: 'recap/view-recap' },
   'GET /app':                                            { action: 'recap/view-recap' },
 
-
-
-
   //MISC
   'GET /lesson-redirect/:v3id?':                         { action: 'lesson-redirect' },
-  'GET /redirect/:link*':                              { action: 'email-redirect' },
+  'GET /redirect/:link*':                                { action: 'email-redirect' },
 
   //PROMOTIONS
   'GET /expired-promotion':                              { action: 'promotions/view-expired-promo'},

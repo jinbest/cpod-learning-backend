@@ -17,7 +17,7 @@ module.exports = {
 
 
   fn: async function () {
-    let trial = false; let promo = true; let plan = 'premium'; let period = 'quarterly'; let promoCode = 'KINGS2020'; let nonRecurring = true;
+    let trial = false; let promo = true; let plan = 'premium'; let period = 'quarterly'; let promoCode = 'MEMORIAL2020'; let nonRecurring = true;
 
     let validPromos = await PromoCodes.find({promotion_code: promoCode, product_id: {in: [140, 2, 18, 142, 13, 14]}, expiry_date: {'>': new Date()}})
 
