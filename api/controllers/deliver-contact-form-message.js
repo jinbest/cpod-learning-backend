@@ -81,7 +81,6 @@ your custom config -- usually in \`config/custom.js\`, \`config/staging.js\`,
       remoteUri: 'https://cpod.zendesk.com/api/v2'
     })
     await new Promise(resolve => {
-      sails.log.info('start process')
       client.requests.create({
         request: {
           subject: inputs.topic,
