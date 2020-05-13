@@ -19,23 +19,22 @@ module.exports.routes = {
   // 'GET /faq':                { action:   'view-faq' },
   // 'GET /legal/terms':        { action:   'legal/view-terms' },
   // 'GET /legal/privacy':      { action:   'legal/view-privacy' },
-  // 'GET /contact':            { action:   'view-contact' },
   // //
   // 'GET /signup':             { action: 'entrance/view-signup' },
   // 'GET /email/confirm':      { action: 'entrance/confirm-email' },
   // 'GET /email/confirmed':    { action: 'entrance/view-confirmed-email' },
   //
   // 'GET /login':              { action: 'entrance/view-login' },
-  // 'GET /password/forgot':    { action: 'entrance/view-forgot-password' },
-  // 'GET /password/new':       { action: 'entrance/view-new-password' },
   //
   // 'GET /account':            { action: 'account/view-account-overview' },
   // 'GET /account/password':   { action: 'account/view-edit-password' },
   // 'GET /account/profile':    { action: 'account/view-edit-profile' },
 
   'GET /':                                               { action: 'view-homepage-or-redirect' },
-
+  'GET /contact':                                        { action:   'view-contact' },
   'GET /login':                                          { action: 'entrance/view-login' },
+  'GET /password/forgot':                                { action: 'entrance/view-forgot-password' },
+  'GET /password/new':                                   { action: 'entrance/view-new-password' },
   'GET /email/confirm':                                  { action: 'entrance/confirm-email' },
   'GET /email/confirmed':                                { action: 'onboarding/view-pricing-email-confirmed' },
   'GET /logout':                                         { action: 'account/logout' },
@@ -244,6 +243,9 @@ module.exports.routes = {
   'POST   /api/v1/placement/email-results':              { action: 'placement/email-results' },
   'POST  /api/v1/entrance/signup':                       { action: 'entrance/signup' },
   'POST  /api/v1/entrance/login':                        { action: 'entrance/login' },
+  'POST  /api/v1/entrance/password/reset':               { action: 'entrance/send-password-recovery-email' },
+  'POST  /api/v1/entrance/password/update':              { action: 'entrance/update-password-and-login' },
+  'POST  /api/v1/entrance/send-message':                 { action: 'deliver-contact-form-message' },
   'PUT  /api/v1/onboarding/pricing':                     { action: 'onboarding/pricing' },
   'PUT  /api/v1/onboarding/level':                       { action: 'onboarding/level' },
   'PUT  /api/v1/onboarding/redeem':                      { action: 'redeem/redeem-voucher' },

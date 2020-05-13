@@ -40,9 +40,9 @@ module.exports = {
     }//•
 
     // Look up the user with this reset token.
-    var userRecord = await User.findOne({ passwordResetToken: inputs.token });
+    var userRecord = await User.findOne({ code: inputs.token });
     // If no such user exists, or their token is expired, display an error page explaining that the link is bad.
-    if (!userRecord || userRecord.passwordResetTokenExpiresAt <= Date.now()) {
+    if (!userRecord) {
       throw 'invalidOrExpiredToken';
     }
 

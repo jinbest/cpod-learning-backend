@@ -45,6 +45,7 @@
     "moment": "^2.24.0",
     "mysql": "^2.18.1",
     "node-mautic": "^1.1.0",
+    "node-zendesk": "^1.4.0",
     "parse-cc-cedict": "^2.1.0",
     "passport": "^0.4.0",
     "passport-facebook": "^3.0.0",

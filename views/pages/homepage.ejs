@@ -37,7 +37,7 @@
                         <div class="form-block__checkbox-block"></div>
                         <span class="form-block__checkbox-label">I want to hear the latest news from ChinesePod.</span>
                       </label>
-                      <p class="text-danger" v-if="cloudError==='emailAlreadyInUse'"><small>It looks like there's already an account with your email address. If you forgot your password, you can recover it <strong><a href="/accounts/resetpassword">here</a></strong>.</small></p>
+                      <p class="text-danger" v-if="cloudError==='emailAlreadyInUse'"><small>It looks like there's already an account with your email address. If you forgot your password, you can recover it <strong><a href="/password/forgot">here</a></strong>.</small></p>
                       <p class="text-danger" v-else-if="cloudError"><small>An error occurred while processing your request. Please check your information and try again, or <strong><a href="/support">contact support</a></strong> if the error persists.</small></p>
 
                     </div>
@@ -217,7 +217,7 @@
                       <div class="form-block__checkbox-block"></div>
                       <span class="form-block__checkbox-label">I want to hear the latest news from ChinesePod.</span>
                     </label>
-                    <p class="text-danger" v-if="cloudError==='emailAlreadyInUse'"><small>It looks like there's already an account with your email address. If you forgot your password, you can recover it <strong><a href="/accounts/resetpassword">here</a></strong>.</small></p>
+                    <p class="text-danger" v-if="cloudError==='emailAlreadyInUse'"><small>It looks like there's already an account with your email address. If you forgot your password, you can recover it <strong><a href="/password/forgot">here</a></strong>.</small></p>
                     <p class="text-danger" v-else-if="cloudError"><small>An error occurred while processing your request. Please check your information and try again, or <strong><a href="/support">contact support</a></strong> if the error persists.</small></p>
 
                   </div>
@@ -480,7 +480,7 @@
                     <div class="form-block__checkbox-block"></div>
                     <span class="form-block__checkbox-label">I want to hear the latest news from ChinesePod.</span>
                   </label>
-                  <p class="text-danger" v-if="cloudError==='emailAlreadyInUse'"><small>It looks like there's already an account with your email address. If you forgot your password, you can recover it <strong><a href="/accounts/resetpassword">here</a></strong>.</small></p>
+                  <p class="text-danger" v-if="cloudError==='emailAlreadyInUse'"><small>It looks like there's already an account with your email address. If you forgot your password, you can recover it <strong><a href="/password/forgot">here</a></strong>.</small></p>
                   <p class="text-danger" v-else-if="cloudError"><small>An error occurred while processing your request. Please check your information and try again, or <strong><a href="/support">contact support</a></strong> if the error persists.</small></p>
 
                 </div>

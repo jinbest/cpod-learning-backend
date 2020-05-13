@@ -32,7 +32,7 @@ module.exports = {
 
     // Find the record for this user.
     // (Even if no such user exists, pretend it worked to discourage sniffing.)
-    var userRecord = await User.findOne({ emailAddress: inputs.emailAddress });
+    var userRecord = await User.findOne({ email: inputs.emailAddress });
     if (!userRecord) {
       return;
     }//•
@@ -45,8 +45,7 @@ module.exports = {
     // (This allows us to look up the user when the link from the email is clicked.)
     await User.updateOne({ id: userRecord.id })
     .set({
-      passwordResetToken: token,
-      passwordResetTokenExpiresAt: Date.now() + sails.config.custom.passwordResetTokenTTL,
+      code: token
     });
 
     // Send recovery email
@@ -54,8 +53,9 @@ module.exports = {
       to: inputs.emailAddress,
       subject: 'Password reset instructions',
       template: 'email-reset-password',
+      layout: false,
       templateData: {
-        fullName: userRecord.fullName,
+        fullName: userRecord.name,
         token: token
       }
     });

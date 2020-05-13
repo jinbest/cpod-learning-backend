@@ -61,7 +61,8 @@ your custom config -- usually in \`config/custom.js\`, \`config/staging.js\`,
     }
 
     await sails.helpers.sendTemplateEmail.with({
-      to: sails.config.custom.internalEmailAddress,
+      // to: sails.config.custom.internalEmailAddress,
+      to: 'ugis@chinesepod.com',
       subject: 'New contact form message',
       template: 'internal/email-contact-form',
       layout: false,
@@ -72,6 +73,27 @@ your custom config -- usually in \`config/custom.js\`, \`config/staging.js\`,
         message: inputs.message
       }
     });
+
+    const zendesk = require('node-zendesk');
+    const client = zendesk.createClient({
+      username: 'elsha@chinesepod.com',
+      token: sails.config.custom.zendeskKey,
+      remoteUri: 'https://cpod.zendesk.com/api/v1'
+    })
+
+    await client.requests.create({
+      request: {
+        subject: inputs.topic,
+        comment: {
+          body: inputs.message
+        },
+        requester: {
+          name: inputs.fullName,
+          email: inputs.emailAddress
+        }
+      }
+    })
+      .catch(e => sails.hooks.bugsnag.notify(e))
 
   }
 
