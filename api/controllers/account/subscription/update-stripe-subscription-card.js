@@ -32,6 +32,12 @@ module.exports = {
 
   fn: async function (inputs) {
 
+    sails.log.info(inputs);
+    sails.log.info({
+      source: inputs.token,
+      name: inputs.fullName
+    })
+
     inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
     const stripe = require('stripe')(sails.config.custom.stripeSecret);

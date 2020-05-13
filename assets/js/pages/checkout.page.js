@@ -197,13 +197,12 @@ parasails.registerPage('checkout', {
         }
       }
 
-      await this.stripe.createToken(this.card)
+      await this.stripe.createToken(this.card, {name: `${this.formData.fName} ${this.formData.lName}`})
         .then((card) => {
           this.token = card.token.id;
         })
         .catch((e) => {
-          console.log(e);
-          // this.modal = 'paymentError';
+          this.modal = 'paymentError';
           this.syncing = false;
           return
         });

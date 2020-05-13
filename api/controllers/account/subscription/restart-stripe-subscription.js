@@ -45,7 +45,7 @@ module.exports = {
 
     }
 
-    await stripe.subscriptions.update(inputs.subscriptionId,{ cancel_at_period_end: true })
+    await stripe.subscriptions.update(inputs.subscriptionId,{ cancel_at_period_end: false })
       .catch(err => sails.hooks.bugsnag.notify(err));
 
     await Subscriptions.updateOne({subscription_id: inputs.subscriptionId})
