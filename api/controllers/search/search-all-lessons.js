@@ -336,6 +336,11 @@ module.exports = {
 
     } else {
 
+      const containsChinese = require('contains-chinese');
+      let fuzziness = containsChinese(inputs.query) ? 0 : 1;
+
+      sails.log.info(fuzziness)
+
       if (searchFilters.length > 0) {
 
         sails.log.info('Has Query & Has Filters');
@@ -354,7 +359,7 @@ module.exports = {
                     fields: ['title^4', 'introduction^2', 'transcription1^2', 'hosts'],
                     operator: 'and',
                     analyzer: 'standard',
-                    fuzziness: 1,
+                    fuzziness: fuzziness,
                   }
                 },
                 filter: searchFilters
@@ -379,7 +384,7 @@ module.exports = {
                 fields: ['id', 'title^4', 'introduction^2', 'transcription1^2', 'hosts'],
                 operator: 'and',
                 analyzer: 'standard',
-                fuzziness: 1
+                fuzziness: fuzziness
               },
             }
           }
