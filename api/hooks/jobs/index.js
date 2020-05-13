@@ -406,9 +406,33 @@ module.exports = function defineJobsHook(sails) {
 
         });
 
-        userInfoQueue.process('DestroySession', 1, function(job) {
-          sails.log.info('Destroying Session');
-          job.data.session.destroy();
+        userInfoQueue.process('UpdateUseParameters', 1, async function(job) {
+          let email = job.data.email; let logData = [];
+          let userData = await User.findOne({email: email});
+          if (!userData || !userData.id) {
+            return 'No such user'
+          }
+          let latestLogs = await BackupLogging.find({id: email}).sort('createdAt DESC').limit(10);
+          if (latestLogs && Array.isArray(latestLogs) && latestLogs.length) {
+            [...new Set(latestLogs.map(log => log.accesslog_urlbase.split('https://')[1].split('.')[0]))].forEach(log => {
+              switch (log) {
+                case 'www':
+                  logData.push({user_id: userData.id, option_key: 'newDashboard', option_value: new Date()})
+                  break;
+                case 'ws':
+                  logData.push({user_id: userData.id, option_key: 'androidApp', option_value: new Date()})
+                  break;
+                case 'server4':
+                  logData.push({user_id: userData.id, option_key: 'iosApp', option_value: new Date()})
+                  break;
+                case 'chinesepod':
+                  logData.push({user_id: userData.id, option_key: 'oldDashboard', option_value: new Date()})
+                  break;
+              }
+            });
+            return await UserOptions.createEach().fetch();
+          }
+          return 'No Logs'
         });
 
         global.userInfoQueue = userInfoQueue;

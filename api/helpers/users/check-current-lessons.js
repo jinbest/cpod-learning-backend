@@ -62,7 +62,10 @@ module.exports = {
 
     users = [...new Set(users.map(user => user.id))];
 
-    users.forEach(user => userInfoQueue.add('SetCurrentLesson', {email: user}, {jobId: `SetCurrentLesson-${user}`,attempts: 2, timeout: 600000,  removeOnComplete: true, removeOnFail: true}))
+    users.forEach(user => {
+      userInfoQueue.add('SetCurrentLesson', {email: user}, {jobId: `SetCurrentLesson-${user}`,attempts: 2, timeout: 600000,  removeOnComplete: true, removeOnFail: true})
+      userInfoQueue.add('UpdateUseParameters', {email: user}, {jobId: `UpdateUseParameters-${user}`,attempts: 2, timeout: 600000,  removeOnComplete: true, removeOnFail: true})
+    })
 
   }
 
