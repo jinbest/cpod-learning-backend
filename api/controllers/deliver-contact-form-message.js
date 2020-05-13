@@ -76,25 +76,25 @@ your custom config -- usually in \`config/custom.js\`, \`config/staging.js\`,
 
     const zendesk = require('node-zendesk');
     const client = zendesk.createClient({
-      username: 'elsha@chinesepod.com',
+      username: inputs.emailAddress,
       token: sails.config.custom.zendeskKey,
-      remoteUri: 'https://cpod.zendesk.com/api/v1'
+      remoteUri: 'https://cpod.zendesk.com/api/v2'
     })
-
-    await client.requests.create({
-      request: {
-        subject: inputs.topic,
-        comment: {
-          body: inputs.message
-        },
-        requester: {
-          name: inputs.fullName,
-          email: inputs.emailAddress
+    await new Promise(resolve => {
+      sails.log.info('start process')
+      client.requests.create({
+        request: {
+          subject: inputs.topic,
+          comment: {
+            body: inputs.message
+          },
+          requester: {
+            name: inputs.fullName,
+            email: inputs.emailAddress
+          }
         }
-      }
+      }, resolve)
     })
-      .catch(e => sails.hooks.bugsnag.notify(e))
-
   }
 
 
