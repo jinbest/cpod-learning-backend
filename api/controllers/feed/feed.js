@@ -53,7 +53,7 @@ module.exports = {
           returnData.push({
             name: host,
             email: `${host.toLowerCase().split(' ').join('.')}@chinesepod.com`,
-            link: `https://www.chinesepod.com/explore?query=${host.split(' ').join('+')}`
+            link: `https://www.chinesepod.com/explore?search=${host.split(' ').join('+')}`
           })
         });
         return returnData
