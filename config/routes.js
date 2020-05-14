@@ -343,6 +343,20 @@ module.exports.routes = {
   'GET /api/v1/exercises/results':                       { action: 'exercises/results/get' },
   'POST /api/v1/exercises/results':                      { action: 'exercises/results/post' },
 
+  //VOCABULARY Routes
+  'GET /api/v1/vocabulary/words':                        { action: 'vocabulary/words/get-all-words'},
+  'GET /api/v1/vocabulary/words/:id':                    { action: 'vocabulary/words/get-word-by-id'},
+  'PUT /api/v1/vocabulary/words/add':                    { action: 'vocabulary/words/add-word'},
+  'PUT /api/v1/vocabulary/words/create':                 { action: 'vocabulary/words/create-word'},
+  'POST /api/v1/vocabulary/words/:id':                   { action: 'vocabulary/words/update-word'},
+  'DELETE /api/v1/vocabulary/words/:id':                 { action: 'vocabulary/words/delete-word'},
+
+  'GET /api/v1/vocabulary/decks':                        { action: 'vocabulary/decks/get-all-decks'},
+  'GET /api/v1/vocabulary/decks/:id':                    { action: 'vocabulary/decks/get-deck-by-id'},
+  'PUT /api/v1/vocabulary/decks':                        { action: 'vocabulary/decks/create-deck'},
+  'POST /api/v1/vocabulary/decks/:id':                   { action: 'vocabulary/decks/update-deck'},
+  'DELETE /api/v1/vocabulary/decks/:id':                 { action: 'vocabulary/decks/delete-deck'},
+
   //Feedback Routes
   'POST /api/v1/feedback/dashboard-feedback':            { action: 'feedback/dashboard-feedback' },
   'GET /api/v1/feedback/dashboard-feedback-all':         { action: 'feedback/dashboard-feedback-all' },
