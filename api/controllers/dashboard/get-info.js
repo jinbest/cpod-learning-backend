@@ -34,7 +34,7 @@ module.exports = {
       throw 'invalid'
     }
 
-    let userOptions = await UserOptions.find({user_id: inputs.userId, option_key: {in: ['level', 'interests', 'autoMarkStudied', 'pinyin', 'newDash', 'timezone', 'currentLesson']}});
+    let userOptions = await UserOptions.find({user_id: inputs.userId, option_key: {in: ['level', 'charSet', 'interests', 'autoMarkStudied', 'pinyin', 'newDash', 'timezone', 'currentLesson']}});
 
     function toObject(arr) {
       var rv = {};
