@@ -56,7 +56,7 @@ then redirect to either a special landing page (for newly-signed up users), or t
     var user = await User.findOne({ code: inputs.code });
 
     // If no such user exists, or their token is expired, bail.
-    if (!user) {
+    if (!user || user.confirm_status) {
       throw 'invalidOrExpiredToken';
     }
 
