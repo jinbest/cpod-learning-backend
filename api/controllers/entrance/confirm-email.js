@@ -77,7 +77,7 @@ then redirect to either a special landing page (for newly-signed up users), or t
     this.req.visitor.event("confirm_account", "confirm_account").send();
 
     if (this.req.wantsJSON) {
-      return;
+      return {success: 1};
     } else {
       //Create PHP Website Session & Cookie
       await sails.helpers.createPhpSession.with({
