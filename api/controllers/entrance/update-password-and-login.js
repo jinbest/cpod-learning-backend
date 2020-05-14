@@ -60,7 +60,8 @@ module.exports = {
     // Store the user's new password and clear their reset token so it can't be used again.
     await User.updateOne({ id: userRecord.id })
     .set({
-      password: hashed
+      password: hashed,
+      code: await sails.helpers.strings.random('url-friendly')
     });
 
     // Log the user in.
