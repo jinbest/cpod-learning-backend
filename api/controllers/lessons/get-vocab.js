@@ -45,7 +45,7 @@ module.exports = {
       item['p'] = item.column_2;
       item['en'] = item.column_3;
       item['t'] = item.column_4;
-      returnData.push(_.pick(item, ['s', 't', 'p', 'en', 'audio','vocabulary_class']));
+      returnData.push(_.pick(item, ['id', 's', 't', 'p', 'en', 'audio','vocabulary_class']));
     });
     return returnData
   }

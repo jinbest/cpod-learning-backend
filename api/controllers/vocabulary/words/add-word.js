@@ -47,10 +47,10 @@ module.exports = {
 
     }
 
-    let vocab = await UserVocabulary.create({user_id: inputs.userId, vocabulary_id: inputs.vocabularyId}).fetch();
+    let vocab = await UserVocabulary.updateOrCreate({user_id: inputs.userId, vocabulary_id: inputs.vocabularyId}, {user_id: inputs.userId, vocabulary_id: inputs.vocabularyId});
 
     if (inputs.deckId) {
-      await UserVocabularyToVocabularyTags.create({vocabulary_tag_id: inputs.deckId, user_vocabulary_id: vocab.id})
+      await UserVocabularyToVocabularyTags.updateOrCreate({vocabulary_tag_id: inputs.deckId, user_vocabulary_id: vocab.id}, {vocabulary_tag_id: inputs.deckId, user_vocabulary_id: vocab.id})
     }
 
     return vocab
