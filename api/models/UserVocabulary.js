@@ -53,11 +53,11 @@ module.exports = {
       defaultsTo: 0
     },
     last_test_date: {
-      type: "string",
+      type: "ref",
       defaultsTo: '0000-00-00'
     },
     last_correct_date: {
-      type: "string",
+      type: "ref",
       defaultsTo: '0000-00-00'
     },
     createdAt: {
