@@ -277,6 +277,7 @@ module.exports.routes = {
   'GET /api/v1/recap/get-popular-recap-lessons':         { action: 'recap/get-popular-recap-lessons' },
   'GET /api/v1/recap/get-all-recap-lessons':             { action: 'recap/get-all-recap-lessons' },
   'POST /api/v1/recap/get-lessons':                      { action: 'recap/get-user-lesson' },
+  'GET /api/v1/recap/get-news':                          { action: 'recap/get-news' },
   'GET  /api/v1/recap/get-content/:lessonId':            { action: 'recap/list-recap-files' },
   'POST /api/v1/recap/request-lesson':                   { action: 'recap/request-lesson' },
   'GET /api/v1/recap/users':                             { action: 'recap/users-by-current-lesson' },
