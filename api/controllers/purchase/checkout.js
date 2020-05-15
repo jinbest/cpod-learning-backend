@@ -549,6 +549,7 @@ module.exports = {
         {
           items: [{id: currentSubItem, plan: plans[inputs.plan][inputs.billingCycle].stripeId}],
           coupon: coupon ? coupon.id : null,
+          trial_period_days: holidayPromo ? 90 : inputs.trial ? 14 : 0,
           cancel_at_period_end: !!inputs.nonRecurring,
           billing_cycle_anchor: 'now',
           proration_behavior: 'always_invoice'
