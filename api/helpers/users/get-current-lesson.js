@@ -70,29 +70,29 @@ module.exports = {
       throw 'invalid'
     }
 
-    const redis = require("redis"),
-      client = redis.createClient('redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/3');
-
-    const {promisify} = require('util');
-    const getAsync = promisify(client.get).bind(client);
-
-    let response = await getAsync(user.email);
-
-    if (response) {
-      let json = false;
-      try {
-        json = JSON.parse(response);
-      } catch (e) {
-        sails.log.error(e)
-      }
-
-      if (json && new Date(json['timestamp']) > new Date(Date.now() - minTimer * 60 * 1000)) {
-
-        sails.log.info({result: new Date(json['timestamp']) > new Date(Date.now() - minTimer * 60 * 1000), killdate: new Date(Date.now() - minTimer * 60 * 1000), redisdate: new Date(json['timestamp'])});
-
-        return JSON.parse(response)
-      }
-    }
+    // const redis = require("redis"),
+    //   client = redis.createClient('redis://cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com:6379/3');
+    //
+    // const {promisify} = require('util');
+    // const getAsync = promisify(client.get).bind(client);
+    //
+    // let response = await getAsync(user.email);
+    //
+    // if (response) {
+    //   let json = false;
+    //   try {
+    //     json = JSON.parse(response);
+    //   } catch (e) {
+    //     sails.log.error(e)
+    //   }
+    //
+    //   if (json && new Date(json['timestamp']) > new Date(Date.now() - minTimer * 60 * 1000)) {
+    //
+    //     sails.log.info({result: new Date(json['timestamp']) > new Date(Date.now() - minTimer * 60 * 1000), killdate: new Date(Date.now() - minTimer * 60 * 1000), redisdate: new Date(json['timestamp'])});
+    //
+    //     return JSON.parse(response)
+    //   }
+    // }
 
     let latestStudiedLesson = false;
 
@@ -158,11 +158,11 @@ module.exports = {
         timestamp: new Date()
       };
 
-      client.set(user.email, JSON.stringify(returnData));
+      // client.set(user.email, JSON.stringify(returnData));
 
     }
 
-    client.end(true);
+    // client.end(true);
 
     await UserOptions.updateOrCreate({user_id: user.id, option_key: 'recapApp'}, {user_id: user.id, option_key: 'recapApp', option_value: new Date()});
 
