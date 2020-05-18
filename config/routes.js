@@ -355,6 +355,7 @@ module.exports.routes = {
   'GET /api/v1/vocabulary/decks':                        { action: 'vocabulary/decks/get-all-decks'},
   'GET /api/v1/vocabulary/decks/:id':                    { action: 'vocabulary/decks/get-deck-by-id'},
   'PUT /api/v1/vocabulary/decks':                        { action: 'vocabulary/decks/create-deck'},
+  'PUT /api/v1/vocabulary/decks/add':                    { action: 'vocabulary/decks/add-word-to-deck'},
   'POST /api/v1/vocabulary/decks/:id':                   { action: 'vocabulary/decks/update-deck'},
   'DELETE /api/v1/vocabulary/decks/:id':                 { action: 'vocabulary/decks/delete-deck'},
 

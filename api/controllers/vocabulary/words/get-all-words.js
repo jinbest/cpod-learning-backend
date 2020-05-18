@@ -33,7 +33,7 @@ module.exports = {
 
     let userVocab = await UserVocabulary.find({user_id: inputs.userId}).skip(inputs.skip).limit(inputs.limit).populate('vocabulary_id.v3_id',{where: {},select: ['title', 'hash_code', 'slug', 'level']});
 
-    let userDecks = await UserVocabularyToVocabularyTags.find({user_vocabulary_id: {in: userVocab.map(vocab => vocab.id)}}).populate('vocabulary_tag_id')
+    let userDecks = await UserVocabularyToVocabularyTags.find({user_vocabulary_id: {in: userVocab.map(vocab => vocab.id)}}).populate('vocabulary_tag_id', {where: {user_id: inputs.userId}})
 
     return {
       total: total,

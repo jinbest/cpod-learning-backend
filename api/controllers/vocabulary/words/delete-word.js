@@ -41,7 +41,7 @@ module.exports = {
     }
 
     await UserVocabulary.destroyOne({id: inputs.id})
-    await UserVocabularyToVocabularyTags.destroyOne({user_vocabulary_id: inputs.id})
+    await UserVocabularyToVocabularyTags.destroy({user_vocabulary_id: inputs.id})
 
   }
 
