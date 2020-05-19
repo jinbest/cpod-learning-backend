@@ -23,8 +23,6 @@ module.exports = {
 
     let userVocab = await UserVocabulary.find({id: inputs.id}).populate('vocabulary_id');
 
-
-
   }
 
 
