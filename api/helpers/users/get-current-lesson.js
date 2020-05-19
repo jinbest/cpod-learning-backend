@@ -125,7 +125,16 @@ module.exports = {
 
       let userSettings = await UserSettings.findOne({user_id: user.id});
 
-      let userOptions = await UserOptions.find({user_id: user.id})
+      let userOptions = await UserOptions.find({user_id: inputs.userId, option_key: {in: ['level', 'charSet', 'interests', 'autoMarkStudied', 'pinyin', 'newDash', 'timezone', 'currentLesson']}});
+
+      function toObject(arr) {
+        var rv = {};
+        arr.forEach(option => {
+          rv[option.option_key] = option.option_value
+        });
+        return rv;
+      }
+      userOptions = toObject(userOptions);
 
       let charSet = userOptions['charSet'] ? userOptions['charSet'] : 'simplified';
 
