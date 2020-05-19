@@ -125,16 +125,28 @@ module.exports = {
 
       let userSettings = await UserSettings.findOne({user_id: user.id});
 
-      let charSet = 'simplified';
+      let userOptions = await UserOptions.find({user_id: inputs.userId, option_key: {in: ['level', 'charSet', 'interests', 'autoMarkStudied', 'pinyin', 'newDash', 'timezone', 'currentLesson']}});
 
-      try {
-        let rawChar = userSettings.setting.split('"ctype";i:')[1].slice(0,1);
-        if (rawChar == 2) {
-          charSet = 'traditional';
+      function toObject(arr) {
+        var rv = {};
+        arr.forEach(option => {
+          rv[option.option_key] = option.option_value
+        });
+        return rv;
+      }
+      userOptions = toObject(userOptions);
+
+      let charSet = userOptions['charSet'] ? userOptions['charSet'] : 'simplified';
+
+      if (!userOptions['charSet']) {
+        try {
+          let rawChar = userSettings.setting.split('"ctype";i:')[1].slice(0,1);
+          if (rawChar == 2) {
+            charSet = 'traditional';
+          }
+        } catch (e) {
+          // await sails.helpers.users.setCharSet(user.id, charSet);
         }
-
-      } catch (e) {
-        await sails.helpers.users.setCharSet(user.id, charSet);
       }
 
       let content = await Contents.findOne({v3_id: latestStudiedLesson});

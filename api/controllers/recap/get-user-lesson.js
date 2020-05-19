@@ -42,6 +42,8 @@ module.exports = {
 
     let session = await sails.helpers.phpApi.checkSession(inputs.sessionId);
 
+    sails.log.info(session)
+
     if(!session) {
       throw 'invalid'
     }
@@ -50,6 +52,8 @@ module.exports = {
       email: session.email
     });
 
+    sails.log.info(user)
+
     if(!user.id) {
       throw 'invalid'
     }
@@ -57,7 +61,7 @@ module.exports = {
     //Connect Sails Session to PHP API Session
     this.req.session.userId = user.id;
 
-    return await sails.helpers.users.getCurrentLesson(inputs.sessionId)
+    return await sails.helpers.users.getCurrentLesson.with({userId: user.id})
       .catch(() => {throw 'invalid'})
 
   }
