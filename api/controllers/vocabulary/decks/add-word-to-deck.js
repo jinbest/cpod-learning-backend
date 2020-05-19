@@ -9,8 +9,7 @@ module.exports = {
 
   inputs: {
     wordId: {
-      type: 'number',
-      isInteger: true,
+      type: ['ref'],
       required: true
     },
     deckId: {
@@ -29,7 +28,12 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    await UserVocabularyToVocabularyTags.updateOrCreate({vocabulary_tag_id: inputs.deckId, user_vocabulary_id: inputs.wordId},{vocabulary_tag_id: inputs.deckId, user_vocabulary_id: inputs.wordId})
+    let promises = [];
+    inputs.wordId.forEach(id => {
+      promises.push(UserVocabularyToVocabularyTags.updateOrCreate({vocabulary_tag_id: inputs.deckId, user_vocabulary_id: id},{vocabulary_tag_id: inputs.deckId, user_vocabulary_id: id}))
+    })
+
+    await Promise.all(promises)
 
   }
 

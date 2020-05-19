@@ -32,7 +32,7 @@ module.exports = {
     let userData = await User.findOne({email: inputs.email});
 
     if (!userData) {
-      throw 'invalid'
+      return `Sorry no such user with email ${inputs.email}`
     }
 
     let access = await sails.helpers.users.getAccessType(userData.id);
@@ -47,7 +47,17 @@ module.exports = {
 
     } else {
 
-      return `Sorry an error occurred with ${inputs.email}`
+      let userAccess;
+      try {
+        userAccess = await UserSiteLinks.findOne({user_id: userData.id, site_id: 2})
+      } catch (e) {
+
+      }
+      if (!userAccess) {
+        return `User with email ${inputs.email} already has ${access} access`
+      } else {
+        return `User with email ${inputs.email} already has ${access} access that expires on ${new Date(userAccess.expiry).toISOString()}`
+      }
 
     }
   }

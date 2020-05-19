@@ -34,7 +34,8 @@ module.exports = {
 
     if (!deck) {
       throw 'invalid'
-    } else if (deck.user_id !== inputs.userId && !deck.public) {
+    // } else if (deck.user_id !== inputs.userId && !deck.public) {
+    } else if (deck.user_id !== inputs.userId) {
       throw 'unauthorized'
     }
     let deckVocab = await UserVocabularyToVocabularyTags.find({vocabulary_tag_id: inputs.id}).select('user_vocabulary_id');
@@ -44,13 +45,14 @@ module.exports = {
 
     userVocab = userVocab.map(vocab => {
       let tags = userDecks.filter(deck => deck.user_vocabulary_id === vocab.id);
-      sails.log.info(tags);
       if (tags && tags.length) {
-        vocab.vocabulary_id.tags = tags.map(tag => tag.vocabulary_tag_id)
+        tags = tags.map(tag => tag.vocabulary_tag_id)
       }
-      vocab.lesson = _.pick(vocab.vocabulary_id.v3_id, ['title', 'hash_code', 'slug', 'level', 'type', 'id']);
-      delete vocab.vocabulary_id.v3_id
-      return {...vocab.vocabulary_id, ...{user_vocabulary_id: vocab.id, createdAt: vocab.createdAt, lesson: vocab.lesson}}
+      if (vocab.vocabulary_id && vocab.vocabulary_id.v3_id) {
+        vocab.lesson = _.pick(vocab.vocabulary_id.v3_id, ['title', 'hash_code', 'slug', 'level', 'type', 'id']);
+        delete vocab.vocabulary_id.v3_id
+      }
+      return {...vocab.vocabulary_id, ...{user_vocabulary_id: vocab.id, createdAt: vocab.createdAt, lesson: vocab.lesson, tags: tags}}
     })
 
     return {...deck, ...{vocab: userVocab}}
