@@ -55,6 +55,7 @@ module.exports.policies = {
   'dashboard/*': 'is-authenticated',
   'lessons/*': ['is-authenticated', contentLimiter],
   'exercises/*': 'is-authenticated',
+  'vocabulary/*': 'is-authenticated',
   'search/*': 'is-authenticated',
   'token/check': 'is-authenticated',
 

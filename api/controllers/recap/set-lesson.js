@@ -17,32 +17,24 @@ module.exports = {
 
 
   exits: {
+    invalid: {
+      responseType: "badRequest"
+    }
 
   },
 
 
   fn: async function (inputs) {
 
-    sails.log.info(inputs);
+    inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
-    let lessonId = inputs.lessonId;
-
-    if (this.req.me) {
-      let log = await Logging.create({
-        id: this.req.me.email,
-        access_ip: this.req.ip,
-        accesslog_url: `https://chinesepod.com/lessons/api?v3_id=${lessonId}&type=lesson`,
-        accesslog_sessionid: this.req.session.id,
-        accesslog_urlbase: 'https://chinesepod.com/lessons/api',
-      }).fetch();
-
-      return `Set current lesson to ${lessonId} for user ${this.req.me.email} \n${JSON.stringify(log)}`
-
-    } else {
-      return this.res.redirect('/login')
+    if (!inputs.userId) {
+      throw 'invalid'
     }
 
+    await UserOptions.updateOrCreate({user_id: inputs.userId, option_key: 'currentLesson'}, {option_value: inputs.lessonId})
 
+    return `Set current lesson to ${inputs.lessonId} for user ${this.req.me && this.req.me.email ? this.req.me.email : inputs.userId}`
 
   }
 };
