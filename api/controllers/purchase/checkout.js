@@ -544,16 +544,31 @@ module.exports = {
 
       let currentSubItem = currentSubscriptionInfo['items']['data'][0]['id'];
 
-      await stripe.subscriptions.update(
-        currentSub,
-        {
+      let updateData;
+
+      if (inputs.trial) {
+        updateData = {
           items: [{id: currentSubItem, plan: plans[inputs.plan][inputs.billingCycle].stripeId}],
           coupon: coupon ? coupon.id : null,
           // trial_period_days: holidayPromo ? 90 : inputs.trial ? 14 : 0,
           cancel_at_period_end: !!inputs.nonRecurring,
-          billing_cycle_anchor: inputs.trial ? parseInt((new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).getTime() / 1000).toFixed(0)) : 'now',
+          trial_end: inputs.trial ? parseInt((new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).getTime() / 1000).toFixed(0)) : 'now',
+          // billing_cycle_anchor: inputs.trial ? 'unchanged' : 'now',
           proration_behavior: 'always_invoice'
         }
+      } else {
+        updateData = {
+          items: [{id: currentSubItem, plan: plans[inputs.plan][inputs.billingCycle].stripeId}],
+          coupon: coupon ? coupon.id : null,
+          cancel_at_period_end: !!inputs.nonRecurring,
+          billing_cycle_anchor: 'now',
+          proration_behavior: 'always_invoice'
+        }
+      }
+
+      await stripe.subscriptions.update(
+        currentSub,
+        updateData
       )
         .then(async (subscription) => {
           try {
