@@ -39,9 +39,7 @@ module.exports = {
       allowNull: true
     },
     accesslog_locId: {
-      type: "string",
-      columnType: "varchar",
-      allowNull: true
+      type: "ref"
     },
     accesslog_country: {
       type: "string",
