@@ -30,6 +30,8 @@ module.exports = {
 
     inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
+    sails.log.info(inputs)
+
     let vocab = await UserVocabulary.find({id: {in: inputs.wordId}, user_id: inputs.userId});
 
     if (!vocab || !vocab.length) {

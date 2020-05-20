@@ -49,13 +49,19 @@ module.exports = {
     let promises = [];
     let createdVocab = [];
 
-    inputs.vocabularyId.forEach(vocab => {
-      promises.push(UserVocabulary.updateOrCreate({user_id: inputs.userId, vocabulary_id: vocab.id}, {user_id: inputs.userId, vocabulary_id: vocab.id})
-        .then(vocab => createdVocab.push(vocab)))
+    sails.log.info(inputs)
+
+    inputs.vocabularyId.forEach(vocabId => {
+      promises.push(UserVocabulary.updateOrCreate({user_id: inputs.userId, vocabulary_id: vocabId}, {user_id: inputs.userId, vocabulary_id: vocabId})
+        .then(console.log))
     })
 
+    sails.log.info(createdVocab)
+
     await Promise.all(promises)
-      .catch((e) => sails.hooks.bugsnag.notify(e))
+      .catch((e) => sails.hooks.bugsnag.notify(e));
+
+    sails.log.info(createdVocab);
 
     if (inputs.deckId) {
 
