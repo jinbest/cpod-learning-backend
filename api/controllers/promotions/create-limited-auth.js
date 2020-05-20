@@ -48,8 +48,9 @@ module.exports = {
     let pathParams = this.req.path.split('/');
 
     sails.log.info(pathParams);
+    sails.log.info(this.req.url);
 
-    let path = pathParams.slice(0,pathParams.length - 1).join('/');
+    let path = pathParams.slice(0,pathParams.length - 1).join('/') + '?' + this.req.url.split('?')[1]
     sails.log.info(path);
     return this.res.redirect(path)
 

@@ -549,9 +549,9 @@ module.exports = {
         {
           items: [{id: currentSubItem, plan: plans[inputs.plan][inputs.billingCycle].stripeId}],
           coupon: coupon ? coupon.id : null,
-          trial_period_days: holidayPromo ? 90 : inputs.trial ? 14 : 0,
+          // trial_period_days: holidayPromo ? 90 : inputs.trial ? 14 : 0,
           cancel_at_period_end: !!inputs.nonRecurring,
-          billing_cycle_anchor: 'now',
+          billing_cycle_anchor: inputs.trial ? parseInt((new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).getTime() / 1000).toFixed(0)) : 'now',
           proration_behavior: 'always_invoice'
         }
       )

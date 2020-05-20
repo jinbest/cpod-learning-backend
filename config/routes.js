@@ -134,9 +134,12 @@ module.exports.routes = {
   'GET /kings-day-2020/:token':                          { action: 'promotions/create-limited-auth'},
   'GET /kings-day-2020':                                 { action: 'promotions/view-expired-promo'},
   'GET /kings-day-2020/success':                         { action: 'promotions/view-promo-success'},
-  'GET /mothers-day-2020/':                              { action: 'promotions/mothers-day/view-gift'},
+  'GET /mothers-day-2020/':                              { action: 'promotions/view-expired-promo'},
   'GET /mothers-day-2020/:token':                        { action: 'promotions/create-limited-auth'},
   'GET /mothers-day-2020/success':                       { action: 'promotions/view-gift-success'},
+  'GET /memorial-day-2020/':                             { action: 'promotions/memorial-day/view-promo'},
+  'GET /memorial-day-2020/:token':                       { action: 'promotions/create-limited-auth'},
+  'GET /memorial-day-2020/success':                      { action: 'promotions/view-promo-success'},
 
   //PROMOTIONS - REDEEM GIFTS
   'GET /valentines-day-gift/redeem/:code?/:userCode?':   { action: 'promotions/valentines/view-valentines-day-gift-redeem'},

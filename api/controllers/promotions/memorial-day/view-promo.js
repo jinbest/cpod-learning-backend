@@ -6,6 +6,12 @@ module.exports = {
 
   description: 'Display "Promo" page.',
 
+  inputs: {
+    annual: {
+      type: 'boolean'
+    }
+  },
+
 
   exits: {
 
@@ -16,8 +22,12 @@ module.exports = {
   },
 
 
-  fn: async function () {
-    let trial = false; let promo = true; let plan = 'premium'; let period = 'quarterly'; let promoCode = 'MEMORIAL2020'; let nonRecurring = true;
+  fn: async function (inputs) {
+    let trial = false; let promo = true; let plan = 'premium'; let promoCode = 'MEMORIAL2020'; let nonRecurring = true;
+
+    sails.log.info(inputs)
+
+    let period = inputs.annual ? 'annually' : 'quarterly';
 
     let validPromos = await PromoCodes.find({promotion_code: promoCode, product_id: {in: [140, 2, 18, 142, 13, 14]}, expiry_date: {'>': new Date()}})
 
@@ -30,7 +40,7 @@ module.exports = {
     let ipData = {};
 
     // Respond with view.
-    return this.res.view('pages/promotions/kings-day/promo',{
+    return this.res.view('pages/promotions/memorial-day/promo',{
       layout: 'layouts/layout-promo',
       expiry: null,
       needsAccount: !(this.req.me || this.req.session.limitedAuth),
