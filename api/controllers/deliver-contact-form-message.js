@@ -76,7 +76,7 @@ your custom config -- usually in \`config/custom.js\`, \`config/staging.js\`,
 
     const zendesk = require('node-zendesk');
     const client = zendesk.createClient({
-      username: inputs.emailAddress,
+      username: 'ugis@chinesepod.com',
       token: sails.config.custom.zendeskKey,
       remoteUri: 'https://cpod.zendesk.com/api/v2'
     })
@@ -93,7 +93,8 @@ your custom config -- usually in \`config/custom.js\`, \`config/staging.js\`,
           }
         }
       }, resolve)
-    })
+    });
+
   }
 
 
