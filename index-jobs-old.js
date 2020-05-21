@@ -81,7 +81,7 @@ module.exports = function defineJobsHook(sails) {
       //                 //
 
       var userInfoQueue = new Queue('UserInfoQueue', sails.config.jobs.url);
-      var cleanupQueue = new Queue('CleanupQueue', sails.config.jobs.url);
+      // var cleanupQueue = new Queue('CleanupQueue', sails.config.jobs.url);
 
       var triggerQueue = new Queue('TriggerQueue', sails.config.jobs.url);
 

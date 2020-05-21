@@ -75,7 +75,7 @@ module.exports = function defineJobsHook(sails) {
         // USER INFO QUEUE //
         //                 //
         var userInfoQueue = new Queue('UserInfoQueue', sails.config.jobs.url);
-        var cleanupQueue = new Queue('CleanupQueue', sails.config.jobs.url);
+        // var cleanupQueue = new Queue('CleanupQueue', sails.config.jobs.url);
 
         userInfoQueue.on('ready', () => {
           sails.log.info('userInfoQueue ready!');
@@ -430,7 +430,7 @@ module.exports = function defineJobsHook(sails) {
                   break;
               }
             });
-            return await UserOptions.createEach().fetch();
+            return await UserOptions.createEach(logData).fetch();
           }
           return 'No Logs'
         });
