@@ -23,7 +23,7 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    let trial = false; let promo = true; let plan = 'premium'; let promoCode = 'MEMORIAL2020'; let nonRecurring = false;
+    let trial = false; let promo = true; let plan = 'premium'; let promoCode = 'MEMORIAL828'; let nonRecurring = false;
 
     sails.log.info(inputs)
 
@@ -40,7 +40,7 @@ module.exports = {
     let ipData = {};
 
     // Respond with view.
-    return this.res.view('pages/promotions/memorial-day/promo',{
+    return this.res.view('pages/promotions/memorial-day/promo-alt',{
       layout: 'layouts/layout-promo',
       expiry: null,
       needsAccount: !(this.req.me || this.req.session.limitedAuth),
