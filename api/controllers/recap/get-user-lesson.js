@@ -14,6 +14,9 @@ module.exports = {
       description: 'Session ID provided by the PHP site API layer',
       example: '4d99a8f17364d8caedc4b64e8d5b319e973b6abc39addbba58538f594468961a4ce883',
       required: true
+    },
+    version: {
+      type: 'string'
     }
 
   },
@@ -61,7 +64,7 @@ module.exports = {
     //Connect Sails Session to PHP API Session
     this.req.session.userId = user.id;
 
-    return await sails.helpers.users.getCurrentLesson.with({userId: user.id})
+    return await sails.helpers.users.getCurrentLesson.with({userId: user.id, version: inputs.version})
       .catch(() => {throw 'invalid'})
 
   }

@@ -17,6 +17,9 @@ module.exports = {
     userId: {
       type: 'number',
       isInteger: true
+    },
+    version: {
+      type: 'string'
     }
 
   },
@@ -176,7 +179,9 @@ module.exports = {
 
     // client.end(true);
 
-    await UserOptions.updateOrCreate({user_id: user.id, option_key: 'recapApp'}, {user_id: user.id, option_key: 'recapApp', option_value: new Date()});
+    if(inputs.version) {
+      await UserOptions.updateOrCreate({user_id: user.id, option_key: 'recapApp'}, {user_id: user.id, option_key: 'recapApp', option_value: inputs.version});
+    }
 
     return returnData
 
