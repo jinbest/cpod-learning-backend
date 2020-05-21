@@ -93,13 +93,13 @@ module.exports = function defineJobsHook(sails) {
           // });
         });
 
-        cleanupQueue.process(async job => {
-          const userInfoJob = await userInfoQueue.getJob(job.id);
-          if (!userInfoJob) {
-            return;
-          }
-          userInfoJob.remove();
-        });
+        // cleanupQueue.process(async job => {
+        //   const userInfoJob = await userInfoQueue.getJob(job.id);
+        //   if (!userInfoJob) {
+        //     return;
+        //   }
+        //   userInfoJob.remove();
+        // });
 
         userInfoQueue.process('Update Data to Mautic', 5, async function (job, done) {
 
