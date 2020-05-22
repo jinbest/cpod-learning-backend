@@ -412,7 +412,7 @@ module.exports = function defineJobsHook(sails) {
           if (!userData || !userData.id) {
             return 'No such user'
           }
-          let latestLogs = await BackupLogging.find({id: email}).sort('createdAt DESC').limit(10);
+          let latestLogs = await BackupLogging.find({id: email}).sort('createdAt DESC').limit(100);
           if (latestLogs && Array.isArray(latestLogs) && latestLogs.length) {
             [...new Set(latestLogs.map(log => log.accesslog_urlbase.split('https://')[1].split('.')[0]))].forEach(log => {
               switch (log) {
