@@ -140,6 +140,7 @@ module.exports.routes = {
   'GET /memorial-day-2020/':                             { action: 'promotions/memorial-day/view-promo'},
   'GET /memorial-weekend-2020/':                         { action: 'promotions/memorial-day/view-promo-alt'},
   'GET /memorial-day-2020/:token':                       { action: 'promotions/create-limited-auth'},
+  'GET /memorial-weekend-2020/:token':                   { action: 'promotions/create-limited-auth'},
   'GET /memorial-day-2020/success':                      { action: 'promotions/view-promo-success'},
   'GET /memorial-weekend-2020/success':                  { action: 'promotions/view-promo-success'},
 
