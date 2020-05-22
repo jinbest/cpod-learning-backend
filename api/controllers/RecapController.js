@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-  serve: (req, res) => {
+  upload: (req, res) => {
     const fs = require('fs');
 
     const app = __dirname + '/../../assets/recap/upload/index.html';
