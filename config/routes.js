@@ -111,9 +111,13 @@ module.exports.routes = {
   'GET /super-secret-page':                              { action: 'recap/view-popular-recap-lessons' },
   'GET /current-lesson':                                 { action: 'recap/view-current-lesson' },
   'GET /set-lesson/:lessonId':                           { action: 'recap/set-lesson' },
-  'GET /recap':                                          { action: 'recap/view-recap' },
-  'GET /recapp':                                         { action: 'recap/view-recap' },
-  'GET /app':                                            { action: 'recap/view-recap' },
+  'GET /recap':                                          'RecapController.index',
+  // 'GET /recap/feedback':                                 'RecapController.feedback',
+  'GET /recap-beta':                                     'RecapController.beta',
+  'GET /recap-beta/signup':                              'RecapController.signup',
+  'GET /recap-beta/feedback':                            'RecapController.feedback',
+  'GET /recapp':                                         'RecapController.index',
+  'GET /app':                                            'RecapController.index',
 
   //MISC
   'GET /lesson-redirect/:v3id?':                         { action: 'lesson-redirect' },

@@ -9,7 +9,31 @@ module.exports = {
   serve: (req, res) => {
     const fs = require('fs');
 
+    const app = __dirname + '/../../assets/recap/upload/index.html';
+    fs.createReadStream(app).pipe(res)
+  },
+  index: (req, res) => {
+    const fs = require('fs');
+
     const app = __dirname + '/../../assets/recap/index.html';
+    fs.createReadStream(app).pipe(res)
+  },
+  beta: (req, res) => {
+    const fs = require('fs');
+
+    const app = __dirname + '/../../assets/recap/index-beta.html';
+    fs.createReadStream(app).pipe(res)
+  },
+  feedback: (req, res) => {
+    const fs = require('fs');
+
+    const app = __dirname + '/../../assets/recap/feedback.html';
+    fs.createReadStream(app).pipe(res)
+  },
+  signup: (req, res) => {
+    const fs = require('fs');
+
+    const app = __dirname + '/../../assets/recap/signup.html';
     fs.createReadStream(app).pipe(res)
   }
 };
