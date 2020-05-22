@@ -54,6 +54,8 @@ module.exports = {
         }
       });
 
+      sails.log.info(JSON.stringify(records.map(course => course.course_title)))
+
       sails.log.info('Records Pooled');
 
       let commands = [];
