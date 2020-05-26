@@ -238,12 +238,12 @@
                                 <div class="custom-control custom-radio">
                                     <input type="radio" id="learnedFrom6" name="learnedFrom" class="custom-control-input" value="Other" v-model="formData.learnedAbout.choice">
                                     <label class="custom-control-label" for="learnedFrom6">Other: </label>
-                                    <input v-if="formData.methods.choice==='Other'" type="text" placeholder="" class="form-control" id="learnedFromOther" v-model="formData.learnedAbout.text">
+                                    <input v-if="formData.learnedAbout.choice==='Other'" type="text" placeholder="" class="form-control" id="learnedFromOther" v-model="formData.learnedAbout.text">
                                 </div>
                             </div>
                             <div class="form-group pt-2 pl-2 pr-2 pb-2">
                                 <label for="usedMethodsComment">COMMENTS:</label>
-                                <textarea class="form-control" id="usedMethodsComment" rows="3" v-model="formData.methods.comments"></textarea>
+                                <textarea class="form-control" id="usedMethodsComment" rows="3" v-model="formData.learnedAbout.comments"></textarea>
                             </div>
                         </div>
                     </div>
