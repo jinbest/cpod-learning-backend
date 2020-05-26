@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Page Styles -->
+    <link href="/recap/cprecap-styles.css" rel="stylesheet">
+
+    <title>ChinesePod - RECAP - Feedback</title>
+
+    <script src="https://vuejs.org/js/vue.min.js"></script>
+    <!-- Vue.js development version, includes helpful console warnings
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+</head>
+<body>
+<!--Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light cprecap-navbar">
+    <a class="navbar-brand" href="http://www.chinesepod.com/">
+        <img src="/recap/img/logo-text-recap.svg" alt="ChinesePod">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-md-end" id="navbarNav">
+        <ul class="navbar-nav mt-2">
+            <li class="nav-item">
+                <a class="nav-link" href="https://www.chinesepod.com/contact">Help</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://www.chinesepod.com/login">Log in</a>
+            </li>
+        </ul>
+        <form class="form-inline mt-2">
+            <a class="btn btn-outline-success" role="button" href="https://www.chinesepod.com/signup">Sign Up</a>
+        </form>
+    </div>
+</nav>
+<!-- End Navbar -->
+
+<!-- Writing APP page -->
+<section class="cprecap-feedback" id="recap-feedback">
+    <div class="container-fluid">
+        <div class="row justify-content-center mt-5">
+            <div class="col-11 text-center">
+                <h1 class="text-white mb-3">ChinesePod RECAP APP</h1>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-11 col-md-10 col-lg-8 cprecap-feedback-body">
+                <form v-show="!submitted" style="width: 100%;">
+                    <div class="pl-4 pr-4 pt-4 pb-2 ml-3 mr-3">
+                        <h3>Give BETA Feedback</h3>
+                        <p class="text-danger">* Required</p>
+                    </div>
+                    <div class="form-group p-2 p-md-4 m-md-3">
+                        <h4 class="mb-3">How user-friendly is the interface? <span class="text-danger">*</span></h4>
+                        <div class="form-row">
+                            <div class="col-2">
+                                <div class="custom-control">Very Bad</div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="scoreInterface1" name="scoreInterface" class="custom-control-input" value="1" v-model="formData.userInterface">
+                                    <label class="custom-control-label" for="scoreInterface1">1</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="scoreInterface2" name="scoreInterface" class="custom-control-input" value="2" v-model="formData.userInterface">
+                                    <label class="custom-control-label" for="scoreInterface2">2</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="scoreInterface3" name="scoreInterface" class="custom-control-input" value="3" v-model="formData.userInterface">
+                                    <label class="custom-control-label" for="scoreInterface3">3</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="scoreInterface4" name="scoreInterface" class="custom-control-input" value="4" v-model="formData.userInterface">
+                                    <label class="custom-control-label" for="scoreInterface4">4</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="scoreInterface5" name="scoreInterface" class="custom-control-input" value="5" v-model="formData.userInterface">
+                                    <label class="custom-control-label" for="scoreInterface5">5</label>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="custom-control">Very Good</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group p-2 p-md-4 m-md-3">
+                        <h4 class="mb-3">Are there technical issues? <span class="text-danger">*</span></h4>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="technicalIssues1" name="technicalIssues" class="custom-control-input" value="Haven't Checked" v-model="formData.technicalIssues">
+                            <label class="custom-control-label" for="technicalIssues1">Haven't checked</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="technicalIssues2" name="technicalIssues" class="custom-control-input" value="No" v-model="formData.technicalIssues">
+                            <label class="custom-control-label" for="technicalIssues2">No</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="technicalIssues3" name="technicalIssues" class="custom-control-input" value="Yes" v-model="formData.technicalIssues">
+                            <label class="custom-control-label" for="technicalIssues3">Yes</label>
+                        </div>
+                    </div>
+                    <div class="form-group p-2 p-md-4 m-md-3">
+                        <h4 class="mb-3">What features would be useful for your Chinese learning?</h4>
+                        <textarea class="form-control" id="usefulFeatures" rows="3" placeholder="Your Answer" v-model="formData.additionalFeatures"></textarea>
+                    </div>
+                    <div class="form-group p-2 p-md-4 m-md-3">
+                        <h4 class="mb-3">How well does the Recap APP reflect our ChinesePod lessons? <span class="text-danger">*</span></h4>
+                        <div class="form-row">
+                            <div class="col-2">
+                                <div class="custom-control">Very Badly</div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="scoreReflect1" name="scoreReflect" class="custom-control-input" value="1" v-model="formData.contentQuality">
+                                    <label class="custom-control-label" for="scoreReflect1">1</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="scoreReflect2" name="scoreReflect" class="custom-control-input" value="2" v-model="formData.contentQuality">
+                                    <label class="custom-control-label" for="scoreReflect2">2</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="scoreReflect3" name="scoreReflect" class="custom-control-input" value="3" v-model="formData.contentQuality">
+                                    <label class="custom-control-label" for="scoreReflect3">3</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="scoreReflect4" name="scoreReflect" class="custom-control-input" value="4" v-model="formData.contentQuality">
+                                    <label class="custom-control-label" for="scoreReflect4">4</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="scoreReflect5" name="scoreReflect" class="custom-control-input" value="5" v-model="formData.contentQuality">
+                                    <label class="custom-control-label" for="scoreReflect5">5</label>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="custom-control">Very Well</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group p-2 p-md-4 m-md-3">
+                        <h4 class="mb-3">What kind of content would you like to see in the Recap APP?</h4>
+                        <textarea class="form-control" id="appContent" rows="3" placeholder="Your Answer" v-model="formData.additionalContent"></textarea>
+                    </div>
+                    <div class="p-4 m-2">
+                        <div v-show="formErrors">
+                            <div class="alert alert-danger" role="alert">
+                                Please fill in all required fields.
+                            </div>
+                        </div>
+                        <button @click.prevent="submitForm" :disabled="syncing" class="btn btn-danger">Submit</button>
+                    </div>
+                </form>
+                <div v-show="submitted" class="col-12 py-4">
+                    Thank you for for your feedback! Please feel free to submit any additional feedback if you have more comments later on. We'll reach out to you shortly to discuss the details.
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-11 text-center mt-4">
+                <a href="/recap-beta" class="cprecap-link-light small">Go back to main page</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Writing APP page -->
+
+<!-- Footer -->
+<footer class="cprecap-footer mt-5">
+    <div class="container-fluid">
+        <div class="row mb-sm-3 mb-5 mb-sm-0 pl-3 pr-3">
+            <div class="col-12 col-sm-6">
+                <ul class="list-inline social">
+                    <li class="list-inline-item"><a class="social-icon facebook" href="https://www.facebook.com/ChinesePod" target="_blank" rel="noopener" aria-label="facebook"></a></li>
+                    <li class="list-inline-item"><a class="social-icon twitter" href="https://twitter.com/chinesepod" target="_blank" rel="noopener" aria-label="twitter"></a></li>
+                    <li class="list-inline-item"><a class="social-icon instagram" href="http://instagram.com/chinesepod/" target="_blank" rel="noopener" aria-label="instagram"></a></li>
+                    <li class="list-inline-item"><a class="social-icon youtube" href="https://www.youtube.com/user/ChinesePodTV" target="_blank" rel="noopener" aria-label="youtube"></a></li>
+                </ul>
+            </div>
+            <div class="col-12 col-sm-6 text-sm-right">
+                <a href="https://itunes.apple.com/us/app/chinesepod-podcast/id1185380819?mt=8" target="_blank" rel="noopener" style="margin-bottom:10px;text-decoration:none;"><img src="/recap/img/app-store-icon.svg" alt="ChinesePod iOS App" width="100"></a>
+                <a href="https://play.google.com/store/apps/details?id=llc.chinesepod.android&amp;hl=en" target="_blank" rel="noopener" style="margin-bottom:10px;"><img src="/recap/img/google-play-icon.svg" class="lazyload" alt="ChinesePod Google Play App" width="112"></a>
+            </div>
+        </div>
+        <div class="row copyright mb-3">
+            <div class="col-12 col-sm-4">
+                <p class="pl-3 pt-2">&copy; {{fullYear}} ChinesePod LLC</p>
+            </div>
+            <div class="col-12 col-sm-8">
+                <ul class="nav justify-content-sm-end">
+                    <li class="nav-item">
+                        <a class="nav-link"  href="https://chinesepod.com/pricing/">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.chinesepod.com/corporate">Corporate</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.chinesepod.com/why-choose-us">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.chinesepod.com/blog">Blog</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- End Footer -->
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script>
+  var app = new Vue({
+    el: '#recap-feedback',
+    data: {
+      syncing: false,
+      submitted: false,
+      formData: {
+        userInterface: '',
+        technicalIssues: '',
+        contentQuality: ''
+      },
+      formErrors: false,
+      formRules: {
+      },
+      cloudError: '',
+    },
+    computed: {
+      fullYear () {
+        return new Date().getFullYear();
+      }
+    },
+    methods: {
+
+      async submitForm () {
+        if (!this.formData.userInterface || !this.formData.technicalIssues || !this.formData.contentQuality) {
+          this.formErrors = true;
+          return
+        } else {
+          this.formErrors = false;
+        }
+        this.syncing = true;
+        await fetch('/api/v1/recap/submit/feedback', {
+          method: 'POST',
+          body: JSON.stringify({data: this.formData})
+        })
+          .catch();
+        this.submitted = true;
+      },
+
+      submittedForm: async function() {
+        // Redirect to the logged-in dashboard on success.
+        // > (Note that we re-enable the syncing state here.  This is on purpose--
+        // > to make sure the spinner stays there until the page navigation finishes.)
+        this.syncing = true;
+        window.location.href = '/home';
+      },
+
+    },
+    mounted () {
+    }
+  })
+</script>
+</body>
+</html>

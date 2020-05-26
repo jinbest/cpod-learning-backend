@@ -46,6 +46,8 @@ module.exports.policies = {
   'redeem/redeem-access-token': 'is-logged-in',
   'redeem/view-redeem-success': 'is-logged-in',
 
+  'recap/beta/*':               'is-logged-in',
+
   'admin/*': ['is-logged-in', 'is-staff'],
 
   'purchase/paypal/view-paypal-pay': 'is-logged-in',

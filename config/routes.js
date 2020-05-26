@@ -113,8 +113,8 @@ module.exports.routes = {
   'GET /set-lesson/:lessonId':                           { action: 'recap/set-lesson' },
   'GET /recap':                                          'RecapController.index',
   'GET /recap-beta':                                     'RecapController.beta',
-  'GET /recap-beta/signup':                              'RecapController.signup',
-  'GET /recap-beta/feedback':                            'RecapController.feedback',
+  'GET /recap-beta/signup':                              {action: 'recap/beta/view-recap-beta-signup'},
+  'GET /recap-beta/feedback':                            {action: 'recap/beta/view-recap-beta-feedback'},
   'GET /recapp':                                         'RecapController.index',
   'GET /app':                                            'RecapController.index',
 
@@ -283,6 +283,8 @@ module.exports.routes = {
   '/api/v1/health/time':                                 { action: 'health/time' },
 
   //Lesson Recap Routes
+  'POST /api/v1/recap/submit/signup':                    { action: 'recap/beta/signup-form' },
+  'POST /api/v1/recap/submit/feedback':                  { action: 'recap/beta/feedback-form' },
   'GET /api/v1/recap/get-popular-lessons':               { action: 'recap/get-popular-lessons' },
   'GET /api/v1/recap/get-popular-recap-lessons':         { action: 'recap/get-popular-recap-lessons' },
   'GET /api/v1/recap/get-all-recap-lessons':             { action: 'recap/get-all-recap-lessons' },
