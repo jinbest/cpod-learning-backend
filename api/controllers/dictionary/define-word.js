@@ -23,7 +23,16 @@ module.exports = {
   fn: async function (inputs) {
 
     // All done.
-    return sails.hooks.hanzi.definitionLookup(inputs.word)
+    let definition = sails.hooks.hanzi.definitionLookup(inputs.word);
+
+    if (!definition) {
+
+      let segments = sails.hooks.hanzi.segment(inputs.word);
+
+      if (segments && segments.length) {
+        return segments.map(phrase => sails.hooks.hanzi.definitionLookup(phrase))
+      }
+    }
 
   }
 

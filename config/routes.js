@@ -416,6 +416,7 @@ module.exports.routes = {
   'GET /api/v1/dictionary/related':                      { action: 'dictionary/get-related-words'},
   'GET /api/v1/dictionary/search/:word':                 { action: 'dictionary/search-word'},
   'GET /api/v1/dictionary/define/:word':                 { action: 'dictionary/define-word'},
+  'GET /api/v1/dictionary/segment/:word':                { action: 'dictionary/segment'},
   'GET /api/v1/dictionary/decompose/:word':              { action: 'dictionary/decompose-word'},
   'GET /api/v1/dictionary/examples/:word':               { action: 'dictionary/examples-word'},
 
