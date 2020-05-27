@@ -34,6 +34,8 @@ module.exports = {
       }
     }
 
+    return definition
+
   }
 
 
