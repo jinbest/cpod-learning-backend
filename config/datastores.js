@@ -34,11 +34,11 @@ module.exports.datastores = {
 
   default: {
     adapter: require('sails-mysql'),
-    url: 'mysql://cpoddba:tr5mai81@`kazuya.chinesepod.com`:3306/chinesepod_production',
+    url: 'mysql://cpoddba:tr5mai81@kazuya.chinesepod.com:3306/chinesepod_production',
   },
   comments: {
     adapter: require('sails-mysql'),
-    url: 'mysql://cpoddba:tr5mai81@`kazuya.chinesepod.com`:3306/chinesepod_production',
+    url: 'mysql://cpoddba:tr5mai81@kazuya.chinesepod.com:3306/chinesepod_production',
     charset: 'utf8mb4',
     collation: 'utf8mb4_unicode_ci',
   },
