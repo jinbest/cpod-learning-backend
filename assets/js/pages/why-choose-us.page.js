@@ -170,7 +170,6 @@ parasails.registerPage('why-choose-us', {
     });
 
     $mh = $("#ex").height();
-    console.log($mh)
     $('#wcu-carousel .item .carousel-desc .carousel-text').css({'height':`${$mh+80}px`});
   },
 
