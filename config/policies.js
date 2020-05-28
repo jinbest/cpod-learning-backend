@@ -34,8 +34,6 @@ module.exports.policies = {
   'onboarding/view-beta-confirm': 'is-logged-in',
   'onboarding/view-beta-confirmed': 'is-logged-in',
   'placement/*': 'is-logged-in',
-  'recap/view-current-lesson': 'is-logged-in',
-  'recap/set-lesson': 'is-logged-in',
   'dash/*': 'is-logged-in',
   'home/*': 'is-logged-in',
   'podcasts/*': true,
@@ -46,7 +44,10 @@ module.exports.policies = {
   'redeem/redeem-access-token': 'is-logged-in',
   'redeem/view-redeem-success': 'is-logged-in',
 
-  'recap/beta/*':               'is-logged-in',
+  'recap/view-current-lesson': 'is-logged-in',
+  'recap/set-lesson': 'is-logged-in',
+  'recap/beta/view-recap-beta-signup': 'is-logged-in',
+  'recap/beta/view-recap-beta-feedback': 'is-logged-in',
 
   'admin/*': ['is-logged-in', 'is-staff'],
 
