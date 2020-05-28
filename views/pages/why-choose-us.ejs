@@ -46,7 +46,7 @@
       <div class="wcu-col col-sm-4 lpt-50-spt-20 lpb-50-spb-20 lplr-30-lplr-15 hl-white" v-for="(item, index) in benefitList" :style="`background: ${item.backgroundColor}`">
         <h4 class="text-center fw-light">{{ item.title }}</h4>
         <p class="text-center">
-          <img :src="`/img/why-choose-us/${item.imgName}`" class="img-responsive center-block ml-auto mr-auto" alt="">
+          <img :src="`/img/why-choose-us/${item.imgName}`" class="img-responsive center-block" alt="">
         </p>
 
         <p class="wc_desc">{{ item.description }}</p>
@@ -161,7 +161,7 @@
     <div class="above-sm-flex">
       <div class="wcu-col col-sm-3 lpt-50-spt-20 lpb-50-spb-20 lplr-30-lplr-15" v-for="(item, index) in toolsList" :key="index">
         <p class="text-center">
-          <img :src="`/img/why-choose-us/${item.id}.png`" class="img-responsive center-block ml-auto mr-auto" alt="item.id">
+          <img :src="`/img/why-choose-us/${item.id}.png`" class="img-responsive center-block" alt="item.id">
         </p>
         <h4 class="text-center hl-white">{{ item.id }}</h4>
         <div class="desc util-mb-20 hl-white">{{ item.excerpt }}</div>
