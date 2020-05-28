@@ -32,6 +32,7 @@ module.exports.routes = {
 
   'GET /':                                               { action: 'view-homepage-or-redirect' },
   'GET /contact':                                        { action:   'view-contact' },
+  'GET /why-choose-us':                                  { action:   'view-why-choose-us' },
   'GET /login':                                          { action: 'entrance/view-login' },
   'GET /password/forgot':                                { action: 'entrance/view-forgot-password' },
   'GET /password/new':                                   { action: 'entrance/view-new-password' },
@@ -217,7 +218,6 @@ module.exports.routes = {
   'GET /api/v1/auth/google/callback':                    { controller: 'PassportController', action: 'googleCallback'},
   'GET /api/v1/sso/discourse':                           { action: 'sso/discourse'},
 
-  'GET /chinese/:unused?/:unused?':                      { action: 'redirect/why-choose-us'},
   'GET /sitemap' :                                       { action: 'sitemap'},
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
