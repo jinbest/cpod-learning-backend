@@ -29,7 +29,7 @@ module.exports = {
       isInteger: true,
       required: true
     },
-    cratedAt: {
+    createdAt: {
       type: "ref",
       columnType: "timestamp",
       columnName: 'create_time',
