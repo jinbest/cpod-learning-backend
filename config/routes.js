@@ -209,6 +209,7 @@ module.exports.routes = {
   '/old-dashboard':                                      '/api/v1/account/opt-out-of-new-dashboard',
 
   '/youtube-podcast':                                    'https://www.youtube.com/watch?v=3WpdN0MVf8g',
+  '/youtube/rebecca':                                    'https://www.youtube.com/channel/UCtsKnrTTopbHP8Ad2YBWx7A',
 
 
   'GET /api/v1/auth/facebook':                           { controller: 'PassportController', action: 'facebookAuth'},
