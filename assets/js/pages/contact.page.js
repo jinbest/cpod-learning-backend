@@ -8,7 +8,6 @@ parasails.registerPage('contact', {
 
     // Form data
     formData: { /* … */ },
-
     // For tracking client-side validation errors in our form.
     // > Has property set to `true` for each invalid property in `formData`.
     formErrors: { /* … */ },

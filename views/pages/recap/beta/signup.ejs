@@ -85,6 +85,10 @@
                                     <label class="custom-control-label" for="usedDevises4">Only mobile</label>
                                 </div>
                             </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" id="androidTV" name="androidTV" class="custom-control-input" v-model="formData.androidTV">
+                                <label class="custom-control-label" for="androidTV">Do you use an Android TV and TV Apps?</label>
+                            </div>
                             <div class="form-group pt-2 pl-2 pr-2 pb-2">
                                 <label for="usedDevisesComment">COMMENTS:</label>
                                 <textarea class="form-control" id="usedDevisesComment" rows="3" v-model="formData.devices.comments"></textarea>
@@ -341,7 +345,8 @@
         devices: {},
         methods: {},
         apps: {},
-        learnedAbout: {}
+        learnedAbout: {},
+        androidTV: false
       },
       formErrors: {
       },

@@ -4,12 +4,12 @@
  */
 
 module.exports = {
+  tableName: 'content_rates',
   attributes: {
     id: {
       type: "number",
       columnType: "int",
       isInteger: true,
-      required: true,
       autoIncrement: true
     },
     lessonId: {
