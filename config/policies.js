@@ -57,6 +57,8 @@ module.exports.policies = {
 
   'dashboard/*': 'is-authenticated',
   'lessons/*': ['is-authenticated', contentLimiter],
+  'lessons/get-sitemap': true,
+  'lessons/get-details': true,
   'exercises/*': 'is-authenticated',
   'vocabulary/*': 'is-authenticated',
   'search/*': 'is-authenticated',
