@@ -27,7 +27,7 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    let lessonData = await LessonData.findOne({slug: inputs.slug}).select(['title', 'level', 'type', 'hash_code', 'introduction', 'publication_timestamp', 'hosts']);
+    let lessonData = await LessonData.findOne({slug: encodeURI(inputs.slug)}).select(['title', 'level', 'type', 'hash_code', 'introduction', 'publication_timestamp', 'hosts']);
 
     if (!lessonData) {
       throw 'invalid'
