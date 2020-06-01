@@ -32,6 +32,15 @@ module.exports = {
     inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
     if (inputs.status) {
+      let studiedLessonCount = await UserContents.count({
+        user_id: inputs.userId,
+        studied: 1,
+        lesson_type: 0
+      });
+      if(studiedLessonCount === 0) {
+        await sails.helpers.users.notifyAfterFirstLessonStudied(inputs.userId, inputs.lessonId);
+      }
+
       await UserOptions.updateOrCreate(
         {user_id: inputs.userId, option_key: 'lastStudiedLesson'},
         {user_id: inputs.userId, option_key: 'lastStudiedLesson', option_value: inputs.lessonId}
