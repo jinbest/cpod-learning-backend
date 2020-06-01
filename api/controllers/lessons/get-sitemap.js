@@ -20,14 +20,19 @@ module.exports = {
   fn: async function (inputs) {
 
     // All done.
-    return await LessonData.find({
+    let lessonData = await LessonData.find({
       publication_timestamp: {
         '<': new Date()
       },
       status_published: 'publish',
       is_private: 0
-    }).select('slug').sort('publication_timestamp DESC')
+    }).select('slug').sort('publication_timestamp DESC');
 
+    lessonData.forEach(lesson => {
+      lesson.slug = decodeURI(lesson.slug)
+    })
+
+    return lessonData
   }
 
 
