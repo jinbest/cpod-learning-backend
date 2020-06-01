@@ -33,6 +33,8 @@ module.exports = {
       throw 'invalid'
     }
 
+    const convert = require('pinyin-tone-converter');
+
     const sanitizeHtml = require('sanitize-html');
 
     const sanitizeOptions = {
@@ -65,7 +67,7 @@ module.exports = {
     let vocabData = [];
     _.each(vocab, function (item) {
       item['simplified'] = item.column_1;
-      item['pinyin'] = item.column_2;
+      item['pinyin'] = convert.convertPinyinTones(item.column_2);
       item['english'] = item.column_3;
       item['traditional'] = item.column_4;
       item['audioUrl'] = `https://s3contents.chinesepod.com/${lessonData.type === 'extra' ? 'extra/' : ''}${lessonData.id}/${lessonData.hash_code}/${item.audio}`
@@ -125,6 +127,7 @@ module.exports = {
         }
       });
       dialogue['audioUrl'] = `https://s3contents.chinesepod.com/${lessonData.type === 'extra' ? 'extra/' : ''}${lessonData.id}/${lessonData.hash_code}/${dialogue.audio}`
+      dialogue.pinyin = convert.convertPinyinTones(dialogue.pinyin);
       dialogueData.push(_.pick(dialogue, ['audioUrl', 'english', 'pinyin', 'traditional', 'simplified']))
     });
 
