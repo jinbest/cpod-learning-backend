@@ -38,15 +38,18 @@ module.exports = {
     return {
       total: total,
       vocabulary: userVocab.map(vocab => {
-          let tags = userDecks.filter(deck => deck.user_vocabulary_id === vocab.id);
-          if (tags && tags.length) {
-            tags = tags.map(tag => tag.vocabulary_tag_id)
-          }
-          if (vocab.vocabulary_id && vocab.vocabulary_id.v3_id) {
-            vocab.lesson = _.pick(vocab.vocabulary_id.v3_id, ['title', 'hash_code', 'slug', 'level', 'type', 'id']);
-            delete vocab.vocabulary_id.v3_id
-          }
-          return {...vocab.vocabulary_id, ...{user_vocabulary_id: vocab.id, createdAt: vocab.createdAt, lesson: vocab.lesson, tags: tags}}
+        let tags = userDecks.filter(deck => deck.user_vocabulary_id === vocab.id);
+        if (tags && tags.length) {
+          tags = tags.map(tag => tag.vocabulary_tag_id)
+        }
+        if (vocab.vocabulary_id && vocab.vocabulary_id.v3_id) {
+          vocab.lesson = _.pick(vocab.vocabulary_id.v3_id, ['title', 'hash_code', 'slug', 'level', 'type', 'id']);
+          delete vocab.vocabulary_id.v3_id
+        }
+        let lessonRoot = `https://s3contents.chinesepod.com/${vocab.lesson.type === 'extra' ? 'extra/' : ''}${vocab.lesson.id}/${vocab.lesson.hash_code}/`
+        vocab.sourceAudioUrl = lessonRoot + vocab.audio;
+        vocab.targetAudioUrl = lessonRoot + vocab.audio;
+        return {...vocab.vocabulary_id, ...{user_vocabulary_id: vocab.id, createdAt: vocab.createdAt, lesson: vocab.lesson, tags: tags}}
       })
     }
   }

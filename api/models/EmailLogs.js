@@ -24,6 +24,19 @@ module.exports = {
     email_id: {
       type: 'string'
     },
+    email_send_id: {
+      type: 'string'
+    },
+    opens: {
+      type: 'number',
+      isInteger: true,
+      defaultsTo: 0
+    },
+    clicks: {
+      type: 'number',
+      isInteger: true,
+      defaultsTo: 0
+    },
     createdAt: {
       type: 'string',
       autoCreatedAt: true
