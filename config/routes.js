@@ -333,6 +333,8 @@ module.exports.routes = {
   'PUT /api/v1/dashboard/event':                         { action: 'dashboard/put-event' },
 
   //Lesson Routes
+  'GET /api/v1/lessons/get-sitemap':                     { action: 'lessons/get-sitemap' },
+  'GET /api/v1/lessons/get-details':                     { action: 'lessons/get-details' },
   'GET /api/v1/lessons/get-lesson/:lessonId?':           { action: 'lessons/get-lesson' },
   'GET /api/v1/lessons/get-dialogue':                    { action: 'lessons/get-dialogue' },
   'GET /api/v1/lessons/get-vocab':                       { action: 'lessons/get-vocab' },
