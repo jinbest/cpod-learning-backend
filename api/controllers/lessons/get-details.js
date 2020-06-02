@@ -27,7 +27,7 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    let lessonData = await LessonData.findOne({slug: encodeURI(inputs.slug)}).select(['title', 'level', 'type', 'hash_code', 'introduction', 'publication_timestamp', 'hosts']);
+    let lessonData = await LessonData.findOne({slug: encodeURI(inputs.slug)}).select(['title', 'image', 'level', 'type', 'hash_code', 'introduction', 'publication_timestamp', 'hosts']);
 
     if (!lessonData) {
       throw 'invalid'
@@ -45,7 +45,10 @@ module.exports = {
       }
     };
 
+    let lessonRoot = `https://s3contents.chinesepod.com/${lessonData.type === 'extra' ? 'extra/' : ''}${lessonData.id}/${lessonData.hash_code}/`
+
     lessonData.introduction = sanitizeHtml(lessonData.introduction, sanitizeOptions);
+    lessonData.image = lessonRoot + lessonData.image;
 
     const keyMap = {
       column_1: 's',
@@ -70,7 +73,7 @@ module.exports = {
       item['pinyin'] = convert.convertPinyinTones(item.column_2);
       item['english'] = item.column_3;
       item['traditional'] = item.column_4;
-      item['audioUrl'] = `https://s3contents.chinesepod.com/${lessonData.type === 'extra' ? 'extra/' : ''}${lessonData.id}/${lessonData.hash_code}/${item.audio}`
+      item['audioUrl'] = lessonRoot + item.audio
       vocabData.push(_.pick(item, ['simplified', 'traditional', 'pinyin', 'english', 'audioUrl']));
     });
 
@@ -126,7 +129,7 @@ module.exports = {
           dialogue.traditional += g;
         }
       });
-      dialogue['audioUrl'] = `https://s3contents.chinesepod.com/${lessonData.type === 'extra' ? 'extra/' : ''}${lessonData.id}/${lessonData.hash_code}/${dialogue.audio}`
+      dialogue['audioUrl'] = lessonRoot + dialogue.audio
       dialogue.pinyin = convert.convertPinyinTones(dialogue.pinyin);
       dialogueData.push(_.pick(dialogue, ['audioUrl', 'english', 'pinyin', 'traditional', 'simplified']))
     });
