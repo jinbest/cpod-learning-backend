@@ -21,15 +21,15 @@ module.exports = function(grunt) {
       },
         {
           expand: true,
-          cwd: './client/static',
-          src: ['**/*.!(coffee|less)'],
-          dest: '.tmp/public'
+          cwd: './.nuxt/dist/client',
+          src: ['**/*'],
+          dest: '.tmp/public/ssr'
         },
         {
           expand: true,
-          cwd: './_nuxt/',
+          cwd: './client/static',
           src: ['**/*'],
-          dest: '.tmp/public'
+          dest: '.tmp/public/'
         }]
     },
     build: {

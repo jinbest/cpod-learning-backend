@@ -108,18 +108,21 @@ module.exports = {
   /*
   ** Build configuration
   */
+  // buildDir: 'assets/nuxt',
+
   build: {
     /*
     ** You can extend webpack config here
     */
-   plugins: [
-    new webpack.ProvidePlugin({
-      '$': 'jquery',
-      'jQuery': 'jquery',
-      'jquery': 'jquery',
-      'window.jQuery': 'jquery',
-    })
-   ],
+    publicPath: 'ssr/',
+    plugins: [
+      new webpack.ProvidePlugin({
+        '$': 'jquery',
+        'jQuery': 'jquery',
+        'jquery': 'jquery',
+        'window.jQuery': 'jquery',
+      })
+    ],
     extend(config, ctx) {
 
     }
@@ -143,5 +146,6 @@ module.exports = {
           })
         })
     }
-  }
+  },
+  dev: false // !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
 }
