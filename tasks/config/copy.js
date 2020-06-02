@@ -18,7 +18,19 @@ module.exports = function(grunt) {
         cwd: './assets',
         src: ['**/*.!(coffee|less)'],
         dest: '.tmp/public'
-      }]
+      },
+        {
+          expand: true,
+          cwd: './client/static',
+          src: ['**/*.!(coffee|less)'],
+          dest: '.tmp/public'
+        },
+        {
+          expand: true,
+          cwd: './_nuxt/',
+          src: ['**/*'],
+          dest: '.tmp/public'
+        }]
     },
     build: {
       files: [{

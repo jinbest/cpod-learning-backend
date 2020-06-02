@@ -87,6 +87,7 @@ module.exports.routes = {
   'GET /levels/:unused?*':                               'HomeController.serve',
   'GET /feedback/:unused?*':                             'HomeController.serve',
   'GET /lesson/:unused?*':                               'HomeController.serve',
+  'GET /nuxt-test/:unused?*':                            'NuxtController.serve',
   'GET /vocabulary/:unused?*':                           'HomeController.serve',
   'GET /explore/:unused?*':                              'HomeController.serve',
   'GET /course/:unused?*':                               'HomeController.serve',

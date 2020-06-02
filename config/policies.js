@@ -37,6 +37,7 @@ module.exports.policies = {
   'dash/*': 'is-logged-in',
   'home/*': 'is-logged-in',
   'podcasts/*': true,
+  'lesson-test/*': true,
 
   'redeem/view-redeem-voucher': 'is-logged-in',
   'redeem/redeem-voucher': 'is-logged-in',
