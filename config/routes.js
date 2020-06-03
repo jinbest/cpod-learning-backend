@@ -419,6 +419,7 @@ module.exports.routes = {
 
   //DICTIONARY
   'GET /api/v1/dictionary/get':                          { action: 'dictionary/get-dictionary-word'},
+  'GET /api/v1/dictionary/get-details':                  { action: 'dictionary/get-details'},
   'GET /api/v1/dictionary/related':                      { action: 'dictionary/get-related-words'},
   'GET /api/v1/dictionary/search/:word':                 { action: 'dictionary/search-word'},
   'GET /api/v1/dictionary/define/:word':                 { action: 'dictionary/define-word'},

@@ -26,6 +26,7 @@ module.exports = function defineHanziHook(sails) {
     dictionarySearch: hanzi.dictionarySearch,
     getExamples: hanzi.getExamples,
     segment: hanzi.segment,
+    getCharactersWithComponent: hanzi.getCharactersWithComponent,
 
     /**
      * Runs when this Sails app loads/lifts.
