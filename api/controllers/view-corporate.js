@@ -1,10 +1,10 @@
 module.exports = {
 
 
-  friendlyName: 'View contact',
+  friendlyName: 'View corporate',
 
 
-  description: 'Display "Contact" page.',
+  description: 'Display "Corporate" page.',
 
 
   exits: {
@@ -23,5 +23,7 @@ module.exports = {
 
   }
 
-
 };
+
+
+
