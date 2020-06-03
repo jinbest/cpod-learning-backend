@@ -98,7 +98,8 @@ parasails.registerPage('corporate', {
 var app = new Vue({
   created: function () {
     var slideMacIndex = 0;
-    $('body').attr('style', 'padding-top: 0 !important');
+
+
     if (window.location.toString().indexOf('/corporate') > -1) {
       $(function () {
         changeCarouselHeight();
