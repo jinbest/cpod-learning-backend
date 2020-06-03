@@ -16,7 +16,9 @@ module.exports = {
 
 
   exits: {
-
+    'invalid': {
+      responseType: 'notFound'
+    }
   },
 
 
@@ -31,32 +33,56 @@ module.exports = {
       let segments = sails.hooks.hanzi.segment(inputs.word);
 
       if (segments && segments.length) {
-        return segments.map(phrase => sails.hooks.hanzi.definitionLookup(phrase))
+        definition =  segments.map(phrase => sails.hooks.hanzi.definitionLookup(phrase))
+      }
+    }
+
+    if(!definition) {
+      throw 'invalid'
+    }
+
+    let vocabData = (await Vocabulary.find({
+      or: [
+        {column_1: inputs.word},
+        {column_4: inputs.word},
+      ],
+      vocabulary_class: {
+        in: ['Key Vocabulary', 'Supplementary']
+      },
+      audio: {'!=': null},
+      v3_id: {
+        '<': 5000
+      }
+    }).sort('id DESC').populate('v3_id').limit(1))[0]
+
+    if (vocabData && vocabData.audio) {
+      if (vocabData.audio.split('http').length > 1) {
+        vocabData.audioUrl = vocabData.audio;
+      } else {
+        vocabData.audioUrl = `https://s3contents.chinesepod.com/${vocabData.v3_id.type === 'extra' ? 'extra/' : ''}${vocabData.v3_id.id}/${vocabData.v3_id.hash_code}/${vocabData.audio}`;
       }
     }
 
     let compounds = sails.hooks.hanzi.getCharactersWithComponent(inputs.word);
 
     if(Array.isArray(compounds)) {
-      compounds = compounds.map(character => sails.hooks.hanzi.definitionLookup(character))
+      compounds = [].concat(compounds.map(character => sails.hooks.hanzi.definitionLookup(character)));
     } else {
       compounds = [];
     }
 
-    let lessons = [];
-
     let lessonData = await LessonData
       .find({
-      publication_timestamp: {
-        '<': new Date()
-      },
-      status_published: 'publish',
-      is_private: 0,
-      or: [
-        {transcription1: { contains: inputs.word }},
-        {transcription2: { contains: inputs.word }}
-      ]
-    })
+        publication_timestamp: {
+          '<': new Date()
+        },
+        status_published: 'publish',
+        is_private: 0,
+        or: [
+          {transcription1: { contains: inputs.word }},
+          {transcription2: { contains: inputs.word }}
+        ]
+      })
       .select('id')
       .sort([
         {publication_timestamp: 'DESC'},
@@ -73,6 +99,7 @@ module.exports = {
       v3_id: {in: relevantLessons}
     }).populate('v3_id').sort('id DESC').limit(10);
 
+    let lessons = [];
     rawDialogues.forEach((dialogue) => {
       let lessonRoot = `https://s3contents.chinesepod.com/${dialogue.v3_id.type === 'extra' ? 'extra/' : ''}${dialogue.v3_id.id}/${dialogue.v3_id.hash_code}/`
       dialogue.vocabulary = [];
@@ -123,12 +150,22 @@ module.exports = {
       lessons.push(_.pick(dialogue, ['audioUrl', 'english', 'pinyin', 'traditional', 'simplified', 'lessonInfo']))
     });
 
+    let related = [].concat(...sails.hooks.hanzi.getExamples(inputs.word));
+    related = related.slice(0,20);
+    let idioms = [].concat(...sails.hooks.hanzi.dictionarySearch(inputs.word)).filter(item => item.definition && item.definition.includes('idiom'));
+    idioms = idioms.slice(0, 20);
+    compounds = [].concat(...compounds.slice(0,20))
+    compounds.forEach(i => {try {i.pinyin = convert.convertPinyinTones(i.pinyin)}catch (e) {sails.log.error(e)}});
+    related.forEach(i => i.pinyin = convert.convertPinyinTones(i.pinyin));
+    idioms.forEach(i => i.pinyin = convert.convertPinyinTones(i.pinyin));
+
     return {
       definition: definition,
+      audioUrl: vocabData && vocabData.audioUrl ? vocabData.audioUrl : '',
       compounds: compounds,
       decomposition: sails.hooks.hanzi.decomposeMany(inputs.word, 2),
-      related: [].concat(...sails.hooks.hanzi.getExamples(inputs.word)),
-      idioms: [].concat(...sails.hooks.hanzi.dictionarySearch(inputs.word)).filter(item => item.definition && item.definition.includes('idiom')),
+      related: related,
+      idioms: idioms,
       lessons: lessons
 
     }
