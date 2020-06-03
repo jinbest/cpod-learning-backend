@@ -46,7 +46,7 @@ module.exports = {
       definition: definition,
       compounds: compounds,
       decomposition: sails.hooks.hanzi.decomposeMany(inputs.word, 2),
-      related: [].concat(...sails.hooks.hanzi.getExamples(inputs.word).slice(0,2)),
+      related: [].concat(...sails.hooks.hanzi.getExamples(inputs.word)),
       idioms: [].concat(...sails.hooks.hanzi.dictionarySearch(inputs.word)).filter(item => item.definition && item.definition.includes('idiom')),
       lessons: []
 
