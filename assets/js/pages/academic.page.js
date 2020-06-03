@@ -9,7 +9,7 @@ if(window.location.toString().indexOf('/academic-offers') > -1){
 
       changeCarouselHeight();
     });
-
+    $('#page-footer').css('display','flex');
     var position_home_desc = $(".home__desc").offset();
     var position_about_item_1_img = $(".about-item_1 .about-item__bg").offset();
     var position_about_item_1_text = $(".about-item_1 .about-item__text").offset();

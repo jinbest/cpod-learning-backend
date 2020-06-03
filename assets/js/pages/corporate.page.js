@@ -103,7 +103,7 @@ var app = new Vue({
     if (window.location.toString().indexOf('/corporate') > -1) {
       $(function () {
         changeCarouselHeight();
-
+        $('#page-footer').css('display','flex');
         var position_resorces = $(".resorces").offset();
         var position_lessons_title = $(".lessons__title").offset();
         var position_lessons_content = $(".lessons__content").offset();
