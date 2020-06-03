@@ -21,6 +21,7 @@ module.exports = {
 
 
   fn: async function (inputs) {
+    const convert = require('pinyin-tone-converter');
 
     // All done.
     let definition = sails.hooks.hanzi.definitionLookup(inputs.word);
@@ -42,13 +43,93 @@ module.exports = {
       compounds = [];
     }
 
+    let lessons = [];
+
+    let lessonData = await LessonData
+      .find({
+      publication_timestamp: {
+        '<': new Date()
+      },
+      status_published: 'publish',
+      is_private: 0,
+      or: [
+        {transcription1: { contains: inputs.word }},
+        {transcription2: { contains: inputs.word }}
+      ]
+    })
+      .select('id')
+      .sort([
+        {publication_timestamp: 'DESC'},
+        {channel_id: 'ASC'}
+      ])
+      .limit(10)
+
+    let relevantLessons = lessonData.map(lesson => lesson.id)
+
+    let rawDialogues = await ContentDialogues.find({
+      row_1: {
+        contains: inputs.word
+      },
+      v3_id: {in: relevantLessons}
+    }).populate('v3_id').sort('id DESC').limit(10);
+
+    rawDialogues.forEach((dialogue) => {
+      let lessonRoot = `https://s3contents.chinesepod.com/${dialogue.v3_id.type === 'extra' ? 'extra/' : ''}${dialogue.v3_id.id}/${dialogue.v3_id.hash_code}/`
+      dialogue.vocabulary = [];
+      dialogue.sentence = [];
+      dialogue.english = dialogue.row_2;
+      dialogue.pinyin = '';
+      dialogue.simplified = '';
+      dialogue.traditional = '';
+      dialogue['row_1'].replace(/\(event,\'(.*?)\',\'(.*?)\',\'(.*?)\',\'(.*?)\'.*?\>(.*?)\<\/span\>([^\<]+)?/g, function(A, B, C, D, E, F, G, H) {
+
+        let d = ''; let e = ''; let c = ''; let b = ''; let g = '';
+
+        try {d = decodeURI(D)} catch (err) {
+          d = D;
+          sails.log.error(err)
+        }
+        try {e = decodeURI(E)} catch (err) {
+          e = E;
+          sails.log.error(err)
+        }
+        try {c = decodeURI(C)} catch (err) {
+          c = C;
+          sails.log.error(err)
+        }
+        try {b = decodeURI(B)} catch (err) {
+          b = B;
+          sails.log.error(err)
+        }
+
+        dialogue.pinyin += c + ' ';
+        dialogue.simplified += d;
+        dialogue.traditional += e;
+
+        if (G) {
+          try {g = decodeURI(G)} catch (err) {
+            g = G;
+            sails.log.error(err)
+          }
+          dialogue.sentence.push(g);
+          dialogue.pinyin += g;
+          dialogue.simplified += g;
+          dialogue.traditional += g;
+        }
+      });
+      dialogue['audioUrl'] = lessonRoot + dialogue.audio
+      dialogue.pinyin = convert.convertPinyinTones(dialogue.pinyin);
+      dialogue.lessonInfo = _.pick(dialogue.v3_id, ['title', 'image', 'slug', 'level']);
+      lessons.push(_.pick(dialogue, ['audioUrl', 'english', 'pinyin', 'traditional', 'simplified', 'lessonInfo']))
+    });
+
     return {
       definition: definition,
       compounds: compounds,
       decomposition: sails.hooks.hanzi.decomposeMany(inputs.word, 2),
       related: [].concat(...sails.hooks.hanzi.getExamples(inputs.word)),
       idioms: [].concat(...sails.hooks.hanzi.dictionarySearch(inputs.word)).filter(item => item.definition && item.definition.includes('idiom')),
-      lessons: []
+      lessons: lessons
 
     }
 
