@@ -61,5 +61,9 @@ module.exports.datastores = {
   mauticDb: {
     adapter: require('sails-mysql'),
     url: 'mysql://cpodadmin:ruXM65mP82PG@chinesepod-mautic.cx6o0r5nidjs.us-east-1.rds.amazonaws.com:3306/bitnami_mautic',
+  },
+  ams_db: {
+    adapter: require('sails-mysql'),
+    url: 'mysql://cpodadmin:ruXM65mP82PG@chinesepod-mautic.cx6o0r5nidjs.us-east-1.rds.amazonaws.com:3306/bitnami_mautic',
   }
 };
