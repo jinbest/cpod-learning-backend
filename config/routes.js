@@ -149,6 +149,12 @@ module.exports.routes = {
   'GET /grundlovsdag-2020/':                             { action: 'promotions/danish-constitution-day/view-promo'},
   'GET /grundlovsdag-2020/:token':                       { action: 'promotions/create-limited-auth'},
   'GET /grundlovsdag-2020/success':                      { action: 'promotions/view-promo-success'},
+  'GET /sweden-2020/':                                   { action: 'promotions/sweden-national-day/view-promo'},
+  'GET /sweden-2020/:token':                             { action: 'promotions/create-limited-auth'},
+  'GET /sweden-2020/success':                            { action: 'promotions/view-promo-success'},
+  'GET /sweden-national-day-2020/':                      { action: 'promotions/sweden-national-day/view-promo-alt'},
+  'GET /sweden-national-day-2020/:token':                { action: 'promotions/create-limited-auth'},
+  'GET /sweden-national-day-2020/success':               { action: 'promotions/view-promo-success'},
 
   //PROMOTIONS - REDEEM GIFTS
   'GET /valentines-day-gift/redeem/:code?/:userCode?':   { action: 'promotions/valentines/view-valentines-day-gift-redeem'},
