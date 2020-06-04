@@ -392,7 +392,8 @@ module.exports.routes = {
   'GET /api/v1/feedback/dashboard-feedback-web':         { action: 'feedback/dashboard-feedback-web' },
 
   // LOG ROUTES
-  'PUT /api/v1/logs/game-logs':                          { action: 'logs/game-logs' },
+  'PUT /api/v1/logs/game-logs':                          { action: 'logs/put-game-logs' },
+  'PUT /api/v1/logs/custom-logs':                        { action: 'logs/put-custom-logs' },
 
   // Token Routes
   'GET /api/v1/token':                                   { action: 'token/check'},
