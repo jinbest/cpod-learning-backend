@@ -1,3 +1,78 @@
+parasails.registerPage('academic', {
+  //  ╦╔╗╔╦╔╦╗╦╔═╗╦    ╔═╗╔╦╗╔═╗╔╦╗╔═╗
+  //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
+  //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
+  data: {
+    // Main syncing/loading state for this page.
+    syncing: false,
+
+    // Form data
+    data: { /* … */},
+    // For tracking client-side validation errors in our form.
+    // > Has property set to `true` for each invalid property in `formData`.
+    errors: { /* … */},
+
+    // Server error state for the form
+    cloudError: '',
+
+    // Success state when form has been submitted
+    cloudSuccess: false,
+  },
+
+  //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
+  //  ║  ║╠╣ ║╣ ║  ╚╦╝║  ║  ║╣
+  //  ╩═╝╩╚  ╚═╝╚═╝ ╩ ╚═╝╩═╝╚═╝
+  beforeMount: function () {
+    // Attach any initial data from the server.
+    _.extend(this, SAILS_LOCALS);
+  },
+  mounted: async function () {
+    //…
+  },
+
+  //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
+  //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
+  //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
+  methods: {
+
+    submittedForm1: async function () {
+      // Show the success message.
+      // this.msg = 'Thank you. We will get back to you soon.';
+      // this.cloudSuccess = true;
+    },
+    handleParsingForm1: function () {
+      // Clear out any pre-existing error messages.
+      this.errors = {};
+      var argins = this.data;
+
+      // Validate email:
+      if (!argins.email) {
+        this.errors.email = true;
+      }
+
+      // Validate name:
+      if (!argins.firstName) {
+        this.errors.firstName = true;
+      }
+      // Validate topic:
+      if (!argins.schoolName) {
+        this.errors.schoolName = true;
+      }
+
+
+
+      // If there were any issues, they've already now been communicated to the user,
+      // so simply return undefined.  (This signifies that the submission should be
+      // cancelled.)
+      if (Object.keys(this.formErrors).length > 0) {
+        return;
+      }
+
+      return argins;
+    },
+
+  }
+});
 var slideMacIndex = 0;
 if(window.location.toString().indexOf('/academic-offers') > -1){
   $(function() {
@@ -87,201 +162,7 @@ if(window.location.toString().indexOf('/academic-offers') > -1){
     }, 1000);
 
 
-    const formTop = $('#form-top');
-    const formBottom = $('#form-bottom');
-    const submitTop = $('#btn-form-top-submit');
-    const submitBottom = $('#btn-form-bottom-submit');
 
-
-    formTop.validate({
-      errorElement: "span",
-      errorClass: "has-error",
-      rules: {
-        'first_name': {
-          required: true,
-          minlength: 1
-        },
-        'school_name': {
-          required: true,
-          minlength: 1
-        },
-        'email': {
-          required: true,
-          minlength: 1,
-          email: true
-        },
-      },
-      errorPlacement: function(error, element) {
-        error.insertAfter(element);
-        let parent = $(element).parents()[0];
-        $(parent).addClass('form__row_error');
-      },
-      highlight: function(element) {
-
-      },
-      unhighlight: function(element) {
-
-      },
-      success: function(element) {
-
-        let parent = $(element).parents()[0];
-        let parent_elem = $(parent);
-
-        if(parent_elem.hasClass('form__row_error')){
-          parent_elem.removeClass('form__row_error');
-        }
-
-        element.removeClass('has-error');
-      },
-      messages: {
-        'first_name': {
-          required: 'Please enter your first name.'
-        },
-        'school_name': {
-          required: 'Please enter school name.'
-        },
-        'email': {
-          required: 'Please enter your email.'
-        },
-      }
-    });
-
-    formBottom.validate({
-      errorElement: "span",
-      errorClass: "has-error",
-      rules: {
-        'first_name': {
-          required: true,
-          minlength: 1
-        },
-        'school_name': {
-          required: true,
-          minlength: 1
-        },
-        'email': {
-          required: true,
-          minlength: 1,
-          email: true
-        },
-      },
-      errorPlacement: function(error, element) {
-        error.insertAfter(element);
-        let parent = $(element).parents()[0];
-        $(parent).addClass('form__row_error');
-      },
-      highlight: function(element) {
-        // $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
-      },
-      unhighlight: function(element) {
-        // $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
-      },
-      success: function(element) {
-
-        let parent = $(element).parents()[0];
-        let parent_elem = $(parent);
-
-        if(parent_elem.hasClass('form__row_error')){
-          parent_elem.removeClass('form__row_error');
-        }
-
-        element.removeClass('has-error');
-        //.closest('.form-group').removeClass('has-error').addClass('has-success');
-      },
-      messages: {
-        'first_name': {
-          required: 'Please enter your first name.'
-        },
-        'school_name': {
-          required: 'Please enter school name.'
-        },
-        'email': {
-          required: 'Please enter your email.'
-        },
-      }
-    });
-
-
-    formTop.on('click','button', function(e){
-
-      e.preventDefault();
-
-      let form_valid = formTop.valid();
-      if(form_valid) {
-
-        submitTop.button('loading');
-        $('#form-top-msg').html('');
-        $.ajax({
-          type: "POST",
-          url: "/group-offering/contact-academic/",
-          data: formTop.serialize(),
-          success: function (res) {
-            let result = JSON.parse(res);
-            if (result.status != 1) {
-              // failed
-              $('#form-top-msg').html(
-                `<div class="${result.alertClass}">
-                                ${result.alertMsg}
-                            </div>`
-              );
-              submitTop.button('reset');
-            } else {
-              // success
-              $('#form-top-msg').html(
-                `<div class="${result.alertClass}">
-                                ${result.alertMsg}
-                            </div>`
-              );
-              submitTop.button('reset');
-            }
-
-            setTimeout(function () {
-              $('#form-top-msg').html('');
-            }, 10000);
-          }
-        });
-      }
-    });
-
-    formBottom.on('click','button', function(e){
-
-      e.preventDefault();
-
-      let form_valid = formBottom.valid();
-      if(form_valid) {
-
-        submitBottom.button('loading');
-        $('#form-bottom-msg').html('');
-        $.ajax({
-          type: "POST",
-          url: "/group-offering/contact-academic/",
-          data: formBottom.serialize(),
-          success: function (res) {
-            let result = JSON.parse(res);
-            if (result.status != 1) {
-              // failed
-              $('#form-bottom-msg').html(
-                `<div class="${result.alertClass}">
-                                ${result.alertMsg}
-                            </div>`
-              );
-              submitBottom.button('reset');
-            } else {
-              // success
-              $('#form-bottom-msg').html(
-                `<div class="${result.alertClass}">
-                                ${result.alertMsg}
-                            </div>`
-              );
-              submitBottom.button('reset');
-            }
-
-            setTimeout(function () {
-              $('#form-bottom-msg').html('');
-            }, 10000);
-          }
-        });
-      }
-    });
 
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 

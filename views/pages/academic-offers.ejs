@@ -1298,6 +1298,7 @@
     /*}*/
 
 </style>
+
 <section class="section home">
     <div class="container">
         <div class="home__title">
@@ -1338,6 +1339,7 @@
         </div>
     </div>
 </section>
+<div id="academic">
 <section class="section content">
     <div class="container">
         <h1 class="title title_big">Let us help you <br> enhance your lessons!</h1>
@@ -1401,21 +1403,29 @@
                     </div>
                     <div class="form-block__content">
                         <div id="form-top-msg"></div>
-                        <form id="form-top" action="">
-                            <div class="form-block__row">
-                                <div class="form-block__col">
+                        <ajax-form :syncing.sync="syncing"
+                              :cloud-error.sync="cloudError" @submitted="submittedForm1()"
+                              :handle-parsing="handleParsingForm1">
+                            <div class="form-block__row" >
+                                <div class="form-block__col" :class="[errors.firstName ? 'form__row_error' : '']">
                                     <label class="form-block__label">Name</label>
-                                    <input type="text" name="first_name" placeholder="First Name" class="form-block__input">
+                                    <input type="text" name="first_name" v-model.trim="data.firstName" placeholder="First Name" class="form-block__input">
+                                    <span for="first_name" class="has-error"
+                                          v-if="errors.firstName">Please enter your first name.</span>
                                 </div>
-                                <div class="form-block__col">
+                                <div class="form-block__col" :class="[errors.schoolName ? 'form__row_error' : '']">
                                     <label class="form-block__label">School</label>
-                                    <input type="text" name="school_name" placeholder="Name of your school" class="form-block__input">
+                                    <input type="text" name="school_name" v-model.trim="data.schoolName" placeholder="Name of your school" class="form-block__input">
+                                    <span for="school_name" class="has-error"
+                                          v-if="errors.schoolName">Please enter school name.</span>
                                 </div>
                             </div>
                             <div class="form-block__row form-block__row_last">
-                                <div class="form-block__col">
+                                <div class="form-block__col" :class="[errors.email ? 'form__row_error' : '']">
                                     <label class="form-block__label">Email Address</label>
-                                    <input type="email" name="email" placeholder="Email@chinesepod.com" class="form-block__input">
+                                    <input type="email" name="email" v-model.trim="data.email"  placeholder="Email@chinesepod.com" class="form-block__input">
+                                    <span for="email" class="has-error"
+                                          v-if="errors.email">Please enter your email.</span>
                                 </div>
                             </div>
                             <div class="form-block__row">
@@ -1423,7 +1433,7 @@
                                     <button type="submit" id="btn-form-top-submit" class="form-block__button">Free one month demo!</button>
                                 </div>
                             </div>
-                        </form>
+                        </ajax-form>
                         <div class="form-block__text">
                             Shortly after signing up a member of our team will contact you via email.
                         </div>
@@ -1566,21 +1576,29 @@
                 </div>
                 <div class="form-block__content">
                     <div id="form-bottom-msg"></div>
-                    <form id="form-bottom" action="">
-                        <div class="form-block__row">
-                            <div class="form-block__col">
+                    <ajax-form  :syncing.sync="syncing"
+                          :cloud-error.sync="cloudError" @submitted="submittedForm1()"
+                          :handle-parsing="handleParsingForm1">
+                        <div class="form-block__row" >
+                            <div class="form-block__col" :class="[errors.firstName ? 'form__row_error' : '']">
                                 <label class="form-block__label">Name</label>
-                                <input type="text" name="first_name" placeholder="First Name" class="form-block__input">
+                                <input type="text" name="first_name"  v-model.trim="data.firstName" placeholder="First Name" class="form-block__input">
+                                <span for="first_name" class="has-error"
+                                      v-if="errors.firstName">Please enter your first name.</span>
                             </div>
-                            <div class="form-block__col">
+                            <div class="form-block__col" :class="[errors.schoolName ? 'form__row_error' : '']">
                                 <label class="form-block__label">School</label>
-                                <input type="text" name="school_name" placeholder="Name of your school" class="form-block__input">
+                                <input type="text" name="school_name" v-model.trim="data.schoolName" placeholder="Name of your school" class="form-block__input">
+                                <span for="school_name" class="has-error"
+                                      v-if="errors.schoolName">Please enter school name.</span>
                             </div>
                         </div>
-                        <div class="form-block__row form-block__row_last">
-                            <div class="form-block__col">
+                        <div class="form-block__row form-block__row_last" >
+                            <div class="form-block__col" :class="[errors.email ? 'form__row_error' : '']">
                                 <label class="form-block__label">Email Address</label>
-                                <input type="email" name="email" placeholder="Email@chinesepod.com" class="form-block__input">
+                                <input type="email" name="email" v-model.trim="data.email" placeholder="Email@chinesepod.com" class="form-block__input">
+                                <span for="email" class="has-error"
+                                      v-if="errors.email">Please enter your email.</span>
                             </div>
                         </div>
                         <div class="form-block__row">
@@ -1588,7 +1606,7 @@
                                 <button type="submit" id="btn-form-bottom-submit" class="form-block__button" data-loading-text="Loading...">Free one month demo!</button>
                             </div>
                         </div>
-                    </form>
+                    </ajax-form>
                     <div class="form-block__text">
                         Shortly after signing up a member of our team will contact you via email.
                     </div>
@@ -1597,3 +1615,5 @@
         </div>
     </div>
 </section>
+</div>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>

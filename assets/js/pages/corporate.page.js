@@ -41,7 +41,6 @@ parasails.registerPage('corporate', {
     submittedForm: async function () {
       // Show the success message.
       this.msg = 'Thank you. We will get back to you soon.';
-      setTimeout( removeSucces(),10000);
       this.cloudSuccess = true;
     },
     openModal: async function (modal) {
@@ -93,13 +92,9 @@ parasails.registerPage('corporate', {
 
   }
 });
-
-
 var app = new Vue({
   created: function () {
     var slideMacIndex = 0;
-
-
     if (window.location.toString().indexOf('/corporate') > -1) {
       $(function () {
         changeCarouselHeight();
