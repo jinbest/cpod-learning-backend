@@ -162,6 +162,9 @@ module.exports.routes = {
   'GET /redeem-gift/:code?/:userCode?':                  { action: 'redeem/gift-subscription/view-gift-redeem'},
   'GET /redeem-gift/success/:code?':                     { action: 'redeem/gift-subscription/view-gift-redeem-success'},
 
+  //TEACHING
+  'GET /booking':                                        { action: 'view-booking' },
+
   //DICTIONARY
   'GET /dictionary-testing/:query?':                     { action: 'view-dictionary' },
 
