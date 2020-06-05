@@ -41,23 +41,18 @@ parasails.registerPage('corporate', {
     submittedForm: async function () {
       // Show the success message.
       this.msg = 'Thank you. We will get back to you soon.';
-      $([document.documentElement, document.body]).animate({
-        scrollTop: $(".form__title").offset().top
-      }, 2000);
-      setTimeout( this.removeSucces,10000);
       this.cloudSuccess = true;
     },
     openModal: async function (modal) {
       // Show the success message.
       this.modal = modal;
     },
-    closeModal: async function () {
+    closeModal: async function (modal) {
       // Show the success message.
       this.modal = "";
     },
-    removeSucces: async function () {
+    removeSucces: async function (modal) {
       // remove the success message.
-      this.formData.message = "";
       this.msg = '';
     },
     handleParsingForm: function () {
@@ -66,7 +61,7 @@ parasails.registerPage('corporate', {
       var argins = this.formData;
 
       // Validate email:
-      if (!argins.emailAddress ) {
+      if (!argins.emailAddress) {
         this.formErrors.emailAddress = true;
       }
 
@@ -100,8 +95,6 @@ parasails.registerPage('corporate', {
 var app = new Vue({
   created: function () {
     var slideMacIndex = 0;
-
-
     if (window.location.toString().indexOf('/corporate') > -1) {
       $(function () {
         changeCarouselHeight();
