@@ -17,6 +17,7 @@ parasails.registerPage('academic', {
 
     // Success state when form has been submitted
     cloudSuccess: false,
+
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -37,9 +38,10 @@ parasails.registerPage('academic', {
 
     submittedForm1: async function () {
       // Show the success message.
-      // this.msg = 'Thank you. We will get back to you soon.';
-      // this.cloudSuccess = true;
+
     },
+
+
     handleParsingForm1: function () {
       // Clear out any pre-existing error messages.
       this.errors = {};
@@ -54,6 +56,7 @@ parasails.registerPage('academic', {
       if (!argins.firstName) {
         this.errors.firstName = true;
       }
+
       // Validate topic:
       if (!argins.schoolName) {
         this.errors.schoolName = true;
@@ -77,12 +80,12 @@ var slideMacIndex = 0;
 if(window.location.toString().indexOf('/academic-offers') > -1){
   $(function() {
 
-    changeCarouselHeight();
+
     showMacSlides();
 
     window.addEventListener('resize', function(event){
 
-      changeCarouselHeight();
+
     });
     $('#page-footer').css('display','flex');
     var position_home_desc = $(".home__desc").offset();
@@ -160,9 +163,6 @@ if(window.location.toString().indexOf('/academic-offers') > -1){
       );
 
     }, 1000);
-
-
-
 
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 
@@ -301,24 +301,6 @@ if(window.location.toString().indexOf('/academic-offers') > -1){
       $('.resorces').css('opacity', 1);
     }
   }
-
-  function changeCarouselHeight(){
-
-    var slides = document.getElementsByClassName("mac-slider__item");
-    var slides_text = document.getElementsByClassName("resources_slider_text_item");
-    for (i = 0; i < slides.length; i++) {
-      slides[i].classList.remove('active');
-      slides_text[i].classList.remove('active');
-    }
-
-    document.getElementById("greatest_carousel_item").classList.add('active');
-    document.getElementById("greatest_carousel_mac_item").classList.add('active');
-
-    var height = document.getElementById("greatest_carousel_item").clientHeight;
-
-    document.getElementsByClassName("resources_slider_text_list")[0].style.height = height + 20 + 'px';
-  }
-
   function showMacSlides() {
     var i;
     var slides = document.getElementsByClassName("mac-slider__item");
