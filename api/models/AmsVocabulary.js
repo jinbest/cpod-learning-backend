@@ -71,10 +71,9 @@ module.exports = {
       allowNull: true
     },
     source_trad: {
-      type: "number",
-      columnType: "int",
-      isInteger: true,
-      required: true
+      type: "string",
+      columnType: "text",
+      allowNull: true
     },
     updatedAt: false,
     createdAt: false

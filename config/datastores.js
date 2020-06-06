@@ -64,6 +64,6 @@ module.exports.datastores = {
   },
   ams_db: {
     adapter: require('sails-mysql'),
-    url: 'mysql://cpodadmin:ruXM65mP82PG@chinesepod-mautic.cx6o0r5nidjs.us-east-1.rds.amazonaws.com:3306/bitnami_mautic',
+    url: 'mysql://ams_dba:23-0wsv;_jvxkvjl3w;sldkfdad=-@proddb02.chinesepod.com:3306/cpodams_ams2',
   }
 };
