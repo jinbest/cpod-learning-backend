@@ -81,7 +81,10 @@ module.exports = {
       return {s: vocab.source, p: convert.convertPinyinTones(vocab.phonetic), t: vocab.source_trad, en: vocab.target, audioUrlCN:  vocab.audioUrlCN, audioUrlEN: vocab.audioUrlEN, lesson: {}}
     })
 
-    return vocabData
+    return {
+      title: inputs.listId,
+      vocabulary: vocabData
+    }
 
   }
 
