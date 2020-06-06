@@ -389,6 +389,9 @@ module.exports.routes = {
   'POST /api/v1/vocabulary/decks/:id':                   { action: 'vocabulary/decks/update-deck'},
   'DELETE /api/v1/vocabulary/decks/:id':                 { action: 'vocabulary/decks/delete-deck'},
 
+  //PUBLIC VOCAB
+  'GET /api/v1/vocabulary/lists/:listId':                { action: 'vocabulary/words/get-defined-list' },
+
   //Feedback Routes
   'POST /api/v1/feedback/dashboard-feedback':            { action: 'feedback/dashboard-feedback' },
   'GET /api/v1/feedback/dashboard-feedback-all':         { action: 'feedback/dashboard-feedback-all' },
