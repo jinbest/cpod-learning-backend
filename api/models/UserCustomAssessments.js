@@ -13,7 +13,11 @@ module.exports = {
       autoIncrement: true,
     },
     user_id: {
-      model: 'user'
+      // model: 'user'
+      //TODO prepare this for production use
+      type: "number",
+      columnType: "int",
+      isInteger: true,
     },
     assessment_id: {
       type: 'string',
