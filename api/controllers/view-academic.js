@@ -6,7 +6,6 @@ module.exports = {
 
   description: 'Display "Contact" page.',
 
-
   exits: {
 
     success: {

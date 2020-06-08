@@ -6,7 +6,6 @@ module.exports = {
 
   description: 'Display "Corporate" page.',
 
-
   exits: {
 
     success: {
