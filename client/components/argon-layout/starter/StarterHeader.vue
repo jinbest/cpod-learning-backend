@@ -19,28 +19,24 @@
       <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
         <li class="nav-item">
           <a href="/corporate" class="nav-link" role="button">
-            <i class="ni ni-ui-04 d-lg-none"></i>
             <span class="nav-link-inner--text">Corporate</span>
           </a>
         </li>
         <li class="nav-item">
           <a href="/pricing" class="nav-link" role="button">
-            <i class="ni ni-ui-04 d-lg-none"></i>
             <span class="nav-link-inner--text">Pricing</span>
           </a>
         </li>
         <li class="nav-item">
           <a href="/contact" class="nav-link" role="button">
-            <i class="ni ni-ui-04 d-lg-none"></i>
             <span class="nav-link-inner--text">Contact Us</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a href="/affiliate" class="nav-link" role="button">
-            <i class="ni ni-ui-04 d-lg-none"></i>
-            <span class="nav-link-inner--text">Affiliate</span>
-          </a>
-        </li>
+<!--        <li class="nav-item">-->
+<!--          <a href="/affiliate" class="nav-link" role="button">-->
+<!--            <span class="nav-link-inner&#45;&#45;text">Affiliate</span>-->
+<!--          </a>-->
+<!--        </li>-->
       </ul>
       <ul class="navbar-nav align-items-lg-center ml-lg-auto">
         <li class="nav-item">

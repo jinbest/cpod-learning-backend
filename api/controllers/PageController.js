@@ -15,6 +15,8 @@ module.exports = {
       fs.createReadStream(app).pipe(res)
     }
 
+    sails.log.info(req.path);
+
     return sails.config.nuxt.render(req, res);
   },
 

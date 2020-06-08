@@ -114,7 +114,7 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-    publicPath: 'ssr/',
+    publicPath: 'ssr/', //(!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? false :
     plugins: [
       new webpack.ProvidePlugin({
         '$': 'jquery',
@@ -132,7 +132,7 @@ module.exports = {
   ** Env configuration
   */
   env: {
-    API_URL: 'https://staging.chinesepod.com/api/v1'
+    API_URL: (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'http://localhost:1337/api/v1' : 'https://www.chinesepod.com/api/v1'
   },
   /*
   ** Generate pages
@@ -147,5 +147,5 @@ module.exports = {
         })
     }
   },
-  dev: !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
+  dev: false //!process.env.NODE_ENV || process.env.NODE_ENV === 'development'
 }
