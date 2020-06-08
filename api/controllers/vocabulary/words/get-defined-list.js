@@ -81,34 +81,36 @@ module.exports = {
 
     let amsData = [].concat(...(await Promise.raceAll(amsPromises, 10000, {})));
 
-    return hskData.map(word => {
-      word.s = word.hanzi;
-      word.t = word.hanzi;
-      word.p = word.pinyin;
-      word.en = word.translations.join('; ');
-      try {
-        let lessonObj = cpodData.find(lesson => lesson.s === word.hanzi);
-        if(lessonObj && lessonObj.v3_id) {
-          word.lesson = lessonObj.v3_id;
-          word.t = lessonObj.t;
-          let lessonRoot = `https://s3contents.chinesepod.com/${lessonObj.v3_id.type === 'extra' ? 'extra/' : ''}${lessonObj.v3_id.id}/${lessonObj.v3_id.hash_code}/`;
-          word.audioUrlCN = lessonObj.audio.slice(0, 4) === 'http' ? lessonObj.audio : lessonRoot + lessonObj.audio;
+    return {
+      title: inputs.title,
+      vocabulary: hskData.map(word => {
+        word.s = word.hanzi;
+        word.t = word.hanzi;
+        word.p = word.pinyin;
+        word.en = word.translations.join('; ');
+        try {
+          let lessonObj = cpodData.find(lesson => lesson.s === word.hanzi);
+          if (lessonObj && lessonObj.v3_id) {
+            word.lesson = lessonObj.v3_id;
+            word.t = lessonObj.t;
+            let lessonRoot = `https://s3contents.chinesepod.com/${lessonObj.v3_id.type === 'extra' ? 'extra/' : ''}${lessonObj.v3_id.id}/${lessonObj.v3_id.hash_code}/`;
+            word.audioUrlCN = lessonObj.audio.slice(0, 4) === 'http' ? lessonObj.audio : lessonRoot + lessonObj.audio;
 
-          let amsObject = amsData.find(lesson => lessonObj.audio && lesson.source_mp3 === lessonObj.audio.split('source/').pop())
+            let amsObject = amsData.find(lesson => lessonObj.audio && lesson.source_mp3 === lessonObj.audio.split('source/').pop())
 
-          if (amsObject && amsObject.target_mp3) {
-            let params = word.audioUrlCN.split('source/');
-            sails.log.info(params);
-            word.audioUrlEN = params[0] + 'translation/' + amsObject.target_mp3;
+            if (amsObject && amsObject.target_mp3) {
+              let params = word.audioUrlCN.split('source/');
+              sails.log.info(params);
+              word.audioUrlEN = params[0] + 'translation/' + amsObject.target_mp3;
+            }
           }
+        } catch (e) {
+          sails.log.error(e);
         }
-      } catch (e) {
-        sails.log.error(e);
-      }
 
-      return _.pick(word, ['s', 't', 'p', 'en', 'audioUrlCN', 'audioUrlEN']);
+        return _.pick(word, ['s', 't', 'p', 'en', 'audioUrlCN', 'audioUrlEN']);
 
-    });
-
+      })
+    }
   }
 };
