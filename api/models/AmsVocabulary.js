@@ -15,9 +15,7 @@ module.exports = {
       autoIncrement: true
     },
     content_id: {
-      type: "number",
-      columnType: "int",
-      isInteger: true,
+      model: 'AmsContent'
     },
     phonetic: {
       type: "string",

@@ -35,7 +35,16 @@ module.exports = {
 
     let userDecks = await UserVocabularyToVocabularyTags.find({user_vocabulary_id: {in: userVocab.map(vocab => vocab.id)}}).populate('vocabulary_tag_id', {where: {user_id: inputs.userId}})
 
-    let amsVocab = await AmsVocabulary.find({target: {in: userVocab.map(vocab => vocab.vocabulary_id.en)}, source: {in: userVocab.map(vocab => vocab.vocabulary_id.s)}}).sort('id DESC')
+    let promises = [];
+    userVocab.forEach(vocab => {
+      if(vocab.vocabulary_id && vocab.vocabulary_id.audio) {
+        promises.push(
+          AmsVocabulary.findOne({source_mp3: vocab.vocabulary_id.audio.split('source/').pop()})
+        )
+      }
+    })
+
+    let amsVocab = [].concat(...(await Promise.all(promises)));
 
     userVocab = userVocab.map(vocab => {
       let tags = userDecks.filter(deck => deck.user_vocabulary_id === vocab.id);
@@ -56,11 +65,14 @@ module.exports = {
         try {
           audioUrlCN = vocab.vocabulary_id.audio.slice(0, 4) === 'http' ? vocab.vocabulary_id.audio : lessonRoot + vocab.vocabulary_id.audio;
           let params = audioUrlCN.split('source/');
-          let engAudio = amsVocab.find(ams => ams.target === vocab.vocabulary_id.en);
-          if(engAudio && engAudio.target_mp3) {
-            audioUrlEN = params[0] + 'translation/' + engAudio.target_mp3
+          sails.log.info(amsVocab)
+          let amsObj = amsVocab.find(ams => ams && ams.source_mp3 === params[params.length - 1])
+          sails.log.info(amsObj);
+          if(amsObj && amsObj.target_mp3) {
+            audioUrlEN = params[0] + 'translation/' + amsObj.target_mp3
           }
         } catch (e) {
+          // sails.log.error(e);
           sails.hooks.bugsnag.notify(`Issue with word - ${JSON.stringify(vocab)}`);
         }
       }
