@@ -371,6 +371,15 @@ module.exports.routes = {
   'GET /api/v1/exercises/results':                       { action: 'exercises/results/get' },
   'POST /api/v1/exercises/results':                      { action: 'exercises/results/post' },
 
+  //Testing Routes
+  'POST /api/v1/testing/put-score':                      { action: 'testing/put-score',
+                                                          cors: {
+                                                            allowOrigins: '*',
+                                                            allowRequestMethods: 'POST',
+                                                            allowAnyOriginWithCredentialsUnsafe: true
+                                                          }},
+
+
   //VOCABULARY Routes
   'GET /api/v1/vocabulary/words':                        { action: 'vocabulary/words/get-all-words'},
   'GET /api/v1/vocabulary/words/:id':                    { action: 'vocabulary/words/get-word-by-id'},
