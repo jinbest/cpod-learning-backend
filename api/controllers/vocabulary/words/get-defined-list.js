@@ -37,56 +37,78 @@ module.exports = {
       throw 'notFound'
     }
 
-    let hskData = require(`../../../../lib/${inputs.listId}.json`);
+    Promise.delay = function(t, val) {
+      return new Promise(resolve => {
+        setTimeout(resolve.bind(null, val), t);
+      });
+    };
 
-    let promises = [];
+    Promise.raceAll = function(promises, timeoutTime, timeoutVal) {
+      return Promise.all(promises.map(p => {
+        return Promise.race([p, Promise.delay(timeoutTime, timeoutVal)])
+      }));
+    };
+
+    let hskData = (require(`../../../../lib/${inputs.listId}.json`));
+
+    let amsPromises = [];
+    let cpodPromises = [];
 
     hskData.forEach(word => {
-      promises.push(
+      if(word.hanzi) {
+        cpodPromises.push(
+          VocabularyNew.find({s: word.hanzi, vocabulary_class: {in: ['Key Vocabulary', 'Supplementary']}, audio: {'!=': null}, v3_id: {'!=': '0000'}}).populate('v3_id').limit(1)
+            .then(data => data[0] ? data[0] : {})
+        )
+      }
+    });
+
+    let cpodData = [].concat(...(await Promise.raceAll(cpodPromises, 10000, {})));
+
+    let lessonMap = cpodData.map(item => item.audio ? item.audio.split('source/').pop() : '');
+
+    hskData.forEach(word => {
+      amsPromises.push(
         AmsVocabulary.getDatastore().sendNativeQuery(`
         SELECT * FROM content_vocabulary cv
         LEFT JOIN content_detail cd ON cv.content_id = cd.content_id
-        WHERE cv.source = '${word.hanzi}' AND cv.source_mp3 IS NOT NULL AND cv.target_mp3 IS NOT NULL AND cd.publish_time < ${new Date().getTime()/1000}
+        WHERE cv.source = '${word.hanzi}' AND cv.source_mp3 IN ($1) AND cv.target_mp3 IS NOT NULL AND cd.publish_time < ${new Date().getTime()/1000}
         ORDER BY cv.content_vocabulary_id DESC
         LIMIT 1
-        `).then(data => data['rows'])
+        `, [lessonMap]).then(data => data['rows'])
       )
     })
 
-    let vocabData = [].concat(...(await Promise.all(promises)));
+    let amsData = [].concat(...(await Promise.raceAll(amsPromises, 10000, {})));
 
-    let lessonData = await LessonData.find({id: {in: vocabData.map(vocab => vocab.v3id)}}).select('type')
+    return hskData.map(word => {
+      word.s = word.hanzi;
+      word.t = word.hanzi;
+      word.p = word.pinyin;
+      word.en = word.translations.join('; ');
+      try {
+        let lessonObj = cpodData.find(lesson => lesson.s === word.hanzi);
+        if(lessonObj && lessonObj.v3_id) {
+          word.lesson = lessonObj.v3_id;
+          word.t = lessonObj.t;
+          let lessonRoot = `https://s3contents.chinesepod.com/${lessonObj.v3_id.type === 'extra' ? 'extra/' : ''}${lessonObj.v3_id.id}/${lessonObj.v3_id.hash_code}/`;
+          word.audioUrlCN = lessonObj.audio.slice(0, 4) === 'http' ? lessonObj.audio : lessonRoot + lessonObj.audio;
 
-    vocabData = vocabData.map(vocab => {
+          let amsObject = amsData.find(lesson => lessonObj.audio && lesson.source_mp3 === lessonObj.audio.split('source/').pop())
 
-
-      if (vocab.source_mp3) {
-
-        try {
-
-          let lessonObj = lessonData.find(lesson => lesson.id === vocab.v3id)
-
-          let lessonRoot = `https://s3contents.chinesepod.com/${lessonObj.type === 'extra' ? 'extra/' : ''}${vocab.v3id}/${vocab.hash_code}/`
-
-          vocab.audioUrlCN = vocab.source_mp3.slice(0, 4) === 'http' ? vocab.source_mp3 : lessonRoot + 'mp3/glossary/source/' + vocab.source_mp3;
-          vocab.audioUrlEN = vocab.target_mp3.slice(0, 4) === 'http' ? vocab.target_mp3 : lessonRoot + 'mp3/glossary/translation/' + vocab.target_mp3;
-
-        } catch (e) {
-          // sails.log.error(e);
-          sails.hooks.bugsnag.notify(`Issue with DEFINED LIST word - ${JSON.stringify(vocab)}`);
+          if (amsObject && amsObject.target_mp3) {
+            let params = word.audioUrlCN.split('source/');
+            sails.log.info(params);
+            word.audioUrlEN = params[0] + 'translation/' + amsObject.target_mp3;
+          }
         }
-
-
+      } catch (e) {
+        sails.log.error(e);
       }
-      return {s: vocab.source, p: convert.convertPinyinTones(vocab.phonetic), t: vocab.source_trad, en: vocab.target, audioUrlCN:  vocab.audioUrlCN, audioUrlEN: vocab.audioUrlEN, lesson: {}}
-    })
 
-    return {
-      title: inputs.listId,
-      vocabulary: vocabData
-    }
+      return _.pick(word, ['s', 't', 'p', 'en', 'audioUrlCN', 'audioUrlEN']);
+
+    });
 
   }
-
-
 };
