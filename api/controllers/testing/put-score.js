@@ -55,7 +55,7 @@ module.exports = {
       user_id: inputs.userId,
       lesson_id: inputs.lessonId,
       assessment_id: inputs.assessmentId,
-      user_score: inputs.userScore,
+      user_score: {'<=': inputs.totalScore },
       total_score: inputs.totalScore,
       updatedAt: {'>': new Date(Date.now() - 1000 * 60 * 60 * 2)}
     },{
