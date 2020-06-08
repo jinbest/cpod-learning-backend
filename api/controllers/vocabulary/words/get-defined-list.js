@@ -95,6 +95,7 @@ module.exports = {
             word.t = lessonObj.t;
             let lessonRoot = `https://s3contents.chinesepod.com/${lessonObj.v3_id.type === 'extra' ? 'extra/' : ''}${lessonObj.v3_id.id}/${lessonObj.v3_id.hash_code}/`;
             word.audioUrlCN = lessonObj.audio.slice(0, 4) === 'http' ? lessonObj.audio : lessonRoot + lessonObj.audio;
+            word.audioUrlCN = word.audioUrlCN.replace('http:', 'https:')
 
             let amsObject = amsData.find(lesson => lessonObj.audio && lesson.source_mp3 === lessonObj.audio.split('source/').pop())
 
