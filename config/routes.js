@@ -372,7 +372,7 @@ module.exports.routes = {
   'POST /api/v1/exercises/results':                      { action: 'exercises/results/post' },
 
   //Testing Routes
-  'POST /api/v1/testing/put-score':                      { action: 'testing/put-score',
+  'POST /api/v1/testing/results':                        { action: 'testing/put-score',
                                                           cors: {
                                                             allowOrigins: '*',
                                                             allowRequestMethods: 'POST',
