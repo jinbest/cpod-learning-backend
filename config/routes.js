@@ -233,7 +233,9 @@ module.exports.routes = {
   'GET /api/v1/auth/google/callback':                    { controller: 'PassportController', action: 'googleCallback'},
   'GET /api/v1/sso/discourse':                           { action: 'sso/discourse'},
 
-  'GET /sitemap' :                                       { action: 'sitemap'},
+  'GET /sitemaps' :                                      { action: 'sitemaps/sitemap-index'},
+  'GET /sitemaps/lessons' :                              { action: 'sitemaps/sitemap-lessons'},
+  'GET /sitemaps/dictionary/:id' :                       { action: 'sitemaps/sitemap-dictionary'},
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
