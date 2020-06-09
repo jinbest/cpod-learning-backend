@@ -18,7 +18,7 @@ parasails.registerPage('academic', {
     // Success state when form has been submitted
     cloudSuccess: false,
 
-
+    msg: '',
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -289,23 +289,28 @@ parasails.registerPage('academic', {
 
     submittedForm1: async function () {
       // Show the success message.
-
+      this.msg = 'Thank you. We will get back to you soon.';
+      setTimeout( this.removeSucces,10000);
+      this.cloudSuccess = true;
     },
 
-
+    removeSucces: async function () {
+      // remove the success message
+      this.msg = '';
+    },
     handleParsingForm1: function () {
       // Clear out any pre-existing error messages.
       this.errors = {};
       var argins = this.data;
 
       // Validate email:
-      if (!argins.email) {
-        this.errors.email = true;
+      if (!argins.emailAddress) {
+        this.errors.emailAddress = true;
       }
 
       // Validate name:
-      if (!argins.firstName) {
-        this.errors.firstName = true;
+      if (!argins.fullName) {
+        this.errors.fullName = true;
       }
 
       // Validate topic:
@@ -317,7 +322,7 @@ parasails.registerPage('academic', {
       // If there were any issues, they've already now been communicated to the user,
       // so simply return undefined.  (This signifies that the submission should be
       // cancelled.)
-      if (Object.keys(this.formErrors).length > 0) {
+      if (Object.keys(this.errors).length > 0) {
         return;
       }
 

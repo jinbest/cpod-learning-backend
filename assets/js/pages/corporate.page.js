@@ -283,6 +283,10 @@ parasails.registerPage('corporate', {
         this.formErrors.fullName = true;
       }
 
+      if (!argins.company) {
+        this.formErrors.company = true;
+      }
+
       // Validate topic:
       if (!argins.topic) {
         this.formErrors.topic = true;

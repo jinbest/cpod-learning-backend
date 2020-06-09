@@ -1,6 +1,5 @@
 module.exports = {
 
-
   friendlyName: 'Deliver contact form message',
 
 
@@ -17,7 +16,6 @@ module.exports = {
     },
 
     topic: {
-      required: true,
       type: 'string',
       description: 'The topic from the contact form.',
       example: 'I want to buy stuff.'
@@ -31,10 +29,14 @@ module.exports = {
     },
 
     message: {
-      required: true,
       type: 'string',
       description: 'The custom message, in plain text.'
-    }
+    },
+
+    company:{
+      type: 'string',
+      description: 'My Company Name'
+    },
 
   },
 
@@ -49,10 +51,24 @@ module.exports = {
 
 
   fn: async function(inputs) {
-
+    if(inputs.topic){
+      topic = inputs.topic
+    }else{
+      topic = "Academic Page"
+    }
+    if(inputs.message){
+      message = inputs.message
+    }else{
+      message = "Academic Page"
+    }
+    if(inputs.company){
+      company = inputs.company
+    }else{
+      company = inputs.schoolName
+    }
     if (!sails.config.custom.internalEmailAddress) {
       throw new Error(
-`Cannot deliver incoming message from contact form because there is no internal
+        `Cannot deliver incoming message from contact form because there is no internal
 email address (\`sails.config.custom.internalEmailAddress\`) configured for this
 app.  To enable contact form emails, you'll need to add this missing setting to
 your custom config -- usually in \`config/custom.js\`, \`config/staging.js\`,
@@ -69,8 +85,9 @@ your custom config -- usually in \`config/custom.js\`, \`config/staging.js\`,
       templateData: {
         contactName: inputs.fullName,
         contactEmail: inputs.emailAddress,
-        topic: inputs.topic,
-        message: inputs.message
+        topic: topic,
+        message: message,
+        company:company
       }
     });
 
@@ -89,13 +106,12 @@ your custom config -- usually in \`config/custom.js\`, \`config/staging.js\`,
           },
           requester: {
             name: inputs.fullName,
-            email: inputs.emailAddress
+            email: inputs.emailAddress,
+            company: inputs.company,
+            company: inputs.schoolName,
           }
         }
       }, resolve)
     });
-
   }
-
-
 };

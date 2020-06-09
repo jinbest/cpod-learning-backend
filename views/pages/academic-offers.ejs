@@ -899,8 +899,8 @@
 </section>
 <div id="academic">
     <section class="section content">
-        <div class="container">
-            <h1 class="title title_big">Let us help you <br> enhance your lessons!</h1>
+        <div class="container home__title">
+            <h1 class="title">Let us help you <br> enhance your lessons!</h1>
         </div>
         <div class="about-item about-item_1">
             <div class="about-item__bg">
@@ -966,17 +966,21 @@
                             <h3 class="form-block__title">Experience it by yourself, for a whole month!</h3>
                         </div>
                         <div class="form-block__content">
-                            <div id="form-top-msg"></div>
-                            <ajax-form  :syncing.sync="syncing"
+                            <div id="ip-msg">
+                                <div v-if="msg" align="center" class="alert alert-success">
+                                    {{ msg }}
+                                </div>
+                            </div>
+                            <ajax-form action="deliverContactFormMessage" :syncing.sync="syncing"
                                         :cloud-error.sync="cloudError" @submitted="submittedForm1()"
                                         :handle-parsing="handleParsingForm1">
                                 <div class="form-block__row">
                                     <div class="form-block__col">
                                         <label class="form-block__label">Name</label>
-                                        <input type="text" name="first_name"  v-model.trim="data.firstName" placeholder="First Name"
+                                        <input type="text" name="first_name"  v-model.trim="data.fullName" placeholder="First Name"
                                                class="form-block__input">
                                         <span for="email" class="has-error"
-                                              v-if="errors.firstName">Please enter your email</span>
+                                              v-if="errors.fullName">Please enter your email</span>
                                     </div>
                                     <div class="form-block__col">
                                         <label class="form-block__label">School</label>
@@ -989,10 +993,10 @@
                                 <div class="form-block__row form-block__row_last">
                                     <div class="form-block__col">
                                         <label class="form-block__label">Email Address</label>
-                                        <input type="email" v-model.trim="data.email" name="email" placeholder="Email@chinesepod.com"
+                                        <input type="email" v-model.trim="data.emailAddress" name="email" placeholder="Email@chinesepod.com"
                                                class="form-block__input">
                                         <span for="email" class="has-error"
-                                              v-if="errors.email">Please enter your email</span>
+                                              v-if="errors.emailAddress">Please enter your email</span>
                                     </div>
                                 </div>
                                 <div class="form-block__row">
@@ -1183,16 +1187,16 @@
                     </div>
                     <div class="form-block__content">
                         <div id="form-bottom-msg"></div>
-                        <ajax-form   :syncing.sync="syncing"
+                        <ajax-form   action="deliverContactFormMessage":syncing.sync="syncing"
                                      :cloud-error.sync="cloudError" @submitted="submittedForm1()"
                                      :handle-parsing="handleParsingForm1">
                             <div class="form-block__row">
                                 <div class="form-block__col">
                                     <label class="form-block__label">Name</label>
-                                    <input type="text" name="first_name"  v-model.trim="data.firstName" placeholder="First Name"
+                                    <input type="text" name="first_name"  v-model.trim="data.fullName" placeholder="First Name"
                                            class="form-block__input">
                                     <span for="email" class="has-error"
-                                          v-if="errors.firstName">Please enter your email</span>
+                                          v-if="errors.fullName">Please enter your email</span>
                                 </div>
                                 <div class="form-block__col">
                                     <label class="form-block__label">School</label>
@@ -1205,10 +1209,10 @@
                             <div class="form-block__row form-block__row_last">
                                 <div class="form-block__col">
                                     <label class="form-block__label">Email Address</label>
-                                    <input type="email" v-model.trim="data.email" name="email" placeholder="Email@chinesepod.com"
+                                    <input type="email" v-model.trim="data.emailAddress" name="email" placeholder="Email@chinesepod.com"
                                            class="form-block__input">
                                     <span for="email" class="has-error"
-                                          v-if="errors.email">Please enter your email</span>
+                                          v-if="errors.emailAddress">Please enter your email</span>
                                 </div>
                             </div>
                             <div class="form-block__row">

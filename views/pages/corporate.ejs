@@ -1225,13 +1225,15 @@
                                           v-if="formErrors.fullName">Please enter your full name.</span>
                                 </div>
                             </div>
-                            <div class="form__row">
+                            <div class="form__row" :class="[formErrors.company ? 'form__row_error' : '']">
                                 <div class="form__label-container">
                                     <div class="form__label">Company</div>
                                     <input type="text" name="company" v-model.trim="formData.company"
                                            class="form__input"
                                            placeholder="Company Name"
                                            value="">
+                                    <span for="name" class="has-error"
+                                          v-if="formErrors.company">Please enter your company name.</span>
                                 </div>
                             </div>
                             <div class="form__row" :class="[formErrors.topic ? 'form__row_error' : '']">
