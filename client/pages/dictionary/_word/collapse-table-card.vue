@@ -3,7 +3,7 @@
     <div class="table-container" role="table" aria-label="Destinations">
       <div class="flex-table row" role="rowgroup" v-for="(item, index) in availableList" :key="index">
         <div class="flex-row simplified" role="cell">
-          <NuxtLink v-if="links" :to="`/dictionary/${item.simplified}`">{{ item.simplified }}</NuxtLink>
+          <a v-if="links" :href="`/dictionary/${item.simplified}`" :title="item.simplified">{{ item.simplified }}</a>
           <span v-else>{{ item.simplified }}</span>
         </div>
         <div class="flex-row pinyin" role="cell">{{ item.pinyin }}</div>

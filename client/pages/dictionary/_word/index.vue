@@ -146,7 +146,7 @@
     data() {
       return {
         writer: null,
-        showAnimation: false,
+        showAnimation: true,
       };
     },
     head() {
@@ -205,12 +205,12 @@
         padding: 5,
         delayBetweenLoops: 3000,
         onLoadCharDataSuccess: () => {
-          this.showAnimation = true;
           document.getElementById('animation-hanzi-container').addEventListener('click', () => {
             this.playAnimation(0, true)
           })
         },
-        onLoadCharDataError: function(reason) {
+        onLoadCharDataError: () => {
+          this.showAnimation = false;
           console.log('Oh No! Could not load character data');
         }
       });
