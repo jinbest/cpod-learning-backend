@@ -50,8 +50,7 @@
               <badge type="success">{{ lessonInfo.level }}</badge>
             </div>
           </div>
-          <div class="lesson-introduction">
-            {{ lessonInfo.introduction }}
+          <div class="lesson-introduction" v-html="lessonInfo.introduction">
           </div>
           <div class="introduction-copyright text-right">
             {{ lessonInfo.publishDate }} | {{ lessonInfo.hosts }}
@@ -76,7 +75,7 @@
       </div>
     </section>
 
-    <section class="section section-sm row align-items-center">
+    <section v-if="vocabularies.length > 0" class="section section-sm row align-items-center">
       <div class="col-lg-3">
         <aside-item title="Detailed Vocabulary" icon="fas fa-quote-right">
           Each lesson has it's unique vocabulary and will provide you with definitions and recordings so you can practice the pronunciation.
@@ -109,7 +108,7 @@
       </div>
     </section>
 
-    <section class="section section-sm row align-items-center reverse-tablet">
+    <section v-if="sentences.length > 0" class="section section-sm row align-items-center reverse-tablet">
       <div class="col-lg-6 offset-lg-3">
         <card class="main-content sentences-card" shadow header-classes="sentences-header-class bg-white border-0">
           <template>
