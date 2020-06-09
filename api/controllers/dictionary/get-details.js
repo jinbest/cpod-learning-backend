@@ -36,7 +36,7 @@ module.exports = {
         definitions =  segments.map(phrase => sails.hooks.hanzi.definitionLookup(phrase))
       }
     } else {
-      definitions = definitions.reverse()
+      definitions = definitions.sort((a,b) => a.definition.split('/').length > b.definition.split('/').length)
     }
 
     if(!definitions) {
@@ -178,10 +178,26 @@ module.exports = {
     let idioms = [].concat(...sails.hooks.hanzi.dictionarySearch(inputs.word)).filter(item => item.definition && item.definition.includes('idiom'));
     idioms = idioms.slice(0, 20);
     compounds = [].concat(...compounds.filter(i => !!i).slice(0,20))
-    compounds.forEach(i => {try {i.pinyin = convert.convertPinyinTones(i.pinyin)}catch (e) {sails.log.info(i)}});
-    definitions.forEach(i => i.pinyin = convert.convertPinyinTones(i.pinyin));
-    related.forEach(i => i.pinyin = convert.convertPinyinTones(i.pinyin));
-    idioms.forEach(i => i.pinyin = convert.convertPinyinTones(i.pinyin));
+    compounds.forEach(i => {
+      try {
+        i.pinyin = convert.convertPinyinTones(i.pinyin);
+        i.definition = convert.convertPinyinTones(i.definition)
+      } catch (e) {
+        sails.log.info(i)
+      }
+    });
+    definitions.forEach(i => {
+      i.pinyin = convert.convertPinyinTones(i.pinyin);
+      i.definition = convert.convertPinyinTones(i.definition);
+    });
+    related.forEach(i => {
+      i.pinyin = convert.convertPinyinTones(i.pinyin);
+      i.definition = convert.convertPinyinTones(i.definition);
+  });
+    idioms.forEach(i => {
+      i.pinyin = convert.convertPinyinTones(i.pinyin);
+      i.definition = convert.convertPinyinTones(i.definition);
+    });
 
     return {
       definition: definitions,
