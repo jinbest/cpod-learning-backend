@@ -1097,97 +1097,104 @@
                         </li>
                     </ul>
 
-                    <div class="modal fade show" tabindex="-1" v-if="modal==='dictionary'" id="modal-tool-Dictionary"
-                         style="display: block; padding-right: 17px;">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    <button type="button" class="close" @click="closeModal()"
-                                    ><span
-                                                aria-hidden="true">×</span></button>
-                                    <div>Use our dictionary for your bidirectional language studies. Look up the
-                                        interpretation or transfer meaning from one language to the other. You can
-                                        search
-                                        for words using either Chinese or English with our extensive glossary of
-                                        terms.
-                                        Furthermore, our dictionary offers a slew of sentences sourced from our
-                                        lesson
-                                        library that will give you awesome contextual opportunities to further
-                                        understand
-                                        whatever word you are searching for. There is nothing else like it on the
-                                        internet!
-                                        <hr>
-                                        <p class="text-center"><img src="/img/why-choose-us/dictionary-screen.png"
-                                                                    class="img-responsive center-block"></p></div>
-                                </div>
-                            </div><!-- /.modal-content -->
-                        </div><!-- /.modal-dialog -->
-                    </div><!-- /.modal -->
-                    <div class="modal fade show" tabindex="-1" v-if="modal==='pronunciation'"
-                         id="modal-tool-Pronunciation" style="display: block; padding-right: 17px;">
-                        <div class="modal-dialog modal-" role="document">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    <button type="button" class="close" @click="closeModal()"><span
-                                                aria-hidden="true">×</span></button>
-                                    <div>Our site consistently ranks as one of the best for our methods and approach
-                                        to
-                                        pronunciation. At ChinesePod, we can help you learn Mandarin pronunciation
-                                        the easy
-                                        way. Whether you're a newbie or an advanced student, our pronunciation
-                                        section has
-                                        something new and novel for you to discover. Furthermore, our Say It Right
-                                        series
-                                        provides a comprehensive, twenty-six lesson approach teaching you how to
-                                        sound like
-                                        a native.
-                                    </div>
-                                </div>
-                            </div><!-- /.modal-content -->
-                        </div><!-- /.modal-dialog -->
-                    </div><!-- /.modal -->
-                    <div class="modal fade show" tabindex="-1" v-if="modal==='vocabulary'" id="modal-tool-Vocabulary"
-                         style="display: block; padding-right: 17px;">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    <button type="button" class="close" @click="closeModal()"><span
-                                                aria-hidden="true">×</span></button>
-                                    <div>The vocabulary for all the lessons are available in our vocabulary manager.
-                                        Generate your own flash card deck to study online with ChinesePod or export
-                                        the deck
-                                        to Pleco, Anki or CSV.
-                                        <hr>
-                                        <p class="text-center"><img src="/img/why-choose-us/vocabulary-screen.png"
-                                                                    class="img-responsive center-block"></p></div>
-                                </div>
-                            </div><!-- /.modal-content -->
-                        </div><!-- /.modal-dialog -->
-                    </div><!-- /.modal -->
-                    <div class="modal fade show" tabindex="-1" v-if="modal==='test'" id="modal-tool-Test"
-                         style="display: block; padding-right: 17px;">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    <button type="button" class="close" @click="closeModal()"
-                                    ><span
-                                                aria-hidden="true">×</span></button>
-                                    <div>ChinesePod doesn’t care about what score you receive. These tests are here
-                                        for you
-                                        to gauge your own abilities and test your understanding of the hard work and
-                                        effort
-                                        you put into completing an academic level, giving you a benchmark to compare
-                                        how you
-                                        have progressed over time.
-                                        <hr>
-                                        <p class="text-center"><img src="/img/why-choose-us/test-screen.png"
-                                                                    class="img-responsive center-block"></p>
-                                        <p class="text-center"><img src="/img/why-choose-us/test-screen2.png"
-                                                                    class="img-responsive center-block"></p></div>
-                                </div>
-                            </div><!-- /.modal-content -->
-                        </div><!-- /.modal-dialog -->
-                    </div><!-- /.modal -->
+                    <modal class="example-modal" v-if="modal==='dictionary'" @close="closeModal()" v-cloak>
+                        <div class="modal-header">
+                            <h2 class="modal-title">DICTIONARY</h2>
+                            <hr/>
+                            <button type="button" class="modal-close-button" data-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Use our dictionary for your bidirectional language studies. Look up the
+                                interpretation or transfer meaning from one language to the other. You can
+                                search
+                                for words using either Chinese or English with our extensive glossary of
+                                terms.
+                                Furthermore, our dictionary offers a slew of sentences sourced from our
+                                lesson
+                                library that will give you awesome contextual opportunities to further
+                                understand
+                                whatever word you are searching for. There is nothing else like it on the
+                                internet!</p>
+                            <hr>
+                            <p class="text-center"><img src="/img/why-choose-us/dictionary-screen.png"
+                                                        class="img-responsive center-block"></p></div>
+
+                        <div class="modal-footer flex-row-reverse justify-content-between">
+                            <button type="button" data-dismiss="modal" class="btn btn-info">Close</button>
+                            <button type="button" data-dismiss="modal" class="btn btn-outline-info">Cancel</button>
+                        </div>
+                    </modal><!-- /.modal -->
+                    <modal class="example-modal" v-if="modal==='pronunciation'" @close="closeModal()" v-cloak>
+                        <div class="modal-header">
+                            <h2 class="modal-title">PRONUNCIATION</h2>
+                            <hr/>
+                            <button type="button" class="modal-close-button" data-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Our site consistently ranks as one of the best for our methods and approach
+                                to
+                                pronunciation. At ChinesePod, we can help you learn Mandarin pronunciation
+                                the easy
+                                way. Whether you're a newbie or an advanced student, our pronunciation
+                                section has
+                                something new and novel for you to discover. Furthermore, our Say It Right
+                                series
+                                provides a comprehensive, twenty-six lesson approach teaching you how to
+                                sound like
+                                a native.</p>
+                        </div>
+                        <div class="modal-footer flex-row-reverse justify-content-between">
+                            <button type="button" data-dismiss="modal" class="btn btn-info">Close</button>
+                            <button type="button" data-dismiss="modal" class="btn btn-outline-info">Cancel</button>
+                        </div>
+                    </modal><!-- /.modal -->
+                    <modal class="example-modal" v-if="modal==='vocabulary'" @close="closeModal()" v-cloak>
+                        <div class="modal-header">
+                            <h2 class="modal-title">VOCABULARY</h2>
+                            <hr/>
+                            <button type="button" class="modal-close-button" data-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>The vocabulary for all the lessons are availabl
+                                e in our vocabulary manager.
+                                Generate your own flash card deck to study online with ChinesePod or export
+                                the deck
+                                to Pleco, Anki or CSV.</p>
+                            <hr>
+                            <p class="text-center"><img src="/img/why-choose-us/vocabulary-screen.png"
+                                                        class="img-responsive center-block"></p>
+                        </div>
+                        <div class="modal-footer flex-row-reverse justify-content-between">
+                            <button type="button" data-dismiss="modal" class="btn btn-info">Close</button>
+                            <button type="button" data-dismiss="modal" class="btn btn-outline-info">Cancel</button>
+                        </div>
+                    </modal><!-- /.modal -->
+                    <modal class="example-modal" v-if="modal==='test'" @close="closeModal()" v-cloak>
+                        <div class="modal-header">
+                            <h2 class="modal-title">VOCABULARY</h2>
+                            <hr/>
+                            <button type="button" class="modal-close-button" data-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>ChinesePod doesn’t care about what score you receive. These tests are here
+                                for you
+                                to gauge your own abilities and test your understanding of the hard work and
+                                effort
+                                you put into completing an academic level, giving you a benchmark to compare
+                                how you
+                                have progressed over time.</p>
+                            <hr>
+                            <p class="text-center"><img src="/img/why-choose-us/test-screen.png"
+                                                        class="img-responsive center-block"></p>
+                            <p class="text-center"><img src="/img/why-choose-us/test-screen2.png"
+                                                        class="img-responsive center-block"></p>
+                        </div>
+                        <div class="modal-footer flex-row-reverse justify-content-between">
+                            <button type="button" data-dismiss="modal" class="btn btn-info">Close</button>
+                            <button type="button" data-dismiss="modal" class="btn btn-outline-info">Cancel</button>
+                        </div>
+                    </modal><!-- /.modal -->
+
                 </div>
             </div>
         </div>
