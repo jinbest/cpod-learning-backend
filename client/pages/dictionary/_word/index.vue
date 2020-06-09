@@ -65,7 +65,7 @@
 
               <div class="decomposition-container row ml-0">
                 <div class="decomposition-item" v-for="(item, index1) in decomposition.components.filter(component => component !== 'No glyph available')" :key="index1">
-                    {{ item }}
+                  {{ item }}
                 </div>
               </div>
             </div>
@@ -111,14 +111,9 @@
                 <base-button class="text-capitalize" :type="getButtonType(sentence.lessonInfo && sentence.lessonInfo.level)">
                   {{ sentence.lessonInfo && sentence.lessonInfo.level }}
                 </base-button>
-                <a v-if="sentence.lessonInfo && sentence.lessonInfo.slug" :title="sentence.lessonInfo.title" :href="`https://www.chinesepod.com/lesson/${sentence.lessonInfo.slug}`">
-                  <base-button outline class="text-capitalize mt-sm-2">
-                    Go to Lesson&nbsp;<i class="fa fa-angle-right" />
-                  </base-button>
+                <a v-if="sentence.lessonInfo && sentence.lessonInfo.slug" :title="sentence.lessonInfo.title" :href="`https://www.chinesepod.com/lesson/${sentence.lessonInfo.slug}`" class="btn btn-outline-primary link-button text-capitalize mt-md-2" role="button" >
+                  Go to Lesson&nbsp;<i class="fa fa-angle-right" />
                 </a>
-                <!--                <base-button outline class="text-capitalize mt-sm-2" icon="fa fa-download">-->
-                <!--                  Download-->
-                <!--                </base-button>-->
               </div>
             </div>
           </div>
@@ -444,6 +439,15 @@
             }
           }
         }
+        a {
+          padding-top: 3px;
+          padding-bottom: 3px;
+          width: 100%;
+          @media (max-width: 576px)  {
+            width: 48%;
+            margin-right: 0;
+          }
+        }
       }
     }
     h4.section-title {
@@ -459,6 +463,45 @@
       }
     }
     button {
+      border-radius: 15px;
+      border: 1px solid #CCCCCC;
+      font-size: 12px;
+      font-weight: normal;
+      &.btn-outline-default {
+        color: #000;
+      }
+      @media (max-width: 576px)  {
+        margin-top: 10px;
+      }
+      &.btn-play {
+        width: 102px;
+        height: 102px;
+        padding-top: 25px;
+        padding-bottom: 10px;
+        @media (max-width: 576px)  {
+          width: 150px;
+          height: fit-content;
+          padding: 4px 0;
+        }
+      }
+      &.btn-download {
+        padding: 4px 0;
+        @media (max-width: 576px)  {
+          width: 150px;
+        }
+      }
+      i.play {
+        font-size: 40px;
+        @media (max-width: 576px)  {
+          font-size: 12px;
+          padding-right: .75em;
+        }
+      }
+      &:hover {
+        color: #FFF;
+      }
+    }
+    .link-button {
       border-radius: 15px;
       border: 1px solid #CCCCCC;
       font-size: 12px;
