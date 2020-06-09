@@ -1,9 +1,9 @@
 <template>
   <header class="header-global">
     <base-nav class="navbar-main" type="secondary" effect="light" expand>
-      <nuxt-link slot="brand" class="navbar-brand mr-lg-5" to="/">
+      <a slot="brand" class="navbar-brand mr-lg-5" href="https://www.chinesepod.com">
         <img src="/img/brand/brand.svg">
-      </nuxt-link>
+      </a>
 
       <div class="row" slot="content-header" slot-scope="{closeMenu}">
         <div class="col-6 collapse-brand">
