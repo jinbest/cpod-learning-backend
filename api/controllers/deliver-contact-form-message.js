@@ -17,7 +17,6 @@ module.exports = {
     },
 
     topic: {
-      required: true,
       type: 'string',
       description: 'The topic from the contact form.',
       example: 'I want to buy stuff.'
@@ -31,9 +30,16 @@ module.exports = {
     },
 
     message: {
-      required: true,
       type: 'string',
       description: 'The custom message, in plain text.'
+    },
+    company: {
+      type: 'string',
+      description: 'Interested company'
+    },
+    school: {
+      type: 'string',
+      description: 'Interested school'
     }
 
   },
@@ -43,12 +49,20 @@ module.exports = {
 
     success: {
       description: 'The message was sent successfully.'
+    },
+
+    invalid: {
+      responseType: 'badRequest'
     }
 
   },
 
 
   fn: async function(inputs) {
+
+    if(!inputs.message && !inputs.school) {
+      throw 'invalid'
+    }
 
     if (!sails.config.custom.internalEmailAddress) {
       throw new Error(
@@ -69,8 +83,8 @@ your custom config -- usually in \`config/custom.js\`, \`config/staging.js\`,
       templateData: {
         contactName: inputs.fullName,
         contactEmail: inputs.emailAddress,
-        topic: inputs.topic,
-        message: inputs.message
+        topic: `${inputs.company || inputs.school ? `[INQUIRY] ${inputs.company ? inputs.company : inputs.school} - `: ''}${inputs.topic}`,
+        message: inputs.message ? inputs.message : 'Inquiry'
       }
     });
 
@@ -83,9 +97,9 @@ your custom config -- usually in \`config/custom.js\`, \`config/staging.js\`,
     await new Promise(resolve => {
       client.requests.create({
         request: {
-          subject: inputs.topic,
+          subject: `${inputs.company || inputs.school ? `[INQUIRY] ${inputs.company ? inputs.company : inputs.school} - `: ''}${inputs.topic}`,
           comment: {
-            body: inputs.message
+            body: inputs.message ? inputs.message : 'Inquiry',
           },
           requester: {
             name: inputs.fullName,
