@@ -36,7 +36,7 @@ module.exports = {
         definitions =  segments.map(phrase => sails.hooks.hanzi.definitionLookup(phrase))
       }
     } else {
-      definitions = definitions.sort((a,b) => a.definition.split('/').length > b.definition.split('/').length)
+      definitions = definitions.sort((a, b) => (a.definition.split('/').length < b.definition.split('/').length) ? 1 : -1)
     }
 
     if(!definitions) {
