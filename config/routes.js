@@ -86,7 +86,7 @@ module.exports.routes = {
   'GET /bookmarks/:unused?*':                            'HomeController.serve',
   'GET /levels/:unused?*':                               'HomeController.serve',
   'GET /feedback/:unused?*':                             'HomeController.serve',
-  'GET /lesson/*':                               'PageController.serve',
+  'GET /lesson/*':                                       'PageController.serve',
   'GET /vocabulary/:unused?*':                           'NuxtController.serve',
   'GET /materials/:unused?*':                            'NuxtController.serve',
   'GET /dictionary/*':                                   'NuxtController.serve',
