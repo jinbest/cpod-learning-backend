@@ -98,6 +98,11 @@ module.exports = {
     }],
     '@nuxtjs/pwa'
   ],
+  buildModules: [
+    ['@nuxtjs/google-analytics', {
+      id: 'UA-1176295-62'
+    }]
+  ],
   /*
   ** Axios module configuration
   */
