@@ -447,7 +447,7 @@ module.exports = function defineJobsHook(sails) {
         seoIndexQueue.process('TriggerReindex', function () {
           let vocabulary = require('../../../lib/cedict_sitemaps.json');
           vocabulary.forEach(word => {
-            seoIndexQueue.add('InxexPhrase', {word: word.simplified}, {jobId: word.simplified,
+            seoIndexQueue.add('IndexPhrase', {word: word.simplified}, {jobId: word.simplified,
               removeOnComplete: true})
           })
         });
