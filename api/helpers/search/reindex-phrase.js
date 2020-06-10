@@ -30,7 +30,7 @@ module.exports = {
     let index = {
       model: 'vocabulary',
       elasticModel: 'vocabulary',
-      elasticIndex: 'vocabulary-search-index',
+      elasticIndex: 'vocabulary-search',
       elasticRecord: [
         'id',
         'simplified', // Simplified
@@ -71,12 +71,11 @@ module.exports = {
     index.elasticRecord.forEach(key => {
       indexRecord[key] = record[key];
     });
-    indexRecord['_id'] = `${record.simplified}`;
     commands.push(action);
     commands.push(indexRecord);
 
-    return await sails.hooks.elastic.client.index({index: index.elasticIndex, body: indexRecord, refresh: true})
-      .catch(error => sails.hooks.bugsnag.notify(error));
+    return await sails.hooks.elastic.client.index({index: index.elasticIndex, id: record['simplified'], body: indexRecord, refresh: true})
+      .catch(error => sails.log.error(error));
 
   }
 
