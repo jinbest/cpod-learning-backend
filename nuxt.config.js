@@ -142,14 +142,14 @@ module.exports = {
       routes.push({
         path: '/lesson/:slug/*',
         components: {
-          default: resolve(__dirname, 'pages/lesson/_slug/index.vue'), // or routes[index].component
+          default: resolve(__dirname, 'client/pages/lesson/_slug/index.vue'), // or routes[index].component
         },
       });
       routes.push({
         path: '*',
         name: 'catchall',
         components: {
-          default: resolve(__dirname, 'pages/404.vue'), // or routes[index].component
+          default: resolve(__dirname, 'client/pages/404.vue'), // or routes[index].component
         },
       })
     }
