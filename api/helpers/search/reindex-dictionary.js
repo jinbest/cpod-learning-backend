@@ -51,7 +51,7 @@ module.exports = {
 
     await new Promise(async (resolve, reject) => {
 
-      // await sails.hooks.elastic.client.indices.delete({index: index.elasticIndex}).catch();
+      // await sails.hooks.elastic.client.indices.delete({index: 'vocabulary-search-index'}).catch();
 
       sails.log.info('Index Deleted');
 

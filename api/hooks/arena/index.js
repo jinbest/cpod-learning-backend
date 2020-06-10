@@ -75,6 +75,13 @@ module.exports = function defineArenaHook(sails) {
                   "host": "cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com",
                   "hostId": "CPODRedis",
                   "db": 8
+                },
+                {
+                  "name": "SeoQueue",
+                  "port": 6379,
+                  "host": "cpod-production.idthgn.ng.0001.use1.cache.amazonaws.com",
+                  "hostId": "CPODRedis",
+                  "db": 8
                 }
               ],
             },

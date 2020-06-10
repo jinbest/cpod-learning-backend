@@ -439,6 +439,21 @@ module.exports = function defineJobsHook(sails) {
 
         userInfoQueue.clean(1000);
 
+        let seoIndexQueue = new Queue('SeoQueue', sails.config.jobs.url);
+        seoIndexQueue.process('IndexPhrase', 5,async function (job) {
+          await sails.helpers.search.reindexPhrase.with(job.data);
+        });
+
+        seoIndexQueue.process('TriggerReindex', function () {
+          let vocabulary = require('../../../lib/cedict_sitemaps.json');
+          vocabulary.forEach(word => {
+            seoIndexQueue.add('InxexPhrase', {word: word.simplified}, {jobId: word.simplified,
+              removeOnComplete: true})
+          })
+        });
+
+        global.seoIndexQueue = seoIndexQueue
+
         done()
       })
     },
