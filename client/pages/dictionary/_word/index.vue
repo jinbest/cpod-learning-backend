@@ -106,7 +106,7 @@
               <div class="english-sentence pt-3">{{ sentence.english }}</div>
             </div>
             <div class="action-content">
-              <dictionary-play-button v-if="sentence.audioUrl" :audio-url="sentence.audioUrl" square />
+              <dictionary-play-button class="mr-0" v-if="sentence.audioUrl" :audio-url="sentence.audioUrl" square />
               <div class="sub-action-buttons">
                 <base-button class="text-capitalize" :type="getButtonType(sentence.lessonInfo && sentence.lessonInfo.level)">
                   {{ sentence.lessonInfo && sentence.lessonInfo.level }}
@@ -410,19 +410,21 @@
       .action-content {
         display: flex;
         align-items: center;
+        justify-content: space-between;
+        width: 280px;
         @media (max-width: 768px)  {
           width: 100%;
-          justify-content: space-between;
+          flex-direction: column;
         }
       }
       .sub-action-buttons {
         display: flex;
         flex-direction: column;
+        flex: 1;
         @media (max-width: 576px)  {
           width: 100%;
-          flex-wrap: wrap;
-          flex-direction: unset;
-          justify-content: space-around;
+          flex-direction: row;
+          justify-content: space-between;
         }
         button {
           padding-top: 3px;
@@ -479,7 +481,7 @@
         padding-top: 25px;
         padding-bottom: 10px;
         @media (max-width: 576px)  {
-          width: 150px;
+          width: 100%;
           height: fit-content;
           padding: 4px 0;
         }
