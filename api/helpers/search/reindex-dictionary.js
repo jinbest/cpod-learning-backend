@@ -62,7 +62,7 @@ module.exports = {
 
       let total = vocabulary.length;
 
-      let batch = 100;
+      let batch = 10;
 
       let bulkCount = Math.ceil(total / batch);
 
