@@ -51,8 +51,7 @@ module.exports = {
 
     await new Promise(async (resolve, reject) => {
 
-      // await sails.hooks.elastic.client.indices.delete({index: index.elasticIndex})
-      //   .catch();
+      // await sails.hooks.elastic.client.indices.delete({index: index.elasticIndex}).catch();
 
       sails.log.info('Index Deleted');
 
@@ -78,14 +77,14 @@ module.exports = {
         let action = {
           index: {
             _index: index.elasticIndex,
-            _type: index.elasticIndex
+            _type: index.elasticIndex,
           }
         };
 
         await asyncForEach(records,async (record) => {
           let indexRecord = {};
 
-          record.id = `${record.simplified}`;
+          record['_id'] = `${record.simplified}`;
           record.pinyin_tones = convert.convertPinyinTones(record.pinyin);
           record.data = JSON.stringify(await sails.helpers.dictionary.getDetails(record.simplified));
 
