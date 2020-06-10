@@ -52,8 +52,7 @@ module.exports = {
       compounds = [];
     }
 
-    let lessonData = await LessonData
-      .find({
+    let lessonData = await LessonData.find({
         publication_timestamp: {
           '<': new Date()
         },
