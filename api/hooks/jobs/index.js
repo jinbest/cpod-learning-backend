@@ -440,7 +440,7 @@ module.exports = function defineJobsHook(sails) {
         userInfoQueue.clean(1000);
 
         let seoIndexQueue = new Queue('SeoQueue', sails.config.jobs.url);
-        seoIndexQueue.process('IndexPhrase', 5,async function (job) {
+        seoIndexQueue.process('IndexPhrase', 1,async function (job) {
           await sails.helpers.search.reindexPhrase.with(job.data);
         });
 
