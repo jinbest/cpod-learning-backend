@@ -41,7 +41,6 @@ module.exports = {
         'data',
         'timestamp'
       ],
-      idColumn: 'id'
     };
 
     const convert = require('pinyin-tone-converter');
@@ -64,7 +63,6 @@ module.exports = {
 
     let indexRecord = {};
 
-    record['_id'] = `${record.simplified}`;
     record.pinyin_tones = convert.convertPinyinTones(record.pinyin);
     record.data = JSON.stringify(await sails.helpers.dictionary.getDetails(record.simplified));
     record.timestamp = new Date().toISOString();
@@ -73,6 +71,7 @@ module.exports = {
     index.elasticRecord.forEach(key => {
       indexRecord[key] = record[key];
     });
+    indexRecord['_id'] = `${record.simplified}`;
     commands.push(action);
     commands.push(indexRecord);
 
