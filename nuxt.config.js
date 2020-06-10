@@ -135,6 +135,27 @@ module.exports = {
     API_URL: (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'http://localhost:1337/api/v1' : 'https://www.chinesepod.com/api/v1'
   },
   /*
+  ** Expanded Routes
+  */
+  router: {
+    extendRoutes (routes, resolve) {
+      routes.push({
+        path: '/lesson/:slug/*',
+        components: {
+          default: resolve(__dirname, 'pages/lesson/_slug/index.vue'), // or routes[index].component
+        },
+      });
+      routes.push({
+        path: '*',
+        name: 'catchall',
+        components: {
+          default: resolve(__dirname, 'pages/404.vue'), // or routes[index].component
+        },
+      })
+    }
+  },
+
+  /*
   ** Generate pages
   */
   generate: {
