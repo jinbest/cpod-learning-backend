@@ -1186,7 +1186,11 @@
                         <h3 class="form-block__title">Experience it by yourself, for a whole month!</h3>
                     </div>
                     <div class="form-block__content">
-                        <div id="form-bottom-msg"></div>
+                        <div id="ip-msg-bot">
+                            <div v-if="msg" align="center" class="alert alert-success">
+                                {{ msg }}
+                            </div>
+                        </div>
                         <ajax-form   action="deliverContactFormMessage":syncing.sync="syncing"
                                      :cloud-error.sync="cloudError" @submitted="submittedForm1()"
                                      :handle-parsing="handleParsingForm1">
