@@ -41,8 +41,14 @@ module.exports = {
     let diff = now.diff(start, 'days');
 
     let sliceSize = 30000;
-    if (diff < 31) {
+    if (diff < 11) {
       sliceSize = Math.pow(diff, 3);
+    } else if (diff < 16) {
+      sliceSize = 1000 + Math.floor(Math.pow(diff, 2.8));
+    } else if (diff < 24) {
+      sliceSize = 2000 + Math.floor(Math.pow(diff, 2.7));
+    } else if (diff < 59) {
+      sliceSize = 3000 + Math.floor(Math.pow(diff, 2.5));
     }
 
     let startPoint = (inputs.id - 1) * dictionarySplitBatch;
