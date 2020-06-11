@@ -83,7 +83,7 @@ your custom config -- usually in \`config/custom.js\`, \`config/staging.js\`,
       templateData: {
         contactName: inputs.fullName,
         contactEmail: inputs.emailAddress,
-        topic: `${inputs.company || inputs.schoolName ? `[INQUIRY] ${inputs.company ? inputs.company : inputs.schoolName}`: ''}${inputs.topic ? ` - ${inputs.topic}` : ''}`,
+        topic: `${inputs.company || inputs.schoolName ? `[INQUIRY] ${inputs.company ? `${inputs.company} - ` : `${inputs.schoolName} - `}`: ''}${inputs.topic ? `${inputs.topic}` : ''}`,
         message: inputs.message ? inputs.message : 'Inquiry'
       }
     });
@@ -97,7 +97,7 @@ your custom config -- usually in \`config/custom.js\`, \`config/staging.js\`,
     await new Promise(resolve => {
       client.requests.create({
         request: {
-          subject: `${inputs.company || inputs.schoolName ? `[INQUIRY] ${inputs.company ? inputs.company : inputs.schoolName}`: ''}${inputs.topic ? ` - ${inputs.topic}` : ''}`,
+          subject: `${inputs.company || inputs.schoolName ? `[INQUIRY] ${inputs.company ? `${inputs.company} - ` : `${inputs.schoolName} - `}`: ''}${inputs.topic ? `${inputs.topic}` : ''}`,
           comment: {
             body: inputs.message ? inputs.message : 'Inquiry',
           },
