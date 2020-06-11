@@ -1,5 +1,6 @@
 module.exports = {
 
+
   friendlyName: 'Deliver contact form message',
 
 
@@ -32,11 +33,14 @@ module.exports = {
       type: 'string',
       description: 'The custom message, in plain text.'
     },
-
-    company:{
+    company: {
       type: 'string',
-      description: 'My Company Name'
+      description: 'Interested company'
     },
+    school: {
+      type: 'string',
+      description: 'Interested school'
+    }
 
   },
 
@@ -45,30 +49,24 @@ module.exports = {
 
     success: {
       description: 'The message was sent successfully.'
+    },
+
+    invalid: {
+      responseType: 'badRequest'
     }
 
   },
 
 
   fn: async function(inputs) {
-    if(inputs.topic){
-      topic = inputs.topic
-    }else{
-      topic = "Academic Page"
+
+    if(!inputs.message && !inputs.school) {
+      throw 'invalid'
     }
-    if(inputs.message){
-      message = inputs.message
-    }else{
-      message = "Academic Page"
-    }
-    if(inputs.company){
-      company = inputs.company
-    }else{
-      company = inputs.schoolName
-    }
+
     if (!sails.config.custom.internalEmailAddress) {
       throw new Error(
-        `Cannot deliver incoming message from contact form because there is no internal
+`Cannot deliver incoming message from contact form because there is no internal
 email address (\`sails.config.custom.internalEmailAddress\`) configured for this
 app.  To enable contact form emails, you'll need to add this missing setting to
 your custom config -- usually in \`config/custom.js\`, \`config/staging.js\`,
@@ -85,9 +83,8 @@ your custom config -- usually in \`config/custom.js\`, \`config/staging.js\`,
       templateData: {
         contactName: inputs.fullName,
         contactEmail: inputs.emailAddress,
-        topic: topic,
-        message: message,
-        company:company
+        topic: `${inputs.company || inputs.school ? `[INQUIRY] ${inputs.company ? inputs.company : inputs.school} - `: ''}${inputs.topic}`,
+        message: inputs.message ? inputs.message : 'Inquiry'
       }
     });
 
@@ -100,18 +97,19 @@ your custom config -- usually in \`config/custom.js\`, \`config/staging.js\`,
     await new Promise(resolve => {
       client.requests.create({
         request: {
-          subject: inputs.topic,
+          subject: `${inputs.company || inputs.school ? `[INQUIRY] ${inputs.company ? inputs.company : inputs.school} - `: ''}${inputs.topic}`,
           comment: {
-            body: inputs.message
+            body: inputs.message ? inputs.message : 'Inquiry',
           },
           requester: {
             name: inputs.fullName,
-            email: inputs.emailAddress,
-            company: inputs.company,
-            company: inputs.schoolName,
+            email: inputs.emailAddress
           }
         }
       }, resolve)
     });
+
   }
+
+
 };

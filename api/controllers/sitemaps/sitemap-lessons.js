@@ -28,15 +28,16 @@ module.exports = {
         },
         status_published: 'publish'
       },
+      select: ['updatedAt', 'slug'],
       sort: 'publication_timestamp DESC',
       limit: 50000
     })
       .eachRecord((lesson) => {
       sitemapXml += (
           '<url>\n'+
-          '  <loc>https://www.chinesepod.com/lessons/' + _.escape(lesson.slug)+'</loc>\n'+
+          '  <loc>https://www.chinesepod.com/lesson/' + _.escape(lesson.slug)+'</loc>\n'+
           '  <lastmod>'+_.escape(lesson.updatedAt.toISOString())+'</lastmod>\n'+
-          '<changefreq>monthly</changefreq>\n'+
+          '<changefreq>weekly</changefreq>\n'+
           '</url>'
         );
     });

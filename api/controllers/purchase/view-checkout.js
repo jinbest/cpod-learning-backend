@@ -10,6 +10,15 @@ module.exports = {
 
   description: 'Display "Checkout" page.',
 
+  inputs: {
+    annual: {
+      type: 'boolean'
+    },
+    quarterly: {
+      type: 'boolean'
+    }
+  },
+
 
   exits: {
 
@@ -19,7 +28,7 @@ module.exports = {
 
   },
 
-  fn: async function () {
+  fn: async function (inputs) {
 
     let trial = false; let promo = false; let plan = 'premium'; let period = 'monthly'; let promoCode = '';
 
@@ -46,27 +55,11 @@ module.exports = {
     if(this.req.param('period', false) && ['annually', 'quarterly', 'monthly'].includes(this.req.param('period', false).toLowerCase())) {
       period = this.req.param('period', false).toLowerCase();
     }
-
-    // const currentDate = new Date();
-    // const geoip = require('geoip-country');
-    // const geo = geoip.lookup(this.req.ip);
-
-    // if (!geo || !geo.country){
-    //
-    //   trial = false;
-    //   delete this.req.session.trial
-    //
-    // } else if (sails.config.custom.coreMarkets.includes(geo.country) && !sails.config.custom.coreFreeMonths.includes(currentDate.getMonth())) {
-    //
-    //   trial = false;
-    //   delete this.req.session.trial
-    //
-    // } else if (!sails.config.custom.coreMarkets.includes(geo.country) && !sails.config.custom.nonCoreFreeMonths.includes(currentDate.getMonth())) {
-    //
-    //   trial = false;
-    //   delete this.req.session.trial
-    //
-    // }
+    if(inputs.annual) {
+      period = 'annually'
+    } else if (inputs.quarterly) {
+      period = 'quarterly'
+    }
 
     // Respond with view.
     return {

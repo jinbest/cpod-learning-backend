@@ -88,8 +88,12 @@ module.exports.routes = {
   'GET /bookmarks/:unused?*':                            'HomeController.serve',
   'GET /levels/:unused?*':                               'HomeController.serve',
   'GET /feedback/:unused?*':                             'HomeController.serve',
-  'GET /lesson/:unused?*':                               'HomeController.serve',
-  'GET /vocabulary/:unused?*':                           'HomeController.serve',
+  'GET /lesson/*':                                       'PageController.serve',
+  'GET /lesson/:slug/:courseId?/rate/:rating':           'HomeController.serve',
+  'GET /vocabulary/:unused?*':                           'NuxtController.serve',
+  'GET /materials/:unused?*':                            'NuxtController.serve',
+  'GET /dictionary/*':                                   'NuxtController.serve',
+  // 'GET /vocabulary/:unused?*':                           'HomeController.serve',
   'GET /explore/:unused?*':                              'HomeController.serve',
   'GET /course/:unused?*':                               'HomeController.serve',
   'GET /settings/:unused?*':                             'HomeController.serve',
@@ -148,12 +152,24 @@ module.exports.routes = {
   'GET /memorial-weekend-2020/:token':                   { action: 'promotions/create-limited-auth'},
   'GET /memorial-day-2020/success':                      { action: 'promotions/view-promo-success'},
   'GET /memorial-weekend-2020/success':                  { action: 'promotions/view-promo-success'},
+  'GET /grundlovsdag-2020/':                             { action: 'promotions/danish-constitution-day/view-promo'},
+  'GET /grundlovsdag-2020/:token':                       { action: 'promotions/create-limited-auth'},
+  'GET /grundlovsdag-2020/success':                      { action: 'promotions/view-promo-success'},
+  'GET /sweden-2020/':                                   { action: 'promotions/sweden-national-day/view-promo'},
+  'GET /sweden-2020/:token':                             { action: 'promotions/create-limited-auth'},
+  'GET /sweden-2020/success':                            { action: 'promotions/view-promo-success'},
+  'GET /sweden-national-day-2020/':                      { action: 'promotions/sweden-national-day/view-promo-alt'},
+  'GET /sweden-national-day-2020/:token':                { action: 'promotions/create-limited-auth'},
+  'GET /sweden-national-day-2020/success':               { action: 'promotions/view-promo-success'},
 
   //PROMOTIONS - REDEEM GIFTS
   'GET /valentines-day-gift/redeem/:code?/:userCode?':   { action: 'promotions/valentines/view-valentines-day-gift-redeem'},
   'GET /valentines-day-gift/redeem/success/:code?':      { action: 'promotions/valentines/view-valentines-day-gift-redeem-success'},
   'GET /redeem-gift/:code?/:userCode?':                  { action: 'redeem/gift-subscription/view-gift-redeem'},
   'GET /redeem-gift/success/:code?':                     { action: 'redeem/gift-subscription/view-gift-redeem-success'},
+
+  //TEACHING
+  'GET /booking':                                        { action: 'view-booking' },
 
   //DICTIONARY
   'GET /dictionary-testing/:query?':                     { action: 'view-dictionary' },
@@ -220,7 +236,10 @@ module.exports.routes = {
   'GET /api/v1/auth/google/callback':                    { controller: 'PassportController', action: 'googleCallback'},
   'GET /api/v1/sso/discourse':                           { action: 'sso/discourse'},
 
-  'GET /sitemap' :                                       { action: 'sitemap'},
+  'GET /sitemap' :                                       { action: 'sitemaps/sitemap-index'},
+  'GET /sitemaps' :                                      { action: 'sitemaps/sitemap-index'},
+  'GET /sitemaps/lessons' :                              { action: 'sitemaps/sitemap-lessons'},
+  'GET /sitemaps/dictionary/:id' :                       { action: 'sitemaps/sitemap-dictionary'},
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
@@ -335,6 +354,8 @@ module.exports.routes = {
   'PUT /api/v1/dashboard/event':                         { action: 'dashboard/put-event' },
 
   //Lesson Routes
+  'GET /api/v1/lessons/get-sitemap':                     { action: 'lessons/get-sitemap' },
+  'GET /api/v1/lessons/get-details':                     { action: 'lessons/get-details' },
   'GET /api/v1/lessons/get-lesson/:lessonId?':           { action: 'lessons/get-lesson' },
   'GET /api/v1/lessons/get-dialogue':                    { action: 'lessons/get-dialogue' },
   'GET /api/v1/lessons/get-vocab':                       { action: 'lessons/get-vocab' },
@@ -359,6 +380,15 @@ module.exports.routes = {
   'GET /api/v1/exercises/results':                       { action: 'exercises/results/get' },
   'POST /api/v1/exercises/results':                      { action: 'exercises/results/post' },
 
+  //Testing Routes
+  'POST /api/v1/testing/results':                        { action: 'testing/put-score',
+                                                          cors: {
+                                                            allowOrigins: '*',
+                                                            allowRequestMethods: 'POST',
+                                                            allowAnyOriginWithCredentialsUnsafe: true
+                                                          }},
+
+
   //VOCABULARY Routes
   'GET /api/v1/vocabulary/words':                        { action: 'vocabulary/words/get-all-words'},
   'GET /api/v1/vocabulary/words/:id':                    { action: 'vocabulary/words/get-word-by-id'},
@@ -377,13 +407,17 @@ module.exports.routes = {
   'POST /api/v1/vocabulary/decks/:id':                   { action: 'vocabulary/decks/update-deck'},
   'DELETE /api/v1/vocabulary/decks/:id':                 { action: 'vocabulary/decks/delete-deck'},
 
+  //PUBLIC VOCAB
+  'GET /api/v1/vocabulary/lists/:listId':                { action: 'vocabulary/words/get-defined-list' },
+
   //Feedback Routes
   'POST /api/v1/feedback/dashboard-feedback':            { action: 'feedback/dashboard-feedback' },
   'GET /api/v1/feedback/dashboard-feedback-all':         { action: 'feedback/dashboard-feedback-all' },
   'GET /api/v1/feedback/dashboard-feedback-web':         { action: 'feedback/dashboard-feedback-web' },
 
   // LOG ROUTES
-  'PUT /api/v1/logs/game-logs':                          { action: 'logs/game-logs' },
+  'PUT /api/v1/logs/game-logs':                          { action: 'logs/put-game-logs' },
+  'PUT /api/v1/logs/custom-logs':                        { action: 'logs/put-custom-logs' },
 
   // Token Routes
   'GET /api/v1/token':                                   { action: 'token/check'},
@@ -416,6 +450,7 @@ module.exports.routes = {
 
   //DICTIONARY
   'GET /api/v1/dictionary/get':                          { action: 'dictionary/get-dictionary-word'},
+  'GET /api/v1/dictionary/get-details':                  { action: 'dictionary/get-details'},
   'GET /api/v1/dictionary/related':                      { action: 'dictionary/get-related-words'},
   'GET /api/v1/dictionary/search/:word':                 { action: 'dictionary/search-word'},
   'GET /api/v1/dictionary/define/:word':                 { action: 'dictionary/define-word'},
