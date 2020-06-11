@@ -62,8 +62,6 @@
     <a class="navbar-brand mr-0" href="/"><img class="logo" alt="ChinesePod Logo" src="/images/brand/brand.svg" width="160px"/></a>
     <div class="navbar-nav flex-row">
       <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/contact">Help</a>
-      <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/corporate"><span class="d-none d-md-inline">For </span>Companies</a>
-      <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/academic-offers"><span class="d-none d-md-inline">For </span>Schools</a>
       <!-- LOGGED-IN NAVIGATION -->
       <% if(me) { %>
         <a class="nav-item nav-link ml-2 ml-md-0 mr-2" href="/pricing">Pricing</a>
@@ -73,6 +71,8 @@
         </div>
       <% } else { %>
         <!-- LOGGED-OUT NAVIGATION -->
+        <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/corporate"><span class="d-none d-md-inline">For </span>Companies</a>
+        <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/academic-offers"><span class="d-none d-md-inline">For </span>Schools</a>
         <a class="nav-item nav-link ml-2 ml-md-0 mr-2" href="/login">Log in</a>
         <div class="form-inline ml-2" >
 <!--          <a class="btn btn-outline-success" href="/pricing">Pricing</a>-->
