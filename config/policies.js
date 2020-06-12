@@ -50,6 +50,8 @@ module.exports.policies = {
   'recap/beta/view-recap-beta-signup': 'is-logged-in',
   'recap/beta/view-recap-beta-feedback': 'is-logged-in',
 
+  'answer/*': 'is-logged-in',
+
   'admin/*': ['is-logged-in', 'is-staff'],
 
   'purchase/paypal/view-paypal-pay': 'is-logged-in',

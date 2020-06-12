@@ -191,6 +191,8 @@ module.exports.routes = {
   '/swagger-old/':                                       '/api-docs-old',
   // '/swagger/':                                           '/api-docs',
 
+  'GET /answer/:questionId/:answer':                     { action: 'answer/put-user-answer' },
+
   //ADMIN PAGES
   //ACCESS VOUCHER CODES
   'GET /admin/access-code-panel':                        {action: 'admin/access-codes/view-access-code-panel'},
