@@ -196,13 +196,13 @@ module.exports.routes = {
   'GET /admin/access-code-panel':                        {action: 'admin/access-codes/view-access-code-panel'},
   'GET /admin/comments':                                 {action: 'admin/comments/view-list-all-comments'},
   'GET /admin/livestream':                               {action: 'admin/view-livestream' },
-  // 'GET /admin/lookup/users':                             { action: 'recap/users-by-current-lesson' }, //TODO REMOVE THIS WHEN SAFE
   'GET /admin/lookup/recap/users':                       { action: 'recap/view-list-users' },
   'GET /admin/lookup/charactercrush/users':              { action: 'charactercrush/view-list-users' },
   'GET /admin/upload/add/:email?':                       { action: 'admin/upload/add-access', skipAssets: false },
   'GET /admin/upload/remove/:email?':                    { action: 'admin/upload/remove-access', skipAssets: false },
   'GET /admin/access/add/:email?':                       { action: 'admin/access/add-access', skipAssets: false },
   'GET /admin/access/remove/:email?':                    { action: 'admin/access/remove-access', skipAssets: false },
+  'GET /admin/secret-recap-submit':                      { action: 'admin/recap/view-add-lessons'},
 
   //MARKETING PAGES
   'GET /marketing/campaign-performance/:code':           {action: 'marketing/view-campaign-performance'},
@@ -325,6 +325,8 @@ module.exports.routes = {
       allowRequestMethods: 'POST',
       allowAnyOriginWithCredentialsUnsafe: true
     }},
+  'PUT /api/v1/recap/ready-lessons':                     {action: 'admin/recap/put-ready-lessons'},
+  'DELETE /api/v1/recap/ready-lessons':                  {action: 'admin/recap/delete-ready-lessons'},
 
   //General Info Routes
   'GET /api/v1/health/ip-info':                          { action: 'health/ip-info' },

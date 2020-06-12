@@ -1,0 +1,52 @@
+<div id="add-lessons" v-cloak class="min-vh-100 bg-gray-lighter py-2">
+
+  <div class="container">
+    <h1 class="headline text-center my-3 pb-3">Add Ready Recap Lessons</h1>
+    <div class="text-center card p-5 col-lg-8 offset-lg-2">
+      <div class="row">
+        <ajax-form class="col-12" action="putReadyLessons" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-errors.sync="formErrors" @submitted="submittedForm()">
+          <div class="card-title">
+            Enter lessons to set as ready. Separate with spaces, commas or semicolons...
+          </div>
+          <div class="form-group">
+            <textarea class="form-control col-12" name="lesson-list" v-model="formData.lessonList" autofocus :disabled="syncing" rows="5"></textarea>
+          </div>
+          <div class="row">
+            <div class="form-group col-6">
+              <ajax-button :syncing="syncing" class="btn-primary btn-lg btn-block">Set Lessons</ajax-button>
+            </div>
+            <div class="col-6">
+              <button @click.prevent="removeAll" class="btn ajax-button btn-danger btn-lg btn-block" :class="[syncingRemoveAll ? 'syncing' : '']">
+                <span class="button-text" v-if="!syncingRemoveAll"><slot name="default">Remove All</slot></span>
+                <span class="button-loader clearfix" v-if="syncingRemoveAll">
+                <slot name="syncing-state">
+                  <div class="loading-dot dot1"></div>
+                  <div class="loading-dot dot2"></div>
+                  <div class="loading-dot dot3"></div>
+                  <div class="loading-dot dot4"></div>
+                </slot>
+              </span>
+              </button>
+            </div>
+          </div>
+
+          <div v-if="cloudError" class="alert alert-danger col-12">
+            Sorry, something went wrong, please check your list and try again.
+          </div>
+        </ajax-form>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <h5>Current Lesson Whitelist</h5>
+          <p v-if="currentWhitelist">
+            {{currentWhitelist}}
+          </p>
+          <p v-else>
+            No lessons
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
