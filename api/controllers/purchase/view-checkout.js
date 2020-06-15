@@ -32,7 +32,9 @@ module.exports = {
 
     let trial = false; let promo = false; let plan = 'premium'; let period = 'monthly'; let promoCode = '';
 
-    if(this.req.param('promo', false)) {
+    sails.log.info(this.req.path);
+
+    if(this.req.path === '/promo-order' || this.req.param('promo', false)) {
       promo = true;
       if (this.req.param('promo')) {
         promoCode = this.req.param('promo').toLowerCase() === 'yes' ? '' : this.req.param('promo').toUpperCase();
