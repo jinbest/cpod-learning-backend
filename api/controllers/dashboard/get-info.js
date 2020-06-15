@@ -20,7 +20,7 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
+    inputs.userId = sails.config.environment === 'development' ? 1026587 : this.req.session.userId;
 
     if (!inputs.userId || typeof inputs.userId === 'undefined') {
       throw 'invalid'
@@ -101,9 +101,9 @@ module.exports = {
           upgradePath: 2, // 3 , 2 , 1,
           prerollAdId: sails.config.custom.prerollAdId,
           prerollAds: sails.config.custom.prerollAds,
-          upgradeLink: sails.config.custom.upgradeLink
+          upgradeLink: sails.config.custom.upgradeLink + (trial ? '' : '?trial=yes')
         };
-        trial = new Date(); //OVERRIDE TRIAL DATE TO FORCE ONLY PREMIUM OPTIONS IN DAS
+        // trial = new Date(); //OVERRIDE TRIAL DATE TO FORCE ONLY PREMIUM OPTIONS IN DAS
       }
 
 
