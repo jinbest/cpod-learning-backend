@@ -14,15 +14,19 @@
             </div>
             <ul class="buttons">
               <li>
-                <a @click="switchBilling('monthly')" class="btn rbtn-blue bill-time" :class="[billingCycle === 'monthly' ? 'active' : '']">Monthly - ${{ pricing[plan].monthly }}</a>
+                <a @click="switchBilling('monthly')" class="btn rbtn-blue bill-time" :class="[billingCycle === 'monthly' ? 'active' : '']">
+                    Billed Monthly - ${{ pricing[plan].monthly }}
+                </a>
               </li>
               <li>
-                <a @click="switchBilling('quarterly')" class="btn rbtn-blue bill-time" :class="[billingCycle === 'quarterly' ? 'active' : '']">Quarterly - ${{ pricing[plan].quarterly }}
-                  <span>{{ pricing[plan].savingQ }}</span></a>
+                <a @click="switchBilling('quarterly')" class="btn rbtn-blue bill-time" :class="[billingCycle === 'quarterly' ? 'active' : '']">
+                    Billed Quarterly - ${{ pricing[plan].quarterly }}
+                  <span>{{ pricing[plan].savingQ }}</span>
+                </a>
               </li>
               <li>
                 <a @click="switchBilling('annually')" class="btn rbtn-blue bill-time" :class="[billingCycle === 'annually' ? 'active' : '']">
-                  Annually - ${{ pricing[plan].annually }}
+                  Billed Annually - ${{ pricing[plan].annually }}
                   <span>{{ pricing[plan].savingA }}</span>
                 </a>
               </li>
@@ -30,7 +34,7 @@
 
             <p v-if="!trial" class="note">When you click Join ChinesePod you will be charged.</p>
 
-            <p v-if="trial" class="note">Don't worry you won't be charged until the end of your 14-day free trial.</p>
+            <p v-if="trial" class=" font-weight-bold">Don't worry you won't be charged until the end of your 14-day free trial.</p>
 
           </li>
           <li>

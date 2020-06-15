@@ -19,7 +19,7 @@ module.exports = {
   fn: async function () {
 
     // Respond with view.
-    let trial = false;
+    let trial = true;
     let showFree = true;
     if(this.req.param('trial', false) || this.req.session.trial ) {
       trial = true
@@ -34,11 +34,11 @@ module.exports = {
     const geoip = require('geoip-country');
     const geo = geoip.lookup(this.req.ip);
 
-    if (!geo || !geo.country){
+    if (true) { // !geo || !geo.country){
 
-      trial = false;
-      delete this.req.session.trial;
-      showFree = false;
+      // trial = false;
+      // delete this.req.session.trial;
+      // showFree = false;
 
     } else if (sails.config.custom.coreMarkets.includes(geo.country) && !sails.config.custom.coreFreeMonths.includes(currentDate.getMonth())) {
 

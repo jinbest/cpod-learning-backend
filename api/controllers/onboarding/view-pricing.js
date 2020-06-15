@@ -6,6 +6,12 @@ module.exports = {
 
   description: 'Display "Pricing" page.',
 
+  inputs: {
+    trial: {
+      type: 'boolean'
+    }
+  },
+
 
   exits: {
 
@@ -16,37 +22,40 @@ module.exports = {
   },
 
 
-  fn: async function () {
+  fn: async function (inputs) {
 
     // Respond with view.
     let trial = false;
     let showFree = true;
-    if(this.req.param('trial', false) || this.req.session.trial ) {
+    if(inputs.trial || this.req.param('trial', false) || this.req.session.trial ) {
       trial = true
     }
+
+    sails.log.info(trial);
+
     if(this.req.me && this.req.me.trial) {
-      sails.log.info(this.req.me);
       trial = false;
       delete this.req.session.trial
     }
+    sails.log.info(trial);
 
     const currentDate = new Date();
     const geoip = require('geoip-country');
     const geo = geoip.lookup(this.req.ip);
 
-    if (!geo || !geo.country){
+    if (true) { //!geo || !geo.country){ //TODO temporarily removal of forced geo check
+
+      // trial = false;
+      // delete this.req.session.trial;
+      // showFree = false;
+
+    } else if (sails.config.custom.coreMarkets.includes(geo.country) && sails.config.custom.coreFreeMonths.includes(currentDate.getMonth())) {
 
       trial = false;
       delete this.req.session.trial;
       showFree = false;
 
-    } else if (sails.config.custom.coreMarkets.includes(geo.country) && !sails.config.custom.coreFreeMonths.includes(currentDate.getMonth())) {
-
-      trial = false;
-      delete this.req.session.trial;
-      showFree = false;
-
-    } else if (!sails.config.custom.coreMarkets.includes(geo.country) && !sails.config.custom.nonCoreFreeMonths.includes(currentDate.getMonth())) {
+    } else if (!sails.config.custom.coreMarkets.includes(geo.country) && sails.config.custom.nonCoreFreeMonths.includes(currentDate.getMonth())) {
 
       trial = false;
       delete this.req.session.trial;
@@ -54,6 +63,7 @@ module.exports = {
 
     }
 
+    sails.log.info(trial);
 
     return {
       trial: trial,
