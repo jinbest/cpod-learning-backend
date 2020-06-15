@@ -25,19 +25,16 @@ module.exports = {
   fn: async function (inputs) {
 
     // Respond with view.
-    let trial = false;
+    let trial = true;
     let showFree = true;
     if(inputs.trial || this.req.param('trial', false) || this.req.session.trial ) {
       trial = true
     }
 
-    sails.log.info(trial);
-
     if(this.req.me && this.req.me.trial) {
       trial = false;
       delete this.req.session.trial
     }
-    sails.log.info(trial);
 
     const currentDate = new Date();
     const geoip = require('geoip-country');
@@ -62,8 +59,6 @@ module.exports = {
       showFree = false;
 
     }
-
-    sails.log.info(trial);
 
     return {
       trial: trial,
