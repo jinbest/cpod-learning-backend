@@ -81,21 +81,20 @@ module.exports = {
       limit: 100
     })
       .eachRecord((lesson) => {
-        lesson.introduction = sanitizeHtml(lesson.introduction, sanitizeOptions);
-
-        feed.addItem({
-          title: lesson.title,
-          id: `https://www.chinesepod.com/lesson/${lesson.slug}`,
-          link: `https://www.chinesepod.com/lesson/${lesson.slug}`,
-          image: `https://s3contents.chinesepod.com/${lesson.type === 'extra' ? 'extra/' : ''}${lesson.id}/${lesson.hash_code}/${lesson.image}`,
-          description: lesson.introduction,
-          content: lesson.introduction,
-          author: prepareContributors(lesson.hosts),
-          date: lesson.publication_timestamp
-        });
+        if (lesson) {
+          lesson.introduction = sanitizeHtml(lesson.introduction, sanitizeOptions);
+          feed.addItem({
+            title: lesson.title,
+            id: `https://www.chinesepod.com/lesson/${lesson.slug}`,
+            link: `https://www.chinesepod.com/lesson/${lesson.slug}`,
+            image: `https://s3contents.chinesepod.com/${lesson.type === 'extra' ? 'extra/' : ''}${lesson.id}/${lesson.hash_code}/${lesson.image}`,
+            description: lesson.introduction,
+            content: lesson.introduction + lesson.transcription1 + lesson.transcription2,
+            author: prepareContributors(lesson.hosts),
+            date: lesson.publication_timestamp
+          });
+        }
       });
-
-    feed.addItem()
 
     switch (inputs.feedType) {
 
