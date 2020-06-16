@@ -23,6 +23,16 @@ module.exports = {
 
   fn: async function (inputs) {
 
+    const sanitizeHtml = require('sanitize-html');
+
+    const sanitizeOptions = {
+      allowedTags: ['b', 'i', 'em', 'strong', 'a', 'p', 'image'],
+      allowedAttributes: {
+        a: [ 'href', 'name', 'target'],
+        image: ['src', 'alt', 'width', 'height'],
+      }
+    };
+
     const Feed = require('feed').Feed;
 
     const feed = new Feed({
@@ -71,17 +81,21 @@ module.exports = {
       limit: 100
     })
       .eachRecord((lesson) => {
+        lesson.introduction = sanitizeHtml(lesson.introduction, sanitizeOptions);
+
         feed.addItem({
           title: lesson.title,
           id: `https://www.chinesepod.com/lesson/${lesson.slug}`,
           link: `https://www.chinesepod.com/lesson/${lesson.slug}`,
           image: `https://s3contents.chinesepod.com/${lesson.type === 'extra' ? 'extra/' : ''}${lesson.id}/${lesson.hash_code}/${lesson.image}`,
-          description: lesson.description,
-          content: lesson.description,
+          description: lesson.introduction,
+          content: lesson.introduction,
           author: prepareContributors(lesson.hosts),
           date: lesson.publication_timestamp
         });
       });
+
+    feed.addItem()
 
     switch (inputs.feedType) {
 
