@@ -39,7 +39,8 @@ module.exports = {
     userVocab.forEach(vocab => {
       if(vocab.vocabulary_id && vocab.vocabulary_id.audio) {
         promises.push(
-          AmsVocabulary.findOne({source_mp3: vocab.vocabulary_id.audio.split('source/').pop()})
+          AmsVocabulary.find({source_mp3: vocab.vocabulary_id.audio.split('source/').pop()}).limit(1)
+          .then(data => {return data[0]})
         )
       }
     })
