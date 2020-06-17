@@ -342,6 +342,7 @@ module.exports = {
       if (response.success && response.data) {
         switch (response.data.type) {
           case 0:
+            // Single Use % Discounts
             discount = (parseFloat(response.data.value) / 100) * plans[inputs.plan][inputs.billingCycle].price;
             coupon = await stripe.coupons.create({
               percent_off: parseFloat(response.data.value),
@@ -349,6 +350,7 @@ module.exports = {
             });
             break;
           case 1:
+            // Single Use $ Discounts
             discount = parseFloat(response.data.value);
             coupon = await stripe.coupons.create({
               amount_off: parseFloat(response.data.value) * 100, // Integer to the cent
@@ -357,10 +359,11 @@ module.exports = {
             });
             break;
           case 2:
-            //TODO ADDING THIS FOR FUTURE USES - MIGRATE STUDENT SUBSCRIPTION TO THIS
+            // Permanent % Discounts
+            discount = (parseFloat(response.data.value) / 100) * plans[inputs.plan][inputs.billingCycle].price;
             coupon = await stripe.coupons.create({
-              amount_off: parseFloat(response.data.value),
-              duration: 'repeating'
+              percent_off: parseFloat(response.data.value),
+              duration: 'forever'
             });
             break;
           default:
