@@ -20,7 +20,7 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    inputs.userId = sails.config.environment === 'development' ? 1026587 : this.req.session.userId;
+    inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId; // alt 1026587
 
     if (!inputs.userId || typeof inputs.userId === 'undefined') {
       throw 'invalid'

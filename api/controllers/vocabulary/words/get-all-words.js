@@ -66,9 +66,9 @@ module.exports = {
         try {
           audioUrlCN = vocab.vocabulary_id.audio.slice(0, 4) === 'http' ? vocab.vocabulary_id.audio : lessonRoot + vocab.vocabulary_id.audio;
           let params = audioUrlCN.split('source/');
-          sails.log.info(amsVocab)
+
           let amsObj = amsVocab.find(ams => ams && ams.source_mp3 === params[params.length - 1])
-          sails.log.info(amsObj);
+
           if(amsObj && amsObj.target_mp3) {
             audioUrlEN = params[0] + 'translation/' + amsObj.target_mp3
           }

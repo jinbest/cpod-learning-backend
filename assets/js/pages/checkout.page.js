@@ -13,6 +13,8 @@ parasails.registerPage('checkout', {
     promoShow: false,
     promoToggle: false,
     promoLimit: 0,
+    nonRecurring: false,
+    permanentDiscount: false,
     pricing:{},
     formData: {
       fName: '',
@@ -128,7 +130,7 @@ parasails.registerPage('checkout', {
       // this.promoToggle = false;
     },
     applyPromoCode: async function () {
-      this.syncing = true;
+      this.promoSyncing = true;
       this.formErrors = {};
       if (this.formData.promoCode && this.promoLimit < 6) {
         // Check code for validity
@@ -146,26 +148,38 @@ parasails.registerPage('checkout', {
               if (info.discount.type === 0) {
                 // Percentage Discount
                 this.pricing.discount = (parseFloat(info.discount.value) / 100) * this.pricing[info.discount.plan][info.discount.billingCycle];
-              }
-              if (info.discount.type === 1) {
+                this.permanentDiscount = false;
+              } else if (info.discount.type === 1) {
                 // Fixed Price Discount
                 this.pricing.discount = parseFloat(info.discount.value);
+                this.permanentDiscount = false;
+              } else if (info.discount.type === 2) {
+                // Percentage PERMANENT Discount
+                this.pricing.discount = (parseFloat(info.discount.value) / 100) * this.pricing[info.discount.plan][info.discount.billingCycle];
+                this.permanentDiscount = true;
+              } else if (info.discount.type === 3) {
+                // Percentage PERMANENT Discount
+                this.pricing.discount = parseFloat(info.discount.value);
+                this.permanentDiscount = true;
               }
             } else {
               this.formErrors.promoCode = true;
               this.promoLimit += 1;
             }
-            this.syncing = false;
+            this.promoSyncing = false;
           })
           .catch((e) => {
-            console.log(e.responseInfo);
+            this.permanentDiscount = false;
+            this.pricing.discount = 0;
             this.formErrors.promoCode = true;
             this.promoLimit += 1;
-            this.syncing = false;
+            this.promoSyncing = false;
           })
       } else {
+        this.permanentDiscount = false;
+        this.pricing.discount = 0;
         this.formErrors.promoCode = true;
-        this.syncing = false;
+        this.promoSyncing = false;
       }
     },
     loginForm: async function() {
