@@ -366,6 +366,15 @@ module.exports = {
               duration: 'forever'
             });
             break;
+          case 3:
+            // Permanent $ Discounts
+            discount = parseFloat(response.data.value);
+            coupon = await stripe.coupons.create({
+              amount_off: parseFloat(response.data.value) * 100, // Integer to the cent
+              currency: 'USD',
+              duration: 'forever'
+            });
+            break;
           default:
             await sails.helpers.mailgun.sendHtmlEmail.with({
               htmlMessage: `
