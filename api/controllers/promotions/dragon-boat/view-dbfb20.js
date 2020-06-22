@@ -29,7 +29,7 @@ module.exports = {
     // Respond with view.
     return this.res.view('pages/promotions/dragon-boat/dbfb20',{
       layout: 'layouts/layout-promo',
-      promoUrl: `https://www.chinesepod.com/upgrade/${promoCode}`
+      promoUrl: `/dragon-boat/${promoCode}`
     });
 
   }
