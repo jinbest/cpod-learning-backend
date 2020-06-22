@@ -223,12 +223,15 @@ parasails.registerPage('promo' +
             this.promoSyncing = false;
           })
           .catch((e) => {
+
+            this.permanentDiscount = false;
             this.pricing.discount = 0;
             this.formErrors.promoCode = true;
             this.promoLimit += 1;
             this.promoSyncing = false;
           })
       } else {
+        this.permanentDiscount = false;
         this.pricing.discount = 0;
         this.formErrors.promoCode = true;
         this.promoSyncing = false;

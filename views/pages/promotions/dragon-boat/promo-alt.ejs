@@ -3,11 +3,11 @@
     <div class="container">
       <div class="row">
         <div class="col-12 mb-2">
-          <img class="img-fluid w-100" src="/images/promotions/dragon_boat_header.jpg" alt="PROMOTION BANNER">
+          <img class="img-fluid w-100" src="/images/promotions/dragon_boat_banner_top.png" alt="PROMOTION BANNER">
         </div>
         <div class="col-12 my-5 text-center">
           <h2 class="">
-            At ChinesePod we're celebrating Dragon Boat festival with great discounts for our Annual and Quarterly Premium Subscriptions!
+            At ChinesePod we're celebrating Dragon Boat festival with great discounts for our Premium Subscriptions!
           </h2>
         </div>
 
@@ -24,9 +24,9 @@
 
                     <div class="basic-info">
                       <div class="row">
-<!--                        <div class="pt-2 col-lg-4 col-sm-6">-->
-<!--                          <button class="btn btn-block py-3 text-wrap" :class="[billingCycle === 'monthly' ? 'btn-promo-active' : 'btn-promo-inactive']" @click.prevent="switchBilling('monthly')"><span class="text-uppercase">Monthly</span><br/> Originally <del>${{pricing['premium']['monthly']}}</del> and now for <span class="font-weight-bold">${{ (Math.round((pricing['premium']['monthly'] * 0.75) * 100) / 100).toFixed(2) }}</span></button>-->
-<!--                        </div>-->
+                        <div class="pt-2 col-lg-4 col-sm-6">
+                          <button class="btn btn-block py-3 text-wrap" :class="[billingCycle === 'monthly' ? 'btn-promo-active' : 'btn-promo-inactive']" @click.prevent="switchBilling('monthly')"><span class="text-uppercase">Monthly</span><br/> Originally <del>${{pricing['premium']['monthly']}}</del> and now for <span class="font-weight-bold">${{ bannerPrices['monthly'] }}</span></button>
+                        </div>
                         <div class="pt-2 col-lg-4 col-sm-6">
                           <button class="btn btn-block py-3 text-wrap" :class="[billingCycle === 'quarterly' ? 'btn-promo-active' : 'btn-promo-inactive']" @click.prevent="switchBilling('quarterly')"><span class="text-uppercase">3 MONTHS</span><br/> Originally <del>${{pricing['premium']['quarterly']}}</del> and now for <span class="font-weight-bold">${{ bannerPrices['quarterly'] }}</span></button>
                         </div>
