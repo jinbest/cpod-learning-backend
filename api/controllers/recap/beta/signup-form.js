@@ -43,7 +43,7 @@ module.exports = {
     if (!voucher) {
       voucher = await Vouchers.create({
         voucher_code: await sails.helpers.strings.random('url-friendly').slice(0,10).toUpperCase(),
-        product_id: 2,
+        product_id: 18,
         expiry_date: expiry,
       })
         .intercept('E_UNIQUE', () => {sails.hooks.bugsnag.notify('Voucher already exists')})
