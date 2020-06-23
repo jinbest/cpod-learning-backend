@@ -15,18 +15,18 @@
             <ul class="buttons">
               <li>
                 <a @click="switchBilling('monthly')" class="btn rbtn-blue bill-time" :class="[billingCycle === 'monthly' ? 'active' : '']">
-                    Billed Monthly - ${{ pricing[plan].monthly }}
+                    Monthly - ${{ pricing[plan].monthly }}
                 </a>
               </li>
               <li>
                 <a @click="switchBilling('quarterly')" class="btn rbtn-blue bill-time" :class="[billingCycle === 'quarterly' ? 'active' : '']">
-                    Billed Quarterly - ${{ pricing[plan].quarterly }}
+                    3 Months - ${{ pricing[plan].quarterly }}
                   <span>{{ pricing[plan].savingQ }}</span>
                 </a>
               </li>
               <li>
                 <a @click="switchBilling('annually')" class="btn rbtn-blue bill-time" :class="[billingCycle === 'annually' ? 'active' : '']">
-                  Billed Annually - ${{ pricing[plan].annually }}
+                  12 Months - ${{ pricing[plan].annually }}
                   <span>{{ pricing[plan].savingA }}</span>
                 </a>
               </li>
@@ -105,9 +105,16 @@
               You will be charged <b>
                 <span class="price-switch total-amount">${{ pricing[plan][billingCycle] - pricing.discount }} {{ billingCycle }}</span>
               </b> starting today.</p>
-            <p v-if="!trial && pricing.discount">
+            <p v-else-if="!trial && pricing.discount && nonRecurring">
+              You will be charged <span class="price-switch total-amount font-weight-bold">${{ (Math.round((pricing[plan][billingCycle] - pricing.discount) * 100) / 100).toFixed(2) }} today</span>.
+              This is a non-recurring subscription.</p>
+            <p v-else-if="!trial && pricing.discount && !nonRecurring  && !permanentDiscount">
               You will be charged <span class="price-switch total-amount font-weight-bold">${{ (Math.round((pricing[plan][billingCycle] - pricing.discount) * 100) / 100).toFixed(2) }} today</span>
-                 and <span class="price-switch total-amount font-weight-bold">${{ pricing[plan][billingCycle] }} {{ billingCycle }}</span> afterwards.</p>
+              and <span class="price-switch total-amount font-weight-bold">${{ pricing[plan][billingCycle] }} {{ billingCycle }}</span> afterwards.
+              You can cancel at any time.</p>
+            <p v-else-if="!trial && pricing.discount && !nonRecurring && permanentDiscount">
+              You will be charged <span class="price-switch total-amount font-weight-bold">${{ (Math.round((pricing[plan][billingCycle] - pricing.discount) * 100) / 100).toFixed(2) }} today</span>.
+              This is a <strong>permanent discount on your subscription</strong> and will be applied to your future payments.</p>
             <div v-if="promoShow">
               <p class="note">Do you have a Promo Code? <a @click="promoToggle = !promoToggle" class="ipc">Apply it here.</a>
             </div>
