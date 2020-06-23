@@ -96,23 +96,23 @@
               <span v-if="needsAccount" class="number">4</span>
               <h3>Your payment information</h3>
             </div>
-            <p v-if="trial">Your card will not be charged for 14 days. If you cancel before then, your card won’t be charged.</br>
+            <p v-if="trial">Your card will not be charged for 14 days. If you cancel before then, your card won’t be charged.<br/>
               You will be charged <b>
                 <span class="price-switch total-amount">${{ pricing[plan][billingCycle] }} {{ billingCycle }}</span>
               </b> when your trial ends.</p>
 
-            <p v-if="!trial && !pricing.discount">
+            <p v-else-if="!pricing.discount">
               You will be charged <b>
                 <span class="price-switch total-amount">${{ pricing[plan][billingCycle] - pricing.discount }} {{ billingCycle }}</span>
               </b> starting today.</p>
-            <p v-else-if="!trial && pricing.discount && nonRecurring">
+            <p v-else-if="nonRecurring">
               You will be charged <span class="price-switch total-amount font-weight-bold">${{ (Math.round((pricing[plan][billingCycle] - pricing.discount) * 100) / 100).toFixed(2) }} today</span>.
               This is a non-recurring subscription.</p>
-            <p v-else-if="!trial && pricing.discount && !nonRecurring  && !permanentDiscount">
+            <p v-else-if="!permanentDiscount">
               You will be charged <span class="price-switch total-amount font-weight-bold">${{ (Math.round((pricing[plan][billingCycle] - pricing.discount) * 100) / 100).toFixed(2) }} today</span>
               and <span class="price-switch total-amount font-weight-bold">${{ pricing[plan][billingCycle] }} {{ billingCycle }}</span> afterwards.
               You can cancel at any time.</p>
-            <p v-else-if="!trial && pricing.discount && !nonRecurring && permanentDiscount">
+            <p v-else-if="permanentDiscount">
               You will be charged <span class="price-switch total-amount font-weight-bold">${{ (Math.round((pricing[plan][billingCycle] - pricing.discount) * 100) / 100).toFixed(2) }} today</span>.
               This is a <strong>permanent discount on your subscription</strong> and will be applied to your future payments.</p>
             <div v-if="promoShow">
@@ -122,7 +122,7 @@
             <div v-show="promoToggle" class="row promotion-code">
               <div class="col-lg-4 col-sm-4">
                 <label for="promotion_code">Promotion Code</label>
-                <input type="text" id="promotionCode" name="promoCode"  :class="[formErrors.promoCode ? 'is-invalid' : '']" placeholder="Promotion Code" v-model.trim="formData.promoCode">
+                <input type="text" id="promotionCode" name="promoCode"  :class="[formErrors.promoCode ? 'is-invalid' : '']" placeholder="Promotion Code" v-model.trim="formData.promoCode" :disabled="pricing.discount > 0">
                 <div v-if="formErrors.promoCode && promoLimit < 6" class="alert alert-warning alert-dismissible fade show" role="alert">
                   <strong>Oh No!</strong>  Unfortunately this is not a valid code.
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -137,41 +137,18 @@
                 </div>
               </div>
               <div class="col-lg-4 col-sm-4 mt-sm-4">
-                <a @click="applyPromoCode" class="btn apply-pc-btn ajax-button mt-2" :class="[syncing ? 'syncing' : '', pricing.discount ? ['rbtn', 'disabled'] : 'rbtn-blue']">
-                  <span class="button-text" v-if="!syncing && !pricing.discount"><slot name="default">Apply</slot></span>
-                  <span class="button-loader clearfix" v-if="syncing">
+                <a @click="applyPromoCode" class="btn apply-pc-btn ajax-button mt-2" :class="[promoSyncing ? 'syncing' : '', pricing.discount ? ['rbtn', 'disabled'] : 'rbtn-blue']">
+                  <span class="button-text" v-if="!promoSyncing && !pricing.discount"><slot name="default">Apply</slot></span>
+                  <span class="button-loader clearfix" v-if="promoSyncing">
                     <slot name="syncing-state">Applying...</slot>
                   </span>
-                  <span class="button-text" v-if="!syncing && pricing.discount"><slot name="default"><i>Applied</i></slot></span>
+                  <span class="button-text" v-if="!promoSyncing && pricing.discount"><slot name="default"><i>Applied</i></slot></span>
                 </a>
-                <a v-show="pricing.discount" @click="formData.promoCode = ''; pricing.discount = 0" class="btn rbtn-red apply-pc-btn mt-2">
+                <a v-show="pricing.discount" @click="clearPromo()" class="btn rbtn-red apply-pc-btn mt-2">
                   <span class="button-text"><slot name="default">Clear</slot></span>
                 </a>
               </div>
             </div>
-
-<!--            <div class="payment-content-paypal">-->
-<!--              <div class="col-12 col-md-4">-->
-<!--                <button class="btn btn-lg btn-block btn-warning" :disabled="syncing"  @click.prevent="paypalCheckout()">-->
-<!--                  <div class="col-12">-->
-<!--                    <img class="img-fluid mx-auto d-block" src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_100x26.png" alt="PayPal Logo">-->
-<!--                  </div>-->
-<!--                </button>-->
-<!--              </div>-->
-<!--              <div class="col-12 my-2 py-2">-->
-<!--                <div class="row">-->
-<!--                  <div class="col-5">-->
-<!--                    <hr/>-->
-<!--                  </div>-->
-<!--                  <div class="col-2 text-center font-weight-bold">-->
-<!--                    or-->
-<!--                  </div>-->
-<!--                  <div class="col-5">-->
-<!--                    <hr/>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
 
             <div class="form-group clearfix">
               <ul class="cards">
@@ -224,7 +201,7 @@
             <div class="col-12 col-md-4">
               <ajax-button id="cc-submit-button" :syncing="syncing" class="btn-block rbtn-blue payment-content-stripe">Join ChinesePod</ajax-button>
             </div>
-            </br>
+            <br/>
           </li>
         </ul>
       </ajax-form>
@@ -258,26 +235,30 @@
   </modal>
 
   <modal class="loginModal modal fade" v-if="modal==='loginModal'" @close="modal = ''" v-cloak>
-    <div class="container">
+    <div class="modal-header">
       <h2 class="text-center">Seems you already have account with us. Please sign in below.</h2>
-      <div class="login-form-container">
-        <hr/>
-        <ajax-form action="login" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-errors.sync="formErrors" @submitted="loginForm()">
-          <div class="form-group">
-            <input type="email" class="form-control" placeholder="Email address" :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress" autocomplete="email" focus-first>
-            <div class="invalid-feedback" v-if="formErrors.emailAddress">Please provide a valid email address.</div>
-          </div>
-          <div class="form-group">
-            <input type="password" class="form-control" placeholder="Password" :class="[formErrors.password ? 'is-invalid' : '']" v-model.trim="formData.password" autocomplete="current-password">
-            <div class="invalid-feedback" v-if="formErrors.password">Please enter your password.</div>
-          </div>
-          <p class="text-danger" v-if="cloudError==='badCombo'"><small>The credentials you entered are not associated with an account. Please check your email and/or password and try again.</small></p>
-          <p class="text-danger" v-else-if="cloudError"><small>An error occurred while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</small></p>
-          <div class="form-group">
-            <ajax-button :syncing="syncing" class="btn-dark btn-lg btn-block">Sign in</ajax-button>
-          </div>
-        </ajax-form>
-        <p class="text-center"><a href="/password/forgot" target="_blank">Forgot your password?</a></p>
+      <button type="button" class="modal-close-button" data-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-content">
+      <div class="col-12 col-md-8 offset-md-2">
+        <div class="login-form-container">
+          <ajax-form action="login" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-errors.sync="formErrors" @submitted="loginForm()">
+            <div class="form-group">
+              <input type="email" class="form-control" placeholder="Email address" :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress" autocomplete="email" focus-first>
+              <div class="invalid-feedback" v-if="formErrors.emailAddress">Please provide a valid email address.</div>
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" placeholder="Password" :class="[formErrors.password ? 'is-invalid' : '']" v-model.trim="formData.password" autocomplete="current-password">
+              <div class="invalid-feedback" v-if="formErrors.password">Please enter your password.</div>
+            </div>
+            <p class="text-danger" v-if="cloudError==='badCombo'"><small>The credentials you entered are not associated with an account. Please check your email and/or password and try again.</small></p>
+            <p class="text-danger" v-else-if="cloudError"><small>An error occurred while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</small></p>
+            <div class="form-group">
+              <ajax-button :syncing="syncing" class="btn-dark btn-lg btn-block">Sign in</ajax-button>
+            </div>
+          </ajax-form>
+          <p class="text-center"><a href="/password/forgot" target="_blank">Forgot your password?</a></p>
+        </div>
       </div>
     </div>
   </modal>

@@ -12,6 +12,7 @@ parasails.registerPage('checkout', {
     enablePaypal: false,
     promoShow: false,
     promoToggle: false,
+    promoSyncing: false,
     promoLimit: 0,
     nonRecurring: false,
     permanentDiscount: false,
@@ -181,6 +182,10 @@ parasails.registerPage('checkout', {
         this.formErrors.promoCode = true;
         this.promoSyncing = false;
       }
+    },
+    clearPromo () {
+      this.formData.promoCode = '';
+      this.pricing.discount = 0
     },
     loginForm: async function() {
       this.needsAccount = false;
