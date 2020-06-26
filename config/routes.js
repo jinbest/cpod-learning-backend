@@ -35,6 +35,7 @@ module.exports.routes = {
   'GET /corporate':                                      { action:   'view-corporate' },
   'GET /academic-offers':                                { action:   'view-academic' },
   'GET /why-choose-us':                                  { action:   'view-why-choose-us' },
+  'GET /start-learning-chinese':                         { action:   'view-start-learning-chinese' },
   'GET /login':                                          { action: 'entrance/view-login' },
   'GET /password/forgot':                                { action: 'entrance/view-forgot-password' },
   'GET /password/new':                                   { action: 'entrance/view-new-password' },

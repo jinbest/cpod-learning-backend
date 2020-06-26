@@ -1,0 +1,291 @@
+<div id="why-choose-us" v-cloak>
+  <section id="why-choose-us-hero">
+    <div class="container">
+      <p class="hidden-xs">&nbsp;</p>
+      <div class="row">
+        <div class="col-12 col-md-8 offset-md-2 text-center">
+          <h1 class="text-center roboto-slab">Start Learning Chinese</h1>
+          <ul class="wcu-bullets">
+            <li><span class="fa fa-check"></span> &nbsp;No Boring Textbooks</li>
+            <li><span class="fa fa-check"></span> &nbsp;On-Demand Content</li>
+            <li><span class="fa fa-check"></span> &nbsp;Over 4000 Lessons</li>
+            <li><span class="fa fa-check"></span> &nbsp;All the Way from Newbie to Advanced</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="wcu-wic" class="bg-white lpt-50-spt-20 lpb-50-spb-20">
+    <div class="container">
+      <h2 class="text-center">What is ChinesePod</h2>
+      <h3 class="text-center">Not your typical Mandarin online course.</h3>
+      <div class="above-sm-flex">
+        <div class="wcu-col col-sm-4" v-for="(item, index) in aboutList" :key="index">
+          <p class="text-center">
+            <img :src="`/img/why-choose-us/${item.imgName}`" class="img-responsive center-block" alt="">
+          </p>
+          <h4 class="roboto-slab">{{ item.title }}</h4>
+          <p class="wc_desc">{{ item.description }}</p>
+          <p><a href="#" class="read-more">Read More <i class="fa fa-caret-down"></i></a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="wcu-wic2">
+    <div class="above-sm-flex">
+      <div class="wcu-col col-sm-4 lpt-50-spt-20 lpb-50-spb-20 lplr-30-lplr-15 hl-white" v-for="(item, index) in benefitList" :style="`background: ${item.backgroundColor}`">
+        <h4 class="text-center fw-light">{{ item.title }}</h4>
+        <p class="text-center">
+          <img :src="`/img/why-choose-us/${item.imgName}`" class="img-responsive center-block" alt="">
+        </p>
+
+        <p class="wc_desc">{{ item.description }}</p>
+        <p><a href="#" class="read-more hl-white">Read More <i class="fa fa-caret-down"></i></a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white text-center lpt-50-spt-20 lpb-50-spb-20">
+    <a href="/signup" class="yellow-btn sign-up-btn">Create an Account Today</a>
+  </section>
+
+  <section class="lpt-50-spt-20 lpb-50-spb-20">
+    <div class="container">
+      <h2 class="text-center">Our Approach</h2>
+      <h3 class="text-center">Our content is different, quirky, and fun.</h3>
+      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel" v-for="(item, index) in approachList" :key="index">
+          <div class="panel-heading" role="tab" :id="`heading${index}`">
+            <h4 class="panel-title">
+              <a role="button" data-toggle="collapse" data-parent="#accordion" :href="`#collapse${index}`" aria-expanded="true" :aria-controls="`collapse${index}`">
+                {{ item.title }} <i class="fa fa-caret-down"></i>
+              </a>
+            </h4>
+          </div>
+          <div :id="`collapse${index}`" class="panel-collapse collapse" role="tabpanel" :aria-labelledby="`heading${index}`">
+            <div class="panel-body" v-html="item.description"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="our-system" class="lpt-50-spt-20 lpb-50-spb-20 hl-white">
+    <h2 class="text-center">Our System</h2>
+    <h3 class="text-center">Learn situational Mandarin with a click of a button.</h3>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-10 offset-sm-1 lpt-50-spt-20 lpb-50-spb-20">
+          <p>ChinesePod’s library of over 4000+ audio & video Mandarin lessons is the largest you will find… anywhere. Our system works by training through mass input. Each lesson begins by going over the dialogue three times. Next up, we chunk each sentence into translations, with each individual translation repeated three times. Following this introduction to the dialogue, we delve into the core lesson, where we explain the grammatical structure behind the dialogue. By the end of the lesson, you have a clear idea of how and why the dialogue is structured as such, and have heard the sentences at least twenty times, giving you ample opportunity to have it imprinted in your mind.</p>
+        </div>
+      </div>
+    </div>
+    <div class="above-sm-flex">
+      <div class="p1-cont wcu-col col-sm-6 lpt-50-spt-20 lpb-50-spb-20 lplr-30-lplr-15">
+        <p>Once you are finished with a lesson, the lesson’s page gives you enriching review opportunities, including vocabulary, sentence reviews, and expansions, where we give further examples of the lessons grammatical structure and vocabulary in different context. Furthermore, our community is made up of active and passionate learners and each lesson’s discussion board is filled with lively conversation about the lessons content.</p>
+      </div>
+      <div class="p2-cont wcu-col col-sm-6 lpt-50-spt-20 lpb-50-spb-20 lplr-30-lplr-15">
+        <p>Studying with a textbook’s rigid structure is de-motivating: you’re going to stick with learning Mandarin when you have the freedom to study what you want in a short, reliable, and proven format. Join the community of over one million students who have ditched the textbook and used ChinesePod to study Mandarin… on their own terms.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="levels" class="lpt-50-spt-20 lpb-50-spb-20 bg-white">
+    <h2 class="text-center">Academic Levels</h2>
+    <div class="container">
+        <p>Beginner, Intermediate, & Advanced? Nope.it’s not as simple as that! At ChinesePod we understand that finding the right entry point for your Mandarin Chinese studies can be confusing. Learning a language, whether it be to simply learn a few survival phrases or something you plan on building a lifelong relationship with, requires hard work and commitment. No one wants to be thrown in the deep end or be made to suffer through trite material they have already mastered. Our content is more aptly organised into five levels. As you progress through the levels, the English and Chinese ratio adjusts accordingly.</p>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <ul class="above-sm-flex">
+          <li v-for="(item, index) in academicList" :key="index">
+            <p class="reset-margin"><img :src="`/img/why-choose-us/${item.id}.png`" class="img-responsive center-block" :alt="item.id"></p>
+            <p class="text-center util-mb-20"><a href="#" class="btn btn-red-border btn-rounded-sides" data-toggle="modal" :data-target="`#modal-${item.id}`">Learn More</a></p>
+          </li>
+        </ul>
+
+        <div v-for="(item, index) in academicList" :key="index" class="modal fade" tabindex="-1" role="dialog" :id="`modal-${item.id}`">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <p>{{ item.description }}</p>
+                <p><a :href="item.url">Go to {{ item.id }} lessons.</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <hr>
+      <div class="sample-videos-cont row">
+        <div class="col-sm-4">
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe width="100%" src="https://www.youtube.com/embed/QQLJ-w1-oOE?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe width="100%" src="https://www.youtube.com/embed/ggPbyZN96ss?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe width="100%" src="https://www.youtube.com/embed/2UFxBmicBc4?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="text-center lpt-50-spt-20 lpb-50-spb-20">
+    <a href="/signup" class="yellow-btn sign-up-btn">Create an Account Today</a>
+  </section>
+
+  <section id="tools" class="lpt-50-spt-20 lpb-50-spb-20">
+    <h2 class="text-center hl-white">Tools</h2>
+    <h3 class="text-center hl-white">Take advantage of these tools to maximise the power of ChinesePod.</h3>
+    <div class="above-sm-flex">
+      <div class="wcu-col col-sm-3 lpt-50-spt-20 lpb-50-spb-20 lplr-30-lplr-15" v-for="(item, index) in toolsList" :key="index">
+        <p class="text-center">
+          <img :src="`/img/why-choose-us/${item.id}.png`" class="img-responsive center-block" alt="item.id">
+        </p>
+        <h4 class="text-center hl-white">{{ item.id }}</h4>
+        <div class="desc util-mb-20 hl-white">{{ item.excerpt }}</div>
+        <p class="text-center"><a href="#" class="btn btn-white btn-rounded-sides" data-toggle="modal" :data-target="`#modal-tool-${item.id}`">Read More</a></p>
+
+        <div class="modal fade" tabindex="-1" role="dialog" :id="`modal-tool-${item.id}`">
+          <div class="modal-dialog" :class="item.modal_size !== 1 ? `modal-${item.modal_size}` : ''" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div v-html="item.description"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonials" class="lpt-50-spt-20 lpb-50-spb-20">
+    <img src="/img/why-choose-us/d-quote.png" class="d-quote" alt="">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="testi">
+            <div class="testi-text">
+              When I was learning Mandarin, ChinesePod was my favourite resource by far. It was essential in getting me up to basic conversational level in just a few months. I recommend it to everyone learning Chinese!
+            </div>
+            <div>
+              <span class="testee"><img class="img-circle" width="80" src="/img/landing/t1.jpg"></span>
+              <span class="testee"><span class="name">Benny Lewis</span><br><span class="pos">The Irish Polyglot</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="testi">
+            <div class="testi-text">
+              ChinesePod is an incredible resource for mastering spoken Chinese - a vast library of entertaining lessons from a great collection of teachers, all short and friendly enough to squeeze into a busy schedule.
+            </div>
+            <div>
+              <span class="testee"><img class="img-circle" width="80" src="/img/landing/t4.jpg"></span>
+              <span class="testee"><span class="name">Mike Love</span><br><span class="pos">Creator of Pleco</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="resources" class="lpt-50-spt-20 lpb-50-spb-20 bg-white">
+    <h2 class="text-center">Additional Resources</h2>
+    <div class="container">
+      <p class="util-mb-20">Supplement your Mandarin speaking, listening, and pronunciation exercises with our plethora of additional study resources. Each podcast lesson is accompanied by a Dialogue, Vocabulary, Expansion, Grammar and Exercises section. Practice online or download all the resources and study on your own time. These supplementary study resources breakdown lesson’s content allowing for further review including learning the vocabulary or listening to each sentence separately.</p>
+      <div class="row" data-ride="carousel">
+        <div id="wcu-carousel" class="carousel slide">
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+              <li data-target="#wcu-carousel" data-slide-to="0"></li>
+              <li data-target="#wcu-carousel" data-slide-to="1"></li>
+              <li data-target="#wcu-carousel" data-slide-to="2"></li>
+              <li data-target="#wcu-carousel" data-slide-to="3"></li>
+              <li data-target="#wcu-carousel" data-slide-to="4" class="active"></li>
+          </ol>
+
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+            <div class="carousel-item item">
+              <div class="carousel-desc" id="dia">
+                <div class="carousel-text">
+                  <h5>Dialogue</h5>
+                  <p>The Dialogue section provides an interactive transcript of the lesson. The Chinese characters are provided along with the English translation and pinyin to ease with pronunciation. It’s better to learn the target language in context but we provide a function to study each word separately too. Scrutinize each Chinese character by mousing over it to see the literal translation. You also have the option of toggling between Simplified and Traditional characters.</p>
+                </div>
+                <img src="/img/why-choose-us/additional-dialogue.png" class="carousel-img" alt="Dialogue">
+              </div>
+            </div>
+            <div class="carousel-item item">
+              <div class="carousel-desc">
+                <div class="carousel-text">
+                  <h5>Vocabulary</h5>
+                  <p>Rote memorization is boring and not the most effective method, but we suggest using the supplementary vocabulary lists in conjunction with the audio or video to accelerate your rate of achieving language competency.</p>
+                </div>
+                <img src="/img/why-choose-us/additional-vocabulary.png" class="carousel-img" alt="Vocabulary">
+              </div>
+            </div>
+            <div class="carousel-item item">
+              <div class="carousel-desc">
+                <div class="carousel-text">
+                  <h5>Expansion</h5>
+                  <p>Our expansion gives you the opportunity to learn target vocabulary taught in the lesson in other meaningful situations.</p>
+                </div>
+                <img src="/img/why-choose-us/additional-expansion.png" class="carousel-img" alt="Expansion">
+              </div>
+            </div>
+            <div class="carousel-item item">
+              <div class="carousel-desc">
+                <div class="carousel-text">
+                  <h5>Grammar</h5>
+                  <p>The grammar section provides a more detailed explanation of the lesson’s grammatical structure, giving you a chance for better comprehension and skilled composition of the Mandarin Language. This section also includes practice sentences that give you additional context to how the grammatical structure may show up in conversation. This functionality is the same as as the Dialogue section.</p>
+                </div>
+                <img src="/img/why-choose-us/additional-grammar.png" class="carousel-img" alt="Grammar">
+              </div>
+            </div>
+            <div class="carousel-item item active">
+              <div class="carousel-desc">
+                <div class="carousel-text" id="ex" >
+                  <h5>Exercises</h5>
+                  <p>Learn aurally then reinforce further with online worksheets and exercises. These include:</p>
+                  <ul>
+                      <li>Matching: Choose a word on the left side, then match it to the closest meaning on the right side.</li>
+                      <li>Sentence Reordering: sentences are in the wrong order; move them into the correct order by clicking and dragging.</li>
+                      <li>Dictation: Listen to the audio and type out what you hear</li>
+                      <li>Multiple Choice</li>
+                  </ul>
+                </div>
+                <img src="/img/why-choose-us/additional-exercises.png" class="carousel-img" alt="Exercises">
+              </div>
+            </div>
+          </div>
+          <!-- Controls -->
+          <a class="left carousel-control" href="#wcu-carousel" role="button" data-slide="prev">
+            <img src="/img/why-choose-us/left.png" alt="Prev">
+          </a>
+          <a class="right carousel-control" href="#wcu-carousel" role="button" data-slide="next">
+            <img src="/img/why-choose-us/right.png" alt="Next">
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="text-center lpt-50-spt-20 lpb-50-spb-20" style="background: #cb3033">
+    <a href="/signup" class="yellow-btn sign-up-btn">Create an Account Today</a>
+  </section>
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
