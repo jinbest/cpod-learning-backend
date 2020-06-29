@@ -18,7 +18,13 @@ module.exports = {
 
   fn: async function () {
 
-    let trial = false; let promo = false; let plan = 'premium'; let period = 'quarterly';
+    let trial = false; let promo = false; let plan = 'premium'; let period = 'quarterly'; let promoCode = 'MOTHERSDAY828';
+
+    let validPromos = await PromoCodes.find({promotion_code: promoCode, product_id: {in: [140, 2, 18, 142, 13, 14]}, expiry_date: {'>': new Date()}})
+
+    if (!Array.isArray(validPromos) || !validPromos.length) {
+      return this.res.view('pages/promotions/expired-promo')
+    }
 
     let ipData = {};
 

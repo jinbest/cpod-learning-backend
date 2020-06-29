@@ -17,7 +17,7 @@ module.exports = {
 
 
   fn: async function () {
-    let trial = false; let promo = true; let plan = 'premium'; let period = 'quarterly'; let promoCode = 'FREEDOM20'; let nonRecurring = true;
+    let trial = false; let promo = true; let plan = 'premium'; let period = 'quarterly'; let promoCode = 'FREEDOMDAY828'; let nonRecurring = true;
 
     const addressfield = require('../../../../lib/addressfield.json');
 

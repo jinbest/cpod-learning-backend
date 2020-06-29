@@ -23,7 +23,7 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    let trial = false; let promo = true; let plan = 'premium'; let promoCode = 'GRUNDLOVSDAG'; let nonRecurring = false;
+    let trial = false; let promo = true; let plan = 'premium'; let promoCode = 'DENMARK828'; let nonRecurring = false;
 
     let period = inputs.annual ? 'annually' : 'quarterly';
 

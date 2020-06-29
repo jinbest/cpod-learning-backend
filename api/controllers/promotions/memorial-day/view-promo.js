@@ -23,7 +23,7 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    let trial = false; let promo = true; let plan = 'premium'; let promoCode = 'MEMORIAL2020'; let nonRecurring = false;
+    let trial = false; let promo = true; let plan = 'premium'; let promoCode = 'MEMORIAL828'; let nonRecurring = false;
 
     sails.log.info(inputs)
 
