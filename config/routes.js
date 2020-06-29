@@ -171,9 +171,9 @@ module.exports.routes = {
   'GET /dbpin20':                                        { action: 'promotions/dragon-boat/view-dbpin20'},
   'GET /dbcp20':                                         { action: 'promotions/dragon-boat/view-dbcp20'},
   // KEEP THESE...
-  'GET /dragon-boat/:promoCode':                         { action: 'promotions/dragon-boat/view-promo-alt'},
-  'GET /dragon-boat/:promoCode/:token':                  { action: 'promotions/create-limited-auth'},
-  'GET /dragon-boat/:promoCode/success':                 { action: 'promotions/view-promo-success'},
+  'GET /dragon-boat':                                    { action: 'promotions/dragon-boat/view-promo-alt'},
+  'GET /dragon-boat/:token':                             { action: 'promotions/create-limited-auth'},
+  'GET /dragon-boat/success':                            { action: 'promotions/view-promo-success'},
   // REMOVE THESE...
   'GET /dragon-boat-2020/':                              { action: 'promotions/dragon-boat/view-promo'},
   'GET /dragon-boat-2020/:token':                        { action: 'promotions/create-limited-auth'},

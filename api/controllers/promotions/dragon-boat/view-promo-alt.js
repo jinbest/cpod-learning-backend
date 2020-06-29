@@ -25,13 +25,13 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    let trial = false; let promo = true; let plan = 'premium'; let promoCode = inputs.promoCode; let nonRecurring = false; let permanentDiscount = true;
+    let trial = false; let promo = true; let plan = 'premium'; let promoCode = 'DRAGON828'; let nonRecurring = false; let permanentDiscount = true;
 
     let period = inputs.annual ? 'annually' : inputs.quarterly ? 'quarterly' : 'monthly';
 
     let validPromos = await PromoCodes.find({promotion_code: promoCode, product_id: {in: [140, 2, 18, 142, 13, 14]}, expiry_date: {'>': new Date()}})
 
-    if (!Array.isArray(validPromos) || !validPromos.length || !['dbfb20', 'dbcp20', 'dbpin20', 'dbtw20'].includes(promoCode.toLowerCase())) {
+    if (!Array.isArray(validPromos) || !validPromos.length || !['dbfb20', 'dbcp20', 'dbpin20', 'dbtw20', 'dragon828'].includes(promoCode.toLowerCase())) {
       return this.res.view('pages/promotions/expired-promo')
     }
 
