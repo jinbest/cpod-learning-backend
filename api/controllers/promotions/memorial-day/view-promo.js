@@ -57,6 +57,11 @@ module.exports = {
         city: '',
         postal: ''
       },
+      bannerPrices: {
+        monthly: 21.75,
+        quarterly: 59.25,
+        annual: 186.75
+      },
       pricing:{
         basic: {
           monthly: 14,

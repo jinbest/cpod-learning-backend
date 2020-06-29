@@ -9,15 +9,11 @@ module.exports = {
 
   exits: {
 
-    // success: {
-    //   viewTemplatePath: 'pages/promotions/kings-day/promo'
-    // }
-
   },
 
 
   fn: async function () {
-    let trial = false; let promo = true; let plan = 'premium'; let period = 'quarterly'; let promoCode = 'KINGSDAY828'; let nonRecurring = true;
+    let trial = false; let promo = true; let plan = 'premium'; let period = 'quarterly'; let promoCode = 'KINGSDAY828'; let nonRecurring = false;
 
     let validPromos = await PromoCodes.find({promotion_code: promoCode, product_id: {in: [140, 2, 18, 142, 13, 14]}, expiry_date: {'>': new Date()}})
 
@@ -46,6 +42,11 @@ module.exports = {
         state: '',
         city: '',
         postal: ''
+      },
+      bannerPrices: {
+        monthly: 20.3,
+        quarterly: 59.25,
+        annual: 186.75
       },
       pricing:{
         basic: {

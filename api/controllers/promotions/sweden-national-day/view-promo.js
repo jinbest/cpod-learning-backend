@@ -52,6 +52,7 @@ module.exports = {
         postal: ''
       },
       bannerPrices: {
+        monthly: 20.3,
         quarterly: 55.30,
         annual: 174.30
       },

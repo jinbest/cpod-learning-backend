@@ -9,22 +9,24 @@ module.exports = {
 
   exits: {
 
-    success: {
-      viewTemplatePath: 'pages/promotions/freedom-day/promo'
-    }
-
   },
 
 
   fn: async function () {
-    let trial = false; let promo = true; let plan = 'premium'; let period = 'quarterly'; let promoCode = 'FREEDOMDAY828'; let nonRecurring = true;
+    let trial = false; let promo = true; let plan = 'premium'; let period = 'quarterly'; let promoCode = 'FREEDOMDAY828'; let nonRecurring = false;
+
+    let validPromos = await PromoCodes.find({promotion_code: promoCode, product_id: {in: [140, 2, 18, 142, 13, 14]}, expiry_date: {'>': new Date()}})
+
+    if (!Array.isArray(validPromos) || !validPromos.length) {
+      return this.res.view('pages/promotions/expired-promo')
+    }
 
     const addressfield = require('../../../../lib/addressfield.json');
 
     let ipData = {};
 
     // Respond with view.
-    return {
+    return this.res.view('pages/promotions/freedom-day/promo', {
       layout: 'layouts/layout-promo',
       expiry: null,
       needsAccount: !(this.req.me || this.req.session.limitedAuth),
@@ -40,6 +42,11 @@ module.exports = {
         state: '',
         city: '',
         postal: ''
+      },
+      bannerPrices: {
+        monthly: 21.75,
+        quarterly: 59.25,
+        annual: 186.75
       },
       pricing:{
         basic: {
@@ -60,7 +67,7 @@ module.exports = {
       },
       stripeKey: sails.config.custom.stripePublishableKey,
       addressfield: addressfield
-    };
+    });
 
   }
 
