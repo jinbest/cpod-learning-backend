@@ -57,7 +57,7 @@ module.exports = {
       },
       bannerPrices: {
         monthly: 20.3,
-        quarterly: 55.30,
+        quarterly: 59.25,
         annual: 174.30
       },
       pricing:{
