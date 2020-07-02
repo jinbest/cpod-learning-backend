@@ -303,7 +303,12 @@ parasails.registerPage('promo' +
       })
         .then((info) => {
           try {
-            fbq('track', 'Purchase', {currency: 'USD', value: (Math.round((this.pricing[this.plan][this.billingCycle] - this.pricing.discount) * 100) / 100).toFixed(2) })
+            fbq('track', 'Purchase', {
+              currency: 'USD',
+              value: (Math.round((this.pricing[this.plan][this.billingCycle] - this.pricing.discount) * 100) / 100).toFixed(2),
+              content_category: this.plan.toUpperCase(),
+              content_name: `${this.pricing.discount ? this.formData.promoCode : ''} ${this.plan.toUpperCase()} - ${this.billingCycle.toUpperCase()}`
+            })
           } catch (e) {}
           window.location.href = window.location.href.split('?')[0] + '/success';
         })
