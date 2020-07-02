@@ -57,6 +57,8 @@ module.exports.routes = {
   'GET /start-learning-chinese/:campaignId':             { action: 'entrance/link-campaign' },
   'GET /start-learning-mandarin':                        { action: 'view-start-learning-mandarin' },
   'GET /start-learning-mandarin/:campaignId':            { action: 'entrance/link-campaign' },
+  'GET /free-trial':                                     { action: 'view-free-trial' },
+  'GET /free-trial/:campaignId':                         { action: 'entrance/link-campaign' },
 
   'GET /pricing':                                        { action: 'onboarding/view-pricing' },
   'GET /pricing-alt':                                    { action: 'onboarding/view-pricing-alt' },
