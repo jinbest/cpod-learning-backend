@@ -30,7 +30,7 @@ module.exports = {
     //TODO: ADD SOME VALIDATION
     this.req.session.campaignId = inputs.campaignId.toUpperCase();
 
-    let path = this.req.path.split(`/${inputs.campaignId}`).join('/');
+    let path = this.req.url.split(`/${inputs.campaignId}`).join('/');
 
     sails.log.info(this.req.session);
 
