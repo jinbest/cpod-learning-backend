@@ -1,0 +1,27 @@
+<div id="promo" v-cloak class="pt-3 kings-day-promo">
+  <div class="mx-3">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 my-4">
+          <img class="img-fluid w-100" src="/images/promotions/independence_day_alt_banner_top.png" alt="PROMOTION BANNER">
+        </div>
+        <div class="col-12 my-3">
+          <h1 class="text-center font-weight-bold">Join ChinesePod and get <span class="text-danger font-weight-bold">50% Off</span> on our Premium Subscriptions!</h1>
+        </div>
+        <div class="col-12 my-3 text-center">
+          <h2 class="">
+            Celebrate 4th of July with ChinesePod and start learning Mandarin today!
+          </h2>
+        </div>
+
+        <%- partial('../../../partials/checkout-form-3-options.ejs') %>
+
+        <div class="col-10 offset-1 col-md-4 offset-md-4 my-4">
+          <img class="img-fluid" src="/images/brand/brand.svg" alt="ChinesePod" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://js.stripe.com/v3/"></script>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
