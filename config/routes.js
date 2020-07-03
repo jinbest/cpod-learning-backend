@@ -170,8 +170,11 @@ module.exports.routes = {
   'GET /independence-day/':                              { action: 'promotions/independence-day/view-promo-alt'},
   'GET /independence-day/:token':                        { action: 'promotions/create-limited-auth'},
   'GET /independence-day/success':                       { action: 'promotions/view-promo-success'},
+  'GET /74FB50/':                                        { action: 'promotions/independence-day/view-74fb50'},
   'GET /july-4/':                                        { action: 'promotions/independence-day/view-promo'},
   'GET /july-4/:token':                                  { action: 'promotions/create-limited-auth'},
+  'GET /july-4/74FB50':                                  { action: 'promotions/independence-day/view-promo-74fb50'},
+  'GET /july-4/74FB50/success':                          { action: 'promotions/view-promo-success'},
   'GET /july-4/success':                                 { action: 'promotions/view-promo-success'},
   // REMOVE THESE...
   'GET /dbfb20':                                         { action: 'promotions/dragon-boat/view-dbfb20'},
