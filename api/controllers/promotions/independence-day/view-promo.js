@@ -53,9 +53,9 @@ module.exports = {
         postal: ''
       },
       bannerPrices: {
-        monthly: 29 / 2,
-        quarterly: 79 / 2,
-        annual: 249 / 2
+        monthly: (29 / 2).toFixed(2),
+        quarterly: (79 / 2).toFixed(2),
+        annual: (249 / 2).toFixed(2)
       },
       pricing:{
         basic: {
