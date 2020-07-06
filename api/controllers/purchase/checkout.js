@@ -440,7 +440,6 @@ module.exports = {
         })
       })
     }
-    //TODO CHECK SUBSCRIPTION STATUS LOGIC
     const existingSubscriptions = await Subscriptions.find({
       user_id: inputs.userId,
       status: {in: [1, 2]},
@@ -672,7 +671,7 @@ module.exports = {
             });
           }
 
-// Update User Access on UserSiteLinks
+          // Update User Access on UserSiteLinks
           let userSiteLinks = await UserSiteLinks.updateOne({user_id:inputs.userId, site_id: 2})
             .set({
               usertype_id: plans[inputs.plan].id,
@@ -680,7 +679,7 @@ module.exports = {
               signup_user_agent: this.req.headers['user-agent']
             });
 
-// Update User SessionInfo to Match Current Access Level
+          // Update User SessionInfo to Match Current Access Level
           const phpSession = await sails.helpers.php.updateSession.with({
             userId: inputs.userId,
             planName: inputs.plan,
