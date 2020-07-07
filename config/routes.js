@@ -42,15 +42,15 @@ module.exports.routes = {
   'GET /logout':                                         { action: 'account/logout' },
 
   'GET /email-signup':                                   { action: 'entrance/view-signup' },
+  'GET /email-signup/:campaignId':                       { action: 'entrance/link-campaign' },
   'GET /get-started':                                    { action: 'entrance/view-signup' },
+  'GET /get-started/:campaignId':                        { action: 'entrance/link-campaign' },
   'GET /signup':                                         { action: 'entrance/view-signup' },
+  'GET /signup/:campaignId':                             { action: 'entrance/link-campaign' },
   'GET /free-signup':                                    { action: 'entrance/view-free-signup' },
+  'GET /free-signup/:campaignId':                        { action: 'entrance/link-campaign' },
   'GET /signup-free':                                    { action: 'view-homepage-or-redirect' },
   'GET /signup-free/:campaignId':                        { action: 'entrance/link-campaign' },
-  'GET /email-signup/:campaignId':                       { action: 'entrance/link-campaign' },
-  'GET /get-started/:campaignId':                        { action: 'entrance/link-campaign' },
-  'GET /signup/:campaignId':                             { action: 'entrance/link-campaign' },
-  'GET /free-signup/:campaignId':                        { action: 'entrance/link-campaign' },
   'GET /why-choose-us':                                  { action: 'view-why-choose-us' },
   'GET /why-choose-us/:campaignId':                      { action: 'entrance/link-campaign' },
   'GET /start-learning-chinese':                         { action: 'view-start-learning-chinese' },
@@ -70,7 +70,7 @@ module.exports.routes = {
   'GET /upgrade':                                        { action: 'purchase/view-checkout' },
   'GET /upgrade/:promo':                                 { action: 'purchase/view-checkout' },
   'GET /upgrade/:promo/:token':                          { action: 'promotions/create-limited-auth'},
-  'GET /april-fools':                                    '/upgrade/APRILFOOLS',
+  // 'GET /april-fools':                                    '/upgrade/APRILFOOLS',
   'GET /checkout/paypal':                                { action: 'purchase/paypal/view-paypal-pay' },
   'GET /checkout/paypal-success':                        { action: 'purchase/paypal/view-paypal-success' },
 
@@ -102,7 +102,6 @@ module.exports.routes = {
   'GET /lesson/:slug/:courseId?/rate/:rating':           'HomeController.serve',
   'GET /vocabulary/:unused?*':                           'HomeController.serve',
   'GET /dictionary/*':                                   'NuxtController.serve',
-  // 'GET /vocabulary/:unused?*':                           'HomeController.serve',
   'GET /explore/:unused?*':                              'HomeController.serve',
   'GET /course/:unused?*':                               'HomeController.serve',
   'GET /settings/:unused?*':                             'HomeController.serve',
@@ -110,8 +109,6 @@ module.exports.routes = {
   'GET /subscription/:unused?*':                         'HomeController.serve',
   'GET /billing/:unused?*':                              'HomeController.serve',
   '/podcasts':                                           'https://forum.chinesepod.com/t/weekly-lesson-announcement/6606',
-  // 'GET /podcasts/:unused?':                              'PodcastsController.serve',
-  // 'GET /dictionary/:unused?':                            'PodcastsController.serve',
 
   //PLACEMENT TEST
   'GET /placement/:unused?':                             'PlacementController.serve',
@@ -176,18 +173,9 @@ module.exports.routes = {
   'GET /july-4/74FB50':                                  { action: 'promotions/independence-day/view-promo-74fb50'},
   'GET /july-4/74FB50/success':                          { action: 'promotions/view-promo-success'},
   'GET /july-4/success':                                 { action: 'promotions/view-promo-success'},
-  // REMOVE THESE...
-  'GET /dbfb20':                                         { action: 'promotions/dragon-boat/view-dbfb20'},
-  'GET /dbtw20':                                         { action: 'promotions/dragon-boat/view-dbtw20'},
-  'GET /dbpin20':                                        { action: 'promotions/dragon-boat/view-dbpin20'},
-  // KEEP THESE...
   'GET /dragon-boat':                                    { action: 'promotions/dragon-boat/view-promo-alt'},
   'GET /dragon-boat/:token':                             { action: 'promotions/create-limited-auth'},
   'GET /dragon-boat/success':                            { action: 'promotions/view-promo-success'},
-  // REMOVE THESE...
-  'GET /dragon-boat-2020/':                              { action: 'promotions/dragon-boat/view-promo'},
-  'GET /dragon-boat-2020/:token':                        { action: 'promotions/create-limited-auth'},
-  'GET /dragon-boat-2020/success':                       { action: 'promotions/view-promo-success'},
 
   //PROMOTIONS - REDEEM GIFTS
   'GET /valentines-day-gift/redeem/:code?/:userCode?':   { action: 'promotions/valentines/view-valentines-day-gift-redeem'},
