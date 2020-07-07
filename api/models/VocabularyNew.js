@@ -5,6 +5,10 @@
 
 module.exports = {
   tableName: 'vocabulary',
+  beforeDestroy: (criteria, cb) => {
+    sails.hooks.bugsnag.notify(`Deleting Vocabulary - ${JSON.stringify(criteria)}`);
+    cb(new Error('This is a read-only model'));
+  },
   attributes: {
     id: {
       type: "number",
