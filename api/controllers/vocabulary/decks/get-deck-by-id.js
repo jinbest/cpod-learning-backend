@@ -52,10 +52,27 @@ module.exports = {
         vocab.lesson = _.pick(vocab.vocabulary_id.v3_id, ['title', 'hash_code', 'slug', 'level', 'type', 'id']);
         delete vocab.vocabulary_id.v3_id
       }
-      let lessonRoot = `https://s3contents.chinesepod.com/${vocab.lesson.type === 'extra' ? 'extra/' : ''}${vocab.lesson.id}/${vocab.lesson.hash_code}/`
-      vocab.sourceAudioUrl = lessonRoot + vocab.audio;
-      vocab.targetAudioUrl = lessonRoot + vocab.audio;
-      return {...vocab.vocabulary_id, ...{user_vocabulary_id: vocab.id, createdAt: vocab.createdAt, lesson: vocab.lesson, tags: tags}}
+
+      let audioUrlCN; let audioUrlEN;
+
+      if (vocab.lesson) {
+        let lessonRoot = `https://s3contents.chinesepod.com/${vocab.lesson.type === 'extra' ? 'extra/' : ''}${vocab.lesson.id}/${vocab.lesson.hash_code}/`
+
+        try {
+          audioUrlCN = vocab.vocabulary_id.audio.slice(0, 4) === 'http' ? vocab.vocabulary_id.audio : lessonRoot + vocab.vocabulary_id.audio;
+          let params = audioUrlCN.split('source/');
+
+          let amsObj = amsVocab.find(ams => ams && ams.source_mp3 === params[params.length - 1])
+
+          if(amsObj && amsObj.target_mp3) {
+            audioUrlEN = params[0] + 'translation/' + amsObj.target_mp3
+          }
+        } catch (e) {
+          // sails.log.error(e);
+          sails.hooks.bugsnag.notify(`Issue with word - ${JSON.stringify(vocab)}`);
+        }
+      }
+      return {...vocab.vocabulary_id, ...{user_vocabulary_id: vocab.id, createdAt: vocab.createdAt, lesson: vocab.lesson, tags: tags, audioUrlCN: audioUrlCN, audioUrlEN: audioUrlEN}}
     })
 
     return {...deck, ...{vocab: userVocab}}
