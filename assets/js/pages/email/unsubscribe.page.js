@@ -5,6 +5,7 @@ parasails.registerPage('unsubscribe', {
   data: {
     email: '',
     syncing: false,
+    formData: {},
 
     cloudSuccess: false,
     cloudError: {}
@@ -18,7 +19,7 @@ parasails.registerPage('unsubscribe', {
     _.extend(this, SAILS_LOCALS);
   },
   mounted: async function() {
-    //…
+    document.getElementById('page-footer').style = 'display: flex';
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
