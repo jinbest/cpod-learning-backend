@@ -46,14 +46,34 @@ module.exports = {
       }
 
     }
+    let lessonVocab = await VocabularyNew.findOne({id: inputs.vocabularyId});
+    let newVocab;
 
-    let vocab = await UserVocabulary.updateOrCreate({user_id: inputs.userId, vocabulary_id: inputs.vocabularyId}, {user_id: inputs.userId, vocabulary_id: inputs.vocabularyId});
+    if (lessonVocab) {
+      delete lessonVocab.id;
+      lessonVocab.vocabulary_class = 'User Vocabulary';
+      sails.log.info(lessonVocab);
+      newVocab = await VocabularyNew.create({
+        vocabulary_class: 'User Vocabulary',
+        s: lessonVocab.s,
+        t: lessonVocab.t,
+        p: lessonVocab.p,
+        en: lessonVocab.en,
+        display_order: lessonVocab.display_order,
+        audio: lessonVocab.audio,
+        image: lessonVocab.image,
+        v3_id: lessonVocab.v3_id
+      }).fetch();
+      sails.log.info(newVocab);
+      let vocab = await UserVocabulary.updateOrCreate({user_id: inputs.userId, vocabulary_id: newVocab.id}, {user_id: inputs.userId, vocabulary_id: newVocab.id});
 
-    if (inputs.deckId) {
-      await UserVocabularyToVocabularyTags.updateOrCreate({vocabulary_tag_id: inputs.deckId, user_vocabulary_id: vocab.id}, {vocabulary_tag_id: inputs.deckId, user_vocabulary_id: vocab.id})
+      if (inputs.deckId) {
+        await UserVocabularyToVocabularyTags.updateOrCreate({vocabulary_tag_id: inputs.deckId, user_vocabulary_id: vocab.id}, {vocabulary_tag_id: inputs.deckId, user_vocabulary_id: vocab.id})
+      }
+
+      return vocab
+
     }
-
-    return vocab
 
   }
 

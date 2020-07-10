@@ -49,25 +49,37 @@ module.exports = {
     let promises = [];
     let createdVocab = [];
 
-    sails.log.info(inputs)
+    let lessonVocab = await VocabularyNew.find({id: {in: inputs.vocabularyId}});
 
-    inputs.vocabularyId.forEach(vocabId => {
-      promises.push(UserVocabulary.updateOrCreate({user_id: inputs.userId, vocabulary_id: vocabId}, {user_id: inputs.userId, vocabulary_id: vocabId})
-        .then(console.log))
-    })
+    if(lessonVocab) {
 
-    sails.log.info(createdVocab)
+      lessonVocab.forEach(vocab => {
+        delete vocab.id;
+        vocab.vocabulary_class = 'User Vocabulary'
+      })
 
-    await Promise.all(promises)
-      .catch((e) => sails.hooks.bugsnag.notify(e));
+      let newVocabulary = await VocabularyNew.createEach(lessonVocab).fetch();
 
-    sails.log.info(createdVocab);
+      newVocabulary.forEach(vocab => {
+        promises.push(UserVocabulary.updateOrCreate({user_id: inputs.userId, vocabulary_id: vocab.id}, {user_id: inputs.userId, vocabulary_id: vocab.id})
+          .then(console.log))
+      })
+
+      await Promise.all(promises)
+        .catch((e) => sails.hooks.bugsnag.notify(e));
+
+    }
 
     if (inputs.deckId) {
 
       promises = [];
       createdVocab.forEach(vocab => {
-        promises.push(UserVocabularyToVocabularyTags.updateOrCreate({vocabulary_tag_id: inputs.deckId, user_vocabulary_id: vocab.id}, {vocabulary_tag_id: inputs.deckId, user_vocabulary_id: vocab.id}))
+        promises.push(
+          UserVocabularyToVocabularyTags.updateOrCreate(
+            {vocabulary_tag_id: inputs.deckId, user_vocabulary_id: vocab.id},
+            {vocabulary_tag_id: inputs.deckId, user_vocabulary_id: vocab.id}
+            )
+        )
       });
 
       await Promise.all(promises)
