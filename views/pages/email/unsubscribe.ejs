@@ -1,24 +1,242 @@
 <div id="unsubscribe" v-cloak class="min-vh-100 bg-gray-lighter">
   <div class="container">
-    <h1 class="headline font-weight-bold text-center py-3 mb-3">
-      Unsubscribe from ChinesePod Emails
+    <h1 class="headline font-weight-bold text-center py-3 mb-3 py-lg-5 mb-lg-5">
+      Update Your Email Preferences
     </h1>
-    <div class="text-center card p-5 mb-4 col-lg-8 offset-lg-2">
+    <ajax-form action="unsubscribeUser" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" @submitted="submittedForm()">
       <div class="row">
+        <div class="col-12 col-lg-6">
+          <div class="card p-1">
+            <div class="embed-responsive embed-responsive-16by9">
+              <iframe width="100%" src="https://www.youtube.com/embed/NjCYc5p8a5c?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 pt-4 pt-lg-0 col-lg-6">
+          <div class="ml-lg-4 card unsub-reason">
+            <div class="card-header text-center">
+              <h5>
+                Please Tell Us Why You Are Unsubscribing:
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="text-center p-2">
+                <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        width="33px" height="30px">
+                  <path fill-rule="evenodd"  fill="rgb(0, 0, 0)"
+                        d="M32.234,5.369 L31.398,6.128 L31.398,6.128 L25.333,11.629 L25.333,11.629 L8.066,27.292 L8.069,27.295 L7.223,28.062 L0.000,29.998 L2.139,23.424 L2.532,23.067 L2.532,23.066 L20.254,6.990 L20.254,6.990 L25.725,2.028 L25.725,2.027 L27.154,0.731 C27.774,0.168 28.786,0.168 29.408,0.731 L32.233,3.295 C32.538,3.570 32.706,3.939 32.706,4.332 C32.706,4.724 32.538,5.093 32.234,5.369 ZM3.333,24.088 L2.008,28.161 L6.520,26.952 L6.667,26.818 L3.496,23.941 L3.333,24.088 ZM21.723,7.406 L21.201,7.880 L21.201,7.880 L4.458,23.066 L7.628,25.942 L24.386,10.740 L24.386,10.739 L26.282,9.019 L26.688,8.651 L23.519,5.777 L21.723,7.406 ZM26.300,3.253 L24.482,4.903 L27.652,7.777 L29.470,6.128 L26.300,3.253 ZM31.287,4.184 L28.461,1.620 C28.363,1.532 28.198,1.532 28.101,1.620 L27.264,2.379 L30.434,5.254 L31.287,4.480 C31.343,4.429 31.355,4.371 31.355,4.332 C31.355,4.293 31.343,4.235 31.287,4.184 ZM31.924,29.703 L11.898,29.703 L11.898,28.456 L31.924,28.456 L31.924,29.703 Z"/>
+                </svg>
+              </div>
+              <div class="pb-3">
+                <textarea rows="5" class="w-100" v-model="formData.unsubReason" placeholder="I'm unsubscribing because ..."></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="spacer row py-1 py-lg-5 my-lg-5"></div>
+      <div class="row">
+        <div class="col-12 col-lg-6">
+          <div class="card p-3 options-card">
+            <div class="col-12">
+              <!--              <p class="text-left">-->
+              <!--                You're updating email preferences for <span class="font-weight-bold">{{ email }}</span>.-->
+              <!--              </p>-->
+              <h5 class="py-3">What emails do you want to unsubscribe from?</h5>
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="defaultCheck1" v-model="formData.unsubscribeAll">
+                  <label class="form-check-label" for="defaultCheck1">
+                    All Emails
+                  </label>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="text-center">
+                  <div class="p-3">
+                    <div class="circle ml-auto mr-auto">OR:</div>
+                  </div>
+                </div>
+              </div>
+              <h5 class="py-3">Please select your preferences:</h5>
+              <table class="table options-table">
+                <thead class="text-white">
+                <tr>
+                  <th scope="col" class="text-center">
+                    <div class="d-md-none">
+                      In
+                    </div>
+                    <div class="d-none d-md-inline">
+                      Subscribed
+                    </div>
+                  </th>
+                  <th scope="col" class="text-center">
+                    <div class="d-md-none">
+                      Out
+                    </div>
+                    <div class="d-none d-md-inline">
+                      Unsubscribed
+                    </div>
+                  </th>
+                  <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody class="text-center">
+                <tr>
+                  <td>
+                    <input type="radio" :value="true" v-model="formData.options.subscribedPromotions">
+                  </td>
+                  <td>
+                    <input type="radio" :value="false" v-model="formData.options.subscribedPromotions">
+                  </td>
+                  <td class="text-left">Marketing Emails</td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="radio" :value="true" v-model="formData.options.subscribedAcademic">
+                  </td>
+                  <td>
+                    <input type="radio" :value="false" v-model="formData.options.subscribedAcademic">
+                  </td>
+                  <td class="text-left">Academic Emails</td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="radio" :value="true" v-model="formData.options.subscribedWeeklyNewLessons">
+                  </td>
+                  <td>
+                    <input type="radio" :value="false" v-model="formData.options.subscribedWeeklyNewLessons">
+                  </td>
+                  <td class="text-left">Weekly New Lessons</td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="radio" :value="true" v-model="formData.options.subscribedWordOfTheDay">
+                  </td>
+                  <td>
+                    <input type="radio" :value="false" v-model="formData.options.subscribedWordOfTheDay">
+                  </td>
+                  <td class="text-left">Word of the Day</td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="radio" :value="true" v-model="formData.options.subscribedBetaNotifications">
+                  </td>
+                  <td>
+                    <input type="radio" :value="false" v-model="formData.options.subscribedBetaNotifications">
+                  </td>
+                  <td class="text-left">
+                    <div class="">
+                      Beta Notifications
+                    </div>
+                    <div class="">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="defaultCheck1" v-model="formData.options.betaNotificationsIOS">
+                        <label class="form-check-label" for="defaultCheck1">
+                          iOS
+                        </label>
+                      </div>
+                    </div>
+                    <div class="">
+
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="defaultCheck1" v-model="formData.options.betaNotificationsAndroid">
+                        <label class="form-check-label" for="defaultCheck1">
+                          Android
+                        </label>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="d-none d-lg-block offset-lg-1 col-lg-5">
+          <div class="card current-settings py-3">
+            <div class="card-body">
+              <div class="current-settings__header">
+                <div class="col-12 text-center py-2">
+                  <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          width="42px" height="42px">
+                    <path fill-rule="evenodd"  fill="rgb(0, 0, 0)"
+                          d="M37.924,16.910 L41.224,17.616 L41.222,23.950 L38.272,24.582 C38.180,25.115 38.072,25.616 37.946,26.096 L40.215,28.147 L37.046,33.633 L34.481,32.804 C34.094,33.269 33.676,33.723 33.232,34.158 L34.073,36.761 L28.589,39.928 L26.963,38.130 C26.298,38.376 25.628,38.581 24.964,38.741 L24.448,41.152 L18.114,41.151 L17.635,38.913 C16.906,38.780 16.192,38.603 15.503,38.386 L13.916,40.142 L8.433,36.972 L9.139,34.785 C8.601,34.308 8.088,33.796 7.609,33.254 L5.301,33.999 L2.136,28.514 L3.985,26.844 C3.790,26.223 3.628,25.583 3.502,24.931 L0.913,24.376 L0.913,18.041 L3.633,17.459 C3.758,16.937 3.918,16.398 4.116,15.826 L1.922,13.844 L5.090,8.361 L8.066,9.321 C8.404,8.966 8.736,8.642 9.069,8.342 L8.062,5.232 L13.548,2.065 L15.810,4.568 C16.197,4.453 16.579,4.352 16.954,4.266 L17.688,0.841 L24.021,0.841 L24.756,4.266 C25.105,4.345 25.453,4.435 25.796,4.534 L28.219,1.851 L33.703,5.019 L32.633,8.333 C32.898,8.571 33.160,8.823 33.425,9.092 L36.833,7.992 L40.001,13.476 L37.548,15.692 C37.688,16.093 37.814,16.501 37.924,16.910 ZM38.439,13.230 L36.265,9.468 L33.070,10.500 L32.803,10.219 C32.371,9.762 31.952,9.363 31.524,8.997 L31.212,8.731 L32.227,5.587 L28.465,3.414 L26.184,5.940 L25.808,5.822 C25.256,5.649 24.686,5.503 24.116,5.387 L23.721,5.307 L23.027,2.071 L18.682,2.071 L17.989,5.308 L17.593,5.387 C17.010,5.504 16.425,5.658 15.806,5.858 L15.428,5.980 L13.302,3.628 L9.539,5.800 L10.490,8.739 L10.178,9.006 C9.689,9.423 9.206,9.893 8.703,10.442 L8.437,10.734 L5.658,9.837 L3.484,13.598 L5.554,15.468 L5.411,15.858 C5.113,16.669 4.896,17.404 4.748,18.106 L4.665,18.496 L2.143,19.036 L2.143,23.381 L4.569,23.902 L4.639,24.312 C4.787,25.179 5.001,26.028 5.276,26.835 L5.406,27.218 L3.699,28.760 L5.870,32.523 L8.010,31.832 L8.277,32.147 C8.878,32.858 9.541,33.520 10.247,34.116 L10.563,34.382 L9.909,36.405 L13.670,38.578 L15.130,36.962 L15.515,37.094 C16.384,37.393 17.303,37.620 18.245,37.769 L18.662,37.836 L19.108,39.921 L23.453,39.922 L23.926,37.710 L24.315,37.626 C25.173,37.442 26.046,37.175 26.910,36.833 L27.307,36.675 L28.835,38.366 L32.596,36.193 L31.822,33.798 L32.107,33.532 C32.720,32.955 33.286,32.341 33.785,31.708 L34.051,31.372 L36.478,32.157 L38.653,28.393 L36.553,26.496 L36.660,26.126 C36.854,25.463 37.004,24.760 37.123,23.977 L37.186,23.556 L39.992,22.955 L39.993,18.611 L36.918,17.952 L36.826,17.578 C36.673,16.955 36.480,16.333 36.253,15.730 L36.105,15.338 L38.439,13.230 ZM21.068,30.671 C16.019,30.671 11.911,26.563 11.911,21.514 C11.911,16.465 16.019,12.357 21.068,12.357 C26.118,12.357 30.226,16.465 30.226,21.514 C30.226,26.563 26.118,30.671 21.068,30.671 ZM21.068,13.587 C16.698,13.587 13.141,17.143 13.141,21.514 C13.141,25.884 16.698,29.440 21.068,29.440 C25.439,29.440 28.996,25.884 28.996,21.514 C28.996,17.143 25.439,13.587 21.068,13.587 Z"/>
+                  </svg>
+                </div>
+                <h5 class="py-2">YOUR CURRENT ACCOUNT SETTINGS:</h5>
+              </div>
+              <div>
+                <div class="settings-option  text-center">
+                  Levels you are interested in:
+                </div>
+                <div class="col-12 p-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="newbie" v-model="formData.preferences.levelInterests.newbie">
+                    <label class="form-check-label" for="newbie">
+                      Newbie
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="intermediate" v-model="formData.preferences.levelInterests.intermediate">
+                    <label class="form-check-label" for="intermediate">
+                      Intermediate
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="advanced" v-model="formData.preferences.levelInterests.advanced">
+                    <label class="form-check-label" for="advanced">
+                      Advanced
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="settings-option text-center">
+                  Character preference:
+                </div>
+                <div class="col-12 p-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" id="simplified" value="simplified" v-model="formData.preferences.charSet">
+                    <label class="form-check-label" for="simplified">
+                      Simplified
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" id="traditional" value="traditional" v-model="formData.preferences.charSet">
+                    <label class="form-check-label" for="traditional">
+                      Traditional
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="notInterestedInCharacters" v-model="formData.preferences.notInterestedInCharacters">
+                    <label class="form-check-label" for="notInterestedInCharacters">
+                      Not interested in learning characters
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row p-5">
         <div class="col-12">
-          <p class="text-left">
-            You're about to unsubscribe <span class="font-weight-bold">{{ email }}</span> from our email message lists.
-          </p>
+          <div class="text-center">
+            <ajax-button type="submit" :syncing="syncing" class="btn btn-lg btn-danger update-button">Update Preferences</ajax-button>
+          </div>
+        </div>
+        <div class="col-12 pt-3">
+          <div class="text-center">
+            <a href="/home">OR Back to Dashboard <i class="fa fa-arrow-right"></i></a>
+          </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-12 text-center pt-5">
-          <ajax-form action="unsubscribeUser" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" >
-            <ajax-button type="submit" :syncing="syncing" class="btn btn-lg btn-danger px-5">Unsubscribe</ajax-button>
-          </ajax-form>
-        </div>
-      </div>
-    </div>
+    </ajax-form>
   </div>
 </div>
 <%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
