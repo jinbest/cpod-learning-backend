@@ -33,30 +33,30 @@ module.exports = {
       columnName: 'column_1',
       columnType: "varchar",
       maxLength: 255,
-      required: true
+      allowNull: true
     },
     p: {
       type: "string",
       columnName: 'column_2',
       columnType: "text",
-      required: true
+      allowNull: true
     },
     en: {
       type: "string",
       columnName: 'column_3',
       columnType: "text",
-      required: true
+      allowNull: true
     },
     t: {
       type: "string",
       columnName: 'column_4',
       columnType: "text",
-      required: true
+      allowNull: true
     },
     audio: {
       type: "string",
       columnType: "text",
-      required: true
+      allowNull: true
     },
     v3_id: {
       model: 'LessonData'
@@ -65,7 +65,7 @@ module.exports = {
       type: "number",
       columnType: "int",
       isInteger: true,
-      required: true
+      defaultsTo: 1
     },
     image: {
       type: "string",
