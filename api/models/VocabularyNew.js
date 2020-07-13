@@ -6,8 +6,14 @@
 module.exports = {
   tableName: 'vocabulary',
   beforeDestroy: (criteria, cb) => {
-    sails.hooks.bugsnag.notify(`Deleting Vocabulary - ${JSON.stringify(criteria)}`);
-    cb(new Error('This is a read-only model'));
+    if (criteria && criteria.where && criteria.where.and) {
+      let target = criteria.where.and.filter(params => params.vocabulary_class);
+      if (target[0].vocabulary_class === 'User Vocabulary') {
+        return cb();
+      }
+    }
+    // sails.hooks.bugsnag.notify(`Deleting Vocabulary - ${JSON.stringify(criteria)}`);
+    return cb(new Error('This is a read-only model'));
   },
   attributes: {
     id: {

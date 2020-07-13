@@ -47,12 +47,25 @@ module.exports = {
 
     }
     let lessonVocab = await VocabularyNew.findOne({id: inputs.vocabularyId});
+
+    let existingVocab = await VocabularyNew.findOne({
+      vocabulary_class: 'User Vocabulary',
+      s: lessonVocab.s,
+      t: lessonVocab.t,
+      p: lessonVocab.p,
+      en: lessonVocab.en,
+      v3_id: lessonVocab.v3_id
+    });
+
+    if (existingVocab) {
+      return
+    }
+
     let newVocab;
 
     if (lessonVocab) {
       delete lessonVocab.id;
       lessonVocab.vocabulary_class = 'User Vocabulary';
-      sails.log.info(lessonVocab);
       newVocab = await VocabularyNew.create({
         vocabulary_class: 'User Vocabulary',
         s: lessonVocab.s,
@@ -64,7 +77,7 @@ module.exports = {
         image: lessonVocab.image,
         v3_id: lessonVocab.v3_id
       }).fetch();
-      sails.log.info(newVocab);
+
       let vocab = await UserVocabulary.updateOrCreate({user_id: inputs.userId, vocabulary_id: newVocab.id}, {user_id: inputs.userId, vocabulary_id: newVocab.id});
 
       if (inputs.deckId) {
