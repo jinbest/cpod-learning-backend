@@ -1,7 +1,0 @@
-User-agent: *
-Disallow: /api/
-Disallow: /api
-Disallow: /redirect/
-Allow: /
-
-Sitemap: https://www.chinesepod.com/sitemap
