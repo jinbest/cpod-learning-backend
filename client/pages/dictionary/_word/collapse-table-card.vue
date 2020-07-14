@@ -6,7 +6,7 @@
           <a v-if="links" :href="`/dictionary/${item.simplified}`" :title="item.simplified">{{ item.simplified }}</a>
           <span v-else>{{ item.simplified }}</span>
         </div>
-        <div class="flex-row pinyin" role="cell">{{ item.pinyin }}</div>
+        <div class="flex-row pinyin" role="cell">{{ cleanPinyin(item.pinyin) }}</div>
         <div class="flex-row english" role="cell">{{ item.definition }}</div>
       </div>
     </div>
@@ -62,6 +62,14 @@ export default {
   methods: {
     collapseContent() {
       this.isOpened = !this.isOpened
+    },
+    cleanPinyin(string) {
+      return string
+        .replace('u:1','ǖ')
+        .replace('u:2','ǘ')
+        .replace('u:3','ǚ')
+        .replace('u:4','ǜ')
+        .replace('u:5','ü')
     }
   }
 }

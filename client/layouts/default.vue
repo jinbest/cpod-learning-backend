@@ -15,6 +15,9 @@
   import StarterFooter from "~/components/argon-layout/starter/StarterFooter";
 
   export default {
+    async fetch () {
+      await this.$store.dispatch('auth/init');
+    },
     components: {
       StarterHeader,
       StarterFooter

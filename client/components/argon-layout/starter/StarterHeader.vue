@@ -32,14 +32,19 @@
             <span class="nav-link-inner--text">Contact Us</span>
           </a>
         </li>
-        <li class="nav-item d-lg-none">
+        <li v-if="!isAuthenticated" class="nav-item d-lg-none">
           <a href="/signup" class="nav-link" role="button">
             <span class="nav-link-inner--text">Sign up</span>
           </a>
         </li>
-        <li class="nav-item d-lg-none">
+        <li v-if="!isAuthenticated" class="nav-item d-lg-none">
           <a href="/login" class="nav-link" role="button">
             <span class="nav-link-inner--text">Log in</span>
+          </a>
+        </li>
+        <li v-if="isAuthenticated" class="nav-item d-lg-none">
+          <a href="/home" class="nav-link" role="button">
+            <span class="nav-link-inner--text">Dashboard</span>
           </a>
         </li>
 <!--        <li class="nav-item">-->
@@ -77,16 +82,22 @@
             <span class="nav-link-inner--text d-lg-none">Youtube</span>
           </a>
         </li>
-        <li class="nav-item d-none d-lg-block ml-lg-4">
+        <li v-if="!isAuthenticated" class="nav-item d-none d-lg-block ml-lg-4">
           <a href="/signup"
              class="btn btn-success btn-icon">
             <span class="nav-link-inner--text">Sign up</span>
           </a>
         </li>
-        <li class="nav-item d-none d-lg-block ml-lg-4">
+        <li v-if="!isAuthenticated" class="nav-item d-none d-lg-block ml-lg-4">
           <a href="/login"
              class="btn btn-outline-primary btn-icon">
             <span class="nav-link-inner--text">Log in</span>
+          </a>
+        </li>
+        <li v-if="isAuthenticated" class="nav-item d-none d-lg-block ml-lg-4">
+          <a href="/home"
+             class="btn btn-outline-primary btn-icon">
+            <span class="nav-link-inner--text">Dashboard</span>
           </a>
         </li>
       </ul>
@@ -98,6 +109,11 @@
   import CloseButton from "~/components/argon/CloseButton";
 
   export default {
+    computed: {
+      isAuthenticated () {
+        return this.$store.getters['auth/isAuthenticated']
+      }
+    },
     components: {
       BaseNav,
       CloseButton

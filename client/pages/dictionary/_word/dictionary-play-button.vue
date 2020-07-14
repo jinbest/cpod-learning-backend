@@ -30,10 +30,8 @@
     methods: {
       async togglePlay () {
         if(!this.playing) {
-          console.log(this.playing);
           await this.audio.play();
           this.playing = true;
-          console.log(this.playing);
         } else {
           await this.audio.pause();
           this.playing = false;

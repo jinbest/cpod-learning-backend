@@ -38,7 +38,7 @@ module.exports = {
     }
 
     if (!inputs.userId) {
-      throw 'invalid'
+      return {token: ''}
     }
 
 

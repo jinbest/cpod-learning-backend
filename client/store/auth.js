@@ -1,0 +1,48 @@
+export const state = () => ({
+  token: ''
+})
+
+export const getters = {
+  isAuthenticated: state => !!state.token
+}
+
+export const mutations = {
+  SET_TOKEN(state, token) {
+    state.token = token
+  }
+}
+
+export const actions = {
+  async init ({ commit }) {
+    let { data } = await this.$axios
+      .post(
+        process.env.API_URL +
+        '/token/auth',
+        {
+          type: 'landing',
+          key: process.env.API_KEY
+        }
+      );
+    if (data && data.token) {
+      commit('SET_TOKEN', data.token);
+    } else {
+      commit('SET_TOKEN', '');
+    }
+  },
+  async getToken ({ commit }) {
+    let { data } = await this.$axios
+      .post(
+        process.env.API_URL +
+        '/token/auth',
+        {
+          type: 'landing',
+          key: process.env.API_KEY
+        }
+      );
+    if (data && data.token) {
+      commit('SET_TOKEN', data.token);
+    } else {
+      commit('SET_TOKEN', '');
+    }
+  }
+}

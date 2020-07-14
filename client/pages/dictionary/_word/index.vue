@@ -154,9 +154,22 @@
     },
     async asyncData ({ params, error, payload, redirect }) {
       const word = params.word
-      const { data } = await sendGet('/dictionary/get-details', { word })
+      const response = await sendGet('/dictionary/get-details', { word })
         .catch(() => redirect('https://www.chinesepod.com'));
+
+      if (!response) {
+        redirect('https://www.chinesepod.com')
+        return
+      }
+
+      const data = response.data
+      if (!data) {
+        redirect('https://www.chinesepod.com')
+        return
+      }
+
       try {
+
 
         const compoundsList = data.compounds.map(compound => compound)
         const relatedWordsList = data.related.map(related => related)

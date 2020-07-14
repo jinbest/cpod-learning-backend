@@ -445,6 +445,7 @@ module.exports.routes = {
   // Token Routes
   'GET /api/v1/token':                                   { action: 'token/check'},
   'POST /api/v1/token':                                  { action: 'token/get'},
+  'POST /api/v1/token/auth':                             { action: 'token/auth'},
 
   //ADS
   'GET /api/v1/ads/android-app':                         { action: 'ads/android-app'},

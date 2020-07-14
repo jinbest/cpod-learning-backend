@@ -226,8 +226,19 @@
       }
     },
     async asyncData ({ params, error, payload, redirect }) {
-      const { data } = await sendGet('/lessons/get-details', { slug: params.slug })
+      const response = await sendGet('/lessons/get-details', { slug: params.slug })
         .catch(() => redirect('https://www.chinesepod.com'));
+
+      if (!response) {
+        redirect('https://www.chinesepod.com')
+        return
+      }
+
+      const data = response.data
+      if (!data) {
+        redirect('https://www.chinesepod.com')
+        return
+      }
 
       try {
 
