@@ -17,6 +17,9 @@ module.exports = {
     preferences: {
       type: {},
     },
+    unsubReason: {
+      type: 'string'
+    }
 
   },
 
@@ -28,6 +31,8 @@ module.exports = {
 
   fn: async function (inputs) {
 
+    sails.log.info(inputs);
+
     inputs.userId = '';
 
     if (this.req.session.userId) {
@@ -36,16 +41,30 @@ module.exports = {
       inputs.userId = this.req.session.limitedAuth.id
     }
 
+    let promises = [];
+
     if (inputs.unsubscribeAll) {
 
-      await MailingDoNotContact.updateOrCreate({user_id: inputs.userId}, {
-        user_id: inputs.userId,
-        reason: 'Website Unsubscribe Button'
-      });
+      promises.push(
+        MailingDoNotContact.updateOrCreate(
+          {user_id: inputs.userId},
+          {user_id: inputs.userId, reason: 'Website Unsubscribe Button'}
+          )
+      );
 
-    } else if (inputs.options && inputs.preferences) {
+    }
 
-      let promises = [];
+    if (inputs.unsubReason) {
+      promises.push(
+        UserOptions.updateOrCreate(
+          {user_id: inputs.userId, option_key: 'unsubReason'},
+          {user_id: inputs.userId, option_key: 'unsubReason', option_value: inputs.unsubReason}
+        )
+      );
+    }
+
+    if (inputs.options && inputs.preferences) {
+
       promises.push(
         UserOptions.updateOrCreate(
         {user_id: inputs.userId, option_key: 'emailPreferences'},
@@ -76,9 +95,9 @@ module.exports = {
         );
       }
 
-      await Promise.all(promises);
-
     }
+
+    await Promise.all(promises);
 
   }
 
