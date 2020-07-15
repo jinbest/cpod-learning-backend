@@ -38,6 +38,7 @@ module.exports = {
     }
 
     if (!inputs.userId) {
+      sails.log.error(this.req.session);
       return {token: ''}
     }
 
