@@ -48,14 +48,14 @@ module.exports = {
     }
     let lessonVocab = await VocabularyNew.findOne({id: inputs.vocabularyId});
 
-    let existingVocab = await VocabularyNew.findOne({
+    let existingVocab = (await VocabularyNew.find({
       vocabulary_class: 'User Vocabulary',
       s: lessonVocab.s,
       t: lessonVocab.t,
       p: lessonVocab.p,
       en: lessonVocab.en,
       v3_id: lessonVocab.v3_id
-    });
+    }).limit(1))[0];
 
     if (existingVocab) {
       return
