@@ -21,7 +21,10 @@ export const actions = {
         type: 'landing',
         key: process.env.API_KEY
       });
+    console.log(data ? data : 'No Data')
+    console.log({state: state.token})
     if (data && data.token && !state.token) {
+      console.log({token: data.token})
       commit('SET_TOKEN', data.token);
     } else {
       commit('SET_TOKEN', '');
