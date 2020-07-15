@@ -366,6 +366,7 @@ module.exports.routes = {
   'GET /api/v1/dashboard/get-bookmarked-lessons':        { action: 'dashboard/get-bookmarked-lessons' },
   'GET /api/v1/dashboard/get-studied-lessons':           { action: 'dashboard/get-studied-lessons' },
   'GET /api/v1/dashboard/all-courses':                   { action: 'dashboard/all-courses' },
+  'GET /api/v1/dashboard/all-playlists':                 { action: 'dashboard/all-playlists' },
   'POST /api/v1/dashboard/toggle-saved':                 { action: 'dashboard/toggle-saved' },
   'POST /api/v1/dashboard/toggle-studied':               { action: 'dashboard/toggle-studied' },
   'POST /api/v1/dashboard/toggle-course':                { action: 'dashboard/toggle-course' },

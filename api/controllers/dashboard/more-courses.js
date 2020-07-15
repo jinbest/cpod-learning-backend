@@ -47,32 +47,20 @@ module.exports = {
       select: ['course']
     });
 
-    let enrolledCourses = [];
-
-    userCourses.forEach((course) => {
-      enrolledCourses.push(course.course)
-    });
+    let enrolledCourses = userCourses.map(course => course.course);
 
     let leveledCourses = await CourseDetail.find({
       where: {
         pubstatus: 1,
         is_private: 0,
         id: { nin: enrolledCourses},
+        order_id: {'>=': 1000},
         channel_id: { in: [await sails.helpers.convert.levelToChannelId(userLevel), await sails.helpers.convert.levelToChannelId(levelHigher)]}
       },
       select: ['id', 'course_title', 'course_introduction'],
-      sort: 'id DESC'
+      sort: 'order_id DESC'
     });
-    let mixedCourses = await CourseDetail.find({
-      where: {
-        pubstatus: 1,
-        is_private: 0,
-        id: { nin: enrolledCourses},
-        channel_id: 181
-      },
-      select: ['id', 'course_title', 'course_introduction'],
-      sort: 'id DESC'
-    });
+
     leveledCourses.forEach((course) => {
       course.course_introduction = sanitizeHtml(course.course_introduction, {
         allowedTags: [],
@@ -80,12 +68,6 @@ module.exports = {
       });
     });
 
-    mixedCourses.forEach((course) => {
-      course.course_introduction = sanitizeHtml(course.course_introduction, {
-        allowedTags: [],
-        allowedAttributes: {}
-      });
-    });
-    return leveledCourses.concat(mixedCourses)
+    return leveledCourses
   }
 };
