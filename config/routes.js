@@ -491,8 +491,8 @@ module.exports.routes = {
   '/api/v1/notifications':                               { action: 'notifications/subscribe', isSocket: true },
 
   //YOUTUBE PROMO
-  'POST /api/v1/youtube':                                { action: 'youtube/post-user-data' },
-  'PUT /api/v1/youtube':                                 { action: 'youtube/put-confirmation' },
+  'POST /api/v1/youtube':                                { action: 'youtube/post-email' },
+  'PUT /api/v1/youtube/:id':                             { action: 'youtube/put-confirmation' },
 
   //EMAIL MARKETING
   'POST /api/v1/email/unsubscribe-user-email':           { action: 'email/unsubscribe-user'},
