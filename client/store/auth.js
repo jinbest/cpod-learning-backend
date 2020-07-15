@@ -1,3 +1,5 @@
+import { sendPost } from '@/util/api'
+
 export const state = () => ({
   token: ''
 })
@@ -13,17 +15,13 @@ export const mutations = {
 }
 
 export const actions = {
-  async init ({ commit }) {
-    let { data } = await this.$axios
-      .post(
-        process.env.API_URL +
-        '/token/auth',
-        {
-          type: 'landing',
-          key: process.env.API_KEY
-        }
-      );
-    if (data && data.token) {
+  async init ({ commit, state }) {
+    const { data } = await sendPost(process.env.API_URL + '/token/auth',
+      {
+        type: 'landing',
+        key: process.env.API_KEY
+      });
+    if (data && data.token && !state.token) {
       commit('SET_TOKEN', data.token);
     } else {
       commit('SET_TOKEN', '');
