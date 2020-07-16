@@ -23,7 +23,7 @@ module.exports = {
 
     return await UserCourses.find({
       where: {user_id: inputs.userId, course: {'>': 0}},
-      select: ['course'],
+      select: ['default_status', 'course'],
       sort: 'updatedAt DESC'
     })
       .populate('course');

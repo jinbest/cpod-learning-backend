@@ -359,6 +359,7 @@ module.exports.routes = {
   'GET /api/v1/dashboard/bookmarks':                     { action: 'dashboard/bookmarks' },
   'GET /api/v1/dashboard/get-course':                    { action: 'dashboard/get-course' },
   'GET /api/v1/dashboard/user-courses':                  { action: 'dashboard/user-courses' },
+  'POST /api/v1/dashboard/set-course-as-main':           { action: 'dashboard/set-course-as-main' },
   'GET /api/v1/dashboard/more-courses':                  { action: 'dashboard/more-courses' },
   'GET /api/v1/dashboard/course-lessons':                { action: 'dashboard/course-lessons' },
   'GET /api/v1/dashboard/all-lessons':                   { action: 'dashboard/all-lessons' },
