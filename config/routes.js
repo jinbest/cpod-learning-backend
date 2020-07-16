@@ -108,6 +108,9 @@ module.exports.routes = {
   'GET /dictionary/*':                                   'NuxtController.serve',
   'GET /explore/:unused?*':                              'HomeController.serve',
   'GET /course/:unused?*':                               'HomeController.serve',
+  'GET /courses/:unused?*':                              'HomeController.serve',
+  'GET /playlist/:unused?*':                             'HomeController.serve',
+  'GET /playlists/:unused?*':                            'HomeController.serve',
   'GET /settings/:unused?*':                             'HomeController.serve',
   'GET /profile/:unused?*':                              'HomeController.serve',
   'GET /subscription/:unused?*':                         'HomeController.serve',
@@ -312,6 +315,7 @@ module.exports.routes = {
   'GET /api/v1/account/subscription/subscriptions':      { action: 'account/subscription/get-subscriptions' },
   'GET /api/v1/account/subscription/transactions':       { action: 'account/subscription/get-transactions' },
   'PUT /api/v1/account/profile/update':                  { action: 'account/settings/update-profile'},
+  'POST /api/v1/account/profile/resend-confirmation':    { action: 'account/settings/resend-email-confirmation'},
   'PUT /api/v1/account/settings/update':                 { action: 'account/settings/update-setting'},
   'POST /api/v1/account/upload-avatar':                  { action: 'account/upload-avatar' ,
     cors: {
