@@ -9,15 +9,17 @@ module.exports = {
 
   serve: (req, res) => {
     // Build in development
-    if(req.session && req.session.userId) {
+    if (req.session && req.session.userId) {
       const fs = require('fs');
       const app = __dirname + '/../../assets/home/index.html';
       fs.createReadStream(app).pipe(res)
+    } else {
+
+      sails.log.info(req.path);
+
+      return sails.config.nuxt.render(req, res);
     }
 
-    sails.log.info(req.path);
-
-    return sails.config.nuxt.render(req, res);
   },
 
 };

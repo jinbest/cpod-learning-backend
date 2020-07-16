@@ -37,7 +37,6 @@ module.exports.policies = {
   'dash/*': 'is-logged-in',
   'home/*': 'is-logged-in',
   'podcasts/*': true,
-  'lesson-test/*': true,
 
   'redeem/view-redeem-voucher': 'is-logged-in',
   'redeem/redeem-voucher': 'is-logged-in',
@@ -66,14 +65,5 @@ module.exports.policies = {
   'vocabulary/*': 'is-authenticated',
   'search/*': 'is-authenticated',
   'token/check': 'is-authenticated',
-
-  // 'lessons/progress/post-lesson-progress': true,
-
-  'search/reindex-lessons': 'is-super-admin',
-  'search/reindex-lessons-data': 'is-super-admin',
-
-  'octopus/*': 'is-super-admin',
-
-  // SwaggerOldController: {'*': 'is-staff'},
 
 };
