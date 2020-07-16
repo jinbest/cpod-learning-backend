@@ -336,7 +336,14 @@ module.exports = {
 
     } else {
 
-      let lessonData = await LessonData.find({id: inputs.query});
+      let lessonData = await LessonData.find({
+        id: inputs.query,
+        status_published: 'publish',
+        is_private: 0,
+        publication_timestamp: {
+          '<': new Date()
+        }
+      });
 
       const containsChinese = require('contains-chinese');
       let fuzziness = containsChinese(inputs.query) ? 0 : 1;
