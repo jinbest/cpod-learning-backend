@@ -546,12 +546,18 @@ module.exports = {
       }
     }
 
+    let currentSub; let currentSubscriptionInfo;
     if (existingStripeSubscriptions.length === 1) {
+      try {
+        currentSub = existingStripeSubscriptions[0]['subscription_id'];
+        currentSubscriptionInfo = await stripe.subscriptions.retrieve(currentSub);
+      } catch (e) {}
+    }
+
+    if (currentSubscriptionInfo) {
 
       let currentSub = existingStripeSubscriptions[0]['subscription_id'];
       let currentSubscriptionInfo = await stripe.subscriptions.retrieve(currentSub);
-
-      sails.log.info(currentSubscriptionInfo);
 
       let currentSubItem = currentSubscriptionInfo['items']['data'][0]['id'];
 
