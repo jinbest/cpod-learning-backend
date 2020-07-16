@@ -336,12 +336,36 @@ module.exports = {
 
     } else {
 
+      let lessonData = await LessonData.find({id: inputs.query});
+
       const containsChinese = require('contains-chinese');
       let fuzziness = containsChinese(inputs.query) ? 0 : 1;
 
       sails.log.info(fuzziness)
 
-      if (searchFilters.length > 0) {
+      if (lessonData && lessonData.length) {
+
+        sails.log.info('Search By Lesson ID');
+
+        lessons = await sails.hooks.elastic.client.search({
+          index: 'lessons',
+          type: 'lessons',
+          from: inputs.skip ? inputs.skip : 0,
+          size: inputs.limit ? inputs.limit : 16,
+          body: {
+            query: {
+              multi_match: {
+                query: inputs.query,
+                fields: ['id'],
+                operator: 'and',
+                analyzer: 'standard',
+                fuzziness: 0
+              },
+            }
+          }
+        });
+
+      } else if (searchFilters.length > 0) {
 
         sails.log.info('Has Query & Has Filters');
 
