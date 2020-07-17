@@ -40,7 +40,7 @@ module.exports = {
 
     let destroyedVocab = await UserVocabulary.destroy({id: {in: inputs.wordId}, user_id: inputs.userId}).fetch();
     await UserVocabularyToVocabularyTags.destroy({user_vocabulary_id: {in: inputs.wordId}});
-    sails.log.info(await VocabularyNew.destroy({id: {in: destroyedVocab.map(vocab => vocab.vocabulary_id)}, vocabulary_class: 'User Vocabulary'}).fetch());
+    await VocabularyNew.destroy({id: {in: destroyedVocab.map(vocab => vocab.vocabulary_id)}, vocabulary_class: {in: ['User Vocabulary', 'User Sentence']}});
 
   }
 

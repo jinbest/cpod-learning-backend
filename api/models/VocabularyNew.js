@@ -8,7 +8,8 @@ module.exports = {
   beforeDestroy: (criteria, cb) => {
     if (criteria && criteria.where && criteria.where.and) {
       let target = criteria.where.and.filter(params => params.vocabulary_class);
-      if (target[0].vocabulary_class === 'User Vocabulary') {
+      sails.log.info(target[0]);
+      if (target.length) {
         return cb();
       }
     }

@@ -60,7 +60,7 @@ module.exports = {
 
       let audioUrlCN; let audioUrlEN;
 
-      if (vocab.lesson) {
+      if (vocab.lesson && vocab.vocabulary_id.audio) {
         let lessonRoot = `https://s3contents.chinesepod.com/${vocab.lesson.type === 'extra' ? 'extra/' : ''}${vocab.lesson.id}/${vocab.lesson.hash_code}/`
 
         try {
@@ -76,6 +76,14 @@ module.exports = {
           // sails.log.error(e);
           sails.hooks.bugsnag.notify(`Issue with word - ${JSON.stringify(vocab)}`);
         }
+
+        if (audioUrlCN) {
+          audioUrlCN = audioUrlCN.replace('http:', 'https:')
+        }
+        if (audioUrlEN) {
+          audioUrlEN = audioUrlEN.replace('http:', 'https:')
+        }
+
       }
 
       return {...vocab.vocabulary_id, ...{user_vocabulary_id: vocab.id, createdAt: vocab.createdAt, lesson: vocab.lesson, tags: tags, audioUrlCN: audioUrlCN, audioUrlEN: audioUrlEN}}

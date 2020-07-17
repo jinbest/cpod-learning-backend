@@ -424,6 +424,7 @@ module.exports.routes = {
   'PUT /api/v1/vocabulary/words/add':                    { action: 'vocabulary/words/add-word'},
   'PUT /api/v1/vocabulary/words/add-many':               { action: 'vocabulary/words/add-many-words'},
   'PUT /api/v1/vocabulary/words/create':                 { action: 'vocabulary/words/create-word'},
+  'PUT /api/v1/vocabulary/words/add-sentence':           { action: 'vocabulary/words/add-sentence'},
   'POST /api/v1/vocabulary/words/:id':                   { action: 'vocabulary/words/update-word'},
   'DELETE /api/v1/vocabulary/words/:id':                 { action: 'vocabulary/words/delete-word'},
   'POST /api/v1/vocabulary/words/delete-many':           { action: 'vocabulary/words/delete-many-words'},
