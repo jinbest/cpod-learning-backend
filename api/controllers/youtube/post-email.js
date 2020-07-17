@@ -8,10 +8,10 @@ module.exports = {
 
 
   inputs: {
-    email: {
+    token: {
       type: 'string',
-      isEmail: true,
-      description: 'The email address of the user account, e.g. m@example.com.',
+      required: true,
+      description: 'User identifier token'
     }
 
   },
@@ -28,9 +28,21 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    let userData = await User.findOne({email: inputs.email});
+    const Hashids = require('hashids/cjs');
+    const hashids = new Hashids('lithographer-defeater');
 
-    //TODO: Implement User Does Not Exist Option
+    let userId = hashids.decode(inputs.token);
+
+    userId = parseInt(userId);
+
+    if (!Number.isInteger(userId)) {
+      throw 'invalid'
+    }
+
+    let userData = await User.findOne({id: userId});
+    //
+    // let userData = await User.findOne({email: inputs.email});
+
     if (!userData) {
       throw 'invalid'
     }
@@ -45,7 +57,7 @@ module.exports = {
 
     sails.log.info(userContest);
 
-    return userContest
+    return {...userContest, ...{email: userData.email}}
 
   }
 
