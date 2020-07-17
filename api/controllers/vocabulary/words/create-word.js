@@ -40,13 +40,20 @@ module.exports = {
 
     inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
+    let existingVocabulary = (await VocabularyNew
+      .find({..._.pick(inputs,['s', 't', 'p']), ...{vocabulary_class: {'!=': 'User Vocabulary'}, audio: {'!=': ''}}})
+      .sort('id DESC')
+      .limit(1))[0]
+
+    sails.log.info(existingVocabulary);
+
     let newVocab = await VocabularyNew.create({
       ...inputs, ...{
       vocabulary_class: 'User Vocabulary',
       display_order: 1,
-      audio: "",
-      image: "",
-      v3_id: inputs.lessonId ? inputs.lessonId : ''
+      audio: existingVocabulary ? existingVocabulary.audio : '',
+      image: existingVocabulary ? existingVocabulary.image : '',
+      v3_id: existingVocabulary ? existingVocabulary.v3_id : '0000'
     }}).fetch();
 
     await UserVocabulary.create({user_id: inputs.userId, vocabulary_id: newVocab.id});
