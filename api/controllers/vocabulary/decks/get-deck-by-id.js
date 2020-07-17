@@ -40,7 +40,7 @@ module.exports = {
     }
     let deckVocab = await UserVocabularyToVocabularyTags.find({vocabulary_tag_id: inputs.id}).select('user_vocabulary_id');
 
-    let userVocab = await UserVocabulary.find({id: {in: deckVocab.map(vocab => vocab.user_vocabulary_id)}}).populate('vocabulary_id.v3_id',{where: {},select: ['title', 'hash_code', 'slug', 'level']});
+    let userVocab = await UserVocabulary.find({id: {in: deckVocab.map(vocab => vocab.user_vocabulary_id)}}).sort('createdAt DESC').populate('vocabulary_id.v3_id',{where: {},select: ['title', 'hash_code', 'slug', 'level']});
     let userDecks = await UserVocabularyToVocabularyTags.find({user_vocabulary_id: {in: userVocab.map(vocab => vocab.id)}}).populate('vocabulary_tag_id', {where: {user_id: inputs.userId}})
 
     let promises = [];

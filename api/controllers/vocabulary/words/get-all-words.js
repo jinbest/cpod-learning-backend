@@ -31,7 +31,7 @@ module.exports = {
 
     let total = await UserVocabulary.count({user_id: inputs.userId});
 
-    let userVocab = await UserVocabulary.find({user_id: inputs.userId}).skip(inputs.skip).limit(inputs.limit).populate('vocabulary_id').populate('vocabulary_id.v3_id',{where: {id: '0000'},select: ['title', 'hash_code', 'slug', 'level']});
+    let userVocab = await UserVocabulary.find({user_id: inputs.userId}).sort('createdAt DESC').skip(inputs.skip).limit(inputs.limit).populate('vocabulary_id').populate('vocabulary_id.v3_id',{where: {id: '0000'},select: ['title', 'hash_code', 'slug', 'level']});
 
     let userDecks = await UserVocabularyToVocabularyTags.find({user_vocabulary_id: {in: userVocab.map(vocab => vocab.id)}}).populate('vocabulary_tag_id', {where: {user_id: inputs.userId}})
 
