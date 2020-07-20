@@ -41,7 +41,7 @@ module.exports = {
     inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
     let existingVocabulary = (await VocabularyNew
-      .find({..._.pick(inputs,['s', 't', 'p']), ...{vocabulary_class: {'!=': 'User Vocabulary'}, audio: {'!=': ''}}})
+      .find({..._.pick(inputs,['s', 't', 'p']), ...{vocabulary_class: {'nin': ['User Vocabulary', 'Missing Vocabulary']}, audio: {'nin': ['', 'mp3/glossary/source/']}}})
       .sort('id DESC')
       .limit(1))[0]
 
