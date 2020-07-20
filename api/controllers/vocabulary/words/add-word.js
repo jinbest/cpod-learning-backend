@@ -50,7 +50,7 @@ module.exports = {
 
     if (lessonVocab) {
 
-      let vocab = await UserVocabulary.updateOrCreate({user_id: inputs.userId, vocabulary_id: lessonVocab.id}, {user_id: inputs.userId, vocabulary_id: lessonVocab.id});
+      let vocab = await UserVocabulary.updateOrCreateAndFetch({user_id: inputs.userId, vocabulary_id: lessonVocab.id}, {user_id: inputs.userId, vocabulary_id: lessonVocab.id});
 
       if (inputs.deckId) {
         await UserVocabularyToVocabularyTags.updateOrCreate({vocabulary_tag_id: inputs.deckId, user_vocabulary_id: vocab.id}, {vocabulary_tag_id: inputs.deckId, user_vocabulary_id: vocab.id})

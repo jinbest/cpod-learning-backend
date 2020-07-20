@@ -50,18 +50,10 @@ module.exports = {
 
     let lessonVocab = await VocabularyNew.find({id: {in: inputs.vocabularyId}});
 
-    if(lessonVocab) {
+    if (lessonVocab) {
 
       lessonVocab.forEach(vocab => {
-        delete vocab.id;
-        vocab.vocabulary_class = 'User Vocabulary'
-      })
-
-      let newVocabulary = await VocabularyNew.createEach(lessonVocab).fetch();
-
-      newVocabulary.forEach(vocab => {
-        promises.push(UserVocabulary.updateOrCreate({user_id: inputs.userId, vocabulary_id: vocab.id}, {user_id: inputs.userId, vocabulary_id: vocab.id})
-          .then(console.log))
+        promises.push(UserVocabulary.updateOrCreateAndFetch({user_id: inputs.userId, vocabulary_id: vocab.id}, {user_id: inputs.userId, vocabulary_id: vocab.id}))
       })
 
       let createdVocab = await Promise.all(promises)

@@ -40,8 +40,8 @@ module.exports = {
       throw 'unauthorized'
     }
 
-    await UserVocabulary.destroyOne({id: inputs.id})
-    await UserVocabularyToVocabularyTags.destroy({user_vocabulary_id: inputs.id})
+    let destroyedWord = await UserVocabulary.destroyOne({id: inputs.id})
+    await UserVocabularyToVocabularyTags.destroyOne({user_vocabulary_id: inputs.id})
     await VocabularyNew.destroyOne({id: destroyedWord.vocabulary_id, vocabulary_class: {in: ['User Vocabulary', 'User Sentence']}});
 
   }
