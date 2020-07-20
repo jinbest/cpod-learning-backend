@@ -43,18 +43,6 @@ module.exports = {
     let userVocab = await UserVocabulary.find({id: {in: deckVocab.map(vocab => vocab.user_vocabulary_id)}}).sort('createdAt DESC').populate('vocabulary_id.v3_id',{where: {},select: ['title', 'hash_code', 'slug', 'level']});
     let userDecks = await UserVocabularyToVocabularyTags.find({user_vocabulary_id: {in: userVocab.map(vocab => vocab.id)}}).populate('vocabulary_tag_id', {where: {user_id: inputs.userId}})
 
-    let promises = [];
-    userVocab.forEach(vocab => {
-      if(vocab.vocabulary_id && vocab.vocabulary_id.audio) {
-        promises.push(
-          AmsVocabulary.find({source_mp3: vocab.vocabulary_id.audio.split('source/').pop()}).limit(1)
-            .then(data => {return data[0]})
-        )
-      }
-    })
-
-    let amsVocab = [].concat(...(await Promise.all(promises)));
-
     userVocab = userVocab.map(vocab => {
       let tags = userDecks.filter(deck => deck.user_vocabulary_id === vocab.id);
       if (tags && tags.length) {

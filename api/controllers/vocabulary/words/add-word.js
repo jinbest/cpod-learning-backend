@@ -48,37 +48,9 @@ module.exports = {
     }
     let lessonVocab = await VocabularyNew.findOne({id: inputs.vocabularyId});
 
-    let existingVocab = (await VocabularyNew.find({
-      vocabulary_class: 'User Vocabulary',
-      s: lessonVocab.s,
-      t: lessonVocab.t,
-      p: lessonVocab.p,
-      en: lessonVocab.en,
-      v3_id: lessonVocab.v3_id
-    }).limit(1))[0];
-
-    if (existingVocab) {
-      return
-    }
-
-    let newVocab;
-
     if (lessonVocab) {
-      delete lessonVocab.id;
-      lessonVocab.vocabulary_class = 'User Vocabulary';
-      newVocab = await VocabularyNew.create({
-        vocabulary_class: 'User Vocabulary',
-        s: lessonVocab.s,
-        t: lessonVocab.t,
-        p: lessonVocab.p,
-        en: lessonVocab.en,
-        display_order: lessonVocab.display_order,
-        audio: lessonVocab.audio,
-        image: lessonVocab.image,
-        v3_id: lessonVocab.v3_id
-      }).fetch();
 
-      let vocab = await UserVocabulary.updateOrCreate({user_id: inputs.userId, vocabulary_id: newVocab.id}, {user_id: inputs.userId, vocabulary_id: newVocab.id});
+      let vocab = await UserVocabulary.updateOrCreate({user_id: inputs.userId, vocabulary_id: lessonVocab.id}, {user_id: inputs.userId, vocabulary_id: lessonVocab.id});
 
       if (inputs.deckId) {
         await UserVocabularyToVocabularyTags.updateOrCreate({vocabulary_tag_id: inputs.deckId, user_vocabulary_id: vocab.id}, {vocabulary_tag_id: inputs.deckId, user_vocabulary_id: vocab.id})
