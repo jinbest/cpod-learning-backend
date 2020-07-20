@@ -47,7 +47,6 @@ module.exports = {
     }
 
     let promises = [];
-    let createdVocab = [];
 
     let lessonVocab = await VocabularyNew.find({id: {in: inputs.vocabularyId}});
 
@@ -65,26 +64,25 @@ module.exports = {
           .then(console.log))
       })
 
-      await Promise.all(promises)
+      let createdVocab = await Promise.all(promises)
         .catch((e) => sails.hooks.bugsnag.notify(e));
 
-    }
-
-    if (inputs.deckId) {
-
-      promises = [];
-      createdVocab.forEach(vocab => {
-        promises.push(
-          UserVocabularyToVocabularyTags.updateOrCreate(
-            {vocabulary_tag_id: inputs.deckId, user_vocabulary_id: vocab.id},
-            {vocabulary_tag_id: inputs.deckId, user_vocabulary_id: vocab.id}
+      if (inputs.deckId && createdVocab && createdVocab.length) {
+        promises = [];
+        createdVocab.forEach(vocab => {
+          promises.push(
+            UserVocabularyToVocabularyTags.updateOrCreate(
+              {vocabulary_tag_id: inputs.deckId, user_vocabulary_id: vocab.id},
+              {vocabulary_tag_id: inputs.deckId, user_vocabulary_id: vocab.id}
             )
-        )
-      });
-
-      await Promise.all(promises)
-        .catch((e) => sails.hooks.bugsnag.notify(e))
+          )
+        });
+        await Promise.all(promises)
+          .catch((e) => sails.hooks.bugsnag.notify(e))
+      }
     }
+
+
 
   }
 
