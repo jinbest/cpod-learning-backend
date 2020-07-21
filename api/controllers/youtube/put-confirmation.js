@@ -32,10 +32,7 @@ module.exports = {
 
     let userContest = await UserOptions.findOne({id: inputs.id, option_key: 'youtubeContest'});
 
-    // if (userContest && userContest.option_value === 'initial') {
-    if (userContest && userContest.user_id) {
-
-      //TODO: Determine Campaign Length - Currently 60 days
+    if (userContest && userContest.option_value === 'initial') {
       await UserSiteLinks.updateOrCreate(
         {user_id: userContest.user_id, site_id: 2},
         {user_id: userContest.user_id, site_id: 2, usertype_id: 5, expiry: moment().add(60, 'days').toDate()}
