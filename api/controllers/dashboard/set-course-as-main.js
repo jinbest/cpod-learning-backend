@@ -25,7 +25,7 @@ module.exports = {
 
     inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
-    let mainCourse =  await UserCourses.updateOne({user_id: inputs.userId, course: inputs.courseId}).set({default_status: 1});
+    let mainCourse = await UserCourses.updateOne({user_id: inputs.userId, course: inputs.courseId}).set({default_status: 1});
 
     sails.log.info(mainCourse)
 
