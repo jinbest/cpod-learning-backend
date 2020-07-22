@@ -51,8 +51,8 @@ module.exports = {
     let options =
       {
         adapter: require('skipper-s3')
-        , key: 'AKIA4DQYSAHG3CJYO4XH'
-        , secret: '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'
+        , key: sails.config.custom.awsKey
+        , secret: sails.config.custom.awsSecret
         , bucket: 'chinesepod-recap'
         , region: 'us-east-1'
         , dirname: lessonId

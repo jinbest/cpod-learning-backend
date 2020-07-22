@@ -27,8 +27,8 @@ module.exports = {
   fn: async function (inputs) {
     const options =
         {
-          key: 'AKIA4DQYSAHG3CJYO4XH'
-          , secret: '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'
+          key: sails.config.custom.awsKey
+          , secret: sails.config.custom.awsSecret
           , bucket: 'chinesepod-recap'
         }
       // This will give you an adapter instance configured with the
