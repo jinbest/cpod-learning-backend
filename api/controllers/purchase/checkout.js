@@ -156,6 +156,8 @@ module.exports = {
       }
     };
 
+    let transaction;
+
     if (inputs === {}) {
       throw {invalid: 'No Data Submitted'}
     }
@@ -642,7 +644,7 @@ module.exports = {
             sails.hooks.bugsnag.notify(e);
           }
 
-          let transaction = await Transactions.create({
+          transaction = await Transactions.create({
             subscription_id: subscription.id,
             transaction_id: stripeSubscription && stripeSubscription.charge ? stripeSubscription.charge : '',
             currency: stripeSubscription && stripeSubscription.currency ? stripeSubscription.currency.toUpperCase() : 'USD',
@@ -663,6 +665,12 @@ module.exports = {
             created_by: inputs.userId,
             modified_by: inputs.userId,
           }).fetch();
+
+          // If Trial - Mark User Record as Such
+          if (inputs.trial) {
+            await User.updateOne({id: inputs.userId})
+              .set({trial: new Date(Date.now()).toISOString()});
+          }
 
           if (inputs.address1 && inputs.country && inputs.city) {
             await TransactionAddresses.create({
@@ -711,32 +719,34 @@ module.exports = {
           exits.success();
         })
         .catch(async (err) => {
-          sails.log.error(err);
-          await sails.helpers.mailgun.sendHtmlEmail.with({
-            htmlMessage: `
-            <p>Failed User Purchase on https://www.chinesepod.com</p>
-            <br />
-            <p>Name: ${inputs.fName} ${inputs.lName}</p>
-            <p>Email: ${inputs.emailAddress}</p>
-            <br />
-            ${inputs.promoCode ? `<p>Code: ${inputs.promoCode}</p>` : ''}
-            <p>Product: ${inputs.plan} - ${inputs.billingCycle}</p>
-            <p>Error: ${err}</p>
-            <br />
-            <p>Cheers,</p>
-            <p>The Friendly ChinesePod Contact Robot</p>
-            `,
-            to: 'followup@chinesepod.com',
-            subject: 'Failed User Purchase',
-            from: 'errors@chinesepod.com',
-            fromName: 'ChinesePod Errors'
-          });
+          // sails.log.error(err);
+          // await sails.helpers.mailgun.sendHtmlEmail.with({
+          //   htmlMessage: `
+          //   <p>Failed User Purchase on https://www.chinesepod.com</p>
+          //   <br />
+          //   <p>Name: ${inputs.fName} ${inputs.lName}</p>
+          //   <p>Email: ${inputs.emailAddress}</p>
+          //   <br />
+          //   ${inputs.promoCode ? `<p>Code: ${inputs.promoCode}</p>` : ''}
+          //   <p>Product: ${inputs.plan} - ${inputs.billingCycle}</p>
+          //   <p>Error: ${err}</p>
+          //   <br />
+          //   <p>Cheers,</p>
+          //   <p>The Friendly ChinesePod Contact Robot</p>
+          //   `,
+          //   to: 'followup@chinesepod.com',
+          //   subject: 'Failed User Purchase',
+          //   from: 'errors@chinesepod.com',
+          //   fromName: 'ChinesePod Errors'
+          // });
 
-          errors.push(err.message);
-          throw {declined: errors.length > 0 ? errors[0] : 'Could not confirm the payment method. Please try again later.'};
+          // errors.push(err.message);
+          // throw {declined: errors.length > 0 ? errors[0] : 'Could not confirm the payment method. Please try again later.'};
         })
 
-    } else {
+    }
+
+    if (!transaction) {
 
       await stripe.subscriptions.create({
         customer: customerData.id,
@@ -746,11 +756,7 @@ module.exports = {
         cancel_at_period_end: !!inputs.nonRecurring
       })
         .then(async (subscription) => {
-          // If Trial - Mark User Record as Such
-          if (inputs.trial) {
-            await User.updateOne({id: inputs.userId})
-              .set({trial: new Date(Date.now()).toISOString()});
-          }
+
           try {
             cardData = customerData.sources.data[0];
           } catch (e) {
@@ -804,7 +810,7 @@ module.exports = {
             sails.hooks.bugsnag.notify(e);
           }
 
-          let transaction = await Transactions.create({
+          transaction = await Transactions.create({
             subscription_id: subscription.id,
             transaction_id: stripeSubscription && stripeSubscription.charge ? stripeSubscription.charge : '',
             currency: stripeSubscription && stripeSubscription.currency ? stripeSubscription.currency.toUpperCase() : 'USD',
@@ -825,6 +831,12 @@ module.exports = {
             created_by: inputs.userId,
             modified_by: inputs.userId,
           }).fetch();
+
+          // If Trial - Mark User Record as Such
+          if (inputs.trial) {
+            await User.updateOne({id: inputs.userId})
+              .set({trial: new Date(Date.now()).toISOString()});
+          }
 
           if (inputs.address1 && inputs.country && inputs.city) {
             await TransactionAddresses.create({
