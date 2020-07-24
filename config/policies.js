@@ -65,5 +65,8 @@ module.exports.policies = {
   'vocabulary/*': 'is-authenticated',
   'search/*': 'is-authenticated',
   'token/check': 'is-authenticated',
-
+  'account/settings/*': 'is-authenticated',
+  'account/subscription/*': 'is-authenticated',
+  'account/upload-avatar': 'is-authenticated',
+  'account/update-password': 'is-authenticated',
 };
