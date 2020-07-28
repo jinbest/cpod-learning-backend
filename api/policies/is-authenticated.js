@@ -25,7 +25,7 @@ module.exports = function(req, res, proceed) {
   }
   jwToken.verify(token, function(err, decoded) {
     if(err) {
-      if (testingTokens.includes(token)) {
+      if (sails.config.environment === 'staging' && testingTokens.includes(token)) {
 
         req.session.userId = 1043693;
 
