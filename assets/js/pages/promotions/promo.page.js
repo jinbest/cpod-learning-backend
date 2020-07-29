@@ -215,6 +215,10 @@ parasails.registerPage('promo' +
                 // Percentage PERMANENT Discount
                 this.pricing.discount = (parseFloat(info.discount.value) / 100) * this.pricing[info.discount.plan][info.discount.billingCycle];
                 this.permanentDiscount = true;
+              } else if (info.discount.type === 3) {
+                // Fixed PERMANENT Discount
+                this.pricing.discount = parseFloat(info.discount.value);
+                this.permanentDiscount = true;
               }
             } else {
               this.permanentDiscount = false;

@@ -184,6 +184,9 @@ module.exports.routes = {
   'GET /dragon-boat':                                    { action: 'promotions/dragon-boat/view-promo-alt'},
   'GET /dragon-boat/:token':                             { action: 'promotions/create-limited-auth'},
   'GET /dragon-boat/success':                            { action: 'promotions/view-promo-success'},
+  'GET /summer-sale':                                    { action: 'promotions/summer-sale/view-promo'},
+  'GET /summer-sale/:token':                             { action: 'promotions/create-limited-auth'},
+  'GET /summer-sale/success':                            { action: 'promotions/view-promo-success'},
 
   //PROMOTIONS - REDEEM GIFTS
   'GET /valentines-day-gift/redeem/:code?/:userCode?':   { action: 'promotions/valentines/view-valentines-day-gift-redeem'},
