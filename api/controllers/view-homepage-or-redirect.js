@@ -26,7 +26,7 @@ module.exports = {
   fn: async function () {
     let wistia = false;
 
-    let video = `<div class="embed-responsive embed-responsive-16by9" ><iframe id="cpod-vid" width="100%" height="315" src="https://www.youtube.com/embed/UO92C1JHRI0?rel=0&amp;showinfo=0&autoplay=true" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe></div>`;
+    let video = `<div class="embed-responsive embed-responsive-16by9" ><iframe id="cpod-vid" width="100%" height="315" src="https://www.youtube.com/embed/NjCYc5p8a5c?rel=0&amp;showinfo=0&autoplay=true" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe></div>`;
 
     if (this.req.me) {
       throw {redirect:'/home'};
@@ -37,7 +37,6 @@ module.exports = {
 
     if (this.req.ip && this.req.ip !== '::1') {
       ipData = geoip.lookup(this.req.ip);
-      // ipData = geoip.lookup('42.200.130.138');
     }
 
     if (ipData && ['CN', 'HK'].includes(ipData.country)) {
