@@ -38,6 +38,7 @@ module.exports = {
           '  <loc>https://www.chinesepod.com/lesson/' + _.escape(lesson.slug)+'</loc>\n'+
           '  <lastmod>'+_.escape(lesson.updatedAt.toISOString())+'</lastmod>\n'+
           '<changefreq>weekly</changefreq>\n'+
+          '<priority>1.0</priority>\n'+
           '</url>'
         );
     });

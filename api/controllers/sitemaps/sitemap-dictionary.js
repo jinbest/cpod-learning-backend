@@ -63,6 +63,7 @@ module.exports = {
           '  <loc>https://www.chinesepod.com/dictionary/' + _.escape(entry.simplified)+'</loc>\n'+
           '  <lastmod>'+_.escape(new Date().toISOString())+'</lastmod>\n'+
           '<changefreq>monthly</changefreq>\n'+
+          '<priority>0.8</priority>\n'+
           '</url>'
         );
     });
