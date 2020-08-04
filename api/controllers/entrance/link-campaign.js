@@ -27,8 +27,9 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    //TODO: ADD SOME VALIDATION
-    this.req.session.campaignId = inputs.campaignId.toUpperCase();
+    if (inputs.campaignId) {
+      this.req.session.campaignId = inputs.campaignId.toUpperCase();
+    }
 
     let path = this.req.url.split(`/${inputs.campaignId}`).join('/');
 

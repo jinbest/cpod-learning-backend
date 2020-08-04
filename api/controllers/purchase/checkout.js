@@ -218,6 +218,10 @@ module.exports = {
         .intercept({name: 'UsageError'}, 'invalid')
         .fetch();
 
+      if (this.req.session && this.req.session.campaignId) {
+        await UserOptions.create({user_id: newUserRecord.id, option_key: 'campaignId', option_value: this.req.session.campaignId})
+      }
+
       let newUserSite = await UserSiteLinks.create(_.extend({
         user_id: newUserRecord.id,
         usertype_id: 7, //Free

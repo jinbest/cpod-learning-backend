@@ -6,7 +6,6 @@ module.exports = {
 
   description: 'Display "Signup" page.',
 
-
   exits: {
 
     success: {
@@ -25,6 +24,10 @@ module.exports = {
 
     if (this.req.me) {
       throw {redirect: '/home'};
+    }
+
+    if (this.req.param('campaignId')) {
+      this.req.session.campaignId = this.req.param('campaignId').toUpperCase();
     }
 
     return {};

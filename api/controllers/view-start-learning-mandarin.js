@@ -18,6 +18,10 @@ module.exports = {
 
   fn: async function () {
 
+    if (this.req.param('campaignId')) {
+      this.req.session.campaignId = this.req.param('campaignId').toUpperCase();
+    }
+
     // Respond with view.
     return {};
 
