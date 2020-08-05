@@ -142,6 +142,9 @@ module.exports.routes = {
 
   //MISC
   'GET /lesson-redirect/:v3id?':                         { action: 'lesson-redirect' },
+  'GET r|^/(\\w*\\d{3,4})$|v3id':                                { action: 'lesson-redirect' },
+  'GET r|^/(\\w*\\d{3,4})/(\\S+)$|v3id,lessonTitle':             { action: 'lesson-redirect' },
+  'GET r|^/(\\w*\\d{3,4})/(\\S+)/(\\d+)$|v3id,lessonTitle,courseId': { action: 'lesson-redirect' },
   'GET /redirect/:link*':                                { action: 'email-redirect' },
 
   //PROMOTIONS

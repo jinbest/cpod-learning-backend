@@ -106,13 +106,20 @@ module.exports = {
       latestStudiedLesson = currentLesson['option_value']
 
       if (currentLesson['updatedAt'] < new Date(Date.now() - 60 * 60 * 1000)) {
-
-        userInfoQueue.add('SetCurrentLesson', {email: user.email}, {jobId: `SetCurrentLesson-${user.email}`, attempts: 2, timeout: 600000, removeOnComplete: true, removeOnFail: true});
+        try {
+          userInfoQueue.add('SetCurrentLesson', {email: user.email}, {jobId: `SetCurrentLesson-${user.email}`, attempts: 2, timeout: 600000, removeOnComplete: true, removeOnFail: true});
+        } catch (e) {
+          sails.log.error(e)
+        }
 
       }
 
     } else {
-      userInfoQueue.add('SetCurrentLesson', {email: user.email}, {jobId: `SetCurrentLesson-${user.email}`, attempts: 2, timeout: 600000, removeOnComplete: true, removeOnFail: true});
+      try {
+        userInfoQueue.add('SetCurrentLesson', {email: user.email}, {jobId: `SetCurrentLesson-${user.email}`, attempts: 2, timeout: 600000, removeOnComplete: true, removeOnFail: true});
+      } catch (e) {
+        sails.log.error(e)
+      }
     }
 
     let returnData;
@@ -155,7 +162,7 @@ module.exports = {
       let content = await Contents.findOne({v3_id: latestStudiedLesson});
       let lessonImg = '';
       if (content) {
-        lessonImg = content.type === 'lesson'
+        lessonImg = !content.image ? '' : content.image.slice(0,4) === 'http' ? content.image : content.type === 'lesson'
           ? `https://s3contents.chinesepod.com/${content.v3_id}/${content.hash_code}/${content.image}`
           : `https://s3contents.chinesepod.com/extra/${content.v3_id}/${content.hash_code}/${content.image}`;
       }
