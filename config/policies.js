@@ -36,6 +36,7 @@ module.exports.policies = {
   'placement/*': 'is-logged-in',
   'dash/*': 'is-logged-in',
   'home/*': 'is-logged-in',
+  'objectives/*': 'is-logged-in',
   'podcasts/*': true,
 
   'redeem/view-redeem-voucher': 'is-logged-in',
