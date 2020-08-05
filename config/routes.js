@@ -99,6 +99,7 @@ module.exports.routes = {
   //DASHBOARD
   'GET /dash/:unused?*':                                 'HomeController.serve',
   'GET /home/:unused?*':                                 'HomeController.serve',
+  'GET /objectives/:unused?*':                           'ObjectivesController.serve',
   'GET /latest/:unused?*':                               'HomeController.serve',
   'GET /history/:unused?*':                              'HomeController.serve',
   'GET /bookmarks/:unused?*':                            'HomeController.serve',
