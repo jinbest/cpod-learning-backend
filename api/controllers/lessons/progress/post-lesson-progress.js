@@ -32,14 +32,20 @@ module.exports = {
 
 
   exits: {
-
+    invalid: {
+      responseType: 'badRequest'
+    }
   },
 
 
   fn: async function (inputs) {
 
     if (!inputs.userId) {
-      inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
+      inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session && this.req.session.userId ? this.req.session.userId : '';
+    }
+
+    if (!inputs.userId) {
+      throw 'invalid'
     }
 
     if (!inputs.source) {

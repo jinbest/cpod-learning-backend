@@ -60,6 +60,7 @@ module.exports.policies = {
 
   'dashboard/*': 'is-authenticated',
   'lessons/*': ['is-authenticated', contentLimiter],
+  'lessons/progress/post-lesson-progress': true,
   'lessons/get-sitemap': true,
   'lessons/get-details': true,
   'exercises/*': 'is-authenticated',
