@@ -7,7 +7,7 @@
   "dependencies": {
     "@bugsnag/js": "^6.5.2",
     "@bugsnag/plugin-express": "^6.5.1",
-    "@elastic/elasticsearch": "^7.6.1",
+    "@elastic/elasticsearch": "7.7.1",
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@logisticinfotech/sails-hook-actions2-swagger": "0.0.9",
     "@nuxtjs/axios": "^5.10.0",

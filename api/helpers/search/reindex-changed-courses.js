@@ -51,20 +51,21 @@ module.exports = {
     sails.log.info('Records Pooled');
 
     let commands = [];
-    let action = {
-      index: {
-        _index: index.elasticIndex,
-        _type: index.elasticIndex
-      }
-    };
 
     records.forEach(record => {
+      let action = {
+        index: {
+          _index: index.elasticIndex,
+          _type: index.elasticIndex,
+        }
+      };
+
       let indexRecord = {};
       index.elasticRecord.forEach(key => {
         indexRecord[key] = record[key];
       });
 
-      action['_id'] = indexRecord['id'];
+      action['index']['_id'] = indexRecord['id'];
 
       commands.push(action);
       commands.push(indexRecord);
