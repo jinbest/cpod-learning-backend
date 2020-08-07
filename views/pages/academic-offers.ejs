@@ -123,16 +123,16 @@
                                 <div class="form-block__row">
                                     <div class="form-block__col">
                                         <label class="form-block__label">Name</label>
-                                        <input type="text" name="first_name"  v-model.trim="data.fullName" placeholder="First Name"
+                                        <input type="text" name="fullName"  v-model.trim="data.fullName" placeholder="First Name"
                                                class="form-block__input">
-                                        <span for="email" class="has-error"
+                                        <span for="fullName" class="has-error"
                                               v-if="errors.fullName">Please enter your email</span>
                                     </div>
                                     <div class="form-block__col">
                                         <label class="form-block__label">School</label>
                                         <input type="text" v-model.trim="data.schoolName" name="school_name" placeholder="Name of your school"
                                                class="form-block__input">
-                                        <span for="email" class="has-error"
+                                        <span for="school_name" class="has-error"
                                               v-if="errors.schoolName">Please enter your email</span>
                                     </div>
                                 </div>
@@ -163,7 +163,7 @@
                                                name="message"
                                                placeholder="What are your offers for schools?"
                                                class="form-block__input">
-                                        <span for="email" class="has-error"
+                                        <span for="message" class="has-error"
                                               v-if="errors.message">Please enter your message</span>
                                     </div>
                                 </div>
@@ -365,16 +365,16 @@
                             <div class="form-block__row">
                                 <div class="form-block__col">
                                     <label class="form-block__label">Name</label>
-                                    <input type="text" name="first_name"  v-model.trim="data.fullName" placeholder="First Name"
+                                    <input type="text" name="fullName"  v-model.trim="data.fullName" placeholder="First Name"
                                            class="form-block__input">
-                                    <span for="email" class="has-error"
+                                    <span for="fullName" class="has-error"
                                           v-if="errors.fullName">Please enter your email</span>
                                 </div>
                                 <div class="form-block__col">
                                     <label class="form-block__label">School</label>
                                     <input type="text" v-model.trim="data.schoolName" name="school_name" placeholder="Name of your school"
                                            class="form-block__input">
-                                    <span for="email" class="has-error"
+                                    <span for="school_name" class="has-error"
                                           v-if="errors.schoolName">Please enter your email</span>
                                 </div>
                             </div>
