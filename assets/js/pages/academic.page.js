@@ -317,6 +317,10 @@ parasails.registerPage('academic', {
       if (!argins.schoolName) {
         this.errors.schoolName = true;
       }
+      // Validate message:
+      if (!argins.message) {
+        this.errors.message = true;
+      }
 
 
       // If there were any issues, they've already now been communicated to the user,
