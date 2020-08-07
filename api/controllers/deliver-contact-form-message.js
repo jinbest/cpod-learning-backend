@@ -33,6 +33,10 @@ module.exports = {
       type: 'string',
       description: 'The custom message, in plain text.'
     },
+    phone: {
+      type: 'string',
+      description: 'The phone number, in plain text.'
+    },
     company: {
       type: 'string',
       description: 'Interested company'
@@ -84,7 +88,7 @@ your custom config -- usually in \`config/custom.js\`, \`config/staging.js\`,
         contactName: inputs.fullName,
         contactEmail: inputs.emailAddress,
         topic: `${inputs.company || inputs.schoolName ? `[INQUIRY] ${inputs.company ? `${inputs.company} - ` : `${inputs.schoolName} - `}`: ''}${inputs.topic ? `${inputs.topic}` : ''}`,
-        message: inputs.message ? inputs.message : 'Inquiry'
+        message: inputs.message ? inputs.phone ? `Phone Number: ${inputs.phone} | Message: ${inputs.message}` : inputs.message : 'Inquiry'
       }
     });
 
@@ -99,7 +103,7 @@ your custom config -- usually in \`config/custom.js\`, \`config/staging.js\`,
         request: {
           subject: `${inputs.company || inputs.schoolName ? `[INQUIRY] ${inputs.company ? `${inputs.company} - ` : `${inputs.schoolName} - `}`: ''}${inputs.topic ? `${inputs.topic}` : ''}`,
           comment: {
-            body: inputs.message ? inputs.message : 'Inquiry',
+            body: inputs.message ? inputs.phone ? `Phone Number: ${inputs.phone} | Message: ${inputs.message}` : inputs.message : 'Inquiry'
           },
           requester: {
             name: inputs.fullName,
