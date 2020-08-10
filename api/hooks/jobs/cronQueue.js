@@ -33,7 +33,7 @@ if (process.env.NODE_ENV !== 'production' || sails.config.environment === 'stagi
   triggerQueue.process('Cleanup', 1, async function () {
     await RefreshTokens.destroy({expiry: {'<': new Date()}});
     await LinkDevice.destroy({updatedAt: {'<': new Date(Date.now() - 1000*60*60*24)}});
-    await NySessions.destroy({updatedAt: {'<': new Date(Date.now() - 1000*60*60*24*60)}});
+    await NySession.destroy({updatedAt: {'<': new Date(Date.now() - 1000*60*60*24*60)}});
   })
 
   triggerQueue.add('NewLessonNotifications', {data: 'Check Lessons Every 15 min'}, {repeat: {every: 15 * 60 * 1000}});
