@@ -67,6 +67,8 @@
     "paypal-rest-sdk": "^1.8.1",
     "pinyin-tone-converter": "^1.0.0",
     "popper.js": "^1.16.1",
+    "rand-token": "^1.0.1",
+    "random-words": "^1.1.1",
     "rate-limit-redis": "^1.7.0",
     "redis": "^2.8.0",
     "sails": "^1.2.4",

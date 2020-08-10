@@ -49,13 +49,13 @@ module.exports = {
       type: "number",
       columnType: "int",
       isInteger: true,
-      allowNull: true
+      defaultsTo: 0
     },
     admin_session: {
       type: "number",
       columnType: "int",
       isInteger: true,
-      allowNull: true
+      defaultsTo: 0
     },
     param1: {
       type: "string",
@@ -90,7 +90,7 @@ module.exports = {
     client_id: {
       type: "ref",
       columnType: "varchar",
-      maxLength: 100,
+      maxLength: 100
     },
   }
 };

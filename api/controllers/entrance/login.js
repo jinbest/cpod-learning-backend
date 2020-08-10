@@ -71,6 +71,8 @@ and exposed as \`req.me\`.)`
 
   fn: async function (inputs) {
 
+    let randomToken = require('rand-token');
+
     sails.log.info({inputs: inputs});
 
     // Look up by the email address.
@@ -121,18 +123,32 @@ and exposed as \`req.me\`.)`
 
     delete this.req.session.limitedAuth;
 
-    await sails.helpers.createPhpSession.with({
-      userId: userRecord.id,
-      // sessionId: this.req.session.id
-    })
-      .then((phpSessionId) => {
-        this.res.cookie('CPODSESSID', phpSessionId, {
-          domain: '.chinesepod.com',
-          expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
+    if (!this.req.wantsJSON) {
+      await sails.helpers.createPhpSession.with({
+        userId: userRecord.id,
+        // sessionId: this.req.session.id
+      })
+        .then((phpSessionId) => {
+          this.res.cookie('CPODSESSID', phpSessionId, {
+            domain: '.chinesepod.com',
+            expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
+          });
         });
-      });
+    } else {
+      const refreshToken = randomToken.uid(128);
 
-    return {token: jwToken.sign({userId: userRecord.id})};
+      await RefreshTokens.create({
+        user_id: userRecord.id,
+        refresh_token: refreshToken,
+        ip_address: this.req.ip,
+        user_agent: this.req.headers['user-agent']
+      })
+
+      return {
+        token: jwToken.sign({userId: userRecord.id}),
+        refreshToken: refreshToken
+      };
+    }
 
   }
 };

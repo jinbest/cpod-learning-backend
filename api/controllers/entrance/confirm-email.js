@@ -47,13 +47,22 @@ then redirect to either a special landing page (for newly-signed up users), or t
 
 
   fn: async function (inputs) {
+
+    let randomToken = require('rand-token');
+
     // If no token was provided, this is automatically invalid.
     if (!inputs.code) {
       throw 'invalidOrExpiredToken';
     }
 
     // Get the user with the matching email token.
-    var user = await User.findOne({ code: inputs.code });
+    let user;
+    try {
+      user = await User.findOne({ code: inputs.code });
+    } catch (e) {
+      throw 'invalidOrExpiredToken';
+    }
+
 
     // If no such user exists, or their token is expired, bail.
     if (!user || user.confirm_status) {
@@ -77,7 +86,21 @@ then redirect to either a special landing page (for newly-signed up users), or t
     this.req.visitor.event("confirm_account", "confirm_account").send();
 
     if (this.req.wantsJSON) {
-      return {success: 1};
+
+      const refreshToken = randomToken.uid(128);
+
+      await RefreshTokens.create({
+        user_id: user.id,
+        refresh_token: refreshToken,
+        ip_address: this.req.ip,
+        user_agent: this.req.headers['user-agent']
+      })
+
+      return {
+        success: 1,
+        token: jwToken.sign({userId: user.id}),
+        refreshToken: refreshToken
+      };
     } else {
       //Create PHP Website Session & Cookie
       await sails.helpers.createPhpSession.with({

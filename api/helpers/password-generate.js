@@ -48,18 +48,30 @@ module.exports = {
   },
 
   fn: async function(inputs) {
-    var xkpasswd = require('xkpasswd');
+    var randomWords = require('random-words');
 
-    let options = {
-      complexity: inputs.complexity ? inputs.complexity : 1,
-      separators: '-',
-      wordList: __dirname + '/../../assets/json/passList.json'
-    };
+    // let options = {
+    //   complexity: inputs.complexity ? inputs.complexity : 1,
+    //   separators: '-',
+    //   wordList: __dirname + '/../../assets/json/passList.json'
+    // };
+    //
 
     if (inputs.pattern) {
-      options.pattern = inputs.pattern
+
+      let randomWord = '';
+
+      while (randomWord.length < 6) {
+        randomWord = randomWords();
+      }
+
+      return randomWord
+
+    } else {
+
+      return randomWords({exactly: 2, join: '-'})
+
     }
 
-    return xkpasswd(options);
   }
 };

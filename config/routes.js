@@ -307,6 +307,8 @@ module.exports.routes = {
   // ENTRANCE
   'POST   /api/v1/placement/email-results':              { action: 'placement/email-results' },
   'POST  /api/v1/entrance/signup':                       { action: 'entrance/signup' },
+  'POST  /api/v1/entrance/signup-app':                   { action: 'entrance/signup-app' },
+  'POST  /api/v1/entrance/google':                       { action: 'entrance/login-google' },
   'POST  /api/v1/entrance/login':                        { action: 'entrance/login' },
   'POST  /api/v1/entrance/password/reset':               { action: 'entrance/send-password-recovery-email' },
   'POST  /api/v1/entrance/password/update':              { action: 'entrance/update-password-and-login' },
@@ -463,6 +465,7 @@ module.exports.routes = {
   'GET /api/v1/token':                                   { action: 'token/check'},
   'POST /api/v1/token':                                  { action: 'token/get'},
   'POST /api/v1/token/auth':                             { action: 'token/auth'},
+  'POST /api/v1/token/refresh':                          { action: 'token/refresh'},
 
   //ADS
   'GET /api/v1/ads/android-app':                         { action: 'ads/android-app'},
