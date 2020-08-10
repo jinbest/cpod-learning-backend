@@ -37,7 +37,10 @@ module.exports = {
 
     if (validApps[inputs.clientType] && validApps[inputs.clientType].includes(inputs.clientKey)) {
 
-
+      return _.pick(await LinkDevice.create({
+        code: await sails.helpers.strings.random('url-friendly').slice(0,6).toUpperCase(),
+        client_id: inputs.clientType
+      }).fetch(), ['id', 'code']);
 
     } else {
       throw 'invalid'

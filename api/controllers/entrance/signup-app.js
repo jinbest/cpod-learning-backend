@@ -33,7 +33,15 @@ the account verification message.)`,
       required: true,
       type: 'string',
       description: 'User Designated Password'
-    }
+    },
+    clientKey: {
+      type: 'string',
+      required: true
+    },
+    clientType: {
+      type: 'string',
+      required: true
+    },
   },
 
 

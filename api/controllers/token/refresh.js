@@ -50,6 +50,8 @@ module.exports = {
         throw 'invalid'
       }
 
+      await RefreshTokens.updateOne({id: refreshToken.id}).set({client_id: inputs.client, user_agent: this.req.headers['user-agent']});
+
       return {
         token: jwToken.sign({userId: inputs.userId}),
         refreshToken: refreshToken.refresh_token

@@ -13,7 +13,11 @@ module.exports = {
       type:  'string',
       description: 'Session ID provided by the PHP site API layer',
       example: '4d99a8f17364d8caedc4b64e8d5b319e973b6abc39addbba58538f594468961a4ce883',
-      required: true
+    },
+    token: {
+      type:  'string',
+      description: 'JWT access token',
+      example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7fSwiaWF0IjoxNTk3MDM1ODM2LCJleHAiOjE1OTk2Mjc4MzZ9.qW7Z3AIikdeXUWiY9TWliPNIf4mbHTNuGZLnIwePNZc',
     },
     version: {
       type: 'string'
@@ -30,7 +34,7 @@ module.exports = {
 
     invalid: {
       responseType: 'badRequest',
-      description: 'The provided sessionid is invalid.',
+      description: 'The provided sessionid or token is invalid.',
     },
 
     noLesson: {
@@ -43,17 +47,42 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    let session = await sails.helpers.phpApi.checkSession(inputs.sessionId);
-
-    sails.log.info(session)
-
-    if(!session) {
+    if (!inputs.sessionId && ! inputs.token) {
       throw 'invalid'
     }
 
-    let user = await User.findOne({
-      email: session.email
-    });
+    let user;
+
+    if (inputs.token) {
+      let data;
+      jwToken.verify(inputs.token, (err, decoded) => {
+        if (err) {
+          throw 'invalid'
+        }
+        if (decoded && decoded.data) {
+          data = decoded.data
+        }
+      });
+      if (data && data.userId) {
+        user = await User.findOne({
+          id: data.userId
+        });
+      }
+    } else if (inputs.sessionId) {
+      let session = await sails.helpers.phpApi.checkSession(inputs.sessionId);
+
+      sails.log.info(session)
+
+      if(!session) {
+        throw 'invalid'
+      }
+
+      user = await User.findOne({
+        email: session.email
+      });
+    }
+
+
 
     sails.log.info(user)
 

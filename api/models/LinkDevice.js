@@ -20,9 +20,11 @@ module.exports = {
       allowNull: true
     },
     user_id: {
-      model: 'User'
+      type: 'number',
+      isInteger: true,
+      defaultsTo: 0
     },
-    sessionId: {
+    refreshToken: {
       type: 'string',
       columnName: 'sessionid',
       allowNull: true
@@ -30,7 +32,7 @@ module.exports = {
     status: {
       type: 'number',
       isInteger: true,
-      defaultsTo: 0
+      defaultsTo: 1
     },
     updatedAt: {
       type: 'ref',

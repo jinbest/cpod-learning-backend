@@ -467,6 +467,11 @@ module.exports.routes = {
   'POST /api/v1/token/auth':                             { action: 'token/auth'},
   'POST /api/v1/token/refresh':                          { action: 'token/refresh'},
 
+  // Link Device Routes
+  'PUT /api/v1/device/code':                             { action: 'device/get-code'},
+  'POST /api/v1/device/code':                            { action: 'device/link-code'},
+  'POST /api/v1/device/code/:id':                        { action: 'device/confirm-code'},
+
   //ADS
   'GET /api/v1/ads/android-app':                         { action: 'ads/android-app'},
 
