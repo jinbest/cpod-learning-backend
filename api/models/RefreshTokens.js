@@ -23,6 +23,11 @@ module.exports = {
       columnType: "datetime",
       autoUpdatedAt: true
     },
+    expiry: {
+      type: "string",
+      columnType: "datetime",
+      defaultsTo: new Date(Date.now() + 1000 * 60 * 60)
+    },
     user_id: {
       model: 'User'
     },

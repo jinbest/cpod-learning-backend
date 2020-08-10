@@ -112,6 +112,7 @@ module.exports.custom = {
 
   // JWT Secret
   jwtSecret: 'e24qwkdj6wm7inne45fau5my7zuk2q8l3w5xn7ct',
+  jwtRefreshExpiry: 90*24*60*60*1000,
 
 
   // ADVERTISING PROMOS

@@ -125,6 +125,7 @@ password attempt.`,
     await RefreshTokens.create({
       user_id: userData.id,
       refresh_token: refreshToken,
+      expiry: new Date(Date.now() + sails.config.custom.jwtRefreshExpiry),
       ip_address: this.req.ip,
       user_agent: this.req.headers['user-agent']
     })

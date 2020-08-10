@@ -56,6 +56,7 @@ module.exports = {
         await RefreshTokens.create({
           user_id: linkedAccount.user_id,
           refresh_token: token,
+          expiry: new Date(Date.now() + sails.config.custom.jwtRefreshExpiry),
           ip_address: this.req.ip,
           user_agent: this.req.headers['user-agent']
         })

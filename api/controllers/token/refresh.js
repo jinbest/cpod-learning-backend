@@ -46,7 +46,7 @@ module.exports = {
 
       let refreshToken = await RefreshTokens.findOne({refresh_token: inputs.refreshToken});
 
-      if (!refreshToken || refreshToken.createdAt < new Date(Date.now - 1000 * 60 * 60 * 24 * 90)) {
+      if (!refreshToken || refreshToken.expiry > new Date()) {
         throw 'invalid'
       }
 

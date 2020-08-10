@@ -92,6 +92,7 @@ then redirect to either a special landing page (for newly-signed up users), or t
       await RefreshTokens.create({
         user_id: user.id,
         refresh_token: refreshToken,
+        expiry: new Date(Date.now() + sails.config.custom.jwtRefreshExpiry),
         ip_address: this.req.ip,
         user_agent: this.req.headers['user-agent']
       })

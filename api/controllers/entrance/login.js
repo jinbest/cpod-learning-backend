@@ -140,6 +140,7 @@ and exposed as \`req.me\`.)`
       await RefreshTokens.create({
         user_id: userRecord.id,
         refresh_token: refreshToken,
+        expiry: new Date(Date.now() + sails.config.custom.jwtRefreshExpiry),
         ip_address: this.req.ip,
         user_agent: this.req.headers['user-agent']
       })
