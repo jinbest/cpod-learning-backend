@@ -26,7 +26,7 @@ module.exports = {
     expiry: {
       type: "string",
       columnType: "datetime",
-      defaultsTo: new Date(Date.now() + 1000 * 60 * 60)
+      allowNull: true
     },
     user_id: {
       model: 'User'
