@@ -464,7 +464,7 @@ module.exports = function defineJobsHook(sails) {
               if(currentLinks && Array.isArray(currentLinks)) {
                 return await UserOptions
                   .updateOne({id: userAffiliateConnections.id})
-                  .set({option_key: JSON.stringify(currentLinks.concat(affid))})
+                  .set({option_value: JSON.stringify(currentLinks.concat(affid))})
               }
             } catch (e) {sails.log.error(e)}
           }
