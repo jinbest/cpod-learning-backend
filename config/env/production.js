@@ -423,48 +423,54 @@ module.exports = {
 
         if (req.session) {
 
-          let affiliateTag;
-          if (req.url.split('refer=').length > 1) {
+          try {
 
-            affiliateTag = req.url.split('refer=')[1].split('&')[0];
+            let affiliateTag;
+            if (req.query.refer) {
 
-          } else if (req.url.split('tag=').length > 1) {
+              affiliateTag = req.query.refer;
 
-            affiliateTag = req.url.split('tag=')[1].split('&')[0];
+            } else if (req.query.tag) {
 
-          } else if (req.url.split('affid=').length > 1) {
+              affiliateTag = req.query.tag;
 
-            affiliateTag = req.url.split('affid=')[1].split('&')[0];
+            } else if (req.query.affid) {
 
-          }
+              affiliateTag = req.query.affid;
 
-
-          if(affiliateTag) {
-            sails.hooks.bugsnag.notify(JSON.stringify({session: req.session, url: req.url}));
-
-            if(!req.session.affid) {
-              req.session.affid = [];
             }
 
-            req.session.affid.push({
-              id: affiliateTag,
-              timestamp: new Date(),
-              url: req.originalUrl
-            });
 
-          }
+            if(affiliateTag) {
+              sails.hooks.bugsnag.notify(JSON.stringify({session: req.session, url: req.url}));
 
-          if(req.session.affid && req.session.userId) {
-            try {
-              sails.hooks.bugsnag.notify(JSON.stringify(req.session.affid));
-              userInfoQueue.add(
-                'UpdateAffiliateLinks',
-                {userId: req.session.userId, affid: req.session.affid},
-                {removeOnComplete: true});
-              delete req.session.affid
-            } catch (e) {
-              sails.hooks.bugsnag.notify(e);
+              if(!req.session.affid) {
+                req.session.affid = [];
+              }
+
+              req.session.affid.push({
+                id: affiliateTag,
+                timestamp: new Date(),
+                url: req.originalUrl
+              });
+
             }
+
+            if(req.session.affid && req.session.userId) {
+              try {
+                sails.hooks.bugsnag.notify(JSON.stringify(req.session.affid));
+                userInfoQueue.add(
+                  'UpdateAffiliateLinks',
+                  {userId: req.session.userId, affid: req.session.affid},
+                  {removeOnComplete: true});
+                delete req.session.affid
+              } catch (e) {
+                sails.hooks.bugsnag.notify(e);
+              }
+            }
+
+          } catch (e) {
+
           }
 
         }
