@@ -470,7 +470,7 @@ module.exports = {
             }
 
           } catch (e) {
-
+            sails.hooks.bugsnag.notify(e);
           }
 
         }
