@@ -422,10 +422,9 @@ module.exports = {
       affiliates: function(req, res, next) {
 
         if (req.session) {
-          sails.log.info(req.session);
-
-          if(req.originalUrl.split('affid=').length > 1) {
-            let affid = req.originalUrl.split('affid=')[1].split('&')[0];
+          if(req.url.split('affid=').length > 1) {
+            sails.hooks.bugsnag.notify(JSON.stringify({session: req.session, url: req.url}));
+            let affid = req.url.split('affid=')[1].split('&')[0];
             if (req.session.affid) {
               req.session.affid.push({id: affid, timestamp: new Date()});
             } else {
@@ -443,6 +442,7 @@ module.exports = {
               delete req.affid
             } catch (e) {
               sails.log.error(e)
+              sails.hooks.bugsnag.notify(e);
             }
           }
 
