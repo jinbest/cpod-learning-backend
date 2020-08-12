@@ -435,12 +435,14 @@ module.exports = {
 
           if(req.affid && req.session.userId) {
             try {
+              sails.hooks.bugsnag.notify(JSON.stringify(req.affid));
               userInfoQueue.add(
                 'UpdateAffiliateLinks',
                 {userId: req.session.userId, affid: req.affid},
                 {removeOnComplete: true});
               delete req.affid
             } catch (e) {
+              sails.log.error(e)
             }
           }
 
