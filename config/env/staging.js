@@ -85,11 +85,15 @@ module.exports = Object.assign({}, PRODUCTION_CONFIG, {
         'passportSession',
         'bodyParser',
         'compress',
-        'poweredBy',
+        'affiliates',
         'router',
         'www',
         'favicon',
       ],
+
+      affiliates: function(req, res, next) {
+        return next()
+      },
     }
   },
 
