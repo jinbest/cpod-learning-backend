@@ -475,7 +475,7 @@ module.exports = function defineJobsHook(sails) {
             .create({
               user_id: userId,
               option_key: 'affiliateConnections',
-              option_value: JSON.stringify([{id: affid, timestamp: timestamp}])
+              option_value: JSON.stringify(affid)
             })
             .fetch();
 
