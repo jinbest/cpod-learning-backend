@@ -40,7 +40,6 @@ module.exports.http = {
       'passportSession',
       'bodyParser',
       'compress',
-      'affiliates',
       'router',
       'www',
       'favicon',
@@ -60,37 +59,6 @@ module.exports.http = {
       var middlewareFn = skipper({ strict: true });
       return middlewareFn;
     })(),
-
-    affiliates: function(req, res, next) {
-
-      if (req.session) {
-        sails.log.info(req.session);
-
-        if(req.originalUrl.split('affid=').length > 1) {
-          let affid = req.originalUrl.split('affid=')[1].split('&')[0];
-          if (req.session.affid) {
-            req.session.affid.push({id: affid, timestamp: new Date()});
-          } else {
-            req.session.affid = [{id: affid, timestamp: new Date()}];
-          }
-        }
-
-        if(req.affid && req.session.userId) {
-            try {
-              userInfoQueue.add(
-                'UpdateAffiliateLinks',
-                {userId: req.session.userId, affid: req.affid},
-                {removeOnComplete: true});
-              delete req.affid
-            } catch (e) {
-            }
-        }
-
-      }
-
-
-      return next()
-    },
 
   },
 

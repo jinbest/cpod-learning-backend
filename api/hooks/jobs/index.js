@@ -466,9 +466,7 @@ module.exports = function defineJobsHook(sails) {
                   .updateOne({id: userAffiliateConnections.id})
                   .set({option_key: JSON.stringify(currentLinks.concat(affid))})
               }
-            } catch (e) {
-              sails.log.error(e)
-            }
+            } catch (e) {sails.log.error(e)}
           }
 
           return await UserOptions

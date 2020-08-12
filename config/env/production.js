@@ -422,14 +422,36 @@ module.exports = {
       affiliates: function(req, res, next) {
 
         if (req.session) {
-          if(req.url.split('affid=').length > 1) {
+
+          let affiliateTag;
+          if (req.url.split('refer=').length > 1) {
+
+            affiliateTag = req.url.split('refer=')[1].split('&')[0];
+
+          } else if (req.url.split('tag=').length > 1) {
+
+            affiliateTag = req.url.split('tag=')[1].split('&')[0];
+
+          } else if (req.url.split('affid=').length > 1) {
+
+            affiliateTag = req.url.split('affid=')[1].split('&')[0];
+
+          }
+
+
+          if(affiliateTag) {
             sails.hooks.bugsnag.notify(JSON.stringify({session: req.session, url: req.url}));
-            let affid = req.url.split('affid=')[1].split('&')[0];
-            if (req.session.affid) {
-              req.session.affid.push({id: affid, timestamp: new Date()});
-            } else {
-              req.session.affid = [{id: affid, timestamp: new Date()}];
+
+            if(!req.session.affid) {
+              req.session.affid = [];
             }
+
+            req.session.affid.push({
+              id: affiliateTag,
+              timestamp: new Date(),
+              url: req.originalUrl
+            });
+
           }
 
           if(req.session.affid && req.session.userId) {
@@ -441,7 +463,6 @@ module.exports = {
                 {removeOnComplete: true});
               delete req.session.affid
             } catch (e) {
-              sails.log.error(e)
               sails.hooks.bugsnag.notify(e);
             }
           }
