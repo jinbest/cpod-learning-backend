@@ -449,8 +449,8 @@ module.exports = {
               }
 
               req.session.affid.push({
-                id: affiliateTag,
-                timestamp: new Date(),
+                affiliate_id: affiliateTag,
+                createdAt: new Date(),
                 url: req.originalUrl
               });
 

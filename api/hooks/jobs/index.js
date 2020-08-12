@@ -454,27 +454,13 @@ module.exports = function defineJobsHook(sails) {
         userInfoQueue.process('UpdateAffiliateLinks', 1, async function(job) {
           let userId = job.data.userId;
           let affid = job.data.affid;
-          let userAffiliateConnections = await UserOptions.findOne({user_id: userId, option_key: 'affiliateConnections'});
 
-          if(userAffiliateConnections) {
+          affid.forEach(entry => {
+            entry.user_id = userId
+          })
 
-            try {
-              let currentLinks = JSON.parse(userAffiliateConnections.option_value);
-
-              if(currentLinks && Array.isArray(currentLinks)) {
-                return await UserOptions
-                  .updateOne({id: userAffiliateConnections.id})
-                  .set({option_value: JSON.stringify(currentLinks.concat(affid))})
-              }
-            } catch (e) {sails.log.error(e)}
-          }
-
-          return await UserOptions
-            .create({
-              user_id: userId,
-              option_key: 'affiliateConnections',
-              option_value: JSON.stringify(affid)
-            })
+          return await AffiliateLogs
+            .createEach(affid)
             .fetch();
 
         });
