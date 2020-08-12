@@ -53,7 +53,8 @@ module.exports = {
         'timestamp': new Date()
       },{
         attempts: 3,
-        timeout: 60000
+        timeout: 60000,
+        removeOnComplete: true
       })
 
     }

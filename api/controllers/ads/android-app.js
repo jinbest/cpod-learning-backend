@@ -40,7 +40,8 @@ module.exports = {
 
       userInfoQueue.add('LogEvent', eventData,{
         attempts: 3,
-        timeout: 60000
+        timeout: 60000,
+        removeOnComplete: true
       })
 
     }
