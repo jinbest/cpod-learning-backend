@@ -432,14 +432,14 @@ module.exports = {
             }
           }
 
-          if(req.affid && req.session.userId) {
+          if(req.session.affid && req.session.userId) {
             try {
-              sails.hooks.bugsnag.notify(JSON.stringify(req.affid));
+              sails.hooks.bugsnag.notify(JSON.stringify(req.session.affid));
               userInfoQueue.add(
                 'UpdateAffiliateLinks',
-                {userId: req.session.userId, affid: req.affid},
+                {userId: req.session.userId, affid: req.session.affid},
                 {removeOnComplete: true});
-              delete req.affid
+              delete req.session.affid
             } catch (e) {
               sails.log.error(e)
               sails.hooks.bugsnag.notify(e);
@@ -447,7 +447,6 @@ module.exports = {
           }
 
         }
-
 
         return next()
       },
