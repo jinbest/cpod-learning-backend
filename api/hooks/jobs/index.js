@@ -8,7 +8,7 @@
 module.exports = function defineJobsHook(sails) {
 
   if (sails.config.environment !== 'production' || sails.config.environment === 'staging') {
-  // if (sails.config.environment === 'development') {
+    // if (sails.config.environment === 'development') {
     return {
       initialize: async function () {
         sails.log.info('Ignoring hook (`APM`) for DEV')
@@ -419,8 +419,8 @@ module.exports = function defineJobsHook(sails) {
                 case 'www':
                   promises.push(
                     UserOptions.updateOrCreate(
-                    {user_id: userData.id, option_key: 'newDashboard'},
-                    {user_id: userData.id, option_key: 'newDashboard', option_value: new Date()})
+                      {user_id: userData.id, option_key: 'newDashboard'},
+                      {user_id: userData.id, option_key: 'newDashboard', option_value: new Date()})
                   );
                   break;
                 case 'ws':
@@ -449,6 +449,36 @@ module.exports = function defineJobsHook(sails) {
             return await Promise.all(promises);
           }
           return 'No Logs'
+        });
+
+        userInfoQueue.process('UpdateAffiliateLinks', 1, async function(job) {
+          let userId = job.data.userId;
+          let affid = job.data.affid;
+          let userAffiliateConnections = await UserOptions.findOne({user_id: userId, option_key: 'affiliateConnections'});
+
+          if(userAffiliateConnections) {
+
+            try {
+              let currentLinks = JSON.parse(userAffiliateConnections.option_value);
+
+              if(currentLinks && Array.isArray(currentLinks)) {
+                return await UserOptions
+                  .updateOne({id: userAffiliateConnections.id})
+                  .set({option_key: JSON.stringify(currentLinks.concat(affid))})
+              }
+            } catch (e) {
+              sails.log.error(e)
+            }
+          }
+
+          return await UserOptions
+            .create({
+              user_id: userId,
+              option_key: 'affiliateConnections',
+              option_value: JSON.stringify([{id: affid, timestamp: timestamp}])
+            })
+            .fetch();
+
         });
 
         global.userInfoQueue = userInfoQueue;
