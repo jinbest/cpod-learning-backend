@@ -473,6 +473,13 @@ module.exports.routes = {
   'POST /api/v1/device/code':                            { action: 'device/link-code'},
   'POST /api/v1/device/code/:id':                        { action: 'device/confirm-code'},
 
+  //AFFILIATE ROUTES
+  'PUT /api/v1/affiliate/enroll':                        { action: 'affiliate/enroll'},
+  'GET /api/v1/affiliate/options':                       { action: 'affiliate/get-options'},
+  'POST /api/v1/affiliate/options':                      { action: 'affiliate/post-options'},
+  'GET /api/v1/affiliate/leads':                         { action: 'affiliate/get-leads'},
+  'GET /api/v1/affiliate/payments':                      { action: 'affiliate/get-payments'},
+
   //ADS
   'GET /api/v1/ads/android-app':                         { action: 'ads/android-app'},
 
