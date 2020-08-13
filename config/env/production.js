@@ -451,7 +451,8 @@ module.exports = {
               req.session.affid.push({
                 affiliate_id: affiliateTag,
                 createdAt: new Date(),
-                url: req.originalUrl
+                url: req.originalUrl,
+                ip_address: req.ip
               });
 
             }

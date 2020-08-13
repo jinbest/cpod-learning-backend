@@ -452,11 +452,15 @@ module.exports = function defineJobsHook(sails) {
         });
 
         userInfoQueue.process('UpdateAffiliateLinks', 1, async function(job) {
+          const geoip = require('geoip-country')
+
           let userId = job.data.userId;
           let affid = job.data.affid;
 
           affid.forEach(entry => {
+            let ipData = geoip.lookup(entry.ip_address)
             entry.user_id = userId
+            entry.ip_country = ipData && ipData.country ? ipData.country : ''
           })
 
           return await AffiliateLogs

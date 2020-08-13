@@ -27,6 +27,14 @@ module.exports = {
     url: {
       type: 'string'
     },
+    ip_address: {
+      type: 'string',
+      allowNull: true
+    },
+    ip_country: {
+      type: 'string',
+      allowNull: true
+    },
     createdAt: {
       type: 'string',
       autoCreatedAt: true
