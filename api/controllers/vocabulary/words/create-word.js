@@ -27,6 +27,9 @@ module.exports = {
     lessonId: {
       type: 'string'
     },
+    audio: {
+      type: 'string'
+    }
 
   },
 
@@ -38,6 +41,8 @@ module.exports = {
 
   fn: async function (inputs) {
 
+    sails.log.info(inputs);
+
     inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
     let existingVocabulary = (await VocabularyNew
@@ -48,22 +53,25 @@ module.exports = {
     sails.log.info(existingVocabulary);
 
     let newVocab;
-    if (existingVocabulary && existingVocabulary.id) {
+    if (existingVocabulary && existingVocabulary.p === inputs.p && existingVocabulary.id) {
 
-       newVocab = existingVocabulary;
+      newVocab = existingVocabulary;
 
     } else {
 
+      //TODO: Improve New Vocab creation process
       newVocab = await VocabularyNew.create({
         ...inputs, ...{
           vocabulary_class: 'User Vocabulary',
           display_order: 1,
-          audio: existingVocabulary ? existingVocabulary.audio : '',
-          image: existingVocabulary ? existingVocabulary.image : '',
-          v3_id: existingVocabulary ? existingVocabulary.v3_id : '0000'
+          audio: inputs.audio ? inputs.audio : '',
+          image: '',
+          v3_id: '0000'
         }}).fetch();
 
     }
+
+    sails.log.info(newVocab)
 
     await UserVocabulary.updateOrCreate({user_id: inputs.userId, vocabulary_id: newVocab.id});
 

@@ -22,6 +22,9 @@ module.exports = {
     let sitemapXml = `
       <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
         <sitemap>
+          <loc>https://www.chinesepod.com/sitemaps/pages</loc>
+        </sitemap>
+        <sitemap>
           <loc>https://www.chinesepod.com/sitemaps/lessons</loc>
         </sitemap>
         <sitemap>

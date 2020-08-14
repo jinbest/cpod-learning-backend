@@ -16,7 +16,15 @@ module.exports = {
     },
     filters: {
       type: ['ref']
-    }
+    },
+    limit: {
+      type: 'number',
+      isInteger: true
+    },
+    skip: {
+      type: 'number',
+      isInteger: true
+    },
   },
 
 
@@ -27,48 +35,54 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    sails.log.info(inputs);
+    const containsChinese = require('contains-chinese');
+    let fuzziness = containsChinese(inputs.query) ? 0 : 1;
 
-    let sentences = await sails.hooks.elastic.client.search({
-      index: 'sentences',
-      type: 'sentences',
-      size: inputs.full ? 160 : 10,
-      body: {
-        query: {
-          multi_match: {
-            query: inputs.query,
-            fields: ['simplified', 'traditional', 'pinyin', 'english', 'pinyin_tones'],
-            operator: 'and',
-            analyzer: 'standard'
+    let fields = containsChinese(inputs.query)
+      ? ['simplified', 'traditional', 'pinyin', 'pinyin_tones', 'pinyin_permutations']
+      : ['simplified', 'traditional', 'pinyin', 'definitions', 'pinyin_tones', 'pinyin_permutations']
+
+    let vocabulary;
+    if(inputs.query) {
+      vocabulary = await sails.hooks.elastic.client.search({
+        index: 'vocabulary-search',
+        from: inputs.skip ? inputs.skip : 0,
+        size: inputs.limit ? inputs.limit : 20,
+        body: {
+          query: {
+            multi_match: {
+              query: inputs.query,
+              fields: fields,
+              operator: 'or',
+              analyzer: 'standard',
+              fuzziness: fuzziness
+            },
           }
         }
-      }
-    });
-
-    let definition = sails.hooks.hanzi.definitionLookup(inputs.query);
-    let multiDefinition = false;
-    let segments = false;
-
-    if (!definition) {
-      definition = [];
-      sails.hooks.hanzi.segment(inputs.query).forEach(segment => {
-        definition.push(sails.hooks.hanzi.definitionLookup(segment))
       });
-      segments = sails.hooks.hanzi.segment(inputs.query);
-      if (definition.length > 0) {
-        multiDefinition = true
-      }
+    } else {
+      vocabulary = await sails.hooks.elastic.client.search({
+        index: 'vocabulary-search',
+        from: inputs.skip ? inputs.skip : 0,
+        size: inputs.limit ? inputs.limit : 20,
+        body: {
+          query: {
+            function_score: {
+              boost: "5",
+              random_score: {},
+              boost_mode: "multiply"
+            }
+          },
+        }
+      });
     }
 
+    let results = vocabulary['body']['hits']['hits'].map(i => JSON.parse(i['_source'].data).definition)
+    results = [].concat(...results);
 
     return {
-      definition: definition,
-      segments: segments,
-      multiDefinition: multiDefinition,
-      dictionary: sails.hooks.hanzi.dictionarySearch(inputs.query),
-      dictionaryOnly: sails.hooks.hanzi.dictionarySearch(inputs.query, 'only'),
-      examples: sails.hooks.hanzi.getExamples(inputs.query),
-      sentences: sentences['body']['hits']['hits'].map(i => i['_source'])
+      count: vocabulary['body']['hits']['total']['value'],
+      results: results
     };
 
   }

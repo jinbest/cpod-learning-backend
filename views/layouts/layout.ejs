@@ -2,10 +2,11 @@
   // In case we're displaying the 404 or 500 page and relevant code in the "custom" hook was not able to run,
   // we make sure `me` exists.  This ensures we don't have to do `typeof` checks below.
   var me = undefined;
-} %><!DOCTYPE html>
+} %>
+<!DOCTYPE html>
 <html>
 <head>
-  <title>ChinesePod | Start Learning Mandarin Chinese Today!</title>
+  <title><%= title %></title>
 
   <% /* Viewport tag for sensible mobile support */ %>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -129,10 +130,10 @@
       <div class="list-inline text-center">
         <small class="list-inline-item"><a class="nav-link text-danger" href="/contact">Contact</a></small>
         <small class="list-inline-item"><a class="nav-link text-danger" href="/pricing">Pricing</a></small>
-        <small class="list-inline-item"><a class="nav-link text-danger" href="/jobs">Careers</a></small>
-        <small class="list-inline-item"><a class="nav-link text-danger" href="/why-choose-us">About Us</a></small>
-        <small class="list-inline-item"><a class="nav-link text-danger" href="/affiliate">Affiliate</a></small>
-        <small class="list-inline-item"><a class="nav-link text-danger" href="/resources">Resources</a></small>
+<!--        <small class="list-inline-item"><a class="nav-link text-danger" href="/jobs">Careers</a></small>-->
+        <small class="list-inline-item"><a class="nav-link text-danger" href="/start-learning-mandarin">About Us</a></small>
+<!--        <small class="list-inline-item"><a class="nav-link text-danger" href="/affiliate">Affiliate</a></small>-->
+<!--        <small class="list-inline-item"><a class="nav-link text-danger" href="/resources">Resources</a></small>-->
         <small class="list-inline-item"><a class="nav-link text-danger" href="/privacy">Privacy</a></small>
         <small class="list-inline-item"><a class="nav-link text-danger" href="/terms">Terms</a></small>
       </div>

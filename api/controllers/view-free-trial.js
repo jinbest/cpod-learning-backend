@@ -23,7 +23,9 @@ module.exports = {
     }
 
     // Respond with view.
-    return {};
+    return {
+      title: 'Free Trial | ChinesePod'
+    };
 
   }
 

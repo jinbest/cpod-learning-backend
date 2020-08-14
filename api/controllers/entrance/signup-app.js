@@ -162,7 +162,6 @@ the account verification message.)`,
       optIn: inputs.optIn,
       ipData: ipData
     }).catch((e) => {
-      sails.log.error(e)
     });
 
     if (sails.config.custom.verifyEmailAddresses) {

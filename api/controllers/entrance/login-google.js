@@ -116,7 +116,7 @@ password attempt.`,
         ipData: ipData,
         optIn: true
       })
-        .catch((e) => {sails.log.error(e)});
+        .catch((e) => {});
 
     }
 

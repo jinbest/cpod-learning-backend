@@ -13,22 +13,6 @@ module.exports.routes = {
   //  ╦ ╦╔═╗╔╗ ╔═╗╔═╗╔═╗╔═╗╔═╗
   //  ║║║║╣ ╠╩╗╠═╝╠═╣║ ╦║╣ ╚═╗
   //  ╚╩╝╚═╝╚═╝╩  ╩ ╩╚═╝╚═╝╚═╝
-  // 'GET /':                   { action: 'view-homepage-or-redirect' },
-  // 'GET /welcome/:unused?':   { action: 'dashboard/view-welcome' },
-  // //
-  // 'GET /faq':                { action:   'view-faq' },
-  // 'GET /legal/terms':        { action:   'legal/view-terms' },
-  // 'GET /legal/privacy':      { action:   'legal/view-privacy' },
-  // //
-  // 'GET /signup':             { action: 'entrance/view-signup' },
-  // 'GET /email/confirm':      { action: 'entrance/confirm-email' },
-  // 'GET /email/confirmed':    { action: 'entrance/view-confirmed-email' },
-  //
-  // 'GET /login':              { action: 'entrance/view-login' },
-  //
-  // 'GET /account':            { action: 'account/view-account-overview' },
-  // 'GET /account/password':   { action: 'account/view-edit-password' },
-  // 'GET /account/profile':    { action: 'account/view-edit-profile' },
 
   'GET /':                                               { action: 'view-homepage-or-redirect' },
   'GET /contact':                                        { action: 'view-contact' },
@@ -204,9 +188,6 @@ module.exports.routes = {
   //TEACHING
   'GET /booking':                                        { action: 'view-booking' },
 
-  //DICTIONARY
-  'GET /dictionary-testing/:query?':                     { action: 'view-dictionary' },
-
   //LEGAL PAGES
   'GET /terms':                                          { action:   'legal/view-terms' },
   'GET /terms-and-conditions':                           { action:   'legal/view-terms' },
@@ -273,6 +254,7 @@ module.exports.routes = {
 
   'GET /sitemap' :                                       { action: 'sitemaps/sitemap-index'},
   'GET /sitemaps' :                                      { action: 'sitemaps/sitemap-index'},
+  'GET /sitemaps/pages' :                                { action: 'sitemaps/sitemap-pages'},
   'GET /sitemaps/lessons' :                              { action: 'sitemaps/sitemap-lessons'},
   'GET /sitemaps/dictionary/:id' :                       { action: 'sitemaps/sitemap-dictionary'},
 
@@ -503,7 +485,7 @@ module.exports.routes = {
   // 'GET /api/v1/search/reindex-sentences':                { action: 'search/reindex-sentences' },
   'POST /api/v1/search/search-lessons/:query?':            { action: 'search/search-lessons' },
   'POST /api/v1/search/search-all-lessons/:query?':        { action: 'search/search-all-lessons' },
-  'GET /api/v1/search/search-dictionary/:query':          { action: 'search/search-dictionary' },
+  'GET /api/v1/search/search-dictionary/:query?':          { action: 'search/search-dictionary' },
 
   //DICTIONARY
   'GET /api/v1/dictionary/get':                          { action: 'dictionary/get-dictionary-word'},

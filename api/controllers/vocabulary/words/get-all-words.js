@@ -60,11 +60,14 @@ module.exports = {
 
       let audioUrlCN; let audioUrlEN;
 
-      if (vocab.lesson && vocab.vocabulary_id.audio) {
-        let lessonRoot = `https://s3contents.chinesepod.com/${vocab.lesson.type === 'extra' ? 'extra/' : ''}${vocab.lesson.id}/${vocab.lesson.hash_code}/`
+      if (vocab.vocabulary_id.audio) {
+        let lessonRoot;
+        if (vocab.lesson) {
+          lessonRoot = `https://s3contents.chinesepod.com/${vocab.lesson.type === 'extra' ? 'extra/' : ''}${vocab.lesson.id}/${vocab.lesson.hash_code}/`
+        }
 
         try {
-          audioUrlCN = vocab.vocabulary_id.audio.slice(0, 4) === 'http' ? vocab.vocabulary_id.audio : lessonRoot + vocab.vocabulary_id.audio;
+          audioUrlCN = vocab.vocabulary_id.audio.slice(0, 4) === 'http' ? vocab.vocabulary_id.audio : lessonRoot ? lessonRoot + vocab.vocabulary_id.audio : '';
           let params = audioUrlCN.split('source/');
 
           let amsObj = amsVocab.find(ams => ams && ams.source_mp3 === params[params.length - 1])

@@ -47,6 +47,7 @@ module.exports = {
     }
 
     return {
+      title: 'Free Signup | ChinesePod',
       video: video,
       wistia: wistia
     };

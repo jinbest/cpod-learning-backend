@@ -27,7 +27,9 @@ module.exports = {
       throw {redirect: '/home'};
     }
 
-    return {};
+    return {
+      title: 'Login | ChinesePod',
+    };
 
   }
 

@@ -104,7 +104,7 @@ module.exports = {
             ipData: ipData,
             optIn: true
           })
-            .catch((e) => {sails.log.error(e)});
+            .catch((e) => {});
 
           // LOG STORED CAMPAIGN INFO
           if (req.session.campaignId) {
@@ -243,7 +243,7 @@ module.exports = {
             ipData: ipData,
             optIn: true
           })
-            .catch((e) => {sails.log.error(e)});
+            .catch((e) => {});
 
           // LOG STORED CAMPAIGN INFO
           if (req.session.campaignId) {

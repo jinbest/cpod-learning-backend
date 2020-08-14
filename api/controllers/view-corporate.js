@@ -18,7 +18,9 @@ module.exports = {
   fn: async function () {
 
     // Respond with view.
-    return {};
+    return {
+      title: 'Corporate Offers | ChinesePod'
+    };
 
   }
 

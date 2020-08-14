@@ -61,6 +61,7 @@ module.exports = {
     }
 
     return {
+      title: 'Pricing | ChinesePod',
       trial: trial,
       conversion: false,
       showFree: showFree

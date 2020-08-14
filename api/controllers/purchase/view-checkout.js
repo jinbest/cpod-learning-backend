@@ -65,6 +65,7 @@ module.exports = {
 
     // Respond with view.
     return {
+      title: 'Checkout | ChinesePod',
       needsAccount: !(this.req.me || this.req.session.limitedAuth),
       trial: trial,
       plan: plan,

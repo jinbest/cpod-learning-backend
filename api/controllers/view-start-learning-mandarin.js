@@ -23,7 +23,9 @@ module.exports = {
     }
 
     // Respond with view.
-    return {};
+    return {
+      title: 'Start Learning Mandarin Today with ChinesePod!'
+    };
 
   }
 

@@ -53,19 +53,15 @@ module.exports = {
 
             try {d = decodeURI(D)} catch (err) {
               d = D;
-              sails.log.error(err)
             }
             try {e = decodeURI(E)} catch (err) {
               e = E;
-              sails.log.error(err)
             }
             try {c = decodeURI(C)} catch (err) {
               c = C;
-              sails.log.error(err)
             }
             try {b = decodeURI(B)} catch (err) {
               b = B;
-              sails.log.error(err)
             }
 
             example.sentence.push({
@@ -82,7 +78,6 @@ module.exports = {
             if (G) {
               try {g = decodeURI(G)} catch (err) {
                 g = G;
-                sails.log.error(err)
               }
               example.sentence.push(g);
               example.p += g;

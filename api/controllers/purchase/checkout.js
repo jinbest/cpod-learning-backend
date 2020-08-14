@@ -240,14 +240,12 @@ module.exports = {
       // Store the user's new id in their session.
       inputs.userId = this.req.session.userId = newUserRecord.id;
 
-      let mauticLead = await sails.helpers.mautic.createContact.with({
+      await sails.helpers.mautic.createContact.with({
         email: email,
         userId: newUserRecord.id,
         optIn: inputs.optIn,
         ipData: ipData
       }).catch((e) => {
-        sails.hooks.bugsnag.notify(e);
-        sails.log.error(e)
       });
 
       if (sails.config.custom.verifyEmailAddresses) {

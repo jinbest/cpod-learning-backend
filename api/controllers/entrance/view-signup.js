@@ -30,7 +30,9 @@ module.exports = {
       this.req.session.campaignId = this.req.param('campaignId').toUpperCase();
     }
 
-    return {};
+    return {
+      title: 'Sign Up | ChinesePod',
+    };
 
   }
 
