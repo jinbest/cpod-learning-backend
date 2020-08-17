@@ -47,7 +47,11 @@ module.exports = {
 
     let vocabulary = require('../../../lib/cedict_sitemaps.json');
 
-    let record = vocabulary.find(vocab => vocab.simplified === inputs.word)
+    let record = vocabulary.find(vocab => vocab.simplified === inputs.word);
+
+    if (!record) {
+      record = vocabulary.find(vocab => vocab.traditional === inputs.word);
+    }
 
     if (!record) {
       throw new Error('No Such Entry')
@@ -63,7 +67,14 @@ module.exports = {
 
     let indexRecord = {};
 
-    record.pinyin_tones = convert.convertPinyinTones(record.pinyin);
+    record.pinyin_tones = convert.convertPinyinTones(record.pinyin)
+      .replace('n5', 'n')
+      .replace('r5', 'r')
+      .replace('u:1','ǖ')
+      .replace('u:2','ǘ')
+      .replace('u:3','ǚ')
+      .replace('u:4','ǜ')
+      .replace('u:5','ü');
     record.data = JSON.stringify(await sails.helpers.dictionary.getDetails(record.simplified));
     record.timestamp = new Date().toISOString();
 
