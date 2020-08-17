@@ -32,7 +32,7 @@ module.exports = {
 
     let userContest = await UserOptions.findOne({id: inputs.id, option_key: 'youtubeContest'});
 
-    if (userContest) { // && userContest.option_value === 'initial'
+    if (userContest && userContest.option_value === 'initial') {
 
       await UserOptions.updateOne({id: userContest.id}).set({option_value: 'used'});
 
