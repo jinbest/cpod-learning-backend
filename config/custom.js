@@ -116,12 +116,11 @@ module.exports.custom = {
 
 
   // ADVERTISING PROMOS
-  // coreMarkets: ['US', 'CA', 'CN'],
   coreMarkets: ['US', 'CA', 'UK', 'IE', 'PL'],
   coreFreeMonths: [],
   nonCoreFreeMonths: [],
   // prerollAdId: ['p5yrv7huyo', 'sa5v4h9bm7'],
-  prerollAdId: ['60qooe3gep', '2s3nnjmvz0', 'brmum6248y', 'mk2s8ktsnh', 'yg33tm12mm', '61ti28a28x'], //TODO DISABLE WHEN SAFE
+  prerollAdId: ['60qooe3gep', '2s3nnjmvz0', 'brmum6248y', 'mk2s8ktsnh', 'yg33tm12mm', '61ti28a28x'], //TODO: DISABLE WHEN SAFE
   prerollAds: [
     {title: 'Ads Like This', wistia:'60qooe3gep', vimeo: '409693870', length: 17},
     {title: 'Attention Free Users', wistia: '2s3nnjmvz0', vimeo: '409693833', length: 15},
@@ -142,7 +141,7 @@ module.exports.custom = {
     'http://embed.wistia.com/deliveries/c80b34f4f3a9dd5e0dfa983ed0949f3bfa866d6a.bin',
   ],
 
-  overrideWindow: false,  // TODO add a time window constraint as needed
+  overrideWindow: false,  // TODO: add a time window constraint as needed
 
   // EXTERNAL DEVS
   developers: { rozkalns: { password: '1xHN9EncPdXpJsZWD3rf' }, team: {password: '84MZwlBgXtss5cOwKria'}, aprilDev: { password: 'HCkuL69P9LM29zO3jptW'}, mayDev: { password: 'TQ4jenvoBBx8nJgpoHGt'}, juneDev: { password: '2xACiGzDbIJlnEBO9FNU'}},
