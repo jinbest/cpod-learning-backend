@@ -23,6 +23,7 @@
     "bootstrap-vue": "^2.12.0",
     "bull": "^3.13.0",
     "bull-arena": "^2.7.1",
+    "chinese-conv": "^1.0.1",
     "contains-chinese": "^1.0.0",
     "cross-env": "^5.2.1",
     "crypto-js": "^3.3.0",

@@ -61,17 +61,22 @@ module.exports = {
         }
       });
     } else {
+
+      const randomWords = require('../../../lib/randomChineseCharacters.json');
+
       vocabulary = await sails.hooks.elastic.client.search({
         index: 'vocabulary-search',
         from: inputs.skip ? inputs.skip : 0,
         size: inputs.limit ? inputs.limit : 20,
         body: {
           query: {
-            function_score: {
-              boost: "5",
-              random_score: {},
-              boost_mode: "multiply"
-            }
+            multi_match: {
+              query: randomWords[Math.floor(Math.random() * randomWords.length)],
+              fields: fields,
+              operator: 'or',
+              analyzer: 'standard',
+              fuzziness: 1
+            },
           },
         }
       });

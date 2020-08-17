@@ -30,15 +30,40 @@ module.exports = {
 
       let storedData = await sails.hooks.elastic.client.search({
         index: 'vocabulary-search',
-        // type: 'vocabulary-search',
         body: {
           query: {
-            ids:{
-              values: [inputs.word]
-            }
+            match: {
+              simplifiedId: inputs.word
+            },
           }
         }
       });
+
+      if(!storedData || (storedData && storedData.body && !storedData.body.hits.total.value)) {
+        storedData = await sails.hooks.elastic.client.search({
+          index: 'vocabulary-search',
+          body: {
+            query: {
+              match: {
+                traditionalId: inputs.word
+              },
+            }
+          }
+        });
+      }
+
+      if(!storedData || (storedData && storedData.body && !storedData.body.hits.total.value)) {
+        storedData = await sails.hooks.elastic.client.search({
+          index: 'vocabulary-search',
+          body: {
+            query: {
+              ids:{
+                values: [inputs.word]
+              }
+            }
+          }
+        });
+      }
 
       try {
         let date = new Date()

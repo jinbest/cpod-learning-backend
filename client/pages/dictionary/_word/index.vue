@@ -156,17 +156,20 @@
       const word = params.word
       const response = await sendGet('/dictionary/get-details', { word })
         .catch(() => redirect('https://www.chinesepod.com'));
+      //
+      // if (!response) {
+      //   redirect('https://www.chinesepod.com')
+      //   return
+      // }
 
-      if (!response) {
-        redirect('https://www.chinesepod.com')
-        return
-      }
+      console.log(params);
+      console.log(response);
 
       const data = response.data
-      if (!data) {
-        redirect('https://www.chinesepod.com')
-        return
-      }
+      // if (!data) {
+      //   redirect('https://www.chinesepod.com')
+      //   return
+      // }
 
       try {
 
@@ -204,7 +207,8 @@
         }
 
       } catch (e) {
-        redirect('https://www.chinesepod.com')
+        console.log(e);
+        // redirect('https://www.chinesepod.com')
       }
 
     },

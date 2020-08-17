@@ -16,11 +16,10 @@ module.exports = {
 
   fn: async function (inputs) {
     const convert = require('pinyin-tone-converter');
+    const chineseConv = require('chinese-conv');
 
     // All done.
     let definitions = sails.hooks.hanzi.definitionLookup(inputs.word);
-
-    sails.log.info(definitions);
 
     if (!definitions) {
 
@@ -52,16 +51,17 @@ module.exports = {
       compounds = [];
     }
 
+    sails.log.info(definitions)
+
+    let simplifiedChar = chineseConv.sify(inputs.word);
+
     let lessonData = await LessonData.find({
         publication_timestamp: {
           '<': new Date()
         },
         status_published: 'publish',
         is_private: 0,
-        or: [
-          {transcription1: { contains: inputs.word }},
-          {transcription2: { contains: inputs.word }}
-        ]
+        transcription1: { contains: simplifiedChar },
       })
       .select('id')
       .sort([
@@ -109,6 +109,13 @@ module.exports = {
         .catch()
     ]);
 
+
+
+    sails.log.info(rawDialogues);
+    sails.log.info(relevantLessons);
+
+
+
     if (vocabData && vocabData.audio) {
       if (vocabData.audio.split('http').length > 1) {
         vocabData.audioUrl = vocabData.audio;
@@ -134,19 +141,15 @@ module.exports = {
 
         try {d = decodeURI(D)} catch (err) {
           d = D;
-          sails.log.error(err)
         }
         try {e = decodeURI(E)} catch (err) {
           e = E;
-          sails.log.error(err)
         }
         try {c = decodeURI(C)} catch (err) {
           c = C;
-          sails.log.error(err)
         }
         try {b = decodeURI(B)} catch (err) {
           b = B;
-          sails.log.error(err)
         }
 
         dialogue.pinyin += c + ' ';
@@ -156,7 +159,6 @@ module.exports = {
         if (G) {
           try {g = decodeURI(G)} catch (err) {
             g = G;
-            sails.log.error(err)
           }
           dialogue.sentence.push(g);
           dialogue.pinyin += g;
