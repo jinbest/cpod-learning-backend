@@ -81,12 +81,13 @@ module.exports = {
       }).populate('v3_id').sort('id DESC').limit(10)
     }
 
-    const getVocabulary = async () => {
-      return (await Vocabulary.find({
-        or: [
-          {column_1: inputs.word},
-          {column_4: inputs.word},
-        ],
+    const getVocabulary = async (simplified, pinyin) => {
+
+      const cleanPinyin = await sails.helpers.pinyin.convertTones(pinyin)
+
+      let vocab = await VocabularyNew.find({
+        s: simplified,
+        p: { in: [pinyin, cleanPinyin]},
         vocabulary_class: {
           in: ['Key Vocabulary', 'Supplementary']
         },
@@ -94,7 +95,9 @@ module.exports = {
         v3_id: {
           '<': 5000
         }
-      }).sort('id DESC').populate('v3_id').limit(1))[0]
+      }).sort('id DESC').populate('v3_id').limit(10)
+
+      return vocab.filter(example => example && example.p === cleanPinyin)[0]
     }
 
     let rawDialogues = []; let vocabData;
@@ -104,17 +107,10 @@ module.exports = {
         .then(data => rawDialogues = data)
         .catch()
       ,
-      getVocabulary()
+      getVocabulary(definitions[0].simplified, definitions[0].pinyin)
         .then(data => vocabData = data)
         .catch()
     ]);
-
-
-
-    sails.log.info(rawDialogues);
-    sails.log.info(relevantLessons);
-
-
 
     if (vocabData && vocabData.audio) {
       if (vocabData.audio.split('http').length > 1) {

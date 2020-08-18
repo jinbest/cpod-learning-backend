@@ -50,8 +50,6 @@ module.exports = {
       .sort('id DESC')
       .limit(1))[0]
 
-    sails.log.info(existingVocabulary);
-
     let newVocab;
     if (existingVocabulary && existingVocabulary.p === inputs.p && existingVocabulary.id) {
 
