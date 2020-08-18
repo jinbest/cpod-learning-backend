@@ -47,7 +47,11 @@ module.exports = {
     }
 
     let userAccess = (await UserSiteLinks.find({user_id: inputs.userId, site_id: 2}).limit(1))[0];
-    return {type: accessMap(userAccess.usertype_id), expiry: userAccess.expiry}
+    if (userAccess && userAccess.usertype_id) {
+      return {type: accessMap(userAccess.usertype_id), expiry: userAccess.expiry}
+    } else {
+      return {type: 'free', expiry: new Date()}
+    }
   }
 };
 

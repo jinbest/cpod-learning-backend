@@ -45,8 +45,19 @@ module.exports = {
       }
     }
 
-    let userAccess = await UserSiteLinks.findOne({user_id: inputs.userId, site_id: 2});
-    return accessMap(userAccess.usertype_id)
+    let userAccess;
+    try {
+      userAccess =
+        await UserSiteLinks.findOne({user_id: inputs.userId, site_id: 2});
+    } catch (e) {
+
+    }
+
+    if (userAccess && userAccess.usertype_id) {
+      return accessMap(userAccess.usertype_id)
+    } else {
+      return 'free'
+    }
   }
 };
 
