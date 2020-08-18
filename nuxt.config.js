@@ -3,7 +3,7 @@ const webpack =  require('webpack');
 const axios = require('axios');
 
 module.exports = {
-  mode: 'universal',
+  mode: 'spa',
 
   /*
   ** Headers of the page
@@ -52,7 +52,12 @@ module.exports = {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loadingIndicator: {
+    name: 'circle',
+    color: '#e1001e',
+    background: 'white'
+  },
+  loading: { color: '#e1001e' },
 
   /*
   ** Global CSS

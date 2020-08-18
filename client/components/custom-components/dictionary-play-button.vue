@@ -1,7 +1,7 @@
 <template>
-  <base-button outline class="text-center text-capitalize btn-play mr-sm-4" :class="[square ? '' : 'd-none d-sm-inline-block']" @click="togglePlay">
-    <i class="fa mr-0 play" :class="playing ? 'fa-pause' : 'fa-play'"/><br :class="[square ? 'd-none d-sm-inline-block' : '']" />
-    Play
+  <base-button outline class="text-center text-capitalize btn-play" :class="[square ? 'd-sm-inline-block' : 'd-none d-sm-inline-block']" @click="togglePlay">
+    <i class="fa mr-0 play" :class="playing ? 'fa-pause' : 'fa-play'"/>
+    {{ playing ? 'Pause' : 'Play' }}
   </base-button>
 </template>
 

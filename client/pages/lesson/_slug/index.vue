@@ -7,7 +7,7 @@
         </aside-item>
       </div>
       <div class="col-lg-6">
-        <div class="main-content">
+        <div class="main-content pb-lg-3">
           <div class="text-center">
             <p class="lesson-title mb-0">{{ lessonInfo.title }}</p>
           </div>
@@ -307,6 +307,7 @@
       padding-right: 15px;
     }
     section {
+      padding: 1rem 0;
       @media (max-width: 992px) {
         &.reverse-tablet {
           flex-direction: column-reverse;

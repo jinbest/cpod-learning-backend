@@ -1,3 +1,7 @@
+<!--
+  - Copyright © 2020. Ugis Rozkalns. All Rights Reserved.
+  -->
+
 <template>
   <card shadow class="collapse-table-card" :class="{'expanded-table': isOpened}">
     <div class="table-container" role="table" aria-label="Destinations">
@@ -67,7 +71,8 @@ export default {
   },
   data() {
     return {
-      isOpened: false
+      isOpened: false,
+      charSet: 'simplified'
     };
   },
   mounted() {

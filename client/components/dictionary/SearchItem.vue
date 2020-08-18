@@ -28,11 +28,15 @@
 </template>
 
 <script>
-  import {mapState} from "vuex";
   import {cleanPinyin, cleanDefinitions} from '@/util/dictionary'
 
   export default {
     name: "SearchItem",
+    data () {
+      return {
+        charSet: 'simplified'
+      }
+    },
     props: {
       phrase: Object
     },
@@ -40,11 +44,6 @@
       cleanPinyin: cleanPinyin,
       cleanDefinitions: cleanDefinitions
     },
-    computed: {
-      ...mapState({
-        charSet: state => state.userInfo.charSet})
-    }
-    //  CASES: 'see '; 'CL:'; 'variant of '
   }
 </script>
 

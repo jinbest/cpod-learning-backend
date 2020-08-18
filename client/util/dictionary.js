@@ -1,6 +1,6 @@
 import isChinese from 'is-chinese'
 
-let cleanDefinitions = (definitionString) => {
+const cleanDefinitions = (definitionString) => {
   let definitions = definitionString.split('/');
   let cleanedData = [];
   definitions.forEach(definition => {
@@ -59,9 +59,11 @@ let cleanDefinitions = (definitionString) => {
   return cleanedData
 }
 
-let cleanPinyin = (pinyinString) => {
+const cleanPinyin = (pinyinString) => {
   return pinyinString
     ? pinyinString
+      .replace('\\&#039;', '\'')
+      .replace('&#039;', '\'')
       .replace('n5', 'n')
       .replace('r5', 'r')
       .replace('u:1','ǖ')
@@ -72,13 +74,33 @@ let cleanPinyin = (pinyinString) => {
     : ''
 }
 
-let multipleDefinitions = (definitionString) => {
+const multipleDefinitions = (definitionString) => {
   return definitionString.split('/').length > 1 || definitionString.split('[').length > 1
+}
+
+const checkDecomposition = (component) => {
+  return isChinese(component)
+    && component !== 'No glyph available'
+    && !new RegExp(
+      `[!"\#$%&'()*+,\-./:;<=>?@\[\\\]^_\`{|}~、，。：·～！¥…（）—；【】「」《》？ˋ．・]|\\s|[A-z]|[0-9]|\\d+`
+    ).test(component)
+}
+
+const cleanDecomposition = (array) => {
+  return array.filter(component => {
+    return isChinese(component)
+      && component !== 'No glyph available'
+      && !new RegExp(
+        `[!"\#$%&'()*+,\-./:;<=>?@\[\\\]^_\`{|}~、，。：·～！¥…（）—；【】「」《》？ˋ．・]|\\s|[A-z]|[0-9]|\\d+`
+      ).test(component)
+  })
 }
 
 
 export {
   cleanDefinitions,
   cleanPinyin,
-  multipleDefinitions
+  multipleDefinitions,
+  cleanDecomposition,
+  checkDecomposition
 }

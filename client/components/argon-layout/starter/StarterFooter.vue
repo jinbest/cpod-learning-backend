@@ -13,10 +13,10 @@
               <a href="/pricing" class="nav-link">Pricing</a>
             </li>
             <li class="nav-item">
-              <a href="/corporate" class="nav-link">Corporate</a>
+              <nuxt-link to="/dictionary" class="nav-link">Dictionary</nuxt-link>
             </li>
             <li class="nav-item">
-              <a href="/why-choose-us" class="nav-link">About Us</a>
+              <a href="/start-learning-mandarin" class="nav-link">About Us</a>
             </li>
             <li class="nav-item">
               <a href="/blog" class="nav-link">Blog</a>

@@ -1,106 +1,84 @@
 <template>
-    <component :is="tag"
-               :type="tag === 'button' ? nativeType: ''"
-               @click="handleClick"
-               class="btn"
-               :class="classes">
-    <span class="btn-inner--icon" v-if="$slots.icon || icon && $slots.default">
-      <slot name="icon">
-        <i :class="icon"></i>
-      </slot>
-    </span>
-        <i v-if="!$slots.default" :class="icon"></i>
-        <span class="btn-inner--text" v-if="$slots.icon || icon && $slots.default">
-          <slot>
-            {{text}}
-          </slot>
-    </span>
-        <slot v-if="!$slots.icon && !icon"></slot>
-    </component>
+  <component
+    :is="tag"
+    :type="tag === 'button' ? nativeType : ''"
+    :disabled="disabled || loading"
+    @click="handleClick"
+    class="btn"
+    :class="[
+      { 'rounded-circle': round },
+      { 'btn-block': block },
+      { 'btn-wd': wide },
+      { 'btn-icon btn-fab': icon },
+      { [`btn-${type}`]: type && !outline },
+      { [`btn-${size}`]: size },
+      { [`btn-outline-${type}`]: outline && type },
+      { 'btn-link': link },
+      { disabled: disabled && tag !== 'button' }
+    ]"
+  >
+    <slot name="loading">
+      <i v-if="loading" class="fas fa-spinner fa-spin" :class="icon ? 'ml-2' : ''"></i>
+    </slot>
+    <slot></slot>
+  </component>
 </template>
 <script>
 export default {
-  name: "base-button",
+  name: 'base-button',
   props: {
     tag: {
       type: String,
-      default: "button",
-      description: "Button tag (default -> button)"
+      default: 'button',
+      description: 'Button html tag'
     },
+    round: Boolean,
+    icon: Boolean,
+    block: Boolean,
+    loading: Boolean,
+    wide: Boolean,
+    disabled: Boolean,
     type: {
       type: String,
-      default: "default",
-      description: "Button type (e,g primary, danger etc)"
-    },
-    size: {
-      type: String,
-      default: "",
-      description: "Button size lg|sm"
-    },
-    textColor: {
-      type: String,
-      default: "",
-      description: "Button text color (e.g primary, danger etc)"
+      default: 'default',
+      description: 'Button type (primary|secondary|danger etc)'
     },
     nativeType: {
       type: String,
-      default: "button",
-      description: "Button native type (e.g submit,button etc)"
+      default: 'button',
+      description: 'Button native type (e.g button, input etc)'
     },
-    icon: {
+    size: {
       type: String,
-      default: "",
-      description: "Button icon"
-    },
-    text: {
-      type: String,
-      default: "",
-      description: "Button text in case not provided via default slot"
+      default: '',
+      description: 'Button size (sm|lg)'
     },
     outline: {
       type: Boolean,
-      default: false,
-      description: "Whether button style is outline"
+      description: 'Whether button is outlined (only border has color)'
     },
-    rounded: {
+    link: {
       type: Boolean,
-      default: false,
-      description: "Whether button style is rounded"
-    },
-    iconOnly: {
-      type: Boolean,
-      default: false,
-      description: "Whether button contains only an icon"
-    },
-    block: {
-      type: Boolean,
-      default: false,
-      description: "Whether button is of block type"
-    }
-  },
-  computed: {
-    classes() {
-      let btnClasses = [
-        { "btn-block": this.block },
-        { "rounded-circle": this.rounded },
-        { "btn-icon-only": this.iconOnly },
-        { [`text-${this.textColor}`]: this.textColor },
-        { "btn-icon": this.icon || this.$slots.icon },
-        this.type && !this.outline ? `btn-${this.type}` : "",
-        this.outline ? `btn-outline-${this.type}` : ""
-      ];
-      if (this.size) {
-        btnClasses.push(`btn-${this.size}`);
-      }
-      return btnClasses;
+      description: 'Whether button is a link (no borders or background)'
     }
   },
   methods: {
     handleClick(evt) {
-      this.$emit("click", evt);
+      this.$emit('click', evt);
+    },
+    setType(type) {
+      this.type = type
     }
   }
 };
 </script>
-<style>
+<style scoped lang="scss">
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /deep/ i {
+    padding: 0 3px;
+  }
+}
 </style>

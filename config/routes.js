@@ -92,7 +92,7 @@ module.exports.routes = {
   'GET /lesson/*':                                       { controller: 'PageController', action: 'serve', skipAssets: false},
   'GET /lesson/:slug/:courseId?/rate/:rating':           'HomeController.serve',
   'GET /vocabulary/:unused?*':                           'HomeController.serve',
-  'GET /dictionary/*':                                   { controller: 'NuxtController', action: 'serve', skipAssets: false},
+  'GET /dictionary/*':                                   { controller: 'PageController', action: 'serve', skipAssets: false},
   'GET /explore/:unused?*':                              'HomeController.serve',
   'GET /course/:unused?*':                               'HomeController.serve',
   'GET /courses/:unused?*':                              'HomeController.serve',

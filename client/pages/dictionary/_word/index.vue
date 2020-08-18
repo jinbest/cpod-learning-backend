@@ -1,133 +1,150 @@
 <template>
-  <div class="bg-lighter vocabulary-page">
-    <section class="section main-word-section">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-6 col-sm-5 col-lg-6">
-            <div class="main-word">{{ simplified }}{{ simplified !== traditional ? ` (${traditional})` : '' }}</div>
-            <div class="pronounciation">
-              <div>{{ pinyin }}</div>
-              <div class="pronounciation-comment">Pinyin</div>
-            </div>
+  <div>
+    <div class="container-fluid py-2">
+      <div id="searchArea" class="col-12 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
+        <base-input group prepend-icon="fas fa-search">
+          <input type="search" class="form-control" placeholder="Search in English or Chinese" aria-label="Search in English or in Chinese" aria-describedby="button-addon2" v-model.trim="searchTerm" @search="runSearch()">
+          <div class="input-group-append">
+            <base-button class="btn btn-outline-primary is-loading" type="button" id="button-addon2" @click="runSearch()" :loading="searching">Search</base-button>
           </div>
-
-          <div class="col-6 col-sm-7 col-lg-6 animation-audio-container">
-            <div v-show="showAnimation" class="animation" id="animation-hanzi-container">
-              <svg class="grid-background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%" id="grid-background-target" preserveAspectRatio="xMidYMid meet">
-                <line x1="0" y1="0" x2="200" y2="200" class="line" />
-                <line x1="200" y1="0" x2="0" y2="200" class="line" />
-                <line x1="100" y1="0" x2="100" y2="200" class="line" />
-                <line x1="0" y1="100" x2="200" y2="100" class="line" />
-              </svg>
+        </base-input>
+      </div>
+    </div>
+    <div class="bg-lighter vocabulary-page pb-2">
+      <section class="section main-word-section">
+        <div class="container">
+          <div class="row align-items-center">
+            <div  class="col-12 d-flex justify-content-center" :class="[(showAnimation || audioUrl) ? 'col-sm-5 col-lg-6' : '']">
+              <div>
+                <div class="main-word">{{ simplified }}{{ simplified !== traditional ? ` (${traditional})` : '' }}</div>
+                <div class="pronounciation">
+                  <div>{{ pinyin }}</div>
+                  <div class="pronounciation-comment">Pinyin</div>
+                </div>
+              </div>
             </div>
 
-            <div class="audio-buttons mr-md-4">
-              <dictionary-play-button v-if="audioUrl" :audio-url="audioUrl" />
-              <!--              <base-button outline class="text-capitalize btn-download mt-sm-2" icon="fa fa-download">-->
-              <!--                Download-->
-              <!--              </base-button>-->
+            <div v-if="showAnimation || audioUrl" class="col-12 col-sm-7 col-lg-6 animation-audio-container">
+              <div v-if="showAnimation" class="animation" id="animation-hanzi-container">
+                <svg class="grid-background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%" id="grid-background-target" preserveAspectRatio="xMidYMid meet">
+                  <line x1="0" y1="0" x2="200" y2="200" class="line" />
+                  <line x1="200" y1="0" x2="0" y2="200" class="line" />
+                  <line x1="100" y1="0" x2="100" y2="200" class="line" />
+                  <line x1="0" y1="100" x2="200" y2="100" class="line" />
+                </svg>
+              </div>
+
+              <div class="audio-buttons mr-md-4">
+                <dictionary-play-button v-if="audioUrl" :audio-url="audioUrl" :key="audioUrl" />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section section-sm definition-section mt-3">
-      <div class="container">
-        <h4 class="section-title">Definition</h4>
-        <card shadow>
-          <div class="definition" v-for="(definition, index) in definitionList" :key="index">
-            <div class="definition-title d-flex align-items-center">
-              <div class="simplified pr-3">{{ definition.simplified }}{{ definition.simplified !== definition.traditional ? ` (${definition.traditional})` : '' }}</div>&nbsp;-&nbsp;
-              <div class="pinyin pl-3">{{ definition.pinyin }}</div>
-            </div>
-            <ol>
-              <li v-for="(item, ind) in definition.items" :key="ind">
-                {{ item }}
-              </li>
-            </ol>
-          </div>
-        </card>
-      </div>
-    </section>
-
-    <section class="section section-sm decomposition-section">
-      <div class="container">
-        <h4 class="section-title">Character Decomposition</h4>
-        <card shadow>
-          <div class="content">
-            <div class="composition" v-for="(decomposition, index) in decompositionList" :key="index">
-              <div class="composition-text">
-                <div class="decomposition-item ml-0">
-                  {{ decomposition.character }}
-                </div>
+      <section class="section section-sm definition-section mt-3">
+        <div class="container">
+          <h4 class="section-title">Definition</h4>
+          <card shadow>
+            <div class="definition" v-for="(definition, index) in definitionList" :key="index">
+              <div class="definition-title d-flex align-items-center">
+                <div class="simplified pr-3">{{ definition.simplified }}{{ definition.simplified !== definition.traditional ? ` (${definition.traditional})` : '' }}</div>&nbsp;-&nbsp;
+                <div class="pinyin pl-3">{{ definition.pinyin }}</div>
               </div>
-
-              <div class="decomposition-container row ml-0">
-                <div class="decomposition-item" v-for="(item, index1) in decomposition.components.filter(component => component !== 'No glyph available')" :key="index1">
+              <ol>
+                <li v-for="(item, ind) in definition.items" :key="ind">
                   {{ item }}
+                </li>
+              </ol>
+            </div>
+          </card>
+        </div>
+      </section>
+
+      <section class="section section-sm decomposition-section">
+        <div class="container">
+          <h4 class="section-title">Character Decomposition</h4>
+          <card shadow>
+            <div class="content">
+              <div v-for="(decomposition, index) in decompositionList" :key="index">
+                <div v-if="checkDecomposition(decomposition.character)" class="composition">
+                  <div class="composition-text">
+                    <div class="decomposition-item ml-0">
+                      <nuxt-link :to="`/dictionary/${decomposition.character}`">{{ decomposition.character }}</nuxt-link>
+                    </div>
+                  </div>
+
+                  <div class="decomposition-container row ml-0">
+                    <div class="decomposition-item" v-for="(item, index1) in cleanDecomposition(decomposition.components)" :key="index1">
+                      <nuxt-link :to="`/dictionary/${item}`">{{ item }}</nuxt-link>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </card>
-      </div>
-    </section>
+          </card>
+        </div>
+      </section>
 
-    <section v-if="compoundsList.length > 0"  class="section section-sm compounds-section">
-      <div class="container">
-        <h4 class="section-title">Compounds <span>({{ compoundsList.length }})</span></h4>
-        <collapse-table-card :data="compoundsList" links />
-      </div>
-    </section>
+      <section v-if="compoundsList.length > 0"  class="section section-sm compounds-section">
+        <div class="container">
+          <h4 class="section-title">Compounds <span>({{ compoundsList.length }})</span></h4>
+          <collapse-table-card :data="compoundsList" links />
+        </div>
+      </section>
 
-    <section  v-if="relatedWordsList.length > 0" class="section section-sm">
-      <div class="container">
-        <h4 class="section-title">Related Words <span>({{ relatedWordsList.length }})</span></h4>
-        <collapse-table-card :data="relatedWordsList" links/>
-      </div>
-    </section>
+      <section  v-if="relatedWordsList.length > 0" class="section section-sm">
+        <div class="container">
+          <h4 class="section-title">Related Words <span>({{ relatedWordsList.length }})</span></h4>
+          <collapse-table-card :data="relatedWordsList" links/>
+        </div>
+      </section>
 
-    <section v-if="idiomsList.length > 0" class="section section-sm">
-      <div class="container">
-        <h4 class="section-title">Idioms <span>({{ idiomsList.length }})</span></h4>
-        <collapse-table-card :data="idiomsList"  />
-      </div>
-    </section>
+      <section v-if="idiomsList.length > 0" class="section section-sm">
+        <div class="container">
+          <h4 class="section-title">Idioms <span>({{ idiomsList.length }})</span></h4>
+          <collapse-table-card :data="idiomsList"  />
+        </div>
+      </section>
 
-    <section v-if="sampleSentenceList.length > 0" class="section section-sm sample-sentence-section">
-      <div class="container">
-        <h4 class="section-title">Sample Sentences</h4>
-        <card shadow class="sample-sentence-card" v-for="(sentence, index) in sampleSentenceList" :key="index">
-          <div class="content">
-            <div class="sentence-content pr-md-3">
-              <div class="simplified-sentence">{{ sentence.simplified }}</div>
-              <div class="pinyin-sentence pt-2">{{ sentence.pinyin }}</div>
-              <div class="english-sentence pt-3">{{ sentence.english }}</div>
-            </div>
-            <div class="action-content">
-              <dictionary-play-button class="mr-0" v-if="sentence.audioUrl" :audio-url="sentence.audioUrl" square />
-              <div class="sub-action-buttons">
-                <base-button class="text-capitalize" :type="getButtonType(sentence.lessonInfo && sentence.lessonInfo.level)">
-                  {{ sentence.lessonInfo && sentence.lessonInfo.level }}
-                </base-button>
-                <a v-if="sentence.lessonInfo && sentence.lessonInfo.slug" :title="sentence.lessonInfo.title" :href="`https://www.chinesepod.com/lesson/${sentence.lessonInfo.slug}`" class="btn btn-outline-primary link-button text-capitalize mt-md-2" role="button" >
-                  Go to Lesson&nbsp;<i class="fa fa-angle-right" />
-                </a>
+      <section v-if="sampleSentenceList.length > 0" class="section section-sm sample-sentence-section">
+        <div class="container">
+          <h4 class="section-title">Sample Sentences</h4>
+          <card shadow class="sample-sentence-card" v-for="(sentence, index) in sampleSentenceList" :key="index">
+            <div class="content">
+              <div class="sentence-content pr-md-3">
+                <div class="simplified-sentence" v-html="sentence.simplified"></div>
+                <div class="pinyin-sentence pt-2" v-html="cleanPinyin(sentence.pinyin)"></div>
+                <div class="english-sentence pt-3" v-html="sentence.english"></div>
+              </div>
+              <div class="action-content">
+                <dictionary-play-button class="mr-sm-4" v-if="sentence.audioUrl" :audio-url="sentence.audioUrl" square />
+                <div class="sub-action-buttons">
+                  <base-button
+                    class="text-capitalize btn text-white mb-md-2"
+                    :class="`${getButtonType(sentence.lessonInfo.level)}`">
+                    {{ sentence.lessonInfo && sentence.lessonInfo.level }}
+                  </base-button>
+                  <a v-if="sentence.lessonInfo && sentence.lessonInfo.slug" :title="sentence.lessonInfo.title" :href="`https://www.chinesepod.com/lesson/${sentence.lessonInfo.slug}`" class="btn btn-outline-primary link-button text-capitalize mt-md-2" role="button" >
+                    Go to Lesson&nbsp;<i class="fa fa-angle-right" />
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
-        </card>
-      </div>
-    </section>
+          </card>
+        </div>
+      </section>
+    </div>
   </div>
 </template>
 
 <script>
   import HanziWriter from 'hanzi-writer'
+  import isChinese from 'is-chinese'
   import { sendGet } from '@/util/api'
-  import CollapseTableCard from './collapse-table-card'
-  import DictionaryPlayButton from './dictionary-play-button'
+  import { cleanPinyin, cleanDefinitions, cleanDecomposition, checkDecomposition } from "@/util/dictionary";
+  import CollapseTableCard from '@/components/custom-components/collapse-table-card'
+  import DictionaryPlayButton from '@/components/custom-components/dictionary-play-button'
   export default {
     name: "dictionary",
     layout: 'default',
@@ -140,6 +157,8 @@
     },
     data() {
       return {
+        searching: false,
+        searchTerm: '',
         writer: null,
         showAnimation: true,
       };
@@ -156,20 +175,18 @@
       const word = params.word
       const response = await sendGet('/dictionary/get-details', { word })
         .catch(() => redirect('https://www.chinesepod.com'));
-      //
-      // if (!response) {
-      //   redirect('https://www.chinesepod.com')
-      //   return
-      // }
 
-      console.log(params);
-      console.log(response);
+      if (!response) {
+        redirect('https://www.chinesepod.com')
+        return
+      }
+
 
       const data = response.data
-      // if (!data) {
-      //   redirect('https://www.chinesepod.com')
-      //   return
-      // }
+      if (!data) {
+        redirect('https://www.chinesepod.com')
+        return
+      }
 
       try {
 
@@ -190,7 +207,7 @@
         for (let [key, value] of Object.entries(data.decomposition)) {
           decompositionList.push(value)
         }
-        const animationCharacters = Array.from(word)
+        const animationCharacters = cleanDecomposition(Array.from(word))
 
         return {
           simplified: data.definition[0].simplified,
@@ -217,18 +234,41 @@
         padding: 5,
         delayBetweenLoops: 3000,
         onLoadCharDataSuccess: () => {
-          document.getElementById('animation-hanzi-container').addEventListener('click', () => {
-            this.playAnimation(0, true)
-          })
+          document.getElementById('animation-hanzi-container')
+            .addEventListener('click', () => {
+              this.playAnimation(0, true)
+            })
         },
         onLoadCharDataError: () => {
           this.showAnimation = false;
           console.log('Oh No! Could not load character data');
         }
       });
+      this.playAnimation(0, true);
     },
     methods: {
+      isChinese: isChinese,
+      cleanDefinitions: cleanDefinitions,
+      cleanPinyin: cleanPinyin,
+      cleanDecomposition: cleanDecomposition,
+      checkDecomposition: checkDecomposition,
+      async runSearch () {
+
+        this.searching = true;
+
+        if (this.searchTerm) {
+
+          this.$router.push({path: '/dictionary', query: {search: this.searchTerm}})
+
+        } else {
+
+          this.$router.push({path: '/dictionary'})
+
+        }
+
+      },
       getButtonType(type) {
+        return type.toLowerCase().split(' ').join('-')
         if (type === 'Newbie') return 'primary'
         if (type === 'Intermediate') return 'warning'
         if (type === 'Upper Intermediate') return 'danger'
@@ -236,12 +276,12 @@
         if (type === 'Media') return 'default'
         return 'primary'
       },
-      playAnimation(index, isStartAnimation = false) {
+      async playAnimation(index, isStartAnimation = false) {
         this.writer.setCharacter(this.animationCharacters[index])
 
         if (index === 0 && !isStartAnimation) return
 
-        this.writer.animateCharacter({
+        await this.writer.animateCharacter({
           onComplete: () => {
             setTimeout(() => {
               this.playAnimation((index + 1) % this.animationCharacters.length)
@@ -255,6 +295,55 @@
 
 <style lang="scss">
   .vocabulary-page {
+
+    $cpod-any: #0F4BBD !default;
+    $cpod-newbie: #2487C1 !default;
+    $cpod-elementary: #35C567 !default;
+    $cpod-preint: #F7B500 !default;
+    $cpod-intermediate: #FF4D0F !default;
+    $cpod-upperint: #E1001E !default;
+    $cpod-advanced: #89006B !default;
+    $cpod-media: #003041 !default;
+
+    .any {
+      background-color: $cpod-any;
+    }
+    .newbie {
+      background-color: $cpod-newbie;
+    }
+    .elementary {
+      background-color: $cpod-elementary;
+    }
+    .pre-intermediate {
+      background-color: $cpod-preint;
+    }
+    .intermediate {
+      background-color: $cpod-intermediate;
+    }
+    .upper-intermediate {
+      background-color: $cpod-upperint;
+    }
+    .advanced {
+      background-color: $cpod-advanced;
+    }
+    .media {
+      background-color: $cpod-media;
+      display: block;
+    }
+
+    .characters {
+      font-size: 30px;
+      font-family: 'Noto Sans SC', sans-serif;
+      color: black;
+    }
+    .pinyin {
+      font-family: 'Noto Sans SC', sans-serif;
+    }
+    .pinyin, .english {
+      font-size: 24px;
+      color: black;
+    }
+
     color: #000;
     .main-word-section {
       background: #FFFFFF;

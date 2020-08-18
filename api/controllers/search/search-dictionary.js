@@ -38,6 +38,8 @@ module.exports = {
     const containsChinese = require('contains-chinese');
     let fuzziness = containsChinese(inputs.query) ? 0 : 1;
 
+    sails.log.warn(inputs);
+
     let fields = containsChinese(inputs.query)
       ? ['simplified', 'traditional', 'pinyin', 'pinyin_tones', 'pinyin_permutations']
       : ['simplified', 'traditional', 'pinyin', 'definitions', 'pinyin_tones', 'pinyin_permutations']

@@ -1,15 +1,15 @@
 <template>
-  <header class="header-global">
+  <header class="header-global border-bottom">
     <base-nav class="navbar-main" type="secondary" effect="light" expand>
       <a slot="brand" class="navbar-brand mr-lg-5" href="https://www.chinesepod.com">
-        <img src="/img/brand/brand.svg">
+        <img class="img-fluid cpod-logo" src="/img/brand/logo.png">
       </a>
 
       <div class="row" slot="content-header" slot-scope="{closeMenu}">
         <div class="col-6 collapse-brand">
-          <nuxt-link to="/">
-            <img src="/img/brand/brand.svg">
-          </nuxt-link>
+          <a href="/" title="ChinesePod">
+            <img src="https://www.chinesepod.com/images/brand/brand.svg">
+          </a>
         </div>
         <div class="col-6 collapse-close">
           <close-button @click="closeMenu"></close-button>
@@ -19,7 +19,12 @@
       <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
         <li class="nav-item">
           <a href="/corporate" class="nav-link" role="button">
-            <span class="nav-link-inner--text">Corporate</span>
+            <span class="nav-link-inner--text">For Companies</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/academic-offers" class="nav-link" role="button">
+            <span class="nav-link-inner--text">For Schools</span>
           </a>
         </li>
         <li class="nav-item">
@@ -120,5 +125,8 @@
     }
   };
 </script>
-<style>
+<style lang="scss">
+  .cpod-logo {
+    max-width: 160px !important;
+  }
 </style>
