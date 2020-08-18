@@ -165,13 +165,14 @@ module.exports = {
     commands.push(action);
     commands.push(indexRecord);
 
-    await sails.hooks.elastic.client.delete({index: index.elasticIndex, id: record.simplified})
-      .catch(error => sails.log.error(error));
+    await sails.hooks.elastic.client.index({index: index.elasticIndex, id: `${record.simplified}-${record.traditional}-${record.pinyin}`, body: indexRecord, refresh: true})
+      .then( async () => {
+        await sails.hooks.elastic.client.delete({index: index.elasticIndex, id: record.simplified})
+          .catch(error => sails.log.error(error));
 
-    await sails.hooks.elastic.client.delete({index: index.elasticIndex, id: record.traditional})
-      .catch(error => sails.log.error(error));
-
-    return await sails.hooks.elastic.client.index({index: index.elasticIndex, id: `${record.simplified}-${record.traditional}-${record.pinyin}`, body: indexRecord, refresh: true})
+        await sails.hooks.elastic.client.delete({index: index.elasticIndex, id: record.traditional})
+          .catch(error => sails.log.error(error));
+      })
       .catch(error => sails.log.error(error));
 
   }
