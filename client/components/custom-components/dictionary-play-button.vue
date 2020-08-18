@@ -10,6 +10,7 @@
 
   export default {
     name: 'dictionary-play-button',
+    key: to => to.fullPath,
     props: {
       audioUrl: String,
       square: {

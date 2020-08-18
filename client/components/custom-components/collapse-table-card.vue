@@ -3,11 +3,22 @@
     <div class="table-container" role="table" aria-label="Destinations">
       <div class="flex-table row" role="rowgroup" v-for="(item, index) in availableList" :key="index">
         <div class="flex-row simplified" role="cell">
-          <a v-if="links" :href="`/dictionary/${item.simplified}`" :title="item.simplified">{{ item.simplified }}</a>
+          <nuxt-link v-if="links" :to="`/dictionary/${item.simplified}`" :title="item.simplified">{{ item.simplified }}</nuxt-link>
           <span v-else>{{ item.simplified }}</span>
         </div>
         <div class="flex-row pinyin" role="cell">{{ cleanPinyin(item.pinyin) }}</div>
-        <div class="flex-row english" role="cell">{{ item.definition }}</div>
+        <div class="flex-row english" role="cell">
+          <ol class="list-inline">
+            <li class="list-inline-item" v-for="(definition, index) in cleanDefinitions(item.definition)" :key="index">
+              <div v-if="definition instanceof Object">
+                <strong>{{ index + 1}}</strong> <strong class="small font-weight-bold">{{ definition.type }}:</strong> <router-link :to="`/dictionary/${definition[charSet]}`" :title="definition[charSet]" class="chinese-font">{{definition[charSet]}} {{ cleanPinyin(definition.pinyin) }}</router-link>
+              </div>
+              <div v-else>
+                <strong>{{ index + 1}}</strong> {{definition}}
+              </div>
+            </li>
+          </ol>
+        </div>
       </div>
     </div>
     <template slot="footer" v-if="data.length > maxCount">
@@ -19,6 +30,9 @@
 </template>
 
 <script>
+
+  import { cleanPinyin, cleanDefinitions } from "@/util/dictionary";
+
 export default {
   name: "collapse-table-card",
   layout: 'default',
@@ -60,16 +74,10 @@ export default {
     this.isOpened = this.isExpanded
   },
   methods: {
+    cleanPinyin: cleanPinyin,
+    cleanDefinitions: cleanDefinitions,
     collapseContent() {
       this.isOpened = !this.isOpened
-    },
-    cleanPinyin(string) {
-      return string
-        .replace('u:1','ǖ')
-        .replace('u:2','ǘ')
-        .replace('u:3','ǚ')
-        .replace('u:4','ǜ')
-        .replace('u:5','ü')
     }
   }
 }
