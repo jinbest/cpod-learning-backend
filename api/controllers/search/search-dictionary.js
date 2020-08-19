@@ -46,6 +46,11 @@ module.exports = {
 
     let vocabulary;
     if(inputs.query) {
+
+      if (inputs.query.length < 5) {
+        fuzziness = 0
+      }
+
       vocabulary = await sails.hooks.elastic.client.search({
         index: 'vocabulary-search',
         from: inputs.skip ? inputs.skip : 0,
