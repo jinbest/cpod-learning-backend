@@ -62,15 +62,15 @@ const cleanDefinitions = (definitionString) => {
 const cleanPinyin = (pinyinString) => {
   return pinyinString
     ? pinyinString
-      .replace('\\&#039;', '\'')
-      .replace('&#039;', '\'')
-      .replace('n5', 'n')
-      .replace('r5', 'r')
-      .replace('u:1','ǖ')
-      .replace('u:2','ǘ')
-      .replace('u:3','ǚ')
-      .replace('u:4','ǜ')
-      .replace('u:5','ü')
+      .replace(new RegExp('/\&#039;', 'g'), '\'')
+      .replace(new RegExp('&#039;', 'g'), '\'')
+      .replace(new RegExp('n5', 'g'), 'n')
+      .replace(new RegExp('r5', 'g'), 'r')
+      .replace(new RegExp('u:1', 'g'),'ǖ')
+      .replace(new RegExp('u:2', 'g'),'ǘ')
+      .replace(new RegExp('u:3', 'g'),'ǚ')
+      .replace(new RegExp('u:4', 'g'),'ǜ')
+      .replace(new RegExp('u:5', 'g'),'ü')
     : ''
 }
 
