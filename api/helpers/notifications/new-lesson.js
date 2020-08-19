@@ -45,8 +45,6 @@ module.exports = {
     let targetLesson = lessons[0];
 
     if(targetLesson && targetLesson.title && targetLesson.slug && targetLesson.level) {
-      sails.hooks.bugsnag.notify(`Lesson Alert - ${targetLesson.title}`);
-      sails.hooks.bugsnag.notify(JSON.stringify({title: targetLesson.title, slug: targetLesson.slug, level: targetLesson.level.toUpperCase()}));
       sails.sockets.blast('NEW_LESSON', {title: targetLesson.title, slug: targetLesson.slug, level: targetLesson.level.toUpperCase()});
       for (const lesson of lessons) {
         await sails.helpers.search.indexLesson(lesson.id)

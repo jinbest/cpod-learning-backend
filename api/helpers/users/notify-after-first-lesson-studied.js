@@ -42,11 +42,7 @@ module.exports = {
       },
       trigger: 'first-lesson-studied'
     })
-      .then(() => sails.hooks.bugsnag.notify(`Sent First Lesson Email To ${inputs.userId}`))
       .catch(e => sails.hooks.bugsnag.notify(e))
-
   }
-
-
 };
 
