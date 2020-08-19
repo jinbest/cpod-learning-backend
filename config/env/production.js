@@ -453,8 +453,6 @@ module.exports = {
 
 
             if(affiliateTag) {
-              sails.hooks.bugsnag.notify(JSON.stringify({session: req.session, url: req.url}));
-
               if(!req.session.affid) {
                 req.session.affid = [];
               }
@@ -470,7 +468,6 @@ module.exports = {
 
             if(req.session.affid && req.session.userId) {
               try {
-                sails.hooks.bugsnag.notify(JSON.stringify(req.session.affid));
                 userInfoQueue.add(
                   'UpdateAffiliateLinks',
                   {userId: req.session.userId, affid: req.session.affid},
