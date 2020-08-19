@@ -63,10 +63,18 @@
 
       const response = await sendGet(`/search/search-dictionary/${query.search}`,
         { skip: ((query.page - 1) * 20) })
-        .catch((err) => console.log(err));
+        .catch(() => redirect('https://www.chinesepod.com'));
 
-      const data = response.data;
+      if (!response) {
+        redirect('https://www.chinesepod.com')
+        return
+      }
 
+      const data = response.data
+      if (!data) {
+        redirect('https://www.chinesepod.com')
+        return
+      }
 
       let pages = Math.ceil(data.count / 20);
 

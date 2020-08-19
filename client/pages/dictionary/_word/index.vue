@@ -174,17 +174,16 @@
     async asyncData ({ params, error, payload, redirect }) {
       const word = params.word
       const response = await sendGet('/dictionary/get-details', { word })
-        .catch(() => redirect('https://www.chinesepod.com'));
+        .catch(() => redirect('https://www.chinesepod.com/dictionary'));
 
       if (!response) {
-        redirect('https://www.chinesepod.com')
+        redirect('https://www.chinesepod.com/dictionary')
         return
       }
 
-
       const data = response.data
       if (!data) {
-        redirect('https://www.chinesepod.com')
+        redirect('https://www.chinesepod.com/dictionary')
         return
       }
 
