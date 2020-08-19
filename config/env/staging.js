@@ -60,7 +60,7 @@ module.exports = Object.assign({}, PRODUCTION_CONFIG, {
     //--------------------------------------------------------------------------
   }),
 
-  session: Object.assign({}, PRODUCTION_CONFIG.session, {
+  session: Object.assign({}, {
     // url: 'redis://shared:some_password_everyone_knows@bigsquid.redistogo.com:9562/staging-sessions',
     //--------------------------------------------------------------------------
     // /\  Hard-code your staging Redis server's `url` again here.

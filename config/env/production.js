@@ -57,8 +57,27 @@ const contentLimiter = new slowDown({
   delayMs: 500
 });
 
+
+/**
+ * nuxt config and init
+ */
+const { Nuxt } = require('nuxt');
+
+// Require Nuxt config
+const config = require('../nuxt.config');
+
+config.env.API_URL = '/api/v1'
+// Create a new Nuxt instance
+const nuxt = new Nuxt(config);
+
+// // Enable live build & reloading on dev
+// if (nuxt.options.dev) {
+//   new Builder(nuxt).build();
+// }
+
 module.exports = {
 
+  nuxt,
 
   /**************************************************************************
    *                                                                         *

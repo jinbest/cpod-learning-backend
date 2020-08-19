@@ -5,11 +5,12 @@
 /**
  * nuxt config and init
  */
-const { Nuxt, Builder } = require('nuxt');
+const { Nuxt } = require('nuxt');
 
 // Require Nuxt config
 const config = require('../nuxt.config');
 
+config.env.API_URL = 'http://localhost:1337/api/v1'
 // Create a new Nuxt instance
 const nuxt = new Nuxt(config);
 
