@@ -66,6 +66,7 @@ module.exports.policies = {
   'exercises/*': 'is-authenticated',
   'vocabulary/*': 'is-authenticated',
   'search/*': 'is-authenticated',
+  'search/search-dictionary': true,
   'token/check': 'is-authenticated',
   'account/settings/*': 'is-authenticated',
   'account/subscription/*': 'is-authenticated',
