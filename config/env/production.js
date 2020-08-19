@@ -64,7 +64,7 @@ const contentLimiter = new slowDown({
 const { Nuxt } = require('nuxt');
 
 // Require Nuxt config
-const config = require('../nuxt.config');
+const config = require('../../nuxt.config');
 
 config.env.API_URL = '/api/v1'
 // Create a new Nuxt instance
