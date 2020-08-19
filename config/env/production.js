@@ -57,8 +57,19 @@ const contentLimiter = new slowDown({
   delayMs: 500
 });
 
+const { Nuxt } = require('nuxt');
+
+// Require Nuxt config
+const config = require('../../nuxt.config');
+
+config.env.API_URL = 'https://www.chinesepod.com/api/v1'
+
+// Create a new Nuxt instance
+const nuxt = new Nuxt(config);
+
 module.exports = {
 
+  nuxt,
 
   /**************************************************************************
    *                                                                         *

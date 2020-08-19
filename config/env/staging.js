@@ -25,7 +25,21 @@ var PRODUCTION_CONFIG = require('./production');
 //     (That way, all you need to do in this file is set overrides.)
 //--------------------------------------------------------------------------
 
+
+const { Nuxt } = require('nuxt');
+
+// Require Nuxt config
+const config = require('../../nuxt.config');
+
+config.env.API_URL = 'https://staging.chinesepod.com/api/v1'
+
+// Create a new Nuxt instance
+const nuxt = new Nuxt(config);
+
+
 module.exports = Object.assign({}, PRODUCTION_CONFIG, {
+
+  nuxt,
 
   datastores: Object.assign({}, PRODUCTION_CONFIG.datastores, {
     default: Object.assign({}, PRODUCTION_CONFIG.datastores.default, {

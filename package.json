@@ -60,7 +60,7 @@
     "node-mautic": "^1.1.0",
     "node-zendesk": "^1.4.0",
     "nouislider": "^14.2.0",
-    "nuxt": "^2.14.3",
+    "nuxt": "^2.12.2",
     "parse-cc-cedict": "^2.1.0",
     "passport": "^0.4.0",
     "passport-facebook": "^3.0.0",
