@@ -4,8 +4,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/home/_redirects"
   },
   {
-    "revision": "b7920142f9a26fe55adb",
-    "url": "/home/css/app.a6ecbba6.css"
+    "revision": "0d6b4dc4ffeca769b0ac",
+    "url": "/home/css/app.3265b990.css"
   },
   {
     "revision": "ddb37750c41ae88e26f9",
@@ -176,16 +176,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/home/img/symbol-black-center.d7c26c3a.svg"
   },
   {
-    "revision": "f9b78d93af8ccff72e6e853d649a19cd",
-    "url": "/home/img/symbol.f9b78d93.svg"
-  },
-  {
-    "revision": "8e4fea501f06500dbc2cf9355c9d73bb",
+    "revision": "2448b02ccd30054a237f0b9a5aedd0a4",
     "url": "/home/index.html"
   },
   {
-    "revision": "b7920142f9a26fe55adb",
-    "url": "/home/js/app.9357de45.js"
+    "revision": "0d6b4dc4ffeca769b0ac",
+    "url": "/home/js/app.71e6eb54.js"
   },
   {
     "revision": "f2f7c1ee7343ad720d95",
