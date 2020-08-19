@@ -4,7 +4,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/home/_redirects"
   },
   {
-    "revision": "0d6b4dc4ffeca769b0ac",
+    "revision": "74cdb849c8ecbeb0acdb",
     "url": "/home/css/app.3265b990.css"
   },
   {
@@ -176,12 +176,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/home/img/symbol-black-center.d7c26c3a.svg"
   },
   {
-    "revision": "2448b02ccd30054a237f0b9a5aedd0a4",
+    "revision": "368e59b328a717c14ad324dda95c6e26",
     "url": "/home/index.html"
   },
   {
-    "revision": "0d6b4dc4ffeca769b0ac",
-    "url": "/home/js/app.71e6eb54.js"
+    "revision": "74cdb849c8ecbeb0acdb",
+    "url": "/home/js/app.c5872cf2.js"
   },
   {
     "revision": "f2f7c1ee7343ad720d95",
