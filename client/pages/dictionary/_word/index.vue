@@ -118,10 +118,10 @@
                 <div class="english-sentence pt-3" v-html="sentence.english"></div>
               </div>
               <div class="action-content">
-                <dictionary-play-button class="mr-sm-4" v-if="sentence.audioUrl" :audio-url="sentence.audioUrl" square />
-                <div class="sub-action-buttons">
+                <dictionary-play-button class="mr-lg-4" v-if="sentence.audioUrl" :audio-url="sentence.audioUrl" square />
+                <div class="sub-action-buttons pt-2">
                   <base-button
-                    class="text-capitalize btn text-white mb-md-2"
+                    class="text-capitalize btn text-white mb-md-1"
                     :class="`${getButtonType(sentence.lessonInfo.level)}`">
                     {{ sentence.lessonInfo && sentence.lessonInfo.level }}
                   </base-button>
