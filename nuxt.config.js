@@ -143,7 +143,6 @@ module.exports = {
   */
   env: {
     API_URL: (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'http://localhost:1337/api/v1' : 'https://www.chinesepod.com/api/v1',
-    // API_URL: 'http://localhost:1337/api/v1',
     API_KEY: '87eEcKeThR5STfLlRPxDhzxto1DXJ5OZ3ZvXcvHr'
   },
   /*
