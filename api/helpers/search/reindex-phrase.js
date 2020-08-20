@@ -163,9 +163,11 @@ module.exports = {
       throw new Error('No Such Entry')
     }
 
-    await asyncForEach(records, async (record) => {
+    let data = await sails.helpers.dictionary.getDetails(records[0].simplified)
 
-      sails.log.info(record)
+    for (let i = 0; i < records.length; i++) {
+
+      let record = records[i]
 
       let commands = [];
       let action = {
@@ -187,7 +189,8 @@ module.exports = {
         .replace('u:5','ü');
 
       record.pinyin_permutations = getPinyinPermutations(record.simplified, record.traditional, record.pinyin);
-      record.data = JSON.stringify(await sails.helpers.dictionary.getDetails(record.simplified));
+
+      record.data = JSON.stringify(data);
       record.timestamp = new Date().toISOString();
 
       record.simplifiedId = record.simplified;
@@ -212,12 +215,19 @@ module.exports = {
       commands.push(action);
       commands.push(indexRecord);
 
-      await sails.hooks.elastic.client.index({index: index.elasticIndex, id: `${record.simplified}-${record.traditional}-${record.pinyin}`, body: indexRecord, refresh: true})
+      // sails.log.warn(indexRecord.definitions);
+      // sails.log.warn(indexRecord.definition);
+      // sails.log.warn(record.definition);
+
+      await sails.hooks.elastic.client.index({index: index.elasticIndex, id: `${record.simplified}-${record.traditional}-${record.pinyin}-${record.definition}`, body: indexRecord, refresh: true})
         .then( async () => {
           await sails.hooks.elastic.client.delete({index: index.elasticIndex, id: record.simplified})
             .catch(() => {});
 
           await sails.hooks.elastic.client.delete({index: index.elasticIndex, id: record.traditional})
+            .catch(() => {});
+
+          await sails.hooks.elastic.client.delete({index: index.elasticIndex, id:  `${record.simplified}-${record.traditional}-${record.pinyin}`})
             .catch(() => {});
 
           let cleanupRecord = vocabulary.find(vocab => vocab.simplified === record.simplified);
@@ -229,7 +239,7 @@ module.exports = {
 
         })
         .catch(error => sails.log.error(error));
-    })
+    }
   }
 };
 

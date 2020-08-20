@@ -1,4 +1,5 @@
 import isChinese from 'is-chinese'
+import convertPinyinTones from 'pinyin-tone-converter'
 
 const cleanDefinitions = (definitionString) => {
   let definitions = definitionString.split('/');
@@ -61,7 +62,7 @@ const cleanDefinitions = (definitionString) => {
 
 const cleanPinyin = (pinyinString) => {
   return pinyinString
-    ? pinyinString
+    ? convertPinyinTones(pinyinString)
       .replace(new RegExp('/\&#039;', 'g'), '\'')
       .replace(new RegExp('&#039;', 'g'), '\'')
       .replace(new RegExp('n5', 'g'), 'n')

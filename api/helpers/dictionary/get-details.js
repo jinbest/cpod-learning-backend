@@ -51,7 +51,6 @@ module.exports = {
       compounds = [];
     }
 
-    sails.log.info(definitions)
 
     let simplifiedChar = chineseConv.sify(inputs.word);
 
@@ -178,7 +177,7 @@ module.exports = {
         i.pinyin = convert.convertPinyinTones(i.pinyin);
         i.definition = convert.convertPinyinTones(i.definition)
       } catch (e) {
-        sails.log.info(i)
+
       }
     });
     definitions.forEach(i => {
@@ -186,7 +185,7 @@ module.exports = {
         i.pinyin = convert.convertPinyinTones(i.pinyin);
         i.definition = convert.convertPinyinTones(i.definition)
       } catch (e) {
-        sails.log.info(i)
+
       }
     });
     related.forEach(i => {
@@ -194,7 +193,7 @@ module.exports = {
         i.pinyin = convert.convertPinyinTones(i.pinyin);
         i.definition = convert.convertPinyinTones(i.definition)
       } catch (e) {
-        sails.log.info(i)
+
       }
     });
     idioms.forEach(i => {
@@ -202,7 +201,7 @@ module.exports = {
         i.pinyin = convert.convertPinyinTones(i.pinyin);
         i.definition = convert.convertPinyinTones(i.definition)
       } catch (e) {
-        sails.log.info(i)
+
       }
     });
 
