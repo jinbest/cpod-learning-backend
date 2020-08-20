@@ -116,10 +116,12 @@ module.exports = {
               result.definition = result.definitions
             }
           }
+
+          result.definition = convert.convertPinyinTones(result.definition)
+
         }
       })
     }
-    // results = [].concat(...results);
 
     return {
       count: vocabulary['body']['hits']['total']['value'],
