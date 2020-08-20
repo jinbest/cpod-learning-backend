@@ -37,6 +37,7 @@ module.exports = {
     let sitemapDict = require('../../../lib/cedict_sitemaps.json');
 
     let start = moment(new Date('2020-06-01'))
+    let modified = new Date(new Date().getFullYear(), new Date().getMonth(), 0)
     let now = moment(new Date())
     let diff = now.diff(start, 'days');
 
@@ -61,7 +62,7 @@ module.exports = {
       sitemapXml += (
           '<url>\n'+
           '  <loc>https://www.chinesepod.com/dictionary/' + _.escape(entry.simplified)+'</loc>\n'+
-          '  <lastmod>'+_.escape(new Date().toISOString())+'</lastmod>\n'+
+          '  <lastmod>'+_.escape(modified.toISOString())+'</lastmod>\n'+
           '<changefreq>monthly</changefreq>\n'+
           '<priority>0.8</priority>\n'+
           '</url>'
