@@ -19,22 +19,22 @@ module.exports = {
     const chineseConv = require('chinese-conv');
 
     // All done.
-    let definitions = sails.hooks.hanzi.definitionLookup(inputs.word);
+    let definitionArray = sails.hooks.hanzi.definitionLookup(inputs.word);
 
-    if (!definitions) {
+    if (!definitionArray) {
 
       let segments = sails.hooks.hanzi.segment(inputs.word);
 
       if (segments && segments.length) {
-        definitions =  segments.map(phrase => sails.hooks.hanzi.definitionLookup(phrase))
+        definitionArray =  segments.map(phrase => sails.hooks.hanzi.definitionLookup(phrase))
       }
     } else {
-      if(definitions.length > 1) {
-        definitions = definitions.sort((a, b) => (a.definition.split('/').length < b.definition.split('/').length) ? 1 : -1)
+      if(definitionArray.length > 1) {
+        definitionArray = definitionArray.sort((a, b) => (a.definition.split('/').length < b.definition.split('/').length) ? 1 : -1)
       }
     }
 
-    if(!definitions) {
+    if(!definitionArray) {
       throw 'invalid'
     }
 
@@ -106,7 +106,7 @@ module.exports = {
         .then(data => rawDialogues = data)
         .catch()
       ,
-      getVocabulary(definitions[0].simplified, definitions[0].pinyin)
+      getVocabulary(definitionArray[0].simplified, definitionArray[0].pinyin)
         .then(data => vocabData = data)
         .catch()
     ]);
@@ -180,7 +180,7 @@ module.exports = {
 
       }
     });
-    definitions.forEach(i => {
+    definitionArray.forEach(i => {
       try {
         i.pinyin = convert.convertPinyinTones(i.pinyin);
         i.definition = convert.convertPinyinTones(i.definition)
@@ -206,15 +206,14 @@ module.exports = {
     });
 
     return {
-      definition: definitions,
-      audioUrl: vocabData && vocabData.audioUrl ? vocabData.audioUrl : '',
-      compounds: compounds,
-      decomposition: sails.hooks.hanzi.decomposeMany(inputs.word, 2),
-      related: related,
-      idioms: idioms,
-      lessons: lessons
-
-    }
+        definition: definitionArray,
+        audioUrl: vocabData && vocabData.audioUrl ? vocabData.audioUrl : '',
+        compounds: compounds,
+        decomposition: sails.hooks.hanzi.decomposeMany(inputs.word, 2),
+        related: related,
+        idioms: idioms,
+        lessons: lessons
+      }
 
   }
 

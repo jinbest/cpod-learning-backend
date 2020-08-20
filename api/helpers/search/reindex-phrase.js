@@ -58,10 +58,11 @@ module.exports = {
       }
     };
 
-    const getPinyinPermutations = (simplified, traditional, pinyin) => {
+    const getPinyinPermutations = (simplified, traditional, pinyin, pinyin_tones) => {
       let simplifiedParts = simplified.split('');
       let traditionalParts = traditional.split('');
       let pinyinPartsDirty = pinyin.split(' ');
+      let pinyinPartsTones = pinyin_tones.split(' ');
       let pinyinPartsClean = []; let output = [];
 
       pinyinPartsDirty.forEach((syllable) => {
@@ -70,6 +71,9 @@ module.exports = {
 
       output.push(pinyinPartsClean.join(' '));
       output.push(pinyinPartsClean.join(''));
+      output.push(pinyinPartsDirty.join(' '));
+      output.push(pinyinPartsDirty.join(''));
+      output.push(pinyinPartsTones.join(''));
 
       for (let i = 0; i < pinyinPartsDirty.length; i++) {
 
@@ -128,7 +132,7 @@ module.exports = {
         if(!output.includes(dirtyAndClean)) { output.push(dirtyAndClean); }
       }
 
-      return output
+      return [...new Set(output)] // output //
     }
 
     const arrAvg = arr => arr.reduce((a,b) => a + b, 0) / arr.length
@@ -163,8 +167,6 @@ module.exports = {
       throw new Error('No Such Entry')
     }
 
-    let data = await sails.helpers.dictionary.getDetails(records[0].simplified)
-
     for (let i = 0; i < records.length; i++) {
 
       let record = records[i]
@@ -188,9 +190,9 @@ module.exports = {
         .replace('u:4','ǜ')
         .replace('u:5','ü');
 
-      record.pinyin_permutations = getPinyinPermutations(record.simplified, record.traditional, record.pinyin);
 
-      record.data = JSON.stringify(data);
+      record.pinyin_permutations = getPinyinPermutations(record.simplified, record.traditional, record.pinyin, record.pinyin_tones);
+
       record.timestamp = new Date().toISOString();
 
       record.simplifiedId = record.simplified;
@@ -212,14 +214,14 @@ module.exports = {
 
       indexRecord.priority = calculatePriority(indexRecord.simplified);
 
+      let cpodData = await sails.helpers.dictionary.getDetails(records[i].simplified);
+
+      indexRecord.data = JSON.stringify(cpodData)
+
       commands.push(action);
       commands.push(indexRecord);
 
-      // sails.log.warn(indexRecord.definitions);
-      // sails.log.warn(indexRecord.definition);
-      // sails.log.warn(record.definition);
-
-      await sails.hooks.elastic.client.index({index: index.elasticIndex, id: `${record.simplified}-${record.traditional}-${record.pinyin}-${record.definition}`, body: indexRecord, refresh: true})
+      await sails.hooks.elastic.client.index({index: index.elasticIndex, id: `${record.simplified}-${record.traditional}-${record.pinyin_tones}-${record.definition}`, body: indexRecord, refresh: true})
         .then( async () => {
           await sails.hooks.elastic.client.delete({index: index.elasticIndex, id: record.simplified})
             .catch(() => {});
