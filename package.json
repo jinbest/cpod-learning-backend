@@ -10,6 +10,7 @@
     "@elastic/elasticsearch": "7.7.1",
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@logisticinfotech/sails-hook-actions2-swagger": "0.0.9",
+    "@nahanil/hsk-words": "^0.2.2",
     "@nuxtjs/axios": "^5.10.0",
     "@nuxtjs/pwa": "^3.0.0-beta.20",
     "@sailshq/connect-redis": "^3.2.1",

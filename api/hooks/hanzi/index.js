@@ -30,6 +30,7 @@ module.exports = function defineHanziHook(sails) {
     getExamples: hanzi.getExamples,
     segment: hanzi.segment,
     getCharactersWithComponent: hanzi.getCharactersWithComponent,
+    getCharacterFrequency: hanzi.getCharacterFrequency,
 
     /**
      * Runs when this Sails app loads/lifts.

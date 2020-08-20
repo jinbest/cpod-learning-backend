@@ -37,6 +37,7 @@ module.exports = {
         'pinyin', // Pinyin
         'pinyin_tones',
         'pinyin_permutations',
+        'definition', // English
         'definitions', // English
         'traditional', // Traditional
         'simplifiedId',
@@ -47,8 +48,15 @@ module.exports = {
     };
 
     const convert = require('pinyin-tone-converter');
+    const hsk = require('@nahanil/hsk-words');
 
     let vocabulary = require('../../../lib/cedict_sitemaps.json');
+
+    const asyncForEach = async (array, callback) => {
+      for (let index = 0; index < array.length; index++) {
+        await callback(array[index], index, array)
+      }
+    };
 
     const getPinyinPermutations = (simplified, traditional, pinyin) => {
       let simplifiedParts = simplified.split('');
@@ -56,7 +64,7 @@ module.exports = {
       let pinyinPartsDirty = pinyin.split(' ');
       let pinyinPartsClean = []; let output = [];
 
-      pinyinPartsDirty.forEach((syllable, index) => {
+      pinyinPartsDirty.forEach((syllable) => {
         pinyinPartsClean.push(syllable.replace(/[0-9]/g, ''))
       });
 
@@ -123,60 +131,105 @@ module.exports = {
       return output
     }
 
-    let record = vocabulary.find(vocab => vocab.simplified === inputs.word);
+    const arrAvg = arr => arr.reduce((a,b) => a + b, 0) / arr.length
 
-    if (!record) {
-      record = vocabulary.find(vocab => vocab.traditional === inputs.word);
+    const calculatePriority = (simplified) => {
+      let priorities = [];
+      let chars = simplified.split('');
+      chars.forEach(char => {
+        let priority = 10000;
+        try {
+          let charData = sails.hooks.hanzi.getCharacterFrequency(char);
+          if (charData && charData.number) {
+            priority = charData.number
+          }
+        } catch (e) {
+        }
+        priorities.push(priority)
+      })
+
+      return arrAvg(priorities)
     }
+    //
+    // let record = vocabulary.find(vocab => vocab.simplified === inputs.word);
+    //
+    // if (!record) {
+    //   record = vocabulary.find(vocab => vocab.traditional === inputs.word);
+    // }
 
-    if (!record) {
+    let records = sails.hooks.hanzi.definitionLookup(inputs.word);
+
+    if (!records || !records[0] || !records[0].simplified) {
       throw new Error('No Such Entry')
     }
 
-    let commands = [];
-    let action = {
-      index: {
-        _index: index.elasticIndex,
-        _type: index.elasticIndex,
+    await asyncForEach(records, async (record) => {
+
+      sails.log.info(record)
+
+      let commands = [];
+      let action = {
+        index: {
+          _index: index.elasticIndex,
+          _type: index.elasticIndex,
+        }
+      };
+
+      let indexRecord = {};
+
+      record.pinyin_tones = convert.convertPinyinTones(record.pinyin)
+        .replace('n5', 'n')
+        .replace('r5', 'r')
+        .replace('u:1','ǖ')
+        .replace('u:2','ǘ')
+        .replace('u:3','ǚ')
+        .replace('u:4','ǜ')
+        .replace('u:5','ü');
+
+      record.pinyin_permutations = getPinyinPermutations(record.simplified, record.traditional, record.pinyin);
+      record.data = JSON.stringify(await sails.helpers.dictionary.getDetails(record.simplified));
+      record.timestamp = new Date().toISOString();
+
+      record.simplifiedId = record.simplified;
+      record.traditionalId = record.traditional;
+
+      if (record.definition) {
+        record.definitions = record.definition.split('/')
       }
-    };
 
-    let indexRecord = {};
+      index.elasticRecord.forEach(key => {
+        indexRecord[key] = record[key];
+      });
 
-    record.pinyin_tones = convert.convertPinyinTones(record.pinyin)
-      .replace('n5', 'n')
-      .replace('r5', 'r')
-      .replace('u:1','ǖ')
-      .replace('u:2','ǘ')
-      .replace('u:3','ǚ')
-      .replace('u:4','ǜ')
-      .replace('u:5','ü');
+      indexRecord.word_length = indexRecord.simplified ? indexRecord.simplified.length : 0;
+      indexRecord.pinyin_length = indexRecord.pinyin_tones ? indexRecord.pinyin_tones.length : 0;
 
-    record.pinyin_permutations = getPinyinPermutations(record.simplified, record.traditional, record.pinyin);
-    record.data = JSON.stringify(await sails.helpers.dictionary.getDetails(record.simplified));
-    record.timestamp = new Date().toISOString();
+      let hskLevel = await hsk.findLevel(indexRecord.simplified)
+      indexRecord.hsk = hskLevel > 0 ? hskLevel : 7;
 
-    record.simplifiedId = record.simplified;
-    record.traditionalId = record.traditional;
+      indexRecord.priority = calculatePriority(indexRecord.simplified);
 
-    index.elasticRecord.forEach(key => {
-      indexRecord[key] = record[key];
-    });
-    commands.push(action);
-    commands.push(indexRecord);
+      commands.push(action);
+      commands.push(indexRecord);
 
-    await sails.hooks.elastic.client.index({index: index.elasticIndex, id: `${record.simplified}-${record.traditional}-${record.pinyin}`, body: indexRecord, refresh: true})
-      .then( async () => {
-        await sails.hooks.elastic.client.delete({index: index.elasticIndex, id: record.simplified})
-          .catch(() => {});
+      await sails.hooks.elastic.client.index({index: index.elasticIndex, id: `${record.simplified}-${record.traditional}-${record.pinyin}`, body: indexRecord, refresh: true})
+        .then( async () => {
+          await sails.hooks.elastic.client.delete({index: index.elasticIndex, id: record.simplified})
+            .catch(() => {});
 
-        await sails.hooks.elastic.client.delete({index: index.elasticIndex, id: record.traditional})
-          .catch(() => {});
-      })
-      .catch(error => sails.log.error(error));
+          await sails.hooks.elastic.client.delete({index: index.elasticIndex, id: record.traditional})
+            .catch(() => {});
 
+          let cleanupRecord = vocabulary.find(vocab => vocab.simplified === record.simplified);
+
+          if (cleanupRecord) {
+            await sails.hooks.elastic.client.delete({index: index.elasticIndex, id: `${cleanupRecord.simplified}-${cleanupRecord.traditional}-${cleanupRecord.pinyin}`})
+              .catch(() => {});
+          }
+
+        })
+        .catch(error => sails.log.error(error));
+    })
   }
-
-
 };
 
