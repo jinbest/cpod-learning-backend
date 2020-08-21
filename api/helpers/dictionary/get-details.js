@@ -26,7 +26,10 @@ module.exports = {
       let returnArray = [];
       array.forEach(i => {
         try {
-          let item = Object.create(i);
+          let item = {};
+          Object.keys(i).forEach(key => {
+            item[key] = i[key]
+          });
           item.pinyin = convert.convertPinyinTones(i.pinyin);
           item.definition = convert.convertPinyinTones(i.definition);
           returnArray.push(item)
