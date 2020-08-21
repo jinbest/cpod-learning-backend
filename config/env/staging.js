@@ -80,6 +80,13 @@ module.exports = Object.assign({}, PRODUCTION_CONFIG, {
     // /\  Hard-code your staging Redis server's `url` again here.
     // ||  (or use system env var: `sails_session__url`)
     //--------------------------------------------------------------------------
+
+    cookie: {
+      secure: true,
+      maxAge: 30 * 24 * 60 * 60 * 1000,  // 30 days
+      domain: 'staging.chinesepod.com',
+    },
+
   }),
 
   log: {

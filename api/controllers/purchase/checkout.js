@@ -707,7 +707,8 @@ module.exports = {
           if (holidayPromo) {
             productName = plans['holiday'].description;
           }
-
+          if (sails.config.environment !== 'production' || sails.config.environment === 'staging') {
+          } else {
           this.req.visitor
             .event('payment', 'payment')
             .transaction(transaction.id, transaction.billed_amount)
@@ -718,6 +719,7 @@ module.exports = {
             domain: '.chinesepod.com',
             expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
           });
+          }
           exits.success();
         })
         .catch(async (err) => {

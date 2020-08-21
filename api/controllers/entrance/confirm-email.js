@@ -109,10 +109,13 @@ then redirect to either a special landing page (for newly-signed up users), or t
       })
         .then((phpSessionId) => {
           sails.log.info(phpSessionId);
-          this.res.cookie('CPODSESSID', phpSessionId, {
-            domain: '.chinesepod.com',
-            expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
-          });
+          if (sails.config.environment !== 'production' || sails.config.environment === 'staging') {
+          } else {
+            this.res.cookie('CPODSESSID', phpSessionId, {
+              domain: '.chinesepod.com',
+              expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
+            });
+          }
         });
 
 

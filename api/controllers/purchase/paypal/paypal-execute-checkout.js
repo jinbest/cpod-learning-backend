@@ -231,7 +231,7 @@ module.exports = {
             <p>Name: ${inputs.data.fName} ${inputs.data.lName}</p>
             <p>Email: ${inputs.data.emailAddress}</p>
             <br />
-            <p>Error: Unfortunately, you can only enroll in a trial subscription once. 
+            <p>Error: Unfortunately, you can only enroll in a trial subscription once.
             It was already redeemed on ${new Date(userTrial.trial.toString()).toLocaleString()}</p>
             <br />
             <p>Cheers,</p>
@@ -242,7 +242,7 @@ module.exports = {
             from: 'errors@chinesepod.com',
             fromName: 'ChinesePod Errors'
           });
-          throw {trialAlreadyUsed: `Unfortunately, you can only enroll in a trial subscription once. 
+          throw {trialAlreadyUsed: `Unfortunately, you can only enroll in a trial subscription once.
         It was already redeemed on ${new Date(userTrial.trial.toString()).toLocaleString()}`};
         }
       }
@@ -455,12 +455,6 @@ module.exports = {
       .transaction(transaction.id, transaction.billed_amount)
       .item(transaction.billed_amount, 1, transaction.product_id, productName)
       .send();
-
-    //TODO REMOVE THIS FOR GIFT SUBSCRIPTIONS
-    this.res.cookie('CPODSESSID', phpSession, {
-      domain: '.chinesepod.com',
-      expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
-    });
 
     if (inputs.data.trial) {
       await User.updateOne({id: inputs.userId})

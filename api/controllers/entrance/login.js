@@ -129,10 +129,14 @@ and exposed as \`req.me\`.)`
         // sessionId: this.req.session.id
       })
         .then((phpSessionId) => {
-          this.res.cookie('CPODSESSID', phpSessionId, {
-            domain: '.chinesepod.com',
-            expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
-          });
+
+          if (sails.config.environment !== 'production' || sails.config.environment === 'staging') {
+          } else {
+            this.res.cookie('CPODSESSID', phpSessionId, {
+              domain: '.chinesepod.com',
+              expires: new Date(Date.now() + 365.25 * 24 * 60 * 60 * 1000)
+            });
+          }
         });
     } else {
       const refreshToken = randomToken.uid(128);
