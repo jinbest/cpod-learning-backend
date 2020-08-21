@@ -218,18 +218,18 @@ module.exports = {
       commands.push(action);
       commands.push(indexRecord);
 
-      await sails.hooks.elastic.client.index({index: index.elasticIndex, id: `${record.simplified}-${record.traditional}-${record.pinyin_tones}-${record.definition}`, body: indexRecord, refresh: true})
+      await sails.hooks.elastic.client.index({index: index.elasticIndex, id: `${indexRecord.simplified}-${indexRecord.traditional}-${indexRecord.pinyin_tones}-${indexRecord.definition}`, body: indexRecord, refresh: true})
         .then( async () => {
-          await sails.hooks.elastic.client.delete({index: index.elasticIndex, id: record.simplified})
+          await sails.hooks.elastic.client.delete({index: index.elasticIndex, id: indexRecord.simplified})
             .catch(() => {});
 
-          await sails.hooks.elastic.client.delete({index: index.elasticIndex, id: record.traditional})
+          await sails.hooks.elastic.client.delete({index: index.elasticIndex, id: indexRecord.traditional})
             .catch(() => {});
 
-          await sails.hooks.elastic.client.delete({index: index.elasticIndex, id:  `${record.simplified}-${record.traditional}-${record.pinyin}`})
+          await sails.hooks.elastic.client.delete({index: index.elasticIndex, id:  `${indexRecord.simplified}-${indexRecord.traditional}-${indexRecord.pinyin}`})
             .catch(() => {});
 
-          let cleanupRecord = vocabulary.find(vocab => vocab.simplified === record.simplified);
+          let cleanupRecord = vocabulary.find(vocab => vocab.simplified === indexRecord.simplified);
 
           if (cleanupRecord) {
             await sails.hooks.elastic.client.delete({index: index.elasticIndex, id: `${cleanupRecord.simplified}-${cleanupRecord.traditional}-${cleanupRecord.pinyin}`})
