@@ -53,6 +53,11 @@ module.exports = {
     }
 
     if (sails.config.environment !== 'production' || sails.config.environment === 'staging') {
+      // await sails.helpers.lessons.logProgress.with({userId: inputs.userId, lessonId: inputs.lessonId, track: inputs.track, progress: inputs.progress, source: inputs.source});
+
+      return
+
+    } else {
 
       userInfoQueue.add(
         'LogProgress',
@@ -61,10 +66,6 @@ module.exports = {
           attempts: 3,
           timeout: 60000
       });
-
-    } else {
-
-      await sails.helpers.lessons.logProgress.with({userId: inputs.userId, lessonId: inputs.lessonId, track: inputs.track, progress: inputs.progress, source: inputs.source});
 
     }
 
