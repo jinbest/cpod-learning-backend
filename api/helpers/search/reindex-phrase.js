@@ -71,7 +71,7 @@ module.exports = {
 
       output.push(pinyinPartsClean.join(' '));
       output.push(pinyinPartsClean.join(''));
-      output.push(pinyinPartsDirty.join(' '));
+      // output.push(pinyinPartsDirty.join(' '));
       output.push(pinyinPartsDirty.join(''));
       output.push(pinyinPartsTones.join(''));
 
@@ -145,7 +145,7 @@ module.exports = {
         try {
           let charData = sails.hooks.hanzi.getCharacterFrequency(char);
           if (charData && charData.number) {
-            priority = charData.number
+            priority = parseInt(charData.number)
           }
         } catch (e) {
         }
@@ -154,12 +154,6 @@ module.exports = {
 
       return arrAvg(priorities)
     }
-    //
-    // let record = vocabulary.find(vocab => vocab.simplified === inputs.word);
-    //
-    // if (!record) {
-    //   record = vocabulary.find(vocab => vocab.traditional === inputs.word);
-    // }
 
     let records = sails.hooks.hanzi.definitionLookup(inputs.word);
 
@@ -169,7 +163,16 @@ module.exports = {
 
     for (let i = 0; i < records.length; i++) {
 
-      let record = records[i]
+      let indexRecord = {}
+
+      Object.keys(records[i]).forEach(key => {
+        indexRecord[key] = records[i][key]
+      })
+
+      sails.log.info({
+        indexRecord: indexRecord,
+        record: records[i]
+      })
 
       let commands = [];
       let action = {
@@ -179,9 +182,11 @@ module.exports = {
         }
       };
 
-      let indexRecord = {};
+      if (indexRecord.definition) {
+        indexRecord.definitions = indexRecord.definition.split('/')
+      }
 
-      record.pinyin_tones = convert.convertPinyinTones(record.pinyin)
+      indexRecord.pinyin_tones = convert.convertPinyinTones(indexRecord.pinyin)
         .replace('n5', 'n')
         .replace('r5', 'r')
         .replace('u:1','ǖ')
@@ -191,20 +196,12 @@ module.exports = {
         .replace('u:5','ü');
 
 
-      record.pinyin_permutations = getPinyinPermutations(record.simplified, record.traditional, record.pinyin, record.pinyin_tones);
+      indexRecord.pinyin_permutations = getPinyinPermutations(indexRecord.simplified, indexRecord.traditional, indexRecord.pinyin, indexRecord.pinyin_tones);
 
-      record.timestamp = new Date().toISOString();
+      indexRecord.timestamp = new Date().toISOString();
 
-      record.simplifiedId = record.simplified;
-      record.traditionalId = record.traditional;
-
-      if (record.definition) {
-        record.definitions = record.definition.split('/')
-      }
-
-      index.elasticRecord.forEach(key => {
-        indexRecord[key] = record[key];
-      });
+      indexRecord.simplifiedId = indexRecord.simplified;
+      indexRecord.traditionalId = indexRecord.traditional;
 
       indexRecord.word_length = indexRecord.simplified ? indexRecord.simplified.length : 0;
       indexRecord.pinyin_length = indexRecord.pinyin_tones ? indexRecord.pinyin_tones.length : 0;
@@ -214,7 +211,7 @@ module.exports = {
 
       indexRecord.priority = calculatePriority(indexRecord.simplified);
 
-      let cpodData = await sails.helpers.dictionary.getDetails(records[i].simplified);
+      let cpodData = await sails.helpers.dictionary.getDetails(indexRecord.simplified);
 
       indexRecord.data = JSON.stringify(cpodData)
 

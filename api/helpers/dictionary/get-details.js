@@ -18,8 +18,27 @@ module.exports = {
     const convert = require('pinyin-tone-converter');
     const chineseConv = require('chinese-conv');
 
+    const getHanziData = (word) => {
+      return sails.hooks.hanzi.definitionLookup(word);
+    }
+
+    const cleanHanziData = (array) => {
+      let returnArray = [];
+      array.forEach(i => {
+        try {
+          let item = Object.create(i);
+          item.pinyin = convert.convertPinyinTones(i.pinyin);
+          item.definition = convert.convertPinyinTones(i.definition);
+          returnArray.push(item)
+        } catch (e) {
+          sails.log.error(e)
+        }
+      });
+      return returnArray
+    }
+
     // All done.
-    let definitionArray = sails.hooks.hanzi.definitionLookup(inputs.word);
+    let definitionArray = getHanziData(inputs.word)
 
     if (!definitionArray) {
 
@@ -55,13 +74,13 @@ module.exports = {
     let simplifiedChar = chineseConv.sify(inputs.word);
 
     let lessonData = await LessonData.find({
-        publication_timestamp: {
-          '<': new Date()
-        },
-        status_published: 'publish',
-        is_private: 0,
-        transcription1: { contains: simplifiedChar },
-      })
+      publication_timestamp: {
+        '<': new Date()
+      },
+      status_published: 'publish',
+      is_private: 0,
+      transcription1: { contains: simplifiedChar },
+    })
       .select('id')
       .sort([
         {publication_timestamp: 'DESC'},
@@ -171,49 +190,21 @@ module.exports = {
     related = related.slice(0,20);
     let idioms = [].concat(...sails.hooks.hanzi.dictionarySearch(inputs.word)).filter(item => item.definition && item.definition.includes('idiom'));
     idioms = idioms.slice(0, 20);
-    compounds = [].concat(...compounds.filter(i => !!i).slice(0,20))
-    compounds.forEach(i => {
-      try {
-        i.pinyin = convert.convertPinyinTones(i.pinyin);
-        i.definition = convert.convertPinyinTones(i.definition)
-      } catch (e) {
-
-      }
-    });
-    definitionArray.forEach(i => {
-      try {
-        i.pinyin = convert.convertPinyinTones(i.pinyin);
-        i.definition = convert.convertPinyinTones(i.definition)
-      } catch (e) {
-
-      }
-    });
-    related.forEach(i => {
-      try {
-        i.pinyin = convert.convertPinyinTones(i.pinyin);
-        i.definition = convert.convertPinyinTones(i.definition)
-      } catch (e) {
-
-      }
-    });
-    idioms.forEach(i => {
-      try {
-        i.pinyin = convert.convertPinyinTones(i.pinyin);
-        i.definition = convert.convertPinyinTones(i.definition)
-      } catch (e) {
-
-      }
-    });
+    compounds = [].concat(...compounds.filter(i => !!i).slice(0,20));
+    definitionArray = cleanHanziData(definitionArray);
+    compounds = cleanHanziData(compounds);
+    related = cleanHanziData(related);
+    idioms = cleanHanziData(idioms);
 
     return {
-        definition: definitionArray,
-        audioUrl: vocabData && vocabData.audioUrl ? vocabData.audioUrl : '',
-        compounds: compounds,
-        decomposition: sails.hooks.hanzi.decomposeMany(inputs.word, 2),
-        related: related,
-        idioms: idioms,
-        lessons: lessons
-      }
+      definition: definitionArray,
+      audioUrl: vocabData && vocabData.audioUrl ? vocabData.audioUrl : '',
+      compounds: compounds,
+      decomposition: sails.hooks.hanzi.decomposeMany(inputs.word, 2),
+      related: related,
+      idioms: idioms,
+      lessons: lessons
+    }
 
   }
 
