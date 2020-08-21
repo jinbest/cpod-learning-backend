@@ -52,7 +52,7 @@ module.exports = {
       inputs.source = 'www.chinesepod.com'
     }
 
-    if (sails.config.environment !== 'development') {
+    if (sails.config.environment !== 'production' || sails.config.environment === 'staging') {
 
       userInfoQueue.add(
         'LogProgress',

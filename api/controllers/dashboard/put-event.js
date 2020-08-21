@@ -29,6 +29,10 @@ module.exports = {
   fn: async function (inputs) {
     inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
 
+    if (sails.config.environment !== 'production' || sails.config.environment === 'staging') {
+      return
+    }
+
     if (sails.config.environment === 'development') {
       await sails.helpers.logs.createEvent({
         'userId': inputs.userId,
