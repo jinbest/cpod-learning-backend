@@ -415,6 +415,12 @@ module.exports.routes = {
                                                             allowRequestMethods: 'POST',
                                                             allowAnyOriginWithCredentialsUnsafe: true
                                                           }},
+  'POST /api/v1/testing/put-score':                      { action: 'testing/put-score',
+                                                          cors: {
+                                                            allowOrigins: '*',
+                                                            allowRequestMethods: 'POST',
+                                                            allowAnyOriginWithCredentialsUnsafe: true
+                                                          }},
 
 
   //VOCABULARY Routes
