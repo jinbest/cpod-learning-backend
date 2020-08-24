@@ -24,9 +24,8 @@ module.exports = {
       autoUpdatedAt: true
     },
     expiry: {
-      type: "string",
-      columnType: "datetime",
-      allowNull: true
+      type: "ref",
+      columnType: "datetime"
     },
     user_id: {
       model: 'User'

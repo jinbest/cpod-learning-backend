@@ -40,7 +40,13 @@ module.exports = {
     let sessionStart = currentTime.toISOString().split('T').join(' ').split('.')[0];
     let sessionEnd = expiryTime.toISOString().split('T').join(' ').split('.')[0];
 
-    let userSiteLink = await UserSiteLinks.findOne({ user_id: userId, site_id: 2});
+    let userSiteLink = (await UserSiteLinks.find({ user_id: userId, site_id: 2})
+      .sort('updatedAt DESC')
+      .limit(1))[0];
+
+    if (!userSiteLink) {
+      return ''
+    }
 
     let groupId = inputs.planId;
 

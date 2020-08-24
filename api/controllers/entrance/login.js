@@ -138,13 +138,14 @@ and exposed as \`req.me\`.)`
             });
           }
         });
-    } else {
+    } else if (inputs.clientId) {
       const refreshToken = randomToken.uid(128);
 
       await RefreshTokens.create({
         user_id: userRecord.id,
         refresh_token: refreshToken,
         expiry: new Date(Date.now() + sails.config.custom.jwtRefreshExpiry),
+        client_id: inputs.clientId,
         ip_address: this.req.ip,
         user_agent: this.req.headers['user-agent']
       })

@@ -29,6 +29,8 @@ module.exports = {
 
   fn: async function (inputs) {
 
+    let randomToken = require('rand-token');
+
     try {
 
       inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
@@ -52,7 +54,24 @@ module.exports = {
     };
 
     if (inputs.userId && validApps[inputs.type] && validApps[inputs.type].includes(inputs.key)) {
-      return {userId: inputs.userId, token: jwToken.sign({userId: inputs.userId})}
+
+      const refreshToken = randomToken.uid(128);
+
+      await RefreshTokens.create({
+        user_id: inputs.userId,
+        refresh_token: refreshToken,
+        expiry: new Date(Date.now() + sails.config.custom.jwtRefreshExpiry),
+        client_id: inputs.type,
+        ip_address: this.req.ip,
+        user_agent: this.req.headers['user-agent']
+      })
+
+      return {
+        userId: inputs.userId,
+        token: jwToken.sign({userId: inputs.userId}),
+        refreshToken: refreshToken
+      };
+
     } else {
       throw 'invalid'
     }

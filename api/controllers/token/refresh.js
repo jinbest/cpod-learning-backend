@@ -46,14 +46,14 @@ module.exports = {
 
       let refreshToken = await RefreshTokens.findOne({refresh_token: inputs.refreshToken});
 
-      if (!refreshToken || refreshToken.expiry > new Date()) {
+      if (!refreshToken || refreshToken.expiry < new Date()) {
         throw 'invalid'
       }
 
       await RefreshTokens.updateOne({id: refreshToken.id}).set({client_id: inputs.client, user_agent: this.req.headers['user-agent']});
 
       return {
-        token: jwToken.sign({userId: inputs.userId}),
+        token: jwToken.sign({userId: refreshToken.user_id}),
         refreshToken: refreshToken.refresh_token
       }
 
