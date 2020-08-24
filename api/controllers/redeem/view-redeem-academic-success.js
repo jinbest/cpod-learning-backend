@@ -14,7 +14,7 @@ module.exports = {
   exits: {
 
     success: {
-      viewTemplatePath: 'pages/redeem/redeem-success'
+      viewTemplatePath: 'pages/redeem/academic/success'
     }
 
   },

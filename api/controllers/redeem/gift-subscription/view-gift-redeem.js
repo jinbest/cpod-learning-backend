@@ -128,7 +128,6 @@ module.exports = {
 
         let plan = (plans.filter(i => i.id === voucher.product_id))[0];
 
-        //TODO CREATE VIEW TO CONFIRM CURRENT ACCESS OVERWRITE
         return this.res.view('pages/redeem/gift/confirm',{
           formData: {
             code: inputs.code,

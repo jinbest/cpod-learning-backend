@@ -69,6 +69,9 @@ module.exports.routes = {
   'GET /redeem-token':                                   { action: 'redeem/view-redeem-access-token' },
   'GET /redeem-token/:code':                             { action: 'redeem/redeem-access-token' },
   'GET /redeem-success':                                 { action: 'redeem/view-redeem-success' },
+  'GET /redeem-academic':                                { action: 'redeem/view-redeem-academic-voucher' },
+  'GET /redeem-academic/:code':                          { action: 'redeem/redeem-academic-voucher' },
+  'GET /redeem-academic/success':                        { action: 'redeem/view-redeem-academic-success' },
 
   'GET /level/:unused?':                                 { action: 'onboarding/view-level' },
 
@@ -211,6 +214,7 @@ module.exports.routes = {
   //ADMIN PAGES
   //ACCESS VOUCHER CODES
   'GET /admin/access-code-panel':                        {action: 'admin/access-codes/view-access-code-panel'},
+  'GET /admin/academic-code-panel':                        {action: 'admin/academic-codes/view-academic-code-panel'},
   'GET /admin/comments':                                 {action: 'admin/comments/view-list-all-comments'},
   'GET /admin/livestream':                               {action: 'admin/view-livestream' },
   'GET /admin/lookup/recap/users':                       { action: 'recap/view-list-users' },
@@ -471,6 +475,8 @@ module.exports.routes = {
   //ACCESS CODES
   'POST /api/v1/admin/access-codes/generate':            { action: 'admin/access-codes/generate-access-codes'},
   'POST /api/v1/admin/access-codes/delete':              { action: 'admin/access-codes/delete-access-codes'},
+  'POST /api/v1/admin/academic-codes/generate':          { action: 'admin/academic-codes/generate-academic-codes'},
+  'POST /api/v1/admin/academic-codes/delete':            { action: 'admin/academic-codes/delete-academic-codes'},
   'POST /api/v1/admin/livestream/save-livestream-data':  { action: 'admin/livestream/save-livestream-data' },
   'DELETE /api/v1/admin/livestream/delete-livestream-data': { action: 'admin/livestream/delete-livestream-data' },
 

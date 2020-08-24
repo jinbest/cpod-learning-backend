@@ -10,7 +10,7 @@ module.exports = {
   exits: {
 
     success: {
-      viewTemplatePath: 'pages/admin/access-codes/access-code-panel'
+      viewTemplatePath: 'pages/admin/academic-codes/academic-code-panel'
     }
 
   },
@@ -22,7 +22,15 @@ module.exports = {
       .find()
       .limit(500)
       .skip(this.req.param('page') ? this.req.param('page') * 100 : 0)
-      .sort('createdAt DESC');
+      .sort('createdAt DESC')
+      .populate('redeemed_by')
+    ;
+
+    voucherCodes.forEach(voucher => {
+      if (voucher.redeemed_by && voucher.redeemed_by.email) {
+        voucher.redeemed_by = voucher.redeemed_by.email
+      }
+    })
 
     // Respond with view.
     return {

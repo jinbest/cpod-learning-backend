@@ -1,4 +1,4 @@
-parasails.registerPage('access-code-panel', {
+parasails.registerPage('academic-code-panel', {
   //  ╦╔╗╔╦╔╦╗╦╔═╗╦    ╔═╗╔╦╗╔═╗╔╦╗╔═╗
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
@@ -8,7 +8,7 @@ parasails.registerPage('access-code-panel', {
     formData: {
       amount: 1,
       access_type: 'premium',
-      accessLength: 30
+      expiry: new Date(Date.now() + 1000 * 60 * 60 * 24 * 90).toISOString().split('T')[0]
     },
     formErrors: {},
     syncing: false,
@@ -39,7 +39,7 @@ parasails.registerPage('access-code-panel', {
     },
     async deleteCode(id) {
       this.voucherCodes = this.voucherCodes.filter((code) => code.id !== id);
-      await Cloud['deleteAccessCodes'].with({
+      await Cloud['deleteAcademicCodes'].with({
         voucherId: id
       })
     }

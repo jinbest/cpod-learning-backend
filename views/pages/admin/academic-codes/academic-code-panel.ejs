@@ -1,6 +1,6 @@
-<div id="access-code-panel" v-cloak>
+<div id="academic-code-panel" v-cloak>
   <div class="container">
-    <h1 class="text-white headline font-weight-bold text-center">Access Vouchers</h1>
+    <h1 class="text-white headline font-weight-bold text-center py-4">Academic Vouchers</h1>
     <div class="card p-2">
       <div class="control-panel m-3">
         <div class="float-right">
@@ -12,8 +12,7 @@
         <tr>
           <th scope="col">Code</th>
           <th scope="col">Access</th>
-          <th scope="col">Length</th>
-          <th scope="col">Expires</th>
+          <th scope="col">Expiry</th>
           <th scope="col">Status</th>
           <th scope="col">Redeemed By</th>
           <th scope="col">Created By</th>
@@ -25,9 +24,8 @@
         <tr v-for="code in voucherCodes">
           <th scope="row">{{ code.code }}</th>
           <td>{{ code.access_type }}</td>
-          <td>{{ code.accessLength }}</td>
-          <td>{{ code.expiry ? new Date(code.expiry).toLocaleDateString("en-US", {year: 'numeric', month: 'long', day: 'numeric'}) : 'Never' }}</td>
-          <td >{{ code.status }}</td>
+          <td>{{ new Date(code.expiry).toLocaleDateString("en-US", {month: 'long', day: 'numeric'}) }}</td>
+          <td >{{ code.status.toUpperCase() }}</td>
           <td >{{ code.redeemed_by }}</td>
           <td >{{ code.created_by }}</td>
           <td >{{ new Date(code.updatedAt).toLocaleDateString("en-US", {month: 'long', day: 'numeric'}) }}</td>
@@ -44,7 +42,7 @@
       <h2 class="text-center">Create new access voucher codes</h2>
       <div class="voucher-form-container">
         <hr/>
-        <ajax-form action="generateAccessCodes" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-errors.sync="formErrors" @submitted="createdVoucherCodes()">
+        <ajax-form action="generateAcademicCodes" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-errors.sync="formErrors" @submitted="createdVoucherCodes()">
           <div class="form-group my-3">
             <label>How many?</label>
             <input type="number" class="form-control" placeholder="1" v-model="formData.amount">
@@ -61,17 +59,11 @@
             </div>
           </div>
           <div class="form-group my-3">
-            <label>Length (days)</label>
-            <input type="number" class="form-control" placeholder="30" :class="[formErrors.length ? 'is-invalid' : '']" v-model="formData.accessLength">
-            <div class="invalid-feedback d-block" v-if="formData.length > 365 * 2">Seems to be very long, are you sure?</div>
-          </div>
-          <div class="form-group my-3">
-            <label>Expiry (optional)</label>
-            <input type="text"
+            <label>Expiry</label>
+            <input type="date"
                    class="form-control"
                    placeholder="Click to set expiry date"
-                   v-model="formData.expiry"
-                   onfocus="(this.type='date')">
+                   v-model="formData.expiry">
           </div>
           <p class="text-danger" v-if="cloudError"><small>An error occurred while processing your request. Please check the form and try again.</small></p>
           <div class="form-group">

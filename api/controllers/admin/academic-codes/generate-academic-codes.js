@@ -46,14 +46,12 @@ module.exports = {
       dataToCreate.push({
         code: code,
         access_type: inputs.access_type,
-        accessLength: inputs.accessLength,
         created_by: this.req.me ? this.req.me.email : 'me@chinesepod.com',
-        expires: !!inputs.expiry,
-        expiry: inputs.expiry ? inputs.expiry: null
+        expiry: inputs.expiry ? inputs.expiry: new Date(Date.now() + 1000 * 60  * 60 * 24 * 30)
       })
     }
 
-    return await AccessVoucherCodes.createEach(dataToCreate).fetch();
+    return await AccessAcademicCodes.createEach(dataToCreate).fetch();
 
   }
 

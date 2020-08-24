@@ -24,7 +24,7 @@ module.exports = {
   fn: async function (inputs) {
 
     // All done.
-    return AccessVoucherCodes.destroyOne({id: inputs.voucherId})
+    return AccessAcademicCodes.destroyOne({id: inputs.voucherId})
 
   }
 

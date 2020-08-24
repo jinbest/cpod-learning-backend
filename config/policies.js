@@ -44,6 +44,9 @@ module.exports.policies = {
   'redeem/view-redeem-access-token': 'is-logged-in',
   'redeem/redeem-access-token': 'is-logged-in',
   'redeem/view-redeem-success': 'is-logged-in',
+  'redeem/redeem-academic-voucher': 'is-logged-in',
+  'redeem/view-redeem-academic-voucher': 'is-logged-in',
+  'redeem/view-redeem-academic-success': 'is-logged-in',
 
   'recap/view-current-lesson': 'is-logged-in',
   'recap/set-lesson': 'is-logged-in',

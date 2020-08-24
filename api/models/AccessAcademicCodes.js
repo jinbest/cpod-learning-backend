@@ -1,6 +1,6 @@
 
 module.exports = {
-  tableName: 'access_voucher_codes',
+  tableName: 'access_academic_codes',
   attributes: {
     id: {
       type: "number",
@@ -17,26 +17,9 @@ module.exports = {
       columnType: 'varchar',
       defaultsTo: 'premium'
     },
-    code_type: {
-      type: 'string',
-      columnType: 'varchar',
-      defaultsTo: 'days'
-    },
-    accessLength: {
-      description: 'Length of a redeemed voucher in days',
-      type: "number",
-      columnType: "int",
-      columnName: 'length',
-      isInteger: true,
-      allowNull: true
-    },
     created_by: {
       type: 'string',
       columnType: 'varchar'
-    },
-    expires: {
-      type: 'boolean',
-      defaultsTo: true
     },
     expiry: {
       type: "ref",
