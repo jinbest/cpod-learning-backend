@@ -11,6 +11,17 @@ module.exports = {
     id: {
       type: 'number',
       isInteger: true
+    },
+    skip: {
+      type: 'number',
+      isInteger: true
+    },
+    limit: {
+      type: 'number',
+      isInteger: true
+    },
+    english: {
+      type: 'boolean'
     }
   },
 
@@ -43,6 +54,21 @@ module.exports = {
     let userVocab = await UserVocabulary.find({id: {in: deckVocab.map(vocab => vocab.user_vocabulary_id)}}).sort('createdAt DESC').populate('vocabulary_id.v3_id',{where: {},select: ['title', 'hash_code', 'slug', 'level']});
     let userDecks = await UserVocabularyToVocabularyTags.find({user_vocabulary_id: {in: userVocab.map(vocab => vocab.id)}}).populate('vocabulary_tag_id', {where: {user_id: inputs.userId}})
 
+    let promises = [];
+
+    if(inputs.english) {
+      userVocab.forEach(vocab => {
+        if(vocab.vocabulary_id && vocab.vocabulary_id.audio) {
+          promises.push(
+            AmsVocabulary.find({source_mp3: vocab.vocabulary_id.audio.split('source/').pop()}).limit(1)
+              .then(data => {return data[0]})
+          )
+        }
+      })
+    }
+
+    let amsVocab = [].concat(...(await Promise.all(promises)));
+
     userVocab = userVocab.map(vocab => {
       let tags = userDecks.filter(deck => deck.user_vocabulary_id === vocab.id);
       if (tags && tags.length) {
@@ -55,7 +81,7 @@ module.exports = {
 
       let audioUrlCN; let audioUrlEN;
 
-      if (vocab.vocabulary_id.audio) {
+      if (vocab.vocabulary_id && vocab.vocabulary_id.audio) {
         let lessonRoot;
         if (vocab.lesson) {
           lessonRoot = `https://s3contents.chinesepod.com/${vocab.lesson.type === 'extra' ? 'extra/' : ''}${vocab.lesson.id}/${vocab.lesson.hash_code}/`
@@ -65,13 +91,16 @@ module.exports = {
           audioUrlCN = vocab.vocabulary_id.audio.slice(0, 4) === 'http' ? vocab.vocabulary_id.audio : lessonRoot ? lessonRoot + vocab.vocabulary_id.audio : '';
           let params = audioUrlCN.split('source/');
 
-          let amsObj = amsVocab.find(ams => ams && ams.source_mp3 === params[params.length - 1])
+          let amsObj;
+
+          if(inputs.english) {
+            amsObj = amsVocab.find(ams => ams && ams.source_mp3 === params[params.length - 1])
+          }
 
           if(amsObj && amsObj.target_mp3) {
             audioUrlEN = params[0] + 'translation/' + amsObj.target_mp3
           }
         } catch (e) {
-          // sails.log.error(e);
           sails.hooks.bugsnag.notify(`Issue with word - ${JSON.stringify(vocab)}`);
         }
 
@@ -86,7 +115,7 @@ module.exports = {
       return {...vocab.vocabulary_id, ...{user_vocabulary_id: vocab.id, createdAt: vocab.createdAt, lesson: vocab.lesson, tags: tags, audioUrlCN: audioUrlCN, audioUrlEN: audioUrlEN}}
     })
 
-    return {...deck, ...{vocab: userVocab}}
+    return {...deck, ...{total: userVocab.length},...{vocab: userVocab}}
 
   }
 
