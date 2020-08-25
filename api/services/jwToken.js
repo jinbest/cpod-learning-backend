@@ -7,7 +7,7 @@ module.exports = {
   'sign': function(payload) {
     return jwt.sign({
       data: payload
-    }, sails.config.custom.jwtSecret, {expiresIn: '30d'});
+    }, sails.config.custom.jwtSecret, {expiresIn: '1d'});
   },
   'verify': function(token, callback) {
     jwt.verify(token, sails.config.custom.jwtSecret, callback);
