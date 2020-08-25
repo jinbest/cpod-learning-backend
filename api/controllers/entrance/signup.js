@@ -145,7 +145,7 @@ the account verification message.)`,
       .fetch();
 
     // Store the user's new id in their session.
-    this.req.session.userId = newUserRecord.id;
+    // this.req.session.userId = newUserRecord.id;
 
     //Google Analytics Call
     this.req.visitor.event("sign_up", "sign_up").send();
@@ -160,20 +160,6 @@ the account verification message.)`,
     });
 
     if (sails.config.custom.verifyEmailAddresses) {
-      // Send "confirm account" email
-      // await sails.helpers.sendPlainTextTemplateEmail.with({
-      //   to: email,
-      //   subject: 'Please confirm your account',
-      //   template: 'email-verify-account',
-      //   templateData: {
-      //     fullName: name,
-      //     email: email,
-      //     password: password,
-      //     token: newUserRecord.code ? newUserRecord.code : '',
-      //     mobile: false,
-      //     confirmation: false
-      //   }
-      // });
       await sails.helpers.sendTemplateEmail.with({
         to: email,
         subject: 'Please confirm your account',

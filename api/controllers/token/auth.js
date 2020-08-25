@@ -48,10 +48,9 @@ module.exports = {
       recap: ['fsl5rctm7rmw4s1byz4hqocwwz2t04b3u36b4dxt'],
       objective: ['XcvgbyVVcbNA8AZ155XM68CjE4WawyikUfACEdvF'],
       testing: ['aaaa1111bbbb2222cccc3333'],
-
     };
 
-    if (inputs.userId && validApps[inputs.type] && validApps[inputs.type].includes(inputs.key)) {
+    if (validApps[inputs.type] && validApps[inputs.type].includes(inputs.key)) {
       return {userId: inputs.userId, token: jwToken.sign({userId: inputs.userId})}
     } else {
       throw 'invalid'
