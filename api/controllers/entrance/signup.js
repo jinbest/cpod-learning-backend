@@ -145,6 +145,7 @@ the account verification message.)`,
       .fetch();
 
     // Store the user's new id in their session.
+    // TODO: Re-enable Singup Auto Login if Needed
     // this.req.session.userId = newUserRecord.id;
 
     //Google Analytics Call
