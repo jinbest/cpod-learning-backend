@@ -31,7 +31,6 @@ module.exports = {
   fn: async function (inputs) {
 
     inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session.userId;
-    inputs.userId = sails.config.environment === 'development' ? 1110296 : this.req.session.userId;
 
     let total = await UserVocabulary.count({user_id: inputs.userId});
 
