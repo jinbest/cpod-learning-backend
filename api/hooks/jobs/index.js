@@ -66,6 +66,10 @@ module.exports = function defineJobsHook(sails) {
           done(null, userData.email ? `Logged Request for User: ${userData.email}` : `Logged Request for Unknown User`)
 
         });
+        loggingQueue.process('LoggingNotFound', 5, async function (job) {
+          return await sails.helpers.logs.createNotFoundLog.with(job.data)
+        })
+
         loggingQueue.clean(1000);
         // loggingQueue.clean(1000, 'failed');
 

@@ -24,5 +24,26 @@
 module.exports = function notFound() {
   var req = this.req;
   var res = this.res;
+
+  // if(!req.path.match(sails.LOOKS_LIKE_ASSET_RX) && sails.config.environment === 'production') {
+  if(!req.path.match(sails.LOOKS_LIKE_ASSET_RX)) {
+
+    try {
+      loggingQueue.add('LoggingNotFound', {
+        user_id: req.session && req.session.userId ? req.session.userId : undefined,
+        url: req.url,
+        ip_address: req.ip,
+        user_agent: req.headers['user-agent'],
+        created_at: new Date()
+      }, {
+        attempts: 2,
+        timeout: 20000,
+        removeOnComplete: true
+      })
+    } catch (e) {}
+
+  }
+
   return res.redirect(302, `https://chinesepod.com${req.url}`);
+
 };
