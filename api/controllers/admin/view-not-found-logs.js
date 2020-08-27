@@ -25,6 +25,7 @@ module.exports = {
       SELECT url, count(*) as count
       FROM chinesepod_logging.not_found_logs
       WHERE created_at > '${new Date(Date.now() - 1000 * 60 * 60 * 24 * 30).toISOString()}'
+      GROUP BY url
       ORDER BY count DESC;`))['rows'];
     } catch (e) {
       returnData = [];
