@@ -1,0 +1,20 @@
+<div id="not-found-logs" class="py-3" v-cloak>
+  <div class="container">
+    <h1 class="py-5">Not Found Request Logs in the last 30 days</h1>
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+      <tr>
+        <th scope="col">URL</th>
+        <th scope="col">Requests</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="item in data">
+        <td><a :href="'https://www.chinesepod.com' + item.url">{{ 'https://www.chinesepod.com' + item.url }}</a></td>
+        <td>{{ item.count }}</td>
+      </tr>
+    </table>
+  </div>
+
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

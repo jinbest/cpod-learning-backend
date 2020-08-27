@@ -25,8 +25,7 @@ module.exports = function notFound() {
   var req = this.req;
   var res = this.res;
 
-  // if(!req.path.match(sails.LOOKS_LIKE_ASSET_RX) && sails.config.environment === 'production') {
-  if(!req.path.match(sails.LOOKS_LIKE_ASSET_RX)) {
+  if(!req.path.match(sails.LOOKS_LIKE_ASSET_RX) && sails.config.environment === 'production') {
 
     try {
       loggingQueue.add('LoggingNotFound', {

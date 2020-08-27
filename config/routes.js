@@ -224,6 +224,8 @@ module.exports.routes = {
   'GET /admin/access/add/:email?':                       { action: 'admin/access/add-access', skipAssets: false },
   'GET /admin/access/remove/:email?':                    { action: 'admin/access/remove-access', skipAssets: false },
   'GET /admin/secret-recap-submit':                      { action: 'admin/recap/view-add-lessons'},
+  'GET /admin/not-found-logs':                           { action: 'admin/view-not-found-logs' },
+
 
   //MARKETING PAGES
   'GET /marketing/campaign-performance/:code':           {action: 'marketing/view-campaign-performance'},
