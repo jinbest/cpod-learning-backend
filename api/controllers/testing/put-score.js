@@ -43,7 +43,7 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    if(!inputs.userId){
+    if (!inputs.userId){
       inputs.userId = sails.config.environment === 'development' ? 1016995 : this.req.session && this.req.session.userId ? this.req.session.userId : null;
     }
 
@@ -51,7 +51,7 @@ module.exports = {
       throw 'invalid'
     }
 
-    return await UserCustomAssessments.updateOrCreate({
+    return await UserCustomAssessments.updateOrCreateAndFetch({
       user_id: inputs.userId,
       lesson_id: inputs.lessonId,
       assessment_id: inputs.assessmentId,

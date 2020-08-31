@@ -75,4 +75,5 @@ module.exports.policies = {
   'account/subscription/*': 'is-authenticated',
   'account/upload-avatar': 'is-authenticated',
   'account/update-password': 'is-authenticated',
+  'testing/*': 'is-authenticated',
 };
