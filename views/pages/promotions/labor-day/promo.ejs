@@ -1,0 +1,26 @@
+<div id="promo" v-cloak class="pt-3 promo">
+  <div class="mx-3">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 my-4">
+          <img class="img-fluid w-100" src="/images/promotions/labor_day_banner.jpg" alt="PROMOTION BANNER">
+        </div>
+        <div class="col-12 my-3">
+          <h1 class="text-center font-weight-bold">
+            Join ChinesePod and get a <span class="text-danger font-weight-bold">permanent discount</span> on our Premium Subscription!
+          </h1>
+        </div>
+        <div class="col-12 my-3 text-center">
+        </div>
+
+        <%- partial('../../../partials/checkout-form-monthly-quarterly.ejs') %>
+
+        <div class="col-10 offset-1 col-md-4 offset-md-4 my-4">
+          <img class="img-fluid" src="/images/brand/brand.svg" alt="ChinesePod" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://js.stripe.com/v3/"></script>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

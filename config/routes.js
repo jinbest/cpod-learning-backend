@@ -181,6 +181,9 @@ module.exports.routes = {
   'GET /summer-sale':                                    { action: 'promotions/summer-sale/view-promo'},
   'GET /summer-sale/:token':                             { action: 'promotions/create-limited-auth'},
   'GET /summer-sale/success':                            { action: 'promotions/view-promo-success'},
+  'GET /labor-day':                                      { action: 'promotions/labor-day/view-promo'},
+  'GET /labor-day/:token':                               { action: 'promotions/create-limited-auth'},
+  'GET /labor-day/success':                              { action: 'promotions/view-promo-success'},
 
   //PROMOTIONS - REDEEM GIFTS
   'GET /valentines-day-gift/redeem/:code?/:userCode?':   { action: 'promotions/valentines/view-valentines-day-gift-redeem'},
