@@ -48,7 +48,10 @@ module.exports = {
     let lessonRoot = `https://s3contents.chinesepod.com/${lessonData.type === 'extra' ? 'extra/' : ''}${lessonData.id}/${lessonData.hash_code}/`
 
     lessonData.introduction = sanitizeHtml(lessonData.introduction, sanitizeOptions);
-    lessonData.image = lessonData.image && lessonData.image.slice(0,4) === 'http' ? lessonData.image.replace('http:', 'https:') : lessonRoot + lessonData.image;
+    lessonData.image = lessonData.image && lessonData.image.slice(0,4) === 'http' ? lessonData.image : lessonRoot + lessonData.image;
+
+    lessonData.image.replace('http:', 'https:');
+    lessonData.image.replace('https://s3.amazonaws.com/chinesepod.com/', 'https://s3contents.chinesepod.com/');
 
     const keyMap = {
       column_1: 's',
