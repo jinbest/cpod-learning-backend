@@ -31,7 +31,6 @@ module.exports = {
         return ''
       }
       link = link.replace('http:', 'https:');
-      link = link.replace('https://s3.amazonaws.com/chinesepod.com/', 'https://s3contents.chinesepod.com/');
       return link
     }
 
@@ -50,7 +49,7 @@ module.exports = {
       downloads: {}
     };
 
-    let lessonRoot = `https://s3contents.chinesepod.com/${lessonData.type === 'extra' ? 'extra/' : ''}${lessonData.id}/${lessonData.hash_code}/`
+    let lessonRoot = `https://s3.amazonaws.com/chinesepod.com/${lessonData.type === 'extra' ? 'extra/' : ''}${lessonData.id}/${lessonData.hash_code}/`
 
     if (access === 'premium' || access === 'admin') {
       if (lessonData.mp3_private) {
