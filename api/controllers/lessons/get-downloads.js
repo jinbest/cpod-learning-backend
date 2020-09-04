@@ -42,8 +42,6 @@ module.exports = {
 
     let lessonData = await LessonData.findOne({id: inputs.lessonId});
 
-    let extra = lessonData.type === 'extra';
-
     let returnData = {
       type: access,
       downloads: {}
