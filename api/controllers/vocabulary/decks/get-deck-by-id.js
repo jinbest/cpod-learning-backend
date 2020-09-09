@@ -112,7 +112,25 @@ module.exports = {
         }
 
       }
-      return {...vocab.vocabulary_id, ...{user_vocabulary_id: vocab.id, createdAt: vocab.createdAt, lesson: vocab.lesson, tags: tags, audioUrlCN: audioUrlCN, audioUrlEN: audioUrlEN}}
+      return {
+        ...vocab.vocabulary_id,
+        ...{
+          progress: vocab.progress,
+          next_test_date: vocab.next_test_date,
+          last_test_date: vocab.last_test_date,
+          times_tested: vocab.times_tested,
+          number_correct: vocab.number_correct,
+          correct_streak: vocab.correct_streak,
+          char_learned: vocab.char_learned,
+
+          user_vocabulary_id: vocab.id,
+          createdAt: vocab.createdAt,
+          lesson: vocab.lesson,
+          tags: tags,
+          audioUrlCN: audioUrlCN,
+          audioUrlEN: audioUrlEN
+        }
+      }
     })
 
     return {...deck, ...{total: userVocab.length},...{vocab: userVocab}}

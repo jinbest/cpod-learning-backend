@@ -20,7 +20,17 @@ module.exports = {
   fn: async function (inputs) {
 
     // All done.
-    return;
+    return {
+      "applinks": {
+        "apps": [],
+        "details": [
+          {
+            "appID": "4R8B43XWAY.com.chinesepod.ios",
+            "paths": [ "*" ]
+          }
+        ]
+      }
+    }
 
   }
 

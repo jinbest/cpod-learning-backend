@@ -34,8 +34,9 @@ module.exports = {
       isInteger: true,
       defaultsTo: 0
     },
-    correct_streak: {
+    progress: {
       type: "number",
+      columnName: 'correct_streak',
       columnType: "int",
       isInteger: true,
       defaultsTo: 0
@@ -56,8 +57,9 @@ module.exports = {
       type: "ref",
       defaultsTo: '0000-00-00'
     },
-    last_correct_date: {
+    next_test_date: {
       type: "ref",
+      columnName: 'last_correct_date',
       defaultsTo: '0000-00-00'
     },
     createdAt: {

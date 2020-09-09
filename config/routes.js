@@ -255,6 +255,11 @@ module.exports.routes = {
   '/youtube/rebecca':                                    'https://www.youtube.com/channel/UCtsKnrTTopbHP8Ad2YBWx7A',
 
 
+  '/blog':                                               'https://chinesepod.com/blog',
+  '/blog/feed':                                          'https://chinesepod.com/blog/feed',
+  '/support':                                            'https://support.chinesepod.com/hc/en-us',
+
+
   'GET /api/v1/auth/facebook':                           { controller: 'PassportController', action: 'facebookAuth'},
   'GET /api/v1/auth/facebook/callback':                  { controller: 'PassportController', action: 'facebookCallback'},
   'GET /api/v1/auth/google':                             { controller: 'PassportController', action: 'googleAuth'},
@@ -274,6 +279,9 @@ module.exports.routes = {
   'POST /api/v1/webhooks/mautic/update':                 { action: 'webhooks/mautic/update' },
   'POST /api/v1/webhooks/stripe/failed':                 { action: 'webhooks/stripe/failed' },
   'POST /api/v1/webhooks/paypal':                        { action: 'webhooks/paypal' },
+
+  '/apple-app-site-association':                         { action: 'webhooks/apple/site-association'},
+  '/.well-known/apple-app-site-association':             { action: 'webhooks/apple/site-association'},
 
 
   //  ╔═╗╔═╗╦  ╔═╗╔╗╔╔╦╗╔═╗╔═╗╦╔╗╔╔╦╗╔═╗

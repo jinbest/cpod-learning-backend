@@ -48,7 +48,8 @@ module.exports = {
 
       try {
         thumbnail = fs.createReadStream('lib/replacement-thumbnails/' + filename);
-        thumbnailName = lesson.image.split('images/')[1].replace('.png', '.jpg')
+        const token = await sails.helpers.strings.random('url-friendly');
+        thumbnailName = token + '.jpg' //lesson.image.split('images/')[1].replace('.png', '.jpg')
       } catch (e) {
       }
 
