@@ -32,7 +32,7 @@ module.exports = {
     },
 
     invalid: {
-      responseType: 'badRequest',
+      statusCode: '400',
       description: 'The provided sessionid is invalid.',
     },
 
