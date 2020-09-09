@@ -27,11 +27,13 @@ module.exports = function notFound() {
 
   if(!req.path.match(sails.LOOKS_LIKE_ASSET_RX) && sails.config.environment === 'production') {
 
+
     try {
       loggingQueue.add('LoggingNotFound', {
         user_id: req.session && req.session.userId ? req.session.userId : undefined,
         url: req.url,
         ip_address: req.ip,
+        referrer: req.headers['referrer'],
         user_agent: req.headers['user-agent'],
         created_at: new Date()
       }, {

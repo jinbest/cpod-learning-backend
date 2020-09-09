@@ -27,6 +27,9 @@ module.exports = {
     ip_address: {
       type: 'string'
     },
+    referrer: {
+      type: 'string'
+    },
     user_agent: {
       type: 'string'
     },
