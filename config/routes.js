@@ -107,7 +107,7 @@ module.exports.routes = {
   'GET /billing/:unused?*':                              'HomeController.serve',
   'GET /connect/:unused?*':                              'HomeController.serve',
   '/podcasts':                                           'https://forum.chinesepod.com/t/weekly-lesson-announcement/6606',
-  '/66':                                                 'https://play.google.com/store/apps/details?id=llc.chinesepod.sixtysix',
+  '/66':                                                 '/courses/959',
 
   //PLACEMENT TEST
   'GET /placement/:unused?':                             'PlacementController.serve',
