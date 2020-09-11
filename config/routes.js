@@ -108,6 +108,9 @@ module.exports.routes = {
   'GET /connect/:unused?*':                              'HomeController.serve',
   '/podcasts':                                           'https://forum.chinesepod.com/t/weekly-lesson-announcement/6606',
   '/66':                                                 '/courses/959',
+  '/sixtysix':                                           '/courses/959',
+  '/88':                                                 '/courses/959',
+  '/eightyeight':                                        '/courses/959',
 
   //PLACEMENT TEST
   'GET /placement/:unused?':                             'PlacementController.serve',
@@ -454,6 +457,10 @@ module.exports.routes = {
   'POST /api/v1/vocabulary/decks/remove':                { action: 'vocabulary/decks/remove-word-from-deck'},
   'POST /api/v1/vocabulary/decks/:id':                   { action: 'vocabulary/decks/update-deck'},
   'DELETE /api/v1/vocabulary/decks/:id':                 { action: 'vocabulary/decks/delete-deck'},
+
+  //FLASHCARD ROUTES
+  'GET /api/v1/vocabulary/flashcards/all':               { action: 'vocabulary/flashcards/get-all-words'},
+  'GET /api/v1/vocabulary/flashcards/:id':               { action: 'vocabulary/flashcards/get-deck-by-id'},
 
   //PUBLIC VOCAB
   'GET /api/v1/vocabulary/lists/:listId':                { action: 'vocabulary/words/get-defined-list' },
