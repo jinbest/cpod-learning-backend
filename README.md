@@ -39,12 +39,3 @@ To launch
 To reload (this allows a graceful startup of each app (per processor) to avoid 502 errors)
 
 `pm2 reload all --wait-ready --listen-timeout 15000`
-
-
-## TODOs:
-### Checkout
-- [ ] Error Logging
-
-
-### Onboarding
-- [ ] Migrate Terms Acceptance
