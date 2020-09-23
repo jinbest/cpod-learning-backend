@@ -408,7 +408,6 @@ module.exports = {
         'bodyParser',
         'errorHandler',
         'compress',
-        'poweredBy',
         'affiliates',
         'router',
         'www',
