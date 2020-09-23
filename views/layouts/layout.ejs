@@ -3,6 +3,11 @@
   // we make sure `me` exists.  This ensures we don't have to do `typeof` checks below.
   var me = undefined;
 } %>
+<% if(typeof title === 'undefined') {
+  // In case we're displaying the 404 or 500 page and relevant code in the "custom" hook was not able to run,
+  // we make sure `me` exists.  This ensures we don't have to do `typeof` checks below.
+  var title = 'Start Learning Chinese Today with ChinesePod!';
+} %>
 <!DOCTYPE html>
 <html>
 <head>

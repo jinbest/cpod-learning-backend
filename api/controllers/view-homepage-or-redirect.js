@@ -48,6 +48,7 @@ module.exports = {
     }
 
     return {
+      title: 'Start Learning Chinese Today with ChinesePod!',
       video: video,
       wistia: wistia
     };
