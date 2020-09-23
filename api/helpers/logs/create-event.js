@@ -64,13 +64,11 @@ module.exports = {
       indexRecord['geoip'] = ipData;
     }
 
-    sails.log.info(indexRecord);
+    await sails.helpers.logs.checkAndCreateIndex(index.elasticIndex);
 
     return await sails.hooks.elastic.client.index({index: index.elasticIndex, body: indexRecord})
       .catch(error => {
         return error
-        // sails.hooks.bugsnag.metaData = {index: indexRecord};
-        // sails.hooks.bugsnag.notify(error)
       })
 
   }

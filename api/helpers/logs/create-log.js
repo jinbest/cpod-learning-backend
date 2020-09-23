@@ -84,6 +84,8 @@ module.exports = {
       indexRecord['ua'] = parser(inputs.data.ua);
     }
 
+    await sails.helpers.logs.checkAndCreateIndex(index.elasticIndex);
+
     return await sails.hooks.elastic.client.index({index: index.elasticIndex, body: indexRecord})
       .catch(error => {
         return error
