@@ -123,15 +123,23 @@ module.exports = {
 
     let rawDialogues = []; let vocabData;
 
-    await Promise.all([
+    let promises = [];
+
+    promises.push(
       getDialogues()
         .then(data => rawDialogues = data)
         .catch()
-      ,
-      getVocabulary(definitionArray[0].simplified, definitionArray[0].pinyin)
-        .then(data => vocabData = data)
-        .catch()
-    ]);
+    )
+
+    if (definitionArray && definitionArray[0] && definitionArray[0].simplified && definitionArray[0].pinyin) {
+      promises.push(
+        getVocabulary(definitionArray[0].simplified, definitionArray[0].pinyin)
+          .then(data => vocabData = data)
+          .catch()
+      )
+    }
+
+    await Promise.all(promises);
 
     if (vocabData && vocabData.audio) {
       if (vocabData.audio.split('http').length > 1) {
