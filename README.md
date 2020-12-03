@@ -24,7 +24,7 @@ This app was originally generated on Fri Jun 21 2019 12:13:43 GMT+0800 (Hong Kon
 
 #### Staging version on https://staging.chinesepod.com
 
-`NODE_ENV=production sails_environment=staging pm2 start app.js -i 0`
+`NODE_ENV=production sails_environment=staging pm2 start server.js -i 0`
 
 To stop
 
@@ -34,7 +34,7 @@ To stop
 
 To launch
 
-`pm2 start app.js -i 0 -- --prod`
+`pm2 start server.js -i 0 -- --prod`
 
 To reload (this allows a graceful startup of each app (per processor) to avoid 502 errors)
 
